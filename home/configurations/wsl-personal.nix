@@ -1,16 +1,7 @@
-{ config, pkgs, pkgs-unstable, ... }:
-let
-  username = "pedorich_n";
-  is-wsl = "" != builtins.getEnv "WSL_DISTRO_NAME";
-in
+{ ... }:
 {
-  home.username = username;
-  home.homeDirectory = "/home/${username}";
-  home.stateVersion = "22.05";
-
-  programs.home-manager.enable = true;
-
   imports = [
+    ./common.nix
     ../modules/programs/zsh
     ../modules/programs/git.nix
     ../modules/packages/common.nix
@@ -24,5 +15,7 @@ in
         signByDefault = false;
       };
     };
+
+    zsh.initExtra = "\n\nzstyle :omz:plugins:keychain identities id_main";
   };
 }

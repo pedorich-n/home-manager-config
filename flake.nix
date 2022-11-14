@@ -10,9 +10,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    zsh-snap = {
+      url = "github:marlonrichert/zsh-snap";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, zsh-snap }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -23,14 +28,18 @@
         inherit system;
         config.allowUnfree = true;
       };
-      lib = nixpkgs.lib;
     in
     {
       homeConfigurations = {
         wslPersonal = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit pkgs-unstable; };
           modules = [ ./home/configurations/wsl-personal.nix ];
+          extraSpecialArgs = {
+            inherit pkgs-unstable;
+            inherit zsh-snap;
+            username = "pedorich_n";
+            stateVersion = "22.05";
+          };
         };
       };
     };

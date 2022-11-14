@@ -1,10 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, zsh-snap, ... }:
 
-let
-  zsh-snap = pkgs.callPackage ../../../../overlays/zsh-snap { };
-in
 {
-  home.packages = [ zsh-snap ];
   programs.zsh = {
     enable = true;
 
@@ -16,6 +12,7 @@ in
     envExtra = ''
       VISUAL=vim
       EDITOR="$VISUAL"
+      HOSTNAME=$(hostname)
     '';
 
     initExtraBeforeCompInit = (builtins.readFile ./env_default.sh);

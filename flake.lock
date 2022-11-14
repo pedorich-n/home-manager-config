@@ -57,7 +57,8 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-unstable": "nixpkgs-unstable"
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "zsh-snap": "zsh-snap"
       }
     },
     "utils": {
@@ -72,6 +73,22 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "zsh-snap": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1666669096,
+        "narHash": "sha256-KS3jC/HJKvnaHU9pzwcI+K6njaNIAO/7brmNu2nEquw=",
+        "owner": "marlonrichert",
+        "repo": "zsh-snap",
+        "rev": "a80c0762b08699c1ab8d8a26e2db8141bab995e7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "marlonrichert",
+        "repo": "zsh-snap",
         "type": "github"
       }
     }
