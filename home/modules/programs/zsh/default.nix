@@ -18,6 +18,6 @@
     initExtraBeforeCompInit = (builtins.readFile ./env_default.sh);
 
     initExtra = (builtins.readFile ./zshrc_extra.zsh) + "\n\n" +
-      (builtins.replaceStrings [ "%zsh-snap%" ] [ "${zsh-snap}" ] (builtins.readFile ./zsh_snap.zsh));
+      (builtins.replaceStrings [ "%zsh-snap-path%" ] [ "${zsh-snap}" ] (builtins.readFile ./zsh_snap.zsh));
   };
 }

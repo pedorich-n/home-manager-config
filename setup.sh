@@ -1,26 +1,33 @@
 #!/bin/bash
 
-set -x
+# set -x
 
-machine=$1
+MACHINE=$1
+NIX_PATH=$(which nix)
 
-case $machine in
-    "wsl-personal")
-        echo "sh <(curl -L https://nixos.org/nix/install) --no-daemon"
-    ;;
-    "work")
-        echo "sh <(curl -L https://nixos.org/nix/install) --daemon"
-    ;;
-    "none")
-        echo "none"
-    ;;
-esac
+if [[ -z "$NIX_PATH" ]]; then
+    echo "Intalling nix"
+    case $MACHINE in
+        "wslPersonal")
+            echo "sh <(curl -L https://nixos.org/nix/install) --no-daemon"
+        ;;
+        "work")
+            echo "sh <(curl -L https://nixos.org/nix/install) --daemon"
+        ;;
+    esac
+else
+    echo "nix already installed, skipping..."
+fi
 
-# nix-env -f '<nixpkgs>' -iA nixUnstable
+LINE="experimental-features = nix-command flakes"
+NIX_CONFIG_FILE="/home/$USER/.config/nix/nix.conf"
 
-# nix_config_path="/home/$USER/.config/nix"
-# mkdir -p $nix_config_path
-# echo "experimental-features = nix-command flakes" >> "$nix_config_path/nix.conf"
+mkdir -p $(dirname $NIX_CONFIG_FILE)
 
-# nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz home-manager
-# nix-channel --update
+grep -q "$LINE" "$NIX_CONFIG_FILE" || echo "$LINE" >> "$NIX_CONFIG_FILE"
+
+echo "Building configuration..."
+nix build .#homeConfigurations.$MACHINE.activationPackage
+
+echo "Activating..."
+./result/activate

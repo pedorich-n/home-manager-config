@@ -1,5 +1,5 @@
 zstyle ':znap:*' repos-dir ~/.zsh-plugins
-source %zsh-snap%/znap.zsh
+source %zsh-snap-path%/znap.zsh
 
 znap source ohmyzsh/ohmyzsh lib/{git,theme-and-appearance,history,key-bindings,misc,completion,directories,termsupport}
 znap source ohmyzsh/ohmyzsh plugins/{git,command-not-found,extract,keychain,gpg-agent}
