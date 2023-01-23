@@ -1,4 +1,4 @@
-{ ... }:
+{ custom-params, ... }:
 {
   imports = [
     ./common.nix
@@ -8,6 +8,6 @@
   ];
 
   programs = {
-    zsh.initExtra = "\n\nzstyle :omz:plugins:keychain identities id_main";
+    zsh.initExtra = "\n\nzstyle :omz:plugins:keychain identities work/paidy";
   };
 }

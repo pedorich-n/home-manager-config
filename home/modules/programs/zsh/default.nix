@@ -4,11 +4,6 @@
   programs.zsh = {
     enable = true;
 
-    history = {
-      ignoreDups = true;
-      ignoreSpace = true;
-    };
-
     envExtra = ''
       VISUAL=vim
       EDITOR="$VISUAL"
