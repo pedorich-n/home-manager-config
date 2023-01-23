@@ -12,9 +12,11 @@
 
     initExtraFirst = (builtins.readFile ./env_default.sh);
 
-    initExtraBeforeCompInit = "zstyle :omz:plugins:keychain agents ssh,gpg";
+    initExtraBeforeCompInit = "zstyle :omz:plugins:keychain agents gpg,ssh";
 
-    initExtra = (builtins.readFile ./zshrc_extra.zsh) + "\n\n" +
-      (builtins.replaceStrings [ "%zsh-snap-path%" ] [ "${zsh-snap}" ] (builtins.readFile ./zsh_snap.zsh));
+    initExtra = ''
+      ${(builtins.replaceStrings [ "%zsh-snap-path%" ] [ "${zsh-snap}" ] (builtins.readFile ./zsh_snap.zsh))}
+      ${(builtins.readFile ./zshrc_extra.zsh)}
+    '';
   };
 }
