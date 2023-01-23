@@ -39,11 +39,6 @@
             inherit pkgs-unstable;
             inherit zsh-snap;
 
-            custom-params.git = {
-              email = "pedorich.n@gmail.com";
-              signing_key = "ADC7FB37D4DF4CE2";
-            };
-            username = "pedorich_n";
             stateVersion = stateVersion;
           };
         };
@@ -55,11 +50,6 @@
             inherit pkgs-unstable;
             inherit zsh-snap;
 
-            custom-params.git = {
-              email = "pedorich.n@gmail.com";
-              signing_key = "900C2FE784D62F8C";
-            };
-            username = "mykytapedorich";
             stateVersion = stateVersion;
           };
         };

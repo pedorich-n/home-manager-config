@@ -2,6 +2,7 @@
 
 {
   home.packages = with pkgs; [
+    keychain
     curl
     htop
     vimHugeX

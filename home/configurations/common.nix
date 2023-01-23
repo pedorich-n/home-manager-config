@@ -1,4 +1,4 @@
-{ ... } @ args:
+args @ { ... }:
 {
   home.username = args.username;
   home.homeDirectory = "/home/${args.username}";
