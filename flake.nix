@@ -5,7 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    utils.url = "github:numtide/flake-utils";
+    flake-utils.url = "github:numtide/flake-utils";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -18,21 +18,19 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, utils, home-manager, zsh-snap, ... }:
-    let
-      stateVersion = "22.11";
-
-      pkgsFor = pkgs: system: import pkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-
-    in
-    with utils.lib; eachSystem [ system.x86_64-linux ]
+  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, zsh-snap, ... }:
+    with flake-utils.lib; eachSystem [ system.x86_64-linux ]
       (system:
         let
-          pkgs = pkgsFor nixpkgs system;
-          pkgs-unstable = pkgsFor pkgs-unstable system;
+          stateVersion = "22.11";
+
+          pkgsFor = pkgs: import pkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+
+          pkgs = pkgsFor nixpkgs;
+          pkgs-unstable = pkgsFor nixpkgs-unstable;
 
           homeManagerConfFor = path: home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
