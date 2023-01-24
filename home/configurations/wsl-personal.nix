@@ -14,5 +14,4 @@ args @ { ... }:
     };
     zsh.initExtraBeforeCompInit = "zstyle :omz:plugins:keychain identities id_main\n";
   };
-
 }

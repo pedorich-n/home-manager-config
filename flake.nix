@@ -5,6 +5,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    utils.url = "github:numtide/flake-utils";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,44 +18,33 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, zsh-snap }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, utils, home-manager, zsh-snap, ... }:
     let
       stateVersion = "22.11";
-      system = "x86_64-linux";
 
-      pkgs = import nixpkgs {
+      pkgsFor = pkgs: system: import pkgs {
         inherit system;
         config.allowUnfree = true;
       };
-      pkgs-unstable = import nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
+
     in
-    {
-      homeConfigurations = {
-        wslPersonal = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [ ./home/configurations/wsl-personal.nix ];
-          extraSpecialArgs = {
-            inherit pkgs-unstable;
-            inherit zsh-snap;
+    with utils.lib; eachSystem [ system.x86_64-linux ]
+      (system:
+        let
+          pkgs = pkgsFor nixpkgs system;
+          pkgs-unstable = pkgsFor pkgs-unstable system;
 
-            stateVersion = stateVersion;
+          homeManagerConfFor = path: home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            modules = [ path ];
+            extraSpecialArgs = { inherit pkgs-unstable zsh-snap stateVersion; };
           };
-        };
-
-        linuxWork = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [ ./home/configurations/linux-work.nix ];
-          extraSpecialArgs = {
-            inherit pkgs-unstable;
-            inherit zsh-snap;
-
-            stateVersion = stateVersion;
+        in
+        {
+          packages.homeConfigurations = {
+            wslPersonal = homeManagerConfFor ./home/configurations/wsl-personal.nix;
+            linuxWork = homeManagerConfFor ./home/configurations/linux-work.nix;
           };
-        };
-      };
-    };
+        });
 }
 
