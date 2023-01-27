@@ -7,6 +7,7 @@
     htop
     vimHugeX
     bat
+    ripgrep
     jq
     tmux
     fira-code

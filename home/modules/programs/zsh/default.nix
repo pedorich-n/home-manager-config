@@ -1,4 +1,13 @@
-{ zsh-snap, ... }:
+args @ { zsh-snap, ... }:
+let
+  keychain-identities =
+    if args?identities && args.identities != [ ]
+    then ''
+      zstyle :omz:plugins:keychain agents gpg,ssh
+      zstyle :omz:plugins:keychain identities ${(builtins.concatStringsSep " " args.identities)}
+    ''
+    else "";
+in
 {
   programs.zsh = {
     enable = true;
@@ -12,7 +21,7 @@
 
     initExtraFirst = (builtins.readFile ./env_default.sh);
 
-    initExtraBeforeCompInit = "zstyle :omz:plugins:keychain agents gpg,ssh";
+    initExtraBeforeCompInit = keychain-identities;
 
     initExtra = ''
       ${(builtins.replaceStrings [ "%zsh-snap-path%" ] [ "${zsh-snap}" ] (builtins.readFile ./zsh_snap.zsh))}
