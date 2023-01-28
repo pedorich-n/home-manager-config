@@ -1,6 +1,6 @@
 { pkgs, pkgs-unstable, ... }:
 let
-  mkCleanupOverlay = import ../../overlays/post_fixup_cleanup.nix;
+  mkCleanupOverlay = import ../overlays/post_fixup_cleanup.nix;
 in
 {
   home.packages =
@@ -10,7 +10,7 @@ in
     [
       (coursier.override { jre = pkgs-unstable.temurin-bin-17; })
       (scala.override { majorVersion = "2.13"; jre = pkgs-unstable.temurin-bin-17; })
+      (sbt.override { jre = pkgs-unstable.temurin-bin-17; })
       # (jetbrains.idea-community.override { jdk = pkgs-unstable.temurin-bin-17; })
-      # (scala.override { majorVersion = "2.13"; jre = pkgs-unstable.temurin-bin-17; })
     ]);
 }

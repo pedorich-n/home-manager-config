@@ -1,8 +1,14 @@
 args @ { ... }:
+let
+  args_updated = args // {
+    username = "pedorich_n";
+    identities = [ "id_main" ];
+  };
+in
 {
   imports = [
-    (import ./common.nix (args // { username = "pedorich_n"; }))
-    (import ../modules/programs/zsh (args // { identities = [ "id_main" ]; }))
+    (import ./common.nix (args_updated))
+    (import ../modules/programs/zsh (args_updated))
     ../modules/programs/git.nix
     ../modules/packages/common.nix
   ];
