@@ -7,7 +7,7 @@ let
 in
 {
   imports = [
-    (import ./common.nix (args_updated))
+    (import ./common-linux.nix (args_updated))
     (import ../modules/programs/zsh (args_updated))
     ../modules/programs/git.nix
     ../modules/packages/common.nix

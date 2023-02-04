@@ -9,6 +9,7 @@
     bat
     ripgrep
     jq
+    direnv
     tmux
     fira-code
   ];
