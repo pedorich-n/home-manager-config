@@ -23,5 +23,6 @@ in
       userEmail = "pedorich.n@gmail.com";
       signing.key = "900C2FE784D62F8C";
     };
+    bash.enable = true; # To set Home Manager's ENVs vars in .profile 
   };
 }
