@@ -16,9 +16,14 @@
       url = "github:marlonrichert/zsh-snap";
       flake = false;
     };
+
+    pyenv-flake = {
+      url = "github:pyenv/pyenv";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, zsh-snap, ... }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, zsh-snap, pyenv-flake, ... }:
     with flake-utils.lib; eachSystem [ system.x86_64-linux ]
       (system:
         let
@@ -32,13 +37,19 @@
           pkgs = pkgsFor nixpkgs;
           pkgs-unstable = pkgsFor nixpkgs-unstable;
 
+          shells = {
+            pyenv-builder = ./shells/pyenv-builder.nix;
+          };
+
           homeManagerConfFor = path: home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             modules = [ path ];
-            extraSpecialArgs = { inherit pkgs-unstable zsh-snap stateVersion; };
+            extraSpecialArgs = { inherit pkgs-unstable zsh-snap pyenv-flake stateVersion; };
           };
         in
         {
+          devShells = builtins.mapAttrs (name: path: import path { inherit pkgs; }) shells;
+
           packages.homeConfigurations = {
             wslPersonal = homeManagerConfFor ./home/configurations/wsl-personal.nix;
             linuxWork = homeManagerConfFor ./home/configurations/linux-work.nix;

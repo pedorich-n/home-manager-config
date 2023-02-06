@@ -11,11 +11,12 @@ in
     (import ../modules/programs/zsh (args_updated))
     ../modules/programs/git.nix
     ../modules/packages/common.nix
-    ../modules/packages/scala.nix
+    ../modules/packages/development.nix
   ];
 
   home.packages = with pkgs; [
     saml2aws
+    ulauncher
   ];
 
   programs = {

@@ -68,12 +68,29 @@
         "type": "github"
       }
     },
+    "pyenv-flake": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1675357288,
+        "narHash": "sha256-4fU182sAqLC9azoHDxkrhBoGJqz4jtJ+BzNLR9hznCY=",
+        "owner": "pyenv",
+        "repo": "pyenv",
+        "rev": "c8c324afb42040ac41a71311eb8ccdaf259c7798",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyenv",
+        "repo": "pyenv",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "pyenv-flake": "pyenv-flake",
         "zsh-snap": "zsh-snap"
       }
     },
