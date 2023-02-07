@@ -39,7 +39,9 @@
   };
 
   home.packages = with pkgs; [
+    barrier
     saml2aws
     ulauncher
+    # touchegg ??
   ];
 }

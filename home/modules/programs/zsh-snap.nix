@@ -7,7 +7,7 @@ let
     options = {
       repo = mkOption {
         type = types.str;
-        description = "Github repo in form of organization/repository";
+        description = "Github repo in form of 'organization/repository'";
       };
 
       subfolderPrefix = mkOption {

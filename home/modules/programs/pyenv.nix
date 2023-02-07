@@ -53,7 +53,7 @@ in
 
     home.shellAliases = {
       # "nixpkgs" has to be the same as input name in flake.nix
-      pyenv-build = "nix develop nixpkgs#python311"; 
+      pyenv-build = "nix develop nixpkgs#python311Full"; 
     };
 
     programs.bash.profileExtra = envsFor cfg "bash";
