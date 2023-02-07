@@ -3,7 +3,7 @@ with lib;
 let
   cfg = config.custom.programs.pyenv;
 
-  shellIntegrationsModule = types.submodule ({ config, ... }: {
+  shellIntegrationsModule = types.submodule ({
     options = {
       bash.enable = mkEnableOption "bash";
       zsh.enable = mkEnableOption "zsh";

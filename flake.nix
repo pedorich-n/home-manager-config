@@ -41,10 +41,12 @@
             pyenv-builder = ./shells/pyenv-builder.nix;
           };
 
+          customLib = import ./lib {};
+
           homeManagerConfFor = path: home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             modules = [ path ];
-            extraSpecialArgs = { inherit pkgs-unstable zsh-snap pyenv-flake stateVersion; };
+            extraSpecialArgs = { inherit pkgs-unstable zsh-snap pyenv-flake customLib stateVersion; };
           };
         in
         {

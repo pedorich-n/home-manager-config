@@ -2,16 +2,16 @@ args @ { ... }:
 let
   args_updated = args // {
     username = "pedorich_n";
-    identities = [ "id_main" ];
   };
 in
 {
   imports = [
     (import ./common-linux.nix (args_updated))
-    (import ../modules/programs/zsh (args_updated))
+    ../modules/programs/zsh
     ../modules/programs/git.nix
     ../modules/packages/common.nix
     ../modules/programs/pyenv.nix
+    ../modules/programs/zsh-snap.nix
   ];
 
   custom.programs = {
@@ -21,6 +21,11 @@ in
         # bash.enable = true;
         zsh.enable = true;
       };
+    };
+
+    zsh = {
+      enable = true;
+      keychainIdentities = [ "id_main" ];
     };
   };
 
