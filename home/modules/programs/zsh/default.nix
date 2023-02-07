@@ -31,13 +31,10 @@ in
 
       initExtraFirst = (builtins.readFile ./env_default.sh);
 
-      initExtraBeforeCompInit =
-        if (!customLib.isListNullOrEmpty cfg.keychainIdentities)
-        then ''
-          zstyle :omz:plugins:keychain agents gpg,ssh
-          zstyle :omz:plugins:keychain identities ${(builtins.concatStringsSep " " cfg.keychainIdentities)}
-        ''
-        else "";
+      initExtraBeforeCompInit = strings.optionalString (!customLib.isListNullOrEmpty cfg.keychainIdentities) ''
+        zstyle :omz:plugins:keychain agents gpg,ssh
+        zstyle :omz:plugins:keychain identities ${(builtins.concatStringsSep " " cfg.keychainIdentities)}
+      '';
 
       initExtra = ''
         COMPLETION_WAITING_DOTS=true

@@ -11,18 +11,15 @@ let
   });
 
   envsFor = cfg: shell:
-    if cfg.shellIntegrations.${shell}.enable
-    then ''
+    strings.optionalString cfg.shellIntegrations.${shell}.enable ''
       export PYENV_ROOT="$HOME/${cfg.root}"
       export PATH="$PYENV_ROOT/bin:$PATH"
       eval "$(pyenv init --path)"
-    ''
-    else "";
+    '';
 in
 {
 
   ###### interface
-
   options = {
     custom.programs.pyenv = {
       enable = mkEnableOption "pyenv";
@@ -43,7 +40,6 @@ in
 
 
   ###### implementation
-
   config = mkIf cfg.enable {
     home.file.${cfg.root} = {
       recursive = true;
@@ -53,6 +49,11 @@ in
         rev = pyenv-flake.rev;
         sha256 = pyenv-flake.narHash;
       };
+    };
+
+    home.shellAliases = {
+      # "nixpkgs" has to be the same as input name in flake.nix
+      pyenv-build = "nix develop nixpkgs#python311"; 
     };
 
     programs.bash.profileExtra = envsFor cfg "bash";

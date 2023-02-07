@@ -27,14 +27,12 @@ let
   znapSourceFor = source:
     with builtins; with customLib;
     let
-      prefix = if (!isStringNullOrEmpty (source.subfolderPrefix)) then "${source.subfolderPrefix}/" else "";
+      prefix = strings.optionalString (!isStringNullOrEmpty (source.subfolderPrefix)) "${source.subfolderPrefix}/";
       subfolders =
-        if (source.subfolders != null && source.subfolders != [ ])
-        then
+        strings.optionalString (!isListNullOrEmpty (source.subfolders))
           (if (length (source.subfolders) == 1)
           then head source.subfolders
-          else ''{${concatStringsSep "," source.subfolders}}'')
-        else "";
+          else ''{${concatStringsSep "," source.subfolders}}'');
     in
     ''znap source ${source.repo} ${prefix}${subfolders}'';
 in
@@ -60,11 +58,10 @@ in
 
 
   ###### implementation
-
   config = mkIf cfg.enable {
     programs.zsh.initExtra = with builtins; with customLib;
       ''
-        ${if (!isStringNullOrEmpty (cfg.reposDir)) then "zstyle ':znap:*' repos-dir ${cfg.reposDir}" else ""}
+        ${strings.optionalString (!isStringNullOrEmpty (cfg.reposDir)) "zstyle ':znap:*' repos-dir ${cfg.reposDir}"}
         source ${zsh-snap}/znap.zsh
 
         ${(concatStringsSep "\n" (map (znapSourceFor) cfg.sources))}

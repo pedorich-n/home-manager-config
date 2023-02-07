@@ -41,7 +41,7 @@
             pyenv-builder = ./shells/pyenv-builder.nix;
           };
 
-          customLib = import ./lib {};
+          customLib = import ./lib { };
 
           homeManagerConfFor = path: home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
