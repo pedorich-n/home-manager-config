@@ -11,7 +11,18 @@ in
     (import ../modules/programs/zsh (args_updated))
     ../modules/programs/git.nix
     ../modules/packages/common.nix
+    ../modules/programs/pyenv.nix
   ];
+
+  custom.programs = {
+    pyenv = {
+      enable = true;
+      shellIntegrations = {
+        # bash.enable = true;
+        zsh.enable = true;
+      };
+    };
+  };
 
   programs = {
     git = {

@@ -12,12 +12,23 @@ in
     ../modules/programs/git.nix
     ../modules/packages/common.nix
     ../modules/packages/development.nix
+    ../modules/programs/pyenv.nix
   ];
 
   home.packages = with pkgs; [
     saml2aws
     ulauncher
   ];
+
+  custom.programs = {
+    pyenv = {
+      enable = true;
+      shellIntegrations = {
+        bash.enable = true;
+        zsh.enable = true;
+      };
+    };
+  };
 
   programs = {
     git = {

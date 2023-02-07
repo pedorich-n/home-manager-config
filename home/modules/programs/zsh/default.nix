@@ -13,9 +13,9 @@ in
     enable = true;
 
     envExtra = ''
-      VISUAL=vim
-      EDITOR="$VISUAL"
-      HOSTNAME=$(hostname)
+      export VISUAL=vim
+      export EDITOR="$VISUAL"
+      export HOSTNAME=$(hostname)
     '';
 
 
