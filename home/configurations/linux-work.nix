@@ -1,31 +1,31 @@
-args @ { pkgs, ... }:
-let
-  args_updated = args // {
-    username = "mykytapedorich";
-    identities = [ "work/paidy" ];
-  };
-in
+{ ... }:
 {
   imports = [
-    (import ./common-linux.nix (args_updated))
-    (import ../modules/programs/zsh (args_updated))
+    ./common-linux.nix
+    ../modules/programs/zsh
     ../modules/programs/git.nix
     ../modules/packages/common.nix
-    ../modules/packages/development.nix
     ../modules/programs/pyenv.nix
+    ../modules/programs/zsh-snap.nix
   ];
 
-  home.packages = with pkgs; [
-    saml2aws
-    ulauncher
-  ];
+  custom = {
+    home-linux = {
+      username = "mykytapedorich";
+    };
 
-  custom.programs = {
-    pyenv = {
-      enable = true;
-      shellIntegrations = {
-        bash.enable = true;
-        zsh.enable = true;
+    programs = {
+      pyenv = {
+        enable = true;
+        shellIntegrations = {
+          bash.enable = true;
+          zsh.enable = true;
+        };
+      };
+
+      zsh = {
+        enable = true;
+        keychainIdentities = [ "work/paidy" ];
       };
     };
   };
@@ -37,4 +37,9 @@ in
     };
     bash.enable = true; # To set Home Manager's ENVs vars in .profile 
   };
+
+  home.packages = with pkgs; [
+    saml2aws
+    ulauncher
+  ];
 }

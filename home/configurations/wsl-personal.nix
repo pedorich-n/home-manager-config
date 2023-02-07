@@ -1,12 +1,7 @@
-args @ { ... }:
-let
-  args_updated = args // {
-    username = "pedorich_n";
-  };
-in
+{ ... }:
 {
   imports = [
-    (import ./common-linux.nix (args_updated))
+    ./common-linux.nix
     ../modules/programs/zsh
     ../modules/programs/git.nix
     ../modules/packages/common.nix
@@ -14,18 +9,24 @@ in
     ../modules/programs/zsh-snap.nix
   ];
 
-  custom.programs = {
-    pyenv = {
-      enable = true;
-      shellIntegrations = {
-        # bash.enable = true;
-        zsh.enable = true;
-      };
+  custom = {
+    home-linux = {
+      username = "pedorich_n";
     };
 
-    zsh = {
-      enable = true;
-      keychainIdentities = [ "id_main" ];
+    programs = {
+      pyenv = {
+        enable = true;
+        shellIntegrations = {
+          # bash.enable = true;
+          zsh.enable = true;
+        };
+      };
+
+      zsh = {
+        enable = true;
+        keychainIdentities = [ "id_main" ];
+      };
     };
   };
 
