@@ -31,9 +31,11 @@ in
 
       initExtraFirst = (builtins.readFile ./env_default.sh);
 
-      initExtraBeforeCompInit = strings.optionalString (!customLib.isListNullOrEmpty cfg.keychainIdentities) ''
+      initExtraBeforeCompInit = strings.optionalString (!customLib.isNullOrEmpty cfg.keychainIdentities) ''
         zstyle :omz:plugins:keychain agents gpg,ssh
         zstyle :omz:plugins:keychain identities ${(builtins.concatStringsSep " " cfg.keychainIdentities)}
+        zstyle :omz:plugins:keychain options --quiet
+
       '';
 
       initExtra = ''
@@ -64,7 +66,7 @@ in
           repo = "ohmyzsh/ohmyzsh";
           subfolderPrefix = "plugins";
           subfolders = [ "git" "command-not-found" "extract" ] ++
-            lists.optionals (!customLib.isListNullOrEmpty cfg.keychainIdentities) [ "keychain" "gpg-agent" ];
+            lists.optionals (!customLib.isNullOrEmpty cfg.keychainIdentities) [ "keychain" "gpg-agent" ];
         }
         {
           repo = "ptavares/zsh-direnv";

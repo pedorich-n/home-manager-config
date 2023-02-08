@@ -24,12 +24,26 @@ let
     };
   });
 
+  fpathModule = types.submodule ({
+    options = {
+      name = mkOption {
+        type = types.str;
+        description = "Fpath function name";
+      };
+
+      command = mkOption {
+        type = types.str;
+        description = "Fpath function command";
+      };
+    };
+  });
+
   znapSourceFor = source:
     with builtins; with customLib;
     let
-      prefix = strings.optionalString (!isStringNullOrEmpty (source.subfolderPrefix)) "${source.subfolderPrefix}/";
+      prefix = strings.optionalString (!isNullOrEmpty (source.subfolderPrefix)) "${source.subfolderPrefix}/";
       subfolders =
-        strings.optionalString (!isListNullOrEmpty (source.subfolders))
+        strings.optionalString (!isNullOrEmpty (source.subfolders))
           (if (length (source.subfolders) == 1)
           then head source.subfolders
           else ''{${concatStringsSep "," source.subfolders}}'');
@@ -49,10 +63,14 @@ in
       };
 
       sources = mkOption {
-        type = types.listOf sourceModule;
+        type = with types; nullOr (listOf sourceModule);
         description = "Optional list of sources to install and manage by zsh-snap";
       };
 
+      fpaths = mkOption {
+        type = with types; nullOr (listOf fpathModule);
+        description = "Optional list of fpath functions";
+      };
     };
   };
 
@@ -61,10 +79,10 @@ in
   config = mkIf cfg.enable {
     programs.zsh.initExtra = with builtins; with customLib;
       ''
-        ${strings.optionalString (!isStringNullOrEmpty (cfg.reposDir)) "zstyle ':znap:*' repos-dir ${cfg.reposDir}"}
+        ${strings.optionalString (!isNullOrEmpty (cfg.reposDir)) "zstyle ':znap:*' repos-dir ${cfg.reposDir}"}
         source ${zsh-snap}/znap.zsh
 
-        ${(concatStringsSep "\n" (map (znapSourceFor) cfg.sources))}
+        ${strings.optionalString (!isNullOrEmpty (cfg.sources)) (concatStringsSep "\n" (map (znapSourceFor) cfg.sources))}
       '';
   };
 }

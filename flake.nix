@@ -37,9 +37,7 @@
           pkgs = pkgsFor nixpkgs;
           pkgs-unstable = pkgsFor nixpkgs-unstable;
 
-          shells = {
-            pyenv-builder = ./shells/pyenv-builder.nix;
-          };
+          shells = { };
 
           customLib = import ./lib { };
 
@@ -50,7 +48,7 @@
           };
         in
         {
-          devShells = builtins.mapAttrs (name: path: import path { inherit pkgs; }) shells;
+          #devShells = builtins.mapAttrs (name: path: import path { inherit pkgs; }) shells;
 
           packages.homeConfigurations = {
             wslPersonal = homeManagerConfFor ./home/configurations/wsl-personal.nix;
