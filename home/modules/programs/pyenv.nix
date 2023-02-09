@@ -3,18 +3,18 @@ with lib;
 let
   cfg = config.custom.programs.pyenv;
 
-  shellIntegrationsModule = types.submodule ({
+  shellIntegrationsModule = types.submodule {
     options = {
       bash.enable = mkEnableOption "bash";
       zsh.enable = mkEnableOption "zsh";
     };
-  });
+  };
 
   envsFor = cfg: shell:
     strings.optionalString cfg.shellIntegrations.${shell}.enable ''
       export PYENV_ROOT="$HOME/${cfg.root}"
       export PATH="$PYENV_ROOT/bin:$PATH"
-      eval "$(pyenv init --path)"
+      eval "$(pyenv init -)"
     '';
 in
 {
@@ -53,7 +53,7 @@ in
 
     home.shellAliases = {
       # "nixpkgs" has to be the same as input name in flake.nix
-      pyenv-build = "nix develop nixpkgs#python311Full"; 
+      pyenv-build = "nix develop nixpkgs#python311Full";
     };
 
     programs.bash.profileExtra = envsFor cfg "bash";

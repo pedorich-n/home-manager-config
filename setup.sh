@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# set -x
+set -e
 
 MACHINE=$1
 NIX_PATH=$(which nix)
@@ -24,10 +24,11 @@ NIX_CONFIG_FILE="/home/$USER/.config/nix/nix.conf"
 
 mkdir -p $(dirname $NIX_CONFIG_FILE)
 
-grep -q "$LINE" "$NIX_CONFIG_FILE" || echo "$LINE" >> "$NIX_CONFIG_FILE"
+grep -sq "$LINE" "$NIX_CONFIG_FILE" || echo "$LINE" >> "$NIX_CONFIG_FILE"
 
 echo "Building configuration..."
-nix build .#homeConfigurations.$MACHINE.activationPackage
+# Yeah, x86_64-linux has to be hardcoded, see: https://github.com/nix-community/home-manager/issues/3075
+nix build .#homeConfigurations.x86_64-linux.$MACHINE.activationPackage
 
 echo "Activating..."
 ./result/activate

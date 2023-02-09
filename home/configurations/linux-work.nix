@@ -7,6 +7,7 @@
     ../modules/packages/common.nix
     ../modules/programs/pyenv.nix
     ../modules/programs/zsh-snap.nix
+    ../modules/packages/development.nix
   ];
 
   custom = {

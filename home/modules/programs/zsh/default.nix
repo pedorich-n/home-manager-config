@@ -29,7 +29,7 @@ in
         export HOSTNAME=$(hostname)
       '';
 
-      initExtraFirst = (builtins.readFile ./env_default.sh);
+      initExtraFirst = builtins.readFile ./env_default.sh;
 
       initExtraBeforeCompInit = strings.optionalString (!customLib.isNullOrEmpty cfg.keychainIdentities) ''
         zstyle :omz:plugins:keychain agents gpg,ssh

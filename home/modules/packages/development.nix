@@ -1,7 +1,7 @@
 { pkgs, pkgs-unstable, ... }:
 let
   java-17 = pkgs-unstable.jdk17;
-  scala-2-13 = (pkgs.scala.override { majorVersion = "2.13"; jre = java-17; });
+  scala-2-13 = pkgs.scala.override { majorVersion = "2.13"; jre = java-17; };
 in
 {
   home.packages =

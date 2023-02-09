@@ -1,9 +1,6 @@
-pkg: paths: final: prev:
+pkg: paths: _final: prev:
 let
-  maybeOldPostFixup = oldAttrs:
-    if oldAttrs ? postFixup
-    then oldAttrs.postFixup
-    else "";
+  maybeOldPostFixup = oldAttrs: oldAttrs.postFixup or "";
 
   commands = builtins.map (path: ''rm -f $out/${path}'') paths;
   commandsMerged = builtins.concatStringsSep "\n" commands;

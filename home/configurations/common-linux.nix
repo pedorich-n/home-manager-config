@@ -1,4 +1,4 @@
-{ lib, config, stateVersion, ... }:
+{ lib, config, ... }:
 with lib;
 let
   cfg = config.custom.home-linux;
@@ -25,7 +25,6 @@ in
   config = {
     home.username = cfg.username;
     home.homeDirectory = "/home/${cfg.username}";
-    home.stateVersion = stateVersion;
 
     programs.home-manager.enable = true;
     targets.genericLinux.enable = true;

@@ -1,4 +1,4 @@
-{}:
+_:
 {
   addElementToList = elem: list: if (builtins.elem elem list) then list else list ++ [ elem ];
 
