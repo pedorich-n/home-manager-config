@@ -46,7 +46,7 @@ in
       source = pkgs.fetchFromGitHub {
         owner = "pyenv";
         repo = "pyenv";
-        rev = pyenv-flake.rev;
+        inherit (pyenv-flake) rev;
         sha256 = pyenv-flake.narHash;
       };
     };

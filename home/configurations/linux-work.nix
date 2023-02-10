@@ -7,6 +7,7 @@
     ../modules/packages/common.nix
     ../modules/programs/pyenv.nix
     ../modules/programs/zsh-snap.nix
+    ../modules/programs/vim.nix
     ../modules/packages/development.nix
   ];
 
@@ -28,6 +29,8 @@
         enable = true;
         keychainIdentities = [ "work/paidy" ];
       };
+
+      vim.enable = true;
     };
   };
 

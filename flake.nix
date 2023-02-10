@@ -16,7 +16,7 @@
       url = "github:Gerschtli/nix-formatter-pack";
     };
 
-    zsh-snap = {
+    zsh-snap-flake = {
       url = "github:marlonrichert/zsh-snap";
       flake = false;
     };
@@ -25,9 +25,14 @@
       url = "github:pyenv/pyenv";
       flake = false;
     };
+
+    tomorrow-night-flake = {
+      url = "github:chriskempson/tomorrow-theme";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, nix-formatter-pack, zsh-snap, pyenv-flake, ... }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, nix-formatter-pack, zsh-snap-flake, pyenv-flake, tomorrow-night-flake, ... }:
     with flake-utils.lib; eachSystem [ system.x86_64-linux ]
       (system:
         let
@@ -61,7 +66,7 @@
               { home.stateVersion = stateVersion; }
               module
             ];
-            extraSpecialArgs = { inherit pkgs-unstable zsh-snap pyenv-flake customLib; };
+            extraSpecialArgs = { inherit pkgs-unstable zsh-snap-flake pyenv-flake tomorrow-night-flake customLib; };
           };
         in
         {

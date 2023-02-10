@@ -1,4 +1,4 @@
-{ lib, config, customLib, zsh-snap, ... }:
+{ lib, config, customLib, zsh-snap-flake, ... }:
 with lib;
 let
   cfg = config.custom.programs.zsh.snap;
@@ -80,7 +80,7 @@ in
     programs.zsh.initExtra = with builtins; with customLib;
       ''
         ${strings.optionalString (!isNullOrEmpty cfg.reposDir) "zstyle ':znap:*' repos-dir ${cfg.reposDir}"}
-        source ${zsh-snap}/znap.zsh
+        source ${zsh-snap-flake}/znap.zsh
 
         ${strings.optionalString (!isNullOrEmpty cfg.sources) (concatStringsSep "\n" (map znapSourceFor cfg.sources))}
       '';

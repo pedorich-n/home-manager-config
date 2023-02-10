@@ -160,7 +160,24 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "pyenv-flake": "pyenv-flake",
-        "zsh-snap": "zsh-snap"
+        "tomorrow-night-flake": "tomorrow-night-flake",
+        "zsh-snap-flake": "zsh-snap-flake"
+      }
+    },
+    "tomorrow-night-flake": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1657362863,
+        "narHash": "sha256-G9NOFKP9GX8lKIoHVska6xAY9AKKMenZuVkx0YgfQyA=",
+        "owner": "chriskempson",
+        "repo": "tomorrow-theme",
+        "rev": "ccf6666d888198d341b26b3a99d0bc96500ad503",
+        "type": "github"
+      },
+      "original": {
+        "owner": "chriskempson",
+        "repo": "tomorrow-theme",
+        "type": "github"
       }
     },
     "utils": {
@@ -178,14 +195,14 @@
         "type": "github"
       }
     },
-    "zsh-snap": {
+    "zsh-snap-flake": {
       "flake": false,
       "locked": {
-        "lastModified": 1673870088,
-        "narHash": "sha256-JPScN+114zABM4NscmfidV8b2ZRh6USXrs/6+f2H4Vg=",
+        "lastModified": 1675777300,
+        "narHash": "sha256-Spyw6mvppVadnYdGgmpEwwFpu0L5unykFbpzv6iHHBM=",
         "owner": "marlonrichert",
         "repo": "zsh-snap",
-        "rev": "4821c03c1596cf9e6d045acfb7fc2481eedd1916",
+        "rev": "9b8edd89c2b2303ffa253c5116a97d9138e0831d",
         "type": "github"
       },
       "original": {

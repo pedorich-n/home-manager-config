@@ -5,7 +5,6 @@
     keychain
     curl
     htop
-    vimHugeX
     bat
     ripgrep
     jq

@@ -7,6 +7,7 @@
     ../modules/packages/common.nix
     ../modules/programs/pyenv.nix
     ../modules/programs/zsh-snap.nix
+    ../modules/programs/vim.nix
   ];
 
   custom = {
@@ -27,6 +28,8 @@
         enable = true;
         keychainIdentities = [ "id_main" ];
       };
+
+      vim.enable = true;
     };
   };
 
