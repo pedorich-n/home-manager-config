@@ -8,6 +8,7 @@
     ../modules/programs/pyenv.nix
     ../modules/programs/zsh-snap.nix
     ../modules/programs/vim.nix
+    ../modules/programs/htop.nix
   ];
 
   custom = {
@@ -30,6 +31,7 @@
       };
 
       vim.enable = true;
+      htop.enable = true;
     };
   };
 

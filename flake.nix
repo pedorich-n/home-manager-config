@@ -66,7 +66,7 @@
               { home.stateVersion = stateVersion; }
               module
             ];
-            extraSpecialArgs = { inherit pkgs-unstable zsh-snap-flake pyenv-flake tomorrow-night-flake customLib; };
+            extraSpecialArgs = { inherit self pkgs-unstable zsh-snap-flake pyenv-flake tomorrow-night-flake customLib; };
           };
         in
         {

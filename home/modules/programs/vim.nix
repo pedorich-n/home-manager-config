@@ -22,7 +22,7 @@ in
   config = mkIf cfg.enable {
     programs.vim = {
       enable = true;
-      packageConfigurable = (pkgs.vim_configurable.override { features = "normal"; });
+      packageConfigurable = pkgs.vim_configurable.override { features = "normal"; };
 
       plugins = with pkgs.vimPlugins; [
         vim-easymotion
