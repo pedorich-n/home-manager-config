@@ -11,6 +11,16 @@
       username = "mykytapedorich";
     };
 
+    development.environments = {
+      scala = {
+        enable = true;
+        version = "2.13";
+      };
+
+      python.enable = true;
+      rust.enable = true;
+    };
+
     programs = {
       zsh = {
         enable = true;

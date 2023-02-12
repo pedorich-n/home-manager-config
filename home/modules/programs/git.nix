@@ -28,7 +28,7 @@ in
     programs.git = {
       enable = true;
       userName = "Nikita Pedorich";
-      userEmail = cfg.userEmail;
+      inherit (cfg) userEmail;
 
       signing = {
         signByDefault = !customLib.isNullOrEmpty cfg.signingKey;
