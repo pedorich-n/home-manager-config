@@ -58,14 +58,16 @@
             };
           };
 
-          customLib = import ./lib { };
+          customLib = import ./lib { inherit (pkgs) lib; };
+
+          sharedModules = customLib.listNixFilesRecursive "${self}/home/modules/programs";
 
           homeManagerConfFor = module: home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             modules = [
               { home.stateVersion = stateVersion; }
               module
-            ];
+            ] ++ sharedModules;
             extraSpecialArgs = { inherit self pkgs-unstable zsh-snap-flake pyenv-flake tomorrow-night-flake customLib; };
           };
         in

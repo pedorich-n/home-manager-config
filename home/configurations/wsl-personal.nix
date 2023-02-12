@@ -2,13 +2,7 @@
 {
   imports = [
     ./common-linux.nix
-    ../modules/programs/zsh
-    ../modules/programs/git.nix
     ../modules/packages/common.nix
-    ../modules/programs/pyenv.nix
-    ../modules/programs/zsh-snap.nix
-    ../modules/programs/vim.nix
-    ../modules/programs/htop.nix
   ];
 
   custom = {
@@ -17,6 +11,25 @@
     };
 
     programs = {
+      zsh = {
+        enable = true;
+        keychainIdentities = [ "id_main" ];
+      };
+
+      git = {
+        enable = true;
+        userEmail = "pedorich.n@gmail.com";
+        # signingKey = "ADC7FB37D4DF4CE2";
+      };
+
+      direnv = {
+        enable = true;
+        shellIntegrations = {
+          # bash.enable = true;
+          zsh.enable = true;
+        };
+      };
+
       pyenv = {
         enable = true;
         shellIntegrations = {
@@ -25,20 +38,8 @@
         };
       };
 
-      zsh = {
-        enable = true;
-        keychainIdentities = [ "id_main" ];
-      };
-
       vim.enable = true;
       htop.enable = true;
-    };
-  };
-
-  programs = {
-    git = {
-      userEmail = "pedorich.n@gmail.com";
-      signing.key = "ADC7FB37D4DF4CE2";
     };
   };
 }

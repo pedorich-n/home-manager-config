@@ -2,12 +2,7 @@
 {
   imports = [
     ./common-linux.nix
-    ../modules/programs/zsh
-    ../modules/programs/git.nix
     ../modules/packages/common.nix
-    ../modules/programs/pyenv.nix
-    ../modules/programs/zsh-snap.nix
-    ../modules/programs/vim.nix
     ../modules/packages/development.nix
   ];
 
@@ -17,28 +12,39 @@
     };
 
     programs = {
-      pyenv = {
-        enable = true;
-        shellIntegrations = {
-          bash.enable = true;
-          zsh.enable = true;
-        };
-      };
-
       zsh = {
         enable = true;
         keychainIdentities = [ "work/paidy" ];
       };
 
+      git = {
+        enable = true;
+        userEmail = "pedorich.n@gmail.com";
+        signingKey = "900C2FE784D62F8C";
+      };
+
+      direnv = {
+        enable = true;
+        shellIntegrations = {
+          # bash.enable = true;
+          zsh.enable = true;
+        };
+      };
+
+      pyenv = {
+        enable = true;
+        shellIntegrations = {
+          # bash.enable = true;
+          zsh.enable = true;
+        };
+      };
+
       vim.enable = true;
+      htop.enable = true;
     };
   };
 
   programs = {
-    git = {
-      userEmail = "pedorich.n@gmail.com";
-      signing.key = "900C2FE784D62F8C";
-    };
     bash.enable = true; # To set Home Manager's ENVs vars in .profile 
   };
 
