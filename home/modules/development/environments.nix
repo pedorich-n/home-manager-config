@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, lib, config, ... }:
+{ self, pkgs, pkgs-unstable, lib, config, ... }:
 with lib;
 let
   cfg = config.custom.development.environments;
@@ -86,5 +86,7 @@ in
         (optionalAttrs cfg.aliases.scala.enable { "${cfg.aliases.root}/${cfg.aliases.scala.name}".source = scala; })
         (optionalAttrs cfg.aliases.java.enable { "${cfg.aliases.root}/${cfg.aliases.java.name}".source = cfg.jdk; })
       ];
+
+      xdg.configFile."ideavim/ideavimrc".text = mkIf (cfg.scala.enable || cfg.python.enable) builtins.readFile "${self}/dotfiles/ideavimrc";
     };
 }

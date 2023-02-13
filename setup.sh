@@ -2,33 +2,42 @@
 
 set -e
 
-MACHINE=$1
+CONFIG=$1
 NIX_PATH=$(which nix)
 
-if [[ -z "$NIX_PATH" ]]; then
-    echo "Intalling nix"
-    case $MACHINE in
-        "wslPersonal")
-            echo "sh <(curl -L https://nixos.org/nix/install) --no-daemon"
-        ;;
-        "linuxWork")
-            echo "sh <(curl -L https://nixos.org/nix/install) --daemon"
-        ;;
-    esac
-else
-    echo "nix already installed, skipping..."
-fi
+# Yeah, arch has to be hardcoded, see: https://github.com/nix-community/home-manager/issues/3075
+ARCH="x86_64-linux"
 
-LINE="experimental-features = nix-command flakes"
-NIX_CONFIG_FILE="/home/$USER/.config/nix/nix.conf"
+function install_nix() {
+    local nix_path=$1
+    local config=$2
+    if [[ -z "$nix_path" ]]; then
+        echo "Intalling nix"
+        case $config in
+            "wslPersonal")
+                echo "sh <(curl -L https://nixos.org/nix/install) --no-daemon"
+            ;;
+            "linuxWork")
+                echo "sh <(curl -L https://nixos.org/nix/install) --daemon"
+            ;;
+        esac
+    else
+        echo "Nix already installed, skipping..."
+    fi
+}
 
-mkdir -p $(dirname $NIX_CONFIG_FILE)
+function build() {
+    local arch=$1
+    local config=$2
+    echo "Building Home-Manager configuration..."
+    nix build .#homeConfigurations.$arch.$config.activationPackage --extra-experimental-features nix-command --extra-experimental-features flakes
+}
 
-grep -sq "$LINE" "$NIX_CONFIG_FILE" || echo "$LINE" >> "$NIX_CONFIG_FILE"
+function activate() {
+    echo "Activating Home-Manage..."
+    ./result/activate
+}
 
-echo "Building configuration..."
-# Yeah, x86_64-linux has to be hardcoded, see: https://github.com/nix-community/home-manager/issues/3075
-nix build .#homeConfigurations.x86_64-linux.$MACHINE.activationPackage
-
-echo "Activating..."
-./result/activate
+install_nix "$NIX_PATH" "$CONFIG" &&
+build $ARCH "$CONFIG" && 
+activate

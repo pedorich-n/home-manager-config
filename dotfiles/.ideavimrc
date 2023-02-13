@@ -1,0 +1,57 @@
+set showmode
+set scrolloff=10
+set clipboard+=unnamed
+
+" built-in navigation to navigated items works better
+nnoremap <C-o> :action Back<cr>
+nnoremap <C-i> :action Forward<cr>
+" but preserve ideavim defaults
+nnoremap g<C-o> <C-o>
+nnoremap g<C-i> <C-i>
+
+" easy system clipboard copy/paste
+noremap y "*y
+noremap Y "*Y
+noremap p "*p
+noremap P "*P
+
+" delete won't copy the data to the clipboard
+nnoremap d "_d
+xnoremap d "_d
+
+noremap D "_D
+xnoremap D "_D
+
+nnoremap dd "_dd
+
+nnoremap x "_x
+xnoremap x "_x
+
+nnoremap c "_c
+xnoremap c "_c
+
+vnoremap p "_dP
+
+" built in search
+nnoremap / :action Find<CR>
+nnoremap n :action FindNext<CR>
+nnoremap N :action FindPrevious<CR>
+nnoremap <C-S-b> :action ShowNavBar<CR>
+" but preserve ideavim search
+nnoremap g/ /
+
+" Insert new line below/above without entering to insert mode.
+nnoremap <C-Enter> o<Esc>
+nnoremap <S-Enter> O<Esc>
+
+" Useful
+nnoremap <Space>r :action RenameElement<CR><b><i>
+nnoremap <C-S-u> :action ShowUsages<CR>
+nnoremap <C-S-d> :action GotoDeclaration<CR>
+nnoremap <Space>q :action CloseContent<CR>
+nnoremap <Space>Q :action ReopenClosedTab<CR>
+nnoremap <Space>s :action FileStructurePopup<CR>
+set ideajoin
+
+" Press `F` to activate AceJump
+map F :action AceAction<CR>

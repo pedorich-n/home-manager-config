@@ -58,7 +58,7 @@
             };
           };
 
-          customLib = import ./lib { inherit (pkgs) lib; };
+          customLib = import ./lib { inherit pkgs; };
 
           sharedModules = customLib.listNixFilesRecursive "${self}/home/modules/";
 
@@ -68,7 +68,7 @@
               { home.stateVersion = stateVersion; }
               module
             ] ++ sharedModules;
-            extraSpecialArgs = { inherit self pkgs-unstable zsh-snap-flake pyenv-flake tomorrow-night-flake customLib; };
+            extraSpecialArgs = { inherit self pkgs-unstable customLib zsh-snap-flake pyenv-flake tomorrow-night-flake; };
           };
         in
         {

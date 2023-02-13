@@ -46,12 +46,23 @@ in
 
   ###### implementation
   config = {
-    home.username = cfg.username;
-    home.homeDirectory = if (cfg.homeDirectory != null) then cfg.homeDirectory else "/home/${cfg.username}";
+    home = {
+      inherit (cfg) username;
+      homeDirectory = if (cfg.homeDirectory != null) then cfg.homeDirectory else "/home/${cfg.username}";
 
-    home.packages = mkIf cfg.installCommonApps commonApps;
+      packages = mkIf cfg.installCommonApps commonApps;
+    };
 
     programs.home-manager.enable = true;
     targets.genericLinux.enable = cfg.genericLinux;
+
+    nix = {
+      package = pkgs.nix;
+
+      settings = {
+        experimental-features = [ "nix-command" "flakes" ];
+        log-lines = 50;
+      };
+    };
   };
 }
