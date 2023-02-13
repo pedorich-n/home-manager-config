@@ -82,9 +82,9 @@ in
 
       custom.programs.pyenv.enable = mkIf cfg.python.enable true;
 
-      home.file = builtins.listToAttrs [
-        (mkIf cfg.aliases.scala.enable { "${cfg.aliases.root}/${cfg.aliases.scala.name}".source = scala; })
-        (mkIf cfg.aliases.java.enable { "${cfg.aliases.root}/${cfg.aliases.java.name}".source = cfg.jdk; })
+      home.file = with pkgs.lib.attrsets; builtins.foldl' (acc: next: acc // next) { } [
+        (optionalAttrs cfg.aliases.scala.enable { "${cfg.aliases.root}/${cfg.aliases.scala.name}".source = scala; })
+        (optionalAttrs cfg.aliases.java.enable { "${cfg.aliases.root}/${cfg.aliases.java.name}".source = cfg.jdk; })
       ];
     };
 }
