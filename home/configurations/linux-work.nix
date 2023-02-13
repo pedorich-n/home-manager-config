@@ -1,14 +1,12 @@
 { pkgs, ... }:
 {
-  imports = [
-    ./common-linux.nix
-    ../modules/packages/common.nix
-    ../modules/packages/development.nix
-  ];
+  imports = [ ./common.nix ];
 
   custom = {
-    home-linux = {
+    home = {
       username = "mykytapedorich";
+      installCommonApps = true;
+      genericLinux = true;
     };
 
     development.environments = {
@@ -19,6 +17,17 @@
 
       python.enable = true;
       rust.enable = true;
+
+      aliases = {
+        scala = {
+          enable = true;
+          name = "scala-2.13";
+        };
+        java = {
+          enable = true;
+          name = "java-17";
+        };
+      };
     };
 
     programs = {

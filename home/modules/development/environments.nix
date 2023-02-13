@@ -3,11 +3,20 @@ with lib;
 let
   cfg = config.custom.development.environments;
 
+  aliasSubmoduleFor = name: types.submodule {
+    options = {
+      enable = mkEnableOption "Alias for ${name}";
+      name = mkOption {
+        type = types.str;
+        description = "Folder name for the alias";
+      };
+    };
+  };
+
   # java-17 = pkgs-unstable.temurin-bin-17.overrideAttrs (_: { meta.priority = -10; }); # TODO: try this out
   java-17-default = pkgs-unstable.jdk17;
 in
 {
-
   ###### interface
   options = {
     custom.development.environments = {
@@ -31,6 +40,17 @@ in
       python.enable = mkEnableOption "Python";
 
       rust.enable = mkEnableOption "Rust";
+
+      aliases = {
+        root = mkOption {
+          type = types.str;
+          default = ".sdks";
+          description = "Root folder for aliases (under $HOME)";
+        };
+
+        scala = mkOption { type = aliasSubmoduleFor "Scala"; };
+        java = mkOption { type = aliasSubmoduleFor "Java"; };
+      };
     };
   };
 
@@ -38,27 +58,33 @@ in
   ###### implementation
   config =
     let
-      scala-pkg = pkgs.scala.override { majorVersion = cfg.scala.version; jre = cfg.jdk; };
+      enable = cfg.enable || cfg.scala.enable || cfg.python.enable || cfg.rust.enable;
+
+      scala = pkgs.scala.override { majorVersion = cfg.scala.version; jre = cfg.jdk; };
+
+      scala-pkgs = lists.optionals cfg.scala.enable (with pkgs; [
+        scala
+        (coursier.override { jre = cfg.jdk; })
+        (sbt.override { jre = cfg.jdk; })
+        (jetbrains.idea-community.override { inherit (cfg) jdk; })
+      ]);
+
+      python-pkgs = lists.optionals cfg.python.enable (with pkgs; [
+        (jetbrains.pycharm-community.override { inherit (cfg) jdk; })
+      ]);
+
+      rust-pkgs = lists.optionals cfg.rust.enable (with pkgs; [
+        rustup
+      ]);
     in
-    mkIf cfg.enable {
-      home.packages = [ cfg.jdk ] ++
-        lists.optional cfg.scala.enable (with pkgs;[
-          scala-pkg
-          (coursier.override { jre = cfg.jdk; })
-          (sbt.override { jre = cfg.jdk; })
-          (jetbrains.idea-community.override { inherit (cfg) jdk; })
-        ]) ++
-        lists.optional cfg.python.enable (with pkgs; [
-          (jetbrains.pycharm-community.override { inherit (cfg) jdk; })
-        ]) ++
-        lists.optional cfg.rust.enable (with pkgs;[
-          rustup
-        ]);
+    mkIf enable {
+      home.packages = [ cfg.jdk ] ++ scala-pkgs ++ python-pkgs ++ rust-pkgs;
 
-      custom.programs.pyenv = mkIf cfg.python.enable { enable = true; };
+      custom.programs.pyenv.enable = mkIf cfg.python.enable true;
 
-      home.file.".sdks/scala-${cfg.scala.version}".source = scala-pkg;
-      # TODO: Alias to java-${version} in .sdks. 
-      # Requires to write a function to extract major version from semver, because java.version returns something like 11.0.6
+      home.file = builtins.listToAttrs [
+        (mkIf cfg.aliases.scala.enable { "${cfg.aliases.root}/${cfg.aliases.scala.name}".source = scala; })
+        (mkIf cfg.aliases.java.enable { "${cfg.aliases.root}/${cfg.aliases.java.name}".source = cfg.jdk; })
+      ];
     };
 }

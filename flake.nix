@@ -60,7 +60,7 @@
 
           customLib = import ./lib { inherit (pkgs) lib; };
 
-          sharedModules = with customLib; listNixFilesRecursive "${self}/home/modules/programs" ++ listNixFilesRecursive "${self}/home/modules/development";
+          sharedModules = customLib.listNixFilesRecursive "${self}/home/modules/";
 
           homeManagerConfFor = module: home-manager.lib.homeManagerConfiguration {
             inherit pkgs;

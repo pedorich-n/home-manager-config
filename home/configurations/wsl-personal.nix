@@ -1,13 +1,12 @@
 { ... }:
 {
-  imports = [
-    ./common-linux.nix
-    ../modules/packages/common.nix
-  ];
+  imports = [ ./common.nix ];
 
   custom = {
-    home-linux = {
+    home = {
       username = "pedorich_n";
+      installCommonApps = true;
+      genericLinux = true;
     };
 
     programs = {
