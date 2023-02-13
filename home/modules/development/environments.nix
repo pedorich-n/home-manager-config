@@ -1,4 +1,4 @@
-{ self, pkgs, pkgs-unstable, lib, config, ... }:
+{ self, pkgs, pkgs-unstable, lib, customLib, config, ... }:
 with lib;
 let
   cfg = config.custom.development.environments;
@@ -82,11 +82,13 @@ in
 
       custom.programs.pyenv.enable = mkIf cfg.python.enable true;
 
-      home.file = with pkgs.lib.attrsets; builtins.foldl' (acc: next: acc // next) { } [
+      home.file = with pkgs.lib.attrsets; customLib.flattenAttrsets [
         (optionalAttrs cfg.aliases.scala.enable { "${cfg.aliases.root}/${cfg.aliases.scala.name}".source = scala; })
         (optionalAttrs cfg.aliases.java.enable { "${cfg.aliases.root}/${cfg.aliases.java.name}".source = cfg.jdk; })
       ];
 
-      xdg.configFile."ideavim/ideavimrc".text = mkIf (cfg.scala.enable || cfg.python.enable) builtins.readFile "${self}/dotfiles/ideavimrc";
+      xdg.configFile = with pkgs.lib.attrsets; customLib.flattenAttrsets [
+        (optionalAttrs (cfg.scala.enable || cfg.python.enable) { "ideavim/ideavimrc".text = builtins.readFile "${self}/dotfiles/.ideavimrc"; })
+      ];
     };
 }
