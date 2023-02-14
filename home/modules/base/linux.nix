@@ -60,17 +60,17 @@ in
       homeDirectory = if (cfg.homeDirectory != null) then cfg.homeDirectory else "/home/${cfg.username}";
 
       packages = with pkgs.lib.lists;
-        (optionals (cfg.installCommonApps) commonApps) ++
-        (optional (cfg.installNix.enable) cfg.installNix.package);
+        (optionals cfg.installCommonApps commonApps) ++
+        (optional cfg.installNix.enable cfg.installNix.package);
 
-      shellAliases = mkIf (cfg.installNix.enable) { global-nix = "/nix/var/nix/profiles/default/bin/nix"; };
+      shellAliases = mkIf cfg.installNix.enable { global-nix = "/nix/var/nix/profiles/default/bin/nix"; };
     };
 
     programs.home-manager.enable = true;
     targets.genericLinux.enable = cfg.genericLinux;
 
     nix = {
-      package = if (cfg.installNix.enable) then cfg.installNix.package else pkgs.nix;
+      package = if cfg.installNix.enable then cfg.installNix.package else pkgs.nix;
 
       settings = {
         experimental-features = [ "nix-command" "flakes" ];

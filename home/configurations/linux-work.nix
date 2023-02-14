@@ -14,8 +14,12 @@
         version = "2.13";
       };
 
+      rust = {
+        enable = true;
+        version = "nightly";
+      };
+
       python.enable = true;
-      rust.enable = true;
 
       aliases = {
         scala = {

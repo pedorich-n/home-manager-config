@@ -13,5 +13,5 @@ with pkgs;
 
   listNixFilesRecursive = path: builtins.filter (lib.hasSuffix ".nix") (lib.filesystem.listFilesRecursive path);
 
-  flattenAttrsets = list: builtins.foldl' (acc: next: lib.recursiveUpdate acc next) { } list;
+  flattenAttrsets = builtins.foldl' lib.recursiveUpdate { };
 }

@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   custom = {
     base.linux = {

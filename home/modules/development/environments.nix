@@ -37,9 +37,21 @@ in
         };
       };
 
-      python.enable = mkEnableOption "Python";
+      rust = {
+        enable = mkEnableOption "Rust";
+        version = mkOption {
+          type = with types; nullOr str;
+          default = null;
+          description = "Rust version to install using rustup";
+        };
+        rustupProfile = mkOption {
+          type = types.str;
+          default = "default";
+          description = "Rustup profile to use";
+        };
+      };
 
-      rust.enable = mkEnableOption "Rust";
+      python.enable = mkEnableOption "Python";
 
       aliases = {
         root = mkOption {
@@ -76,8 +88,20 @@ in
       rust-pkgs = lists.optionals cfg.rust.enable (with pkgs; [
         rustup
       ]);
+
+      isInstallRust = cfg.rust.enable && (!customLib.isNullOrEmpty cfg.rust.version);
+      installRustBlock = ''
+        $DRY_RUN_CMD rustup ''${VERBOSE_ARG:---quiet} set profile ${cfg.rust.rustupProfile}
+        $DRY_RUN_CMD rustup ''${VERBOSE_ARG:---quiet} ${cfg.rust.rustupProfile} ${cfg.rust.version}
+      '';
+
     in
     mkIf enable {
+      custom.programs = {
+        pyenv.enable = mkIf cfg.python.enable true;
+        zsh.snap.fpaths = lists.optional cfg.rust.enable { name = "_rustup"; command = "rustup completions zsh"; };
+      };
+
       home = {
         packages = [ cfg.jdk ] ++ scala-pkgs ++ python-pkgs ++ rust-pkgs;
 
@@ -85,15 +109,15 @@ in
           (optionalAttrs cfg.aliases.scala.enable { "${cfg.aliases.root}/${cfg.aliases.scala.name}".source = scala; })
           (optionalAttrs cfg.aliases.java.enable { "${cfg.aliases.root}/${cfg.aliases.java.name}".source = cfg.jdk; })
         ];
+
+        extraActivationPath = lists.optionals isInstallRust rust-pkgs;
+        activation = with lib.hm; {
+          installRustupToolchain = mkIf isInstallRust (dag.entryAfter [ "linkGeneration" ] installRustBlock);
+        };
       };
 
-      custom.programs = {
-        pyenv.enable = mkIf cfg.python.enable true;
-        zsh.snap.fpaths = pkgs.lib.lists.optional (cfg.rust.enable) { name = "_rustup"; command = "rustup completions zsh"; };
+      xdg.configFile = {
+        "ideavim/ideavimrc" = mkIf (cfg.scala.enable || cfg.python.enable) { text = builtins.readFile "${self}/dotfiles/.ideavimrc"; };
       };
-
-      xdg.configFile = with pkgs.lib.attrsets; customLib.flattenAttrsets [
-        (optionalAttrs (cfg.scala.enable || cfg.python.enable) { "ideavim/ideavimrc".text = builtins.readFile "${self}/dotfiles/.ideavimrc"; })
-      ];
     };
 }
