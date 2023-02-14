@@ -40,7 +40,7 @@ in
         enable = mkEnableOption "install Nix";
         package = mkOption {
           type = types.package;
-          default = pkgs.nixVersions.nix_2_12;
+          default = pkgs.nix;
           description = "Nix package to install and use";
         };
       };
@@ -57,7 +57,7 @@ in
   config = {
     home = {
       inherit (cfg) username;
-      homeDirectory = if (cfg.homeDirectory != null) then cfg.homeDirectory else "/home/${cfg.username}";
+      homeDirectory = if (customLib.nonEmpty cfg.homeDirectory) then cfg.homeDirectory else "/home/${cfg.username}";
 
       packages = with pkgs.lib.lists;
         (optionals cfg.installCommonApps commonApps) ++

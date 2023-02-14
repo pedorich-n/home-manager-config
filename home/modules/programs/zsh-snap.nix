@@ -41,9 +41,9 @@ let
   znapSourceFor = source:
     with builtins; with customLib;
     let
-      prefix = strings.optionalString (!isNullOrEmpty source.subfolderPrefix) "${source.subfolderPrefix}/";
+      prefix = strings.optionalString (nonEmpty source.subfolderPrefix) "${source.subfolderPrefix}/";
       subfolders =
-        strings.optionalString (!isNullOrEmpty source.subfolders)
+        strings.optionalString (nonEmpty source.subfolders)
           (if (length source.subfolders == 1)
           then head source.subfolders
           else ''{${concatStringsSep "," source.subfolders}}'');
@@ -79,10 +79,10 @@ in
   config = mkIf cfg.enable {
     programs.zsh.initExtra = with builtins; with customLib;
       ''
-        ${strings.optionalString (!isNullOrEmpty cfg.reposDir) "zstyle ':znap:*' repos-dir ${cfg.reposDir}"}
+        ${strings.optionalString (nonEmpty cfg.reposDir) "zstyle ':znap:*' repos-dir ${cfg.reposDir}"}
         source ${zsh-snap-flake}/znap.zsh
 
-        ${strings.optionalString (!isNullOrEmpty cfg.sources) (concatStringsSep "\n" (map znapSourceFor cfg.sources))}
+        ${strings.optionalString (nonEmpty cfg.sources) (concatStringsSep "\n" (map znapSourceFor cfg.sources))}
       '';
   };
 }

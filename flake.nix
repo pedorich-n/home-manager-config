@@ -14,6 +14,7 @@
 
     nix-formatter-pack = {
       url = "github:Gerschtli/nix-formatter-pack";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zsh-snap-flake = {

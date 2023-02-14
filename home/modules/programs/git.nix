@@ -31,7 +31,7 @@ in
       inherit (cfg) userEmail;
 
       signing = {
-        signByDefault = !customLib.isNullOrEmpty cfg.signingKey;
+        signByDefault = customLib.nonEmpty cfg.signingKey;
         key = cfg.signingKey;
       };
 

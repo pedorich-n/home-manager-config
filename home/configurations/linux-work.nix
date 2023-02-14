@@ -1,11 +1,14 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 {
   custom = {
     base.linux = {
       username = "mykytapedorich";
       installCommonApps = true;
       genericLinux = true;
-      installNix.enable = true;
+      installNix = {
+        enable = true;
+        package = pkgs-unstable.nix;
+      };
     };
 
     development.environments = {

@@ -51,6 +51,8 @@ in
         };
       };
 
+      # Pyenv actually builds python from sources, that requires some additional dependencies available in PATH
+      # so I won't implement the version selection here, like for Rust
       python.enable = mkEnableOption "Python";
 
       aliases = {
@@ -89,7 +91,7 @@ in
         rustup
       ]);
 
-      isInstallRust = cfg.rust.enable && (!customLib.isNullOrEmpty cfg.rust.version);
+      isInstallRust = cfg.rust.enable && (customLib.nonEmpty cfg.rust.version);
       installRustBlock = ''
         $DRY_RUN_CMD rustup ''${VERBOSE_ARG:---quiet} set profile ${cfg.rust.rustupProfile}
         $DRY_RUN_CMD rustup ''${VERBOSE_ARG:---quiet} ${cfg.rust.rustupProfile} ${cfg.rust.version}
@@ -105,10 +107,10 @@ in
       home = {
         packages = [ cfg.jdk ] ++ scala-pkgs ++ python-pkgs ++ rust-pkgs;
 
-        file = with pkgs.lib.attrsets; customLib.flattenAttrsets [
-          (optionalAttrs cfg.aliases.scala.enable { "${cfg.aliases.root}/${cfg.aliases.scala.name}".source = scala; })
-          (optionalAttrs cfg.aliases.java.enable { "${cfg.aliases.root}/${cfg.aliases.java.name}".source = cfg.jdk; })
-        ];
+        file = {
+          "${cfg.aliases.root}/${cfg.aliases.scala.name}" = mkIf (cfg.aliases.scala.enable) { source = scala; };
+          "${cfg.aliases.root}/${cfg.aliases.java.name}" = mkIf (cfg.aliases.java.enable) { source = cfg.jdk; };
+        };
 
         extraActivationPath = lists.optionals isInstallRust rust-pkgs;
         activation = with lib.hm; {
