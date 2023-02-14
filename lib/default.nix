@@ -11,9 +11,7 @@ with pkgs;
     else if (typeOf elem == "list") then elem == [ ]
     else throw "Cannot check emptiness for type ${typeOf elem}");
 
-  listNixFilesRecursive = path: builtins.filter
-    (lib.hasSuffix ".nix")
-    (lib.filesystem.listFilesRecursive path);
+  listNixFilesRecursive = path: builtins.filter (lib.hasSuffix ".nix") (lib.filesystem.listFilesRecursive path);
 
   flattenAttrsets = list: builtins.foldl' (acc: next: lib.recursiveUpdate acc next) { } list;
 }

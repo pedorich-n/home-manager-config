@@ -1,7 +1,7 @@
-{ pkgs, lib, customLib, config, ... }:
+{ pkgs, pkgs-unstable, lib, customLib, config, ... }:
 with lib;
 let
-  cfg = config.custom.home;
+  cfg = config.custom.base.linux;
 
   commonApps = with pkgs; [
     keychain
@@ -18,7 +18,7 @@ in
 {
   ###### interface
   options = {
-    custom.home = {
+    custom.base.linux = {
       username = mkOption {
         type = types.str;
         description = "Username";
@@ -36,6 +36,15 @@ in
         description = "Sets targets.genericLinux.enable";
       };
 
+      installNix = {
+        enable = mkEnableOption "install Nix";
+        package = mkOption {
+          type = types.package;
+          default = pkgs.nixVersions.nix_2_12;
+          description = "Nix package to install and use";
+        };
+      };
+
       installCommonApps = mkOption {
         type = types.bool;
         description = "If true installs these packages: ${commonAppsStr}";
@@ -50,14 +59,18 @@ in
       inherit (cfg) username;
       homeDirectory = if (cfg.homeDirectory != null) then cfg.homeDirectory else "/home/${cfg.username}";
 
-      packages = mkIf cfg.installCommonApps commonApps;
+      packages = with pkgs.lib.lists;
+        (optionals (cfg.installCommonApps) commonApps) ++
+        (optional (cfg.installNix.enable) cfg.installNix.package);
+
+      shellAliases = mkIf (cfg.installNix.enable) { global-nix = "/nix/var/nix/profiles/default/bin/nix"; };
     };
 
     programs.home-manager.enable = true;
     targets.genericLinux.enable = cfg.genericLinux;
 
     nix = {
-      package = pkgs.nix;
+      package = if (cfg.installNix.enable) then cfg.installNix.package else pkgs.nix;
 
       settings = {
         experimental-features = [ "nix-command" "flakes" ];

@@ -1,12 +1,11 @@
 { pkgs, ... }:
 {
-  imports = [ ./common.nix ];
-
   custom = {
-    home = {
+    base.linux = {
       username = "mykytapedorich";
       installCommonApps = true;
       genericLinux = true;
+      installNix.enable = true;
     };
 
     development.environments = {

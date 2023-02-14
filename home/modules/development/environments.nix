@@ -78,14 +78,19 @@ in
       ]);
     in
     mkIf enable {
-      home.packages = [ cfg.jdk ] ++ scala-pkgs ++ python-pkgs ++ rust-pkgs;
+      home = {
+        packages = [ cfg.jdk ] ++ scala-pkgs ++ python-pkgs ++ rust-pkgs;
 
-      custom.programs.pyenv.enable = mkIf cfg.python.enable true;
+        file = with pkgs.lib.attrsets; customLib.flattenAttrsets [
+          (optionalAttrs cfg.aliases.scala.enable { "${cfg.aliases.root}/${cfg.aliases.scala.name}".source = scala; })
+          (optionalAttrs cfg.aliases.java.enable { "${cfg.aliases.root}/${cfg.aliases.java.name}".source = cfg.jdk; })
+        ];
+      };
 
-      home.file = with pkgs.lib.attrsets; customLib.flattenAttrsets [
-        (optionalAttrs cfg.aliases.scala.enable { "${cfg.aliases.root}/${cfg.aliases.scala.name}".source = scala; })
-        (optionalAttrs cfg.aliases.java.enable { "${cfg.aliases.root}/${cfg.aliases.java.name}".source = cfg.jdk; })
-      ];
+      custom.programs = {
+        pyenv.enable = mkIf cfg.python.enable true;
+        zsh.snap.fpaths = pkgs.lib.lists.optional (cfg.rust.enable) { name = "_rustup"; command = "rustup completions zsh"; };
+      };
 
       xdg.configFile = with pkgs.lib.attrsets; customLib.flattenAttrsets [
         (optionalAttrs (cfg.scala.enable || cfg.python.enable) { "ideavim/ideavimrc".text = builtins.readFile "${self}/dotfiles/.ideavimrc"; })

@@ -1,12 +1,11 @@
 { ... }:
 {
-  imports = [ ./common.nix ];
-
   custom = {
-    home = {
+    base.linux = {
       username = "pedorich_n";
       installCommonApps = true;
       genericLinux = true;
+      installNix.enable = true;
     };
 
     programs = {
