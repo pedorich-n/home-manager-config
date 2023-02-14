@@ -14,7 +14,8 @@ let
   };
 
   # java-17 = pkgs-unstable.temurin-bin-17.overrideAttrs (_: { meta.priority = -10; }); # TODO: try this out
-  java-17-default = pkgs-unstable.jdk17;
+  # java-17-default = pkgs-unstable.jdk17;
+  java-17-default = pkgs.jdk;
 in
 {
   ###### interface
@@ -108,7 +109,7 @@ in
         packages = [ cfg.jdk ] ++ scala-pkgs ++ python-pkgs ++ rust-pkgs;
 
         file = {
-          "${cfg.aliases.root}/${cfg.aliases.scala.name}" = mkIf (cfg.aliases.scala.enable) { source = scala; };
+          "${cfg.aliases.root}/${cfg.aliases.scala.name}" = mkIf (cfg.scala.enable && cfg.aliases.scala.enable) { source = scala; };
           "${cfg.aliases.root}/${cfg.aliases.java.name}" = mkIf (cfg.aliases.java.enable) { source = cfg.jdk; };
         };
 
