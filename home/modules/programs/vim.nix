@@ -1,101 +1,85 @@
-{ pkgs, lib, config, tomorrow-night-flake, ... }:
-with lib;
+{ pkgs, config, tomorrow-night-flake, ... }:
 let
-  cfg = config.custom.programs.vim;
-
   vim-tomorrow-night = pkgs.vimUtils.buildVimPluginFrom2Nix {
     name = "tomorrow-night";
     src = "${tomorrow-night-flake}/vim";
   };
 in
 {
+  programs.vim = {
+    packageConfigurable = pkgs.vim_configurable.override { features = "normal"; };
 
-  ###### interface
-  options = {
-    custom.programs.vim = {
-      enable = mkEnableOption "vim";
-    };
-  };
+    plugins = with pkgs.vimPlugins; [
+      vim-easymotion
+      vim-gitgutter
+      tagbar
+      lightline-vim
+      onehalf
+      vim-tomorrow-night
+    ];
 
+    extraConfig = ''
+      " Use system clipboard
+      set clipboard=unnamedplus
 
-  ###### implementation
-  config = mkIf cfg.enable {
-    programs.vim = {
-      enable = true;
-      packageConfigurable = pkgs.vim_configurable.override { features = "normal"; };
+      " Tabs are rendered as spaces
+      set tabstop=2 softtabstop=0 expandtab shiftwidth=2
 
-      plugins = with pkgs.vimPlugins; [
-        vim-easymotion
-        vim-gitgutter
-        tagbar
-        lightline-vim
-        onehalf
-        vim-tomorrow-night
-      ];
+      " Show linenumbers
+      set number
 
-      extraConfig = ''
-        " Use system clipboard
-        set clipboard=unnamedplus
+      " Enable syntax highligting
+      syntax on
 
-        " Tabs are rendered as spaces
-        set tabstop=2 softtabstop=0 expandtab shiftwidth=2
+      " Don't wrap long lines
+      set nowrap
 
-        " Show linenumbers
-        set number
+      " How long VIM waits before writing to swp file
+      set updatetime=250
 
-        " Enable syntax highligting
-        syntax on
+      " More powerful backspacing
+      set backspace=indent,eol,start
 
-        " Don't wrap long lines
-        set nowrap
+      " easy system clipboard copy/paste
+      noremap y "+y
+      noremap Y "+Y
+      noremap p "+p
+      noremap P "+P
 
-        " How long VIM waits before writing to swp file
-        set updatetime=250
+      colorscheme Tomorrow-Night
 
-        " More powerful backspacing
-        set backspace=indent,eol,start
+      " always show status line
+      set laststatus=2
+      " hide native mode name 
+      set noshowmode
 
-        " easy system clipboard copy/paste
-        noremap y "+y
-        noremap Y "+Y
-        noremap p "+p
-        noremap P "+P
+      " Lightline's settings
+      let g:lightline = {
+        \ "active": { "right": [ [ "lineinfo" ], [ "fileformat", "fileencoding" ] ] },
+        \ "colorscheme": "Tomorrow_Night_Eighties",
+        \ "component_function": {
+        \   "fileformat": "LightLineFileformat",
+        \   "filetype": "LightLineFiletype",
+        \   "fileencoding": "LightLineFileencoding",
+        \   "mode": "LightLineMode",
+        \ },
+        \ }
 
-        colorscheme Tomorrow-Night
+      function! LightLineFileformat()
+        return winwidth(0) > 70 ? &fileformat : ""
+      endfunction
 
-        " always show status line
-        set laststatus=2
-        " hide native mode name 
-        set noshowmode
+      function! LightLineFiletype()
+        return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : "no ft") : ""
+      endfunction
 
-        " Lightline's settings
-        let g:lightline = {
-          \ "active": { "right": [ [ "lineinfo" ], [ "fileformat", "fileencoding" ] ] },
-          \ "colorscheme": "Tomorrow_Night_Eighties",
-          \ "component_function": {
-          \   "fileformat": "LightLineFileformat",
-          \   "filetype": "LightLineFiletype",
-          \   "fileencoding": "LightLineFileencoding",
-          \   "mode": "LightLineMode",
-          \ },
-          \ }
+      function! LightLineFileencoding()
+        return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ""
+      endfunction
 
-        function! LightLineFileformat()
-          return winwidth(0) > 70 ? &fileformat : ""
-        endfunction
-
-        function! LightLineFiletype()
-          return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : "no ft") : ""
-        endfunction
-
-        function! LightLineFileencoding()
-          return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ""
-        endfunction
-
-        function! LightLineMode()
-          return winwidth(0) > 60 ? lightline#mode() : ""
-        endfunction
-      '';
-    };
+      function! LightLineMode()
+        return winwidth(0) > 60 ? lightline#mode() : ""
+      endfunction
+    '';
   };
 }

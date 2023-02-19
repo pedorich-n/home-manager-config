@@ -1,34 +1,17 @@
 { pkgs-unstable, ... }:
+let
+  gpgKey = "ADC7FB37D4DF4CE2";
+in
 {
-  custom = {
-    base.linux = {
-      username = "pedorich_n";
-      installCommonApps = true;
-      genericLinux = true;
-      installNix = {
-        enable = true;
-        package = pkgs-unstable.nix;
-      };
-    };
+  imports = [ ./common-linux.nix ];
 
+  home.username = "pedorich_n";
+
+  custom = {
     programs = {
       zsh = {
         enable = true;
-        keychainIdentities = [ "id_main" ];
-      };
-
-      git = {
-        enable = true;
-        userEmail = "pedorich.n@gmail.com";
-        # signingKey = "ADC7FB37D4DF4CE2";
-      };
-
-      direnv = {
-        enable = true;
-        shellIntegrations = {
-          # bash.enable = true;
-          zsh.enable = true;
-        };
+        keychainIdentities = [ "id_main" ]; # TODO: add gpgKey
       };
 
       pyenv = {
@@ -38,9 +21,20 @@
           zsh.enable = true;
         };
       };
+    };
+  };
 
-      vim.enable = true;
-      htop.enable = true;
+  programs = {
+    htop.enable = true;
+    direnv.enable = true;
+    vim.enable = true;
+
+    git = {
+      enable = true;
+      signing = {
+        key = gpgKey;
+        signByDefault = false;
+      };
     };
   };
 }

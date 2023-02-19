@@ -1,16 +1,13 @@
 { pkgs, pkgs-unstable, ... }:
+let
+  gpgKey = "ADC7FB37D4DF4CE2";
+in
 {
-  custom = {
-    base.linux = {
-      username = "mykytapedorich";
-      installCommonApps = true;
-      genericLinux = true;
-      installNix = {
-        enable = true;
-        package = pkgs-unstable.nix;
-      };
-    };
+  imports = [ ./common-linux.nix ];
 
+  home.username = "mykytapedorich";
+
+  custom = {
     development.environments = {
       scala = {
         enable = true;
@@ -39,21 +36,7 @@
     programs = {
       zsh = {
         enable = true;
-        keychainIdentities = [ "work/paidy" ];
-      };
-
-      git = {
-        enable = true;
-        userEmail = "pedorich.n@gmail.com";
-        signingKey = "900C2FE784D62F8C";
-      };
-
-      direnv = {
-        enable = true;
-        shellIntegrations = {
-          # bash.enable = true;
-          zsh.enable = true;
-        };
+        keychainIdentities = [ "work/paidy" gpgKey ];
       };
 
       pyenv = {
@@ -63,14 +46,22 @@
           zsh.enable = true;
         };
       };
-
-      vim.enable = true;
-      htop.enable = true;
     };
   };
 
   programs = {
     bash.enable = true; # To set Home Manager's ENVs vars in .profile 
+    htop.enable = true;
+    direnv.enable = true;
+    vim.enable = true;
+
+    git = {
+      enable = true;
+      signing = {
+        key = gpgKey;
+        signByDefault = true;
+      };
+    };
   };
 
   home.packages = with pkgs; [

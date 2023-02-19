@@ -110,7 +110,7 @@ in
 
         file = {
           "${cfg.aliases.root}/${cfg.aliases.scala.name}" = mkIf (cfg.scala.enable && cfg.aliases.scala.enable) { source = scala; };
-          "${cfg.aliases.root}/${cfg.aliases.java.name}" = mkIf (cfg.aliases.java.enable) { source = cfg.jdk; };
+          "${cfg.aliases.root}/${cfg.aliases.java.name}" = mkIf cfg.aliases.java.enable { source = cfg.jdk; };
         };
 
         extraActivationPath = lists.optionals isInstallRust rust-pkgs;

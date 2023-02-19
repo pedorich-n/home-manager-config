@@ -1,44 +1,12 @@
-{ pkgs, lib, customLib, config, ... }:
-with lib;
-let
-  cfg = config.custom.programs.git;
-in
+{ ... }:
 {
-  ###### interface
-  options = {
-    custom.programs.git = {
-      enable = mkEnableOption "git";
+  programs.git = {
+    userName = "Nikita Pedorich";
+    userEmail = "pedorich.n@gmail.com";
 
-      userEmail = mkOption {
-        type = types.str;
-        description = "git.userEmail";
-      };
-
-      signingKey = mkOption {
-        type = with types; nullOr str;
-        default = null;
-        description = "GPG key to use signing commits";
-      };
-    };
-  };
-
-
-  ###### implementation
-  config = mkIf cfg.enable {
-    programs.git = {
-      enable = true;
-      userName = "Nikita Pedorich";
-      inherit (cfg) userEmail;
-
-      signing = {
-        signByDefault = customLib.nonEmpty cfg.signingKey;
-        key = cfg.signingKey;
-      };
-
-      extraConfig = {
-        pull.rebase = true;
-        push.default = "simple";
-      };
+    extraConfig = {
+      pull.rebase = true;
+      push.default = "simple";
     };
   };
 }
