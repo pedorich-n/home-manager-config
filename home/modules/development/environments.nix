@@ -13,6 +13,10 @@ let
     };
   };
 
+  withIdeOption = {
+    withIde = (mkEnableOption "With IDE") // { default = true; };
+  };
+
   # java-17 = pkgs-unstable.temurin-bin-17.overrideAttrs (_: { meta.priority = -10; }); # TODO: try this out
   # java-17-default = pkgs-unstable.jdk17;
   java-17-default = pkgs.jdk;
@@ -29,14 +33,14 @@ in
         description = "JDK to use";
       };
 
-      scala = {
+      scala = ({
         enable = mkEnableOption "Scala";
         version = mkOption {
           type = types.enum [ "2.10" "2.11" "2.12" "2.13" ];
           default = "2.13";
           description = "Major Scala 2.X version to install";
         };
-      };
+      } // withIdeOption);
 
       rust = {
         enable = mkEnableOption "Rust";
@@ -54,7 +58,9 @@ in
 
       # Pyenv actually builds python from sources, that requires some additional dependencies available in PATH
       # so I won't implement the version selection here, like for Rust
-      python.enable = mkEnableOption "Python";
+      python = ({
+        enable = mkEnableOption "Python";
+      } // withIdeOption);
 
       aliases = {
         root = mkOption {
@@ -77,14 +83,14 @@ in
 
       scala = pkgs.scala.override { majorVersion = cfg.scala.version; jre = cfg.jdk; };
 
-      scala-pkgs = lists.optionals cfg.scala.enable (with pkgs; [
-        scala
-        (coursier.override { jre = cfg.jdk; })
-        (sbt.override { jre = cfg.jdk; })
-        (jetbrains.idea-community.override { inherit (cfg) jdk; })
-      ]);
+      scala-pkgs = lists.optionals cfg.scala.enable
+        (with pkgs; [
+          scala
+          (coursier.override { jre = cfg.jdk; })
+          (sbt.override { jre = cfg.jdk; })
+        ]) ++ lists.optional (cfg.scala.enable && cfg.scala.withIde) (pkgs.jetbrains.idea-community.override { inherit (cfg) jdk; });
 
-      python-pkgs = lists.optionals cfg.python.enable (with pkgs; [
+      python-pkgs = lists.optionals (cfg.python.enable && cfg.python.withIde) (with pkgs; [
         (jetbrains.pycharm-community.override { inherit (cfg) jdk; })
       ]);
 
