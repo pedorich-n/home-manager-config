@@ -8,6 +8,10 @@ in
   home.username = "mykytapedorich";
 
   custom = {
+    config = {
+      gpg-agent.enable = true;
+    };
+
     development.environments = {
       scala = {
         enable = true;

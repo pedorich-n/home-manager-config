@@ -8,6 +8,10 @@ in
   home.username = "pedorich_n";
 
   custom = {
+    config = {
+      gpg-agent.enable = true;
+    };
+
     development.environments = {
       jdk = {
         enable = true;

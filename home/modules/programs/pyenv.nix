@@ -18,7 +18,6 @@ let
     '';
 in
 {
-
   ###### interface
   options = {
     custom.programs.pyenv = {
