@@ -11,7 +11,7 @@ let
     jq
     tmux
     fira-code
-  ] ++ [ nixPkg ];
+  ];
 
 in
 {

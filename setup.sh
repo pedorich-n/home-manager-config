@@ -15,10 +15,10 @@ function install_nix() {
         echo "Intalling nix"
         case $config in
             "wslPersonal")
-                echo "sh <(curl -L https://nixos.org/nix/install) --no-daemon"
+                sh <(curl -L https://nixos.org/nix/install) --no-daemon
             ;;
             "linuxWork")
-                echo "sh <(curl -L https://nixos.org/nix/install) --daemon"
+                sh <(curl -L https://nixos.org/nix/install) --daemon
             ;;
         esac
     else

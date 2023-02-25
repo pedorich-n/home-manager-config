@@ -11,7 +11,7 @@ in
     programs = {
       zsh = {
         enable = true;
-        keychainIdentities = [ "id_main" ]; # TODO: add gpgKey
+        keychainIdentities = [ "id_main" gpgKey ];
       };
 
       pyenv = {
