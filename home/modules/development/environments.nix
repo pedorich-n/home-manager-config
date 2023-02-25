@@ -33,14 +33,14 @@ in
         description = "JDK to use";
       };
 
-      scala = ({
+      scala = {
         enable = mkEnableOption "Scala";
         version = mkOption {
           type = types.enum [ "2.10" "2.11" "2.12" "2.13" ];
           default = "2.13";
           description = "Major Scala 2.X version to install";
         };
-      } // withIdeOption);
+      } // withIdeOption;
 
       rust = {
         enable = mkEnableOption "Rust";
@@ -58,9 +58,9 @@ in
 
       # Pyenv actually builds python from sources, that requires some additional dependencies available in PATH
       # so I won't implement the version selection here, like for Rust
-      python = ({
+      python = {
         enable = mkEnableOption "Python";
-      } // withIdeOption);
+      } // withIdeOption;
 
       aliases = {
         root = mkOption {
