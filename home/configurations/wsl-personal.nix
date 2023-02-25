@@ -33,7 +33,7 @@ in
       enable = true;
       signing = {
         key = gpgKey;
-        signByDefault = false;
+        signByDefault = true;
       };
     };
   };
