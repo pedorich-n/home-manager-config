@@ -3,23 +3,89 @@ with lib;
 let
   cfg = config.custom.development.environments;
 
-  aliasSubmoduleFor = name: types.submodule {
-    options = {
-      enable = mkEnableOption "Alias for ${name}";
-      name = mkOption {
-        type = types.str;
-        description = "Folder name for the alias";
-      };
-    };
-  };
+  # java-17 = pkgs-unstable.temurin-bin-17.overrideAttrs (_: { meta.priority = -10; }); # TODO: try this out
+  # java-17-default = pkgs-unstable.jdk17;
+  java-17-default = pkgs.jdk;
 
   withIdeOption = {
     withIde = (mkEnableOption "With IDE") // { default = true; };
   };
 
-  # java-17 = pkgs-unstable.temurin-bin-17.overrideAttrs (_: { meta.priority = -10; }); # TODO: try this out
-  # java-17-default = pkgs-unstable.jdk17;
-  java-17-default = pkgs.jdk;
+  jdkSubmodule = types.submodule {
+    options = {
+      enable = mkEnableOption "JDK";
+      package = mkOption {
+        type = types.package;
+        default = java-17-default;
+        description = "JDK to use";
+      };
+    };
+  };
+
+  scalaSubmodule = types.submodule {
+    options = {
+      enable = mkEnableOption "Scala";
+      version = mkOption {
+        type = types.enum [ "2.10" "2.11" "2.12" "2.13" ];
+        default = "2.13";
+        description = "Major Scala 2.X version to install";
+      };
+    } // withIdeOption;
+  };
+
+  rustSubmodule = types.submodule {
+    options = {
+      enable = mkEnableOption "Rust";
+      version = mkOption {
+        type = with types; nullOr str;
+        default = null;
+        description = "Rust version to install using rustup";
+      };
+      rustupProfile = mkOption {
+        type = types.str;
+        default = "default";
+        description = "Rustup profile to use";
+      };
+    };
+  };
+
+  pythonSubmodule = types.submodule {
+    options = {
+      enable = mkEnableOption "Python";
+    } // withIdeOption;
+  };
+
+  aliasSubmoduleFor = name: types.submodule {
+    options = {
+      enable = mkEnableOption "Alias for ${name}";
+      name = mkOption {
+        type = types.str;
+        default = "${name}";
+        description = "Folder name for the alias";
+      };
+    };
+  };
+
+  aliasesSubmodule = types.submodule {
+    options = {
+      root = mkOption {
+        type = types.str;
+        default = ".sdks";
+        description = "Root folder for aliases (under $HOME)";
+      };
+
+      scala = mkOption {
+        type = aliasSubmoduleFor "scala";
+        default = { };
+      };
+      jdk = mkOption {
+        type = aliasSubmoduleFor "jdk";
+        default = { };
+      };
+    };
+  };
+
+  buildAlaisFor = name: source: mkIf (cfg.${name}.enable && cfg.aliases.${name}.enable) { "${cfg.aliases.root}/${cfg.aliases.${name}.name}".source = source; };
 in
 {
   ###### interface
@@ -28,49 +94,30 @@ in
       enable = mkEnableOption "Development Environments";
 
       jdk = mkOption {
-        type = types.package;
-        default = java-17-default;
-        description = "JDK to use";
+        type = jdkSubmodule;
+        default = { };
       };
 
-      scala = {
-        enable = mkEnableOption "Scala";
-        version = mkOption {
-          type = types.enum [ "2.10" "2.11" "2.12" "2.13" ];
-          default = "2.13";
-          description = "Major Scala 2.X version to install";
-        };
-      } // withIdeOption;
+      scala = mkOption {
+        type = scalaSubmodule;
+        default = { };
+      };
 
-      rust = {
-        enable = mkEnableOption "Rust";
-        version = mkOption {
-          type = with types; nullOr str;
-          default = null;
-          description = "Rust version to install using rustup";
-        };
-        rustupProfile = mkOption {
-          type = types.str;
-          default = "default";
-          description = "Rustup profile to use";
-        };
+      rust = mkOption {
+        type = rustSubmodule;
+        default = { };
       };
 
       # Pyenv actually builds python from sources, that requires some additional dependencies available in PATH
       # so I won't implement the version selection here, like for Rust
-      python = {
-        enable = mkEnableOption "Python";
-      } // withIdeOption;
+      python = mkOption {
+        type = pythonSubmodule;
+        default = { };
+      };
 
-      aliases = {
-        root = mkOption {
-          type = types.str;
-          default = ".sdks";
-          description = "Root folder for aliases (under $HOME)";
-        };
-
-        scala = mkOption { type = aliasSubmoduleFor "Scala"; };
-        java = mkOption { type = aliasSubmoduleFor "Java"; };
+      aliases = mkOption {
+        type = aliasesSubmodule;
+        default = { };
       };
     };
   };
@@ -79,54 +126,60 @@ in
   ###### implementation
   config =
     let
-      enable = cfg.enable || cfg.scala.enable || cfg.python.enable || cfg.rust.enable;
+      jdkEnabled = cfg.jdk.enable;
+      scalaEnabled = cfg.scala.enable;
+      pythonEnabled = cfg.python.enable;
+      rustEnabled = cfg.rust.enable;
+      enabled = cfg.enable || jdkEnabled || scalaEnabled || pythonEnabled || rustEnabled;
 
-      scala = pkgs.scala.override { majorVersion = cfg.scala.version; jre = cfg.jdk; };
+      jdkPkgs = lists.optional jdkEnabled cfg.jdk.package;
 
-      scala-pkgs = lists.optionals cfg.scala.enable
+      scala = pkgs.scala.override { majorVersion = cfg.scala.version; jre = cfg.jdk.package; };
+
+      scalaPkgs = lists.optionals scalaEnabled
         (with pkgs; [
           scala
-          (coursier.override { jre = cfg.jdk; })
-          (sbt.override { jre = cfg.jdk; })
-        ]) ++ lists.optional (cfg.scala.enable && cfg.scala.withIde) (pkgs.jetbrains.idea-community.override { inherit (cfg) jdk; });
+          (coursier.override { jre = cfg.jdk.package; })
+          (sbt.override { jre = cfg.jdk.package; })
+        ]) ++ lists.optional (scalaEnabled && cfg.scala.withIde) (pkgs.jetbrains.idea-community.override { jdk = cfg.jdk.package; });
 
-      python-pkgs = lists.optionals (cfg.python.enable && cfg.python.withIde) (with pkgs; [
-        (jetbrains.pycharm-community.override { inherit (cfg) jdk; })
+      pythonPkgs = lists.optionals (pythonEnabled && cfg.python.withIde) (with pkgs; [
+        (jetbrains.pycharm-community.override { jdk = cfg.jdk.package; })
       ]);
 
-      rust-pkgs = lists.optionals cfg.rust.enable (with pkgs; [
+      rustPkgs = lists.optionals rustEnabled (with pkgs; [
         rustup
       ]);
 
-      isInstallRust = cfg.rust.enable && (customLib.nonEmpty cfg.rust.version);
+      isInstallRust = rustEnabled && (customLib.nonEmpty cfg.rust.version);
       installRustBlock = ''
         $DRY_RUN_CMD rustup ''${VERBOSE_ARG:---quiet} set profile ${cfg.rust.rustupProfile}
         $DRY_RUN_CMD rustup ''${VERBOSE_ARG:---quiet} ${cfg.rust.rustupProfile} ${cfg.rust.version}
       '';
 
     in
-    mkIf enable {
+    mkIf enabled {
       custom.programs = {
-        pyenv.enable = mkIf cfg.python.enable true;
-        zsh.snap.fpaths = lists.optional cfg.rust.enable { name = "_rustup"; command = "rustup completions zsh"; };
+        pyenv.enable = mkIf pythonEnabled true;
+        zsh.snap.fpaths = lists.optional rustEnabled { name = "_rustup"; command = "rustup completions zsh"; };
       };
 
       home = {
-        packages = [ cfg.jdk ] ++ scala-pkgs ++ python-pkgs ++ rust-pkgs;
+        packages = jdkPkgs ++ scalaPkgs ++ pythonPkgs ++ rustPkgs;
 
-        file = {
-          "${cfg.aliases.root}/${cfg.aliases.scala.name}" = mkIf (cfg.scala.enable && cfg.aliases.scala.enable) { source = scala; };
-          "${cfg.aliases.root}/${cfg.aliases.java.name}" = mkIf cfg.aliases.java.enable { source = cfg.jdk; };
-        };
+        file = lib.mkMerge [
+          (buildAlaisFor "scala" scala)
+          (buildAlaisFor "jdk" cfg.jdk.package)
+        ];
 
-        extraActivationPath = lists.optionals isInstallRust rust-pkgs;
+        extraActivationPath = lists.optionals isInstallRust rustPkgs;
         activation = with lib.hm; {
           installRustupToolchain = mkIf isInstallRust (dag.entryAfter [ "linkGeneration" ] installRustBlock);
         };
       };
 
       xdg.configFile = {
-        "ideavim/ideavimrc" = mkIf (cfg.scala.enable || cfg.python.enable) { text = builtins.readFile "${self}/dotfiles/.ideavimrc"; };
+        "ideavim/ideavimrc" = mkIf ((scalaEnabled && cfg.scala.withIde) || (pythonEnabled && cfg.python.withIde)) { text = builtins.readFile "${self}/dotfiles/.ideavimrc"; };
       };
     };
 }

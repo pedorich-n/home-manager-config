@@ -60,16 +60,13 @@ in
         {
           repo = "ohmyzsh/ohmyzsh";
           subfolderPrefix = "lib";
-          subfolders = [ "git" "theme-and-appearance" "history" "key-bindings" "misc" "completion" "directories" "termsupport" ];
+          subfolders = [ "git" "theme-and-appearance" "history" "key-bindings" "completion" "directories" "termsupport" ];
         }
         {
           repo = "ohmyzsh/ohmyzsh";
           subfolderPrefix = "plugins";
           subfolders = [ "git" "command-not-found" "extract" ] ++
             lists.optionals (customLib.nonEmpty cfg.keychainIdentities) [ "keychain" "gpg-agent" ];
-        }
-        {
-          repo = "ptavares/zsh-direnv";
         }
         {
           repo = "ohmyzsh/ohmyzsh";

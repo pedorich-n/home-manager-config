@@ -8,6 +8,29 @@ in
   home.username = "pedorich_n";
 
   custom = {
+    development.environments = {
+      jdk = {
+        enable = true;
+      };
+
+      rust = {
+        enable = true;
+        version = "nightly";
+      };
+
+      python = {
+        enable = true;
+        withIde = false;
+      };
+
+      aliases = {
+        jdk = {
+          enable = true;
+          name = "java-17";
+        };
+      };
+    };
+
     programs = {
       zsh = {
         enable = true;
