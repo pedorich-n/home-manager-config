@@ -4,16 +4,16 @@ let
 
   nixPkg = pkgs-unstable.nix;
   commonApps = with pkgs; [
-    keychain
-    curl
     bat
-    ripgrep
-    jq
-    tmux
+    curl
     fira-code
     fira-code-symbols
-    nixPkg
-  ];
+    gdu
+    jq
+    keychain
+    ripgrep
+    tmux
+  ] ++ [ nixPkg ];
 
 in
 {
