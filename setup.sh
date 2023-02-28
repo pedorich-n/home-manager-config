@@ -3,10 +3,7 @@
 set -e
 
 CONFIG=$1
-NIX_PATH=$(which nix)
-
-# Yeah, arch has to be hardcoded, see: https://github.com/nix-community/home-manager/issues/3075
-ARCH="x86_64-linux"
+NIX_PATH=$(which nix || echo '')
 
 function install_nix() {
     local nix_path=$1
@@ -27,17 +24,16 @@ function install_nix() {
 }
 
 function build() {
-    local arch=$1
-    local config=$2
+    local config=$1
     echo "Building Home-Manager configuration..."
-    nix build .#homeConfigurations.$arch.$config.activationPackage --extra-experimental-features nix-command --extra-experimental-features flakes
+    nix build .#homeConfigurations.$config.activationPackage --extra-experimental-features nix-command --extra-experimental-features flakes
 }
 
 function activate() {
-    echo "Activating Home-Manage..."
+    echo "Activating Home-Manager..."
     ./result/activate
 }
 
 install_nix "$NIX_PATH" "$CONFIG" &&
-build $ARCH "$CONFIG" && 
+build "$CONFIG" && 
 activate

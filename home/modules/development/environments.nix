@@ -1,4 +1,4 @@
-{ self, pkgs, pkgs-unstable, lib, customLib, config, ... }:
+{ self, pkgs, lib, customLib, config, ... }:
 with lib;
 let
   cfg = config.custom.development.environments;

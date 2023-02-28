@@ -34,56 +34,60 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, nix-formatter-pack, zsh-snap-flake, pyenv-flake, tomorrow-night-flake, ... }:
-    with flake-utils.lib; eachSystem [ system.x86_64-linux ]
-      (system:
+    let
+      pkgsFor = system: pkgs: import pkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      formatterPackArgsFor = system:
         let
-          stateVersion = "22.11";
-
-          pkgsFor = pkgs: import pkgs {
-            inherit system;
-            config.allowUnfree = true;
-          };
-
-          pkgs = pkgsFor nixpkgs;
-          pkgs-unstable = pkgsFor nixpkgs-unstable;
-
-          formatterPackArgs = {
-            inherit system pkgs;
-            checkFiles = [ self ];
-            config = {
-              tools = {
-                deadnix.enable = false;
-                nixpkgs-fmt.enable = true;
-                statix.enable = true;
-              };
+          pkgs = pkgsFor system nixpkgs;
+        in
+        {
+          inherit system pkgs;
+          checkFiles = [ self ];
+          config = {
+            tools = {
+              deadnix.enable = true;
+              nixpkgs-fmt.enable = true;
+              statix.enable = true;
             };
           };
+        };
+
+      homeManagerConfFor = system: module:
+        let
+          pkgs = pkgsFor system nixpkgs;
+          pkgs-unstable = pkgsFor system nixpkgs-unstable;
 
           customLib = import ./lib { inherit pkgs; };
 
           sharedModules = customLib.listNixFilesRecursive "${self}/home/modules/";
-
-          homeManagerConfFor = module: home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
-            modules = [
-              { home.stateVersion = stateVersion; }
-              module
-            ] ++ sharedModules;
-            extraSpecialArgs = { inherit self pkgs-unstable customLib zsh-snap-flake pyenv-flake tomorrow-night-flake; };
-          };
         in
-        {
-          # Schema: https://nixos.wiki/wiki/Flakes#Output_schema
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ module ] ++ sharedModules;
+          extraSpecialArgs = { inherit self pkgs-unstable customLib zsh-snap-flake pyenv-flake tomorrow-night-flake; };
+        };
 
-          checks.nix-formatter-pack-check = nix-formatter-pack.lib.mkCheck formatterPackArgs;
-          formatter = nix-formatter-pack.lib.mkFormatter formatterPackArgs;
+      formatters = with flake-utils.lib; eachDefaultSystem (system: {
+        formatter = nix-formatter-pack.lib.mkFormatter (formatterPackArgsFor system);
+      });
 
-          #devShells = builtins.mapAttrs (name: path: import path { inherit pkgs; }) shells;
+      checks = with flake-utils.lib; eachDefaultSystem (system: {
+        checks.nix-formatter-pack-check = nix-formatter-pack.lib.mkCheck (formatterPackArgsFor system);
+      });
+    in
+    {
+      # Schema: https://nixos.wiki/wiki/Flakes#Output_schema
 
-          homeConfigurations = {
-            wslPersonal = homeManagerConfFor ./home/configurations/wsl-personal.nix;
-            linuxWork = homeManagerConfFor ./home/configurations/linux-work.nix;
-          };
-        });
+      #devShells = builtins.mapAttrs (name: path: import path { inherit pkgs; }) shells;
+
+      homeConfigurations = with flake-utils.lib.system; {
+        wslPersonal = homeManagerConfFor x86_64-linux ./home/configurations/wsl-personal.nix;
+        linuxWork = homeManagerConfFor x86_64-linux ./home/configurations/linux-work.nix;
+      };
+    } // formatters // checks;
 }
 

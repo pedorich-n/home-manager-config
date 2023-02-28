@@ -1,4 +1,4 @@
-{ pkgs-unstable, ... }:
+_:
 let
   gpgKey = "ADC7FB37D4DF4CE2";
 in

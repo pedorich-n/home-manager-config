@@ -1,4 +1,4 @@
-{ pkgs, config, tomorrow-night-flake, ... }:
+{ pkgs, tomorrow-night-flake, ... }:
 let
   vim-tomorrow-night = pkgs.vimUtils.buildVimPluginFrom2Nix {
     name = "tomorrow-night";

@@ -17,6 +17,8 @@ let
 in
 {
   home = {
+    stateVersion = "22.11";
+
     homeDirectory = "/home/${cfg.username}";
 
     packages = commonApps;
