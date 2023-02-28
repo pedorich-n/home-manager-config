@@ -50,6 +50,8 @@ in
           zsh.enable = true;
         };
       };
+
+      gpg.enable = true;
     };
   };
 

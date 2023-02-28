@@ -32,7 +32,7 @@ in
       initExtraFirst = builtins.readFile ./env_default.sh;
 
       initExtraBeforeCompInit = strings.optionalString (customLib.nonEmpty cfg.keychainIdentities) ''
-        zstyle :omz:plugins:keychain agents gpg,ssh
+        zstyle :omz:plugins:keychain agents "gpg,ssh"
         zstyle :omz:plugins:keychain identities ${(builtins.concatStringsSep " " cfg.keychainIdentities)}
         zstyle :omz:plugins:keychain options --quiet
 
