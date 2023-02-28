@@ -11,6 +11,7 @@ let
     jq
     tmux
     fira-code
+    fira-code-symbols
     nixPkg
   ];
 

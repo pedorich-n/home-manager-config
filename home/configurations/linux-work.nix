@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  gpgKey = "ADC7FB37D4DF4CE2";
+  gpgKey = "900C2FE784D62F8C";
 in
 {
   imports = [ ./common-linux.nix ];
@@ -8,11 +8,11 @@ in
   home.username = "mykytapedorich";
 
   custom = {
-    config = {
-      gpg-agent.enable = true;
-    };
-
     development.environments = {
+      jdk = {
+        enable = true;
+      };
+
       scala = {
         enable = true;
         version = "2.13";
@@ -30,7 +30,7 @@ in
           enable = true;
           name = "scala-2.13";
         };
-        java = {
+        jdk = {
           enable = true;
           name = "java-17";
         };
