@@ -9,9 +9,7 @@ in
 
   custom = {
     development.environments = {
-      jdk = {
-        enable = true;
-      };
+      jdk.enable = true;
 
       scala = {
         enable = true;
