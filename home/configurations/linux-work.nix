@@ -48,9 +48,6 @@ in
           zsh.enable = true;
         };
       };
-
-      gpg.enable = true;
-      vscode.enable = true;
     };
   };
 
@@ -59,6 +56,7 @@ in
     htop.enable = true;
     direnv.enable = true;
     vim.enable = true;
+    vscode.enable = true;
 
     git = {
       enable = true;

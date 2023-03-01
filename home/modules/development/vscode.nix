@@ -1,6 +1,9 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, pkgs-unstable, lib, config, ... }:
 {
   programs.vscode = {
+    # VSCode from pkgs is kinda old, but the one from pkgs-unstable is broken right now :(
+    package = pkgs.vscode;
+
     extensions = with pkgs.vscode-marketplace; [
       # Themes
       zhuangtongfa.material-theme
@@ -8,14 +11,14 @@
 
       # Languages
       jnoortheen.nix-ide
-      rust-lang.rust-analyzer
-      ms-python.python
+      pkgs.vscode-extensions.rust-lang.rust-analyzer # Needed because of older VSCode
+      pkgs.vscode-extensions.ms-python.python # Needed because of older VSCode
       scalameta.metals
 
       # Behavior
       vscodevim.vim
       wmaurer.vscode-jumpy
-      k--kato.intellij-idea-keybindings
+      # k--kato.intellij-idea-keybindings
       donjayamanne.githistory
       natqe.reload
     ];
@@ -38,9 +41,13 @@
         "fontFamily" = "Fira Code";
         "fontLigatures" = true;
         "fontSize" = 14;
+        "accessibilitySupport" = "off";
       };
       "window" = {
-        "zoomLevel" = 0.4;
+        "zoomLevel" = 0.6;
+      };
+      "workbench" = {
+        "colorTheme" = "One Dark Pro Flat";
       };
     };
   };

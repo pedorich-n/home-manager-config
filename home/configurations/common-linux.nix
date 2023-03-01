@@ -11,6 +11,7 @@ let
     gdu
     jq
     keychain
+    nixpkgs-fmt
     ripgrep
     rnix-lsp
     tmux

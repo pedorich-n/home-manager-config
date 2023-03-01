@@ -8,5 +8,12 @@ _:
       pull.rebase = true;
       push.default = "simple";
     };
+
+    ignores = [
+      ".vscode/"
+      ".bloop/"
+      ".metals/"
+      "metals.sbt"
+    ];
   };
 }
