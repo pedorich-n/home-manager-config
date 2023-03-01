@@ -12,6 +12,7 @@ let
     jq
     keychain
     ripgrep
+    rnix-lsp
     tmux
   ] ++ [ nixPkg ];
 

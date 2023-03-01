@@ -74,6 +74,7 @@ in
     barrier
     saml2aws
     sublime4
+    vscode
     # touchegg ??
   ];
 }
