@@ -32,19 +32,20 @@
       flake = false;
     };
 
-    nix-vscode-extensions ={
+    nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        nixpkgs.follows = "nixpkgs-unstable";
         flake-utils.follows = "flake-utils";
       };
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, nix-formatter-pack, zsh-snap-flake, pyenv-flake, tomorrow-night-flake, ... }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-vscode-extensions, flake-utils, home-manager, nix-formatter-pack, zsh-snap-flake, pyenv-flake, tomorrow-night-flake, ... }:
     let
       pkgsFor = system: pkgs: import pkgs {
         inherit system;
+        overlays = [ nix-vscode-extensions.overlays.default ];
         config.allowUnfree = true;
       };
 

@@ -50,6 +50,7 @@ in
       };
 
       gpg.enable = true;
+      vscode.enable = true;
     };
   };
 
@@ -72,7 +73,6 @@ in
     barrier
     saml2aws
     sublime4
-    vscode
     # touchegg ??
   ];
 }
