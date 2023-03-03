@@ -6,8 +6,10 @@ let
   commonApps = with pkgs; [
     bat
     curl
-    fira-code
-    fira-code-symbols
+    # This derivation installs a Variable font (multiple fonts in a single file). Idea doesn't support these :(
+    # https://youtrack.jetbrains.com/issue/JBR-3674/Variable-fonts-support
+    # fira-code
+    # fira-code-symbols
     gdu
     jq
     keychain
