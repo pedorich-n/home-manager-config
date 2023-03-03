@@ -27,56 +27,37 @@
     ]);
 
     userSettings = {
-      "vim" = {
-        "normalModeKeyBindingsNonRecursive" = [
-          {
-            "before" = [ "u" ];
-            "commands" = [ "undo" ];
-          }
-          {
-            "before" = [ "C-r" ];
-            "commands" = [ "redo" ];
-          }
-        ];
-        "useSystemClipboard" = true;
-      };
-      "editor" = {
-        "fontFamily" = "Fira Code";
-        "fontLigatures" = true;
-        "fontSize" = 14;
-        "accessibilitySupport" = "off";
-        "detectIndentation" = true;
-        "formatOnPaste" = false;
-        "formatOnType" = true;
-        "formatOnSave" = true;
-        "formatOnSaveMode" = "file";
-        "insertSpaces" = true;
-        "indentSize" = 2;
-        "tabSize" = 2;
-        "useTabStops" = false;
-        "stickyScroll" = {
-          "enabled" = true;
-          "maxLineCount" = 10;
-        };
-      };
-      "files" = {
-        "encoding" = "utf8";
-        "eol" = "\n";
-        "insertFinalNewline" = true;
-        "trimFinalNewlines" = true;
-        "trimTrailingWhitespace" = true;
-        "watcherExclude" = {
-          "**/.ammonite" = true;
-          "**/.bloop" = true;
-          "**/.bsp" = true;
-          "**/.history" = true;
-          "**/.idea" = true;
-          "**/.metals" = true;
-          "**/.scala-build" = true;
-          "**/.scala" = true;
-          "**/metals.sbt" = true;
-          "**/target" = true;
-        };
+      "editor.accessibilitySupport" = "off";
+      "editor.detectIndentation" = true;
+      "editor.fontFamily" = "Fira Code";
+      "editor.fontLigatures" = true;
+      "editor.fontSize" = 14;
+      "editor.formatOnPaste" = false;
+      "editor.formatOnSave" = true;
+      "editor.formatOnSaveMode" = "file";
+      "editor.formatOnType" = true;
+      "editor.indentSize" = 2;
+      "editor.insertSpaces" = true;
+      "editor.stickyScroll.enabled" = true;
+      "editor.stickyScroll.maxLineCount" = 10;
+      "editor.tabSize" = 2;
+      "editor.useTabStops" = false;
+      "files.encoding" = "utf8";
+      "files.eol" = "\n";
+      "files.insertFinalNewline" = true;
+      "files.trimFinalNewlines" = true;
+      "files.trimTrailingWhitespace" = true;
+      "files.watcherExclude" = {
+        "**/.ammonite" = true;
+        "**/.bloop" = true;
+        "**/.bsp" = true;
+        "**/.history" = true;
+        "**/.idea" = true;
+        "**/.metals" = true;
+        "**/.scala-build" = true;
+        "**/.scala" = true;
+        "**/metals.sbt" = true;
+        "**/target" = true;
       };
       "git.autofetch" = false;
       "search.exclude" = {
@@ -91,12 +72,19 @@
         "**/metals.sbt" = true;
         "**/target" = true;
       };
-      "window" = {
-        "zoomLevel" = 0.6;
-      };
-      "workbench" = {
-        "colorTheme" = "One Dark Pro Flat";
-      };
+      "vim.normalModeKeyBindingsNonRecursive" = [
+        {
+          "before" = [ "u" ];
+          "commands" = [ "undo" ];
+        }
+        {
+          "before" = [ "C-r" ];
+          "commands" = [ "redo" ];
+        }
+      ];
+      "vim.useSystemClipboard" = true;
+      "window.zoomLevel" = 0.6;
+      "workbench.colorTheme" = "One Dark Pro Flat";
     };
   };
 }
