@@ -1,6 +1,8 @@
-_:
+{ pkgs, ... }:
 {
   programs.git = {
+    package = pkgs.git;
+
     userName = "Nikita Pedorich";
     userEmail = "pedorich.n@gmail.com";
 

@@ -26,8 +26,41 @@
       # k--kato.intellij-idea-keybindings
     ]);
 
+    keybindings = [
+      {
+        key = "ctrl+`";
+        command = "workbench.action.terminal.focus";
+      }
+      {
+        key = "ctrl+`";
+        command = "workbench.action.focusActiveEditorGroup";
+        when = "terminalFocus";
+      }
+      {
+        key = "shift+alt+l";
+        command = "editor.action.formatDocument";
+        when = "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor";
+      }
+      {
+        key = "shift+alt+f";
+        command = "-editor.action.formatDocument";
+        when = "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor";
+      }
+      {
+        key = "shift+alt+up";
+        command = "-extension.vim_cmd+alt+up";
+        when = "editorTextFocus && vim.active && !inDebugRepl";
+      }
+      {
+        key = "shift+alt+down";
+        command = "-extension.vim_cmd+alt+down";
+        when = "editorTextFocus && vim.active && !inDebugRepl";
+      }
+    ];
+
     userSettings = {
       "editor.accessibilitySupport" = "off";
+      "editor.cursorSurroundingLines" = 10;
       "editor.detectIndentation" = true;
       "editor.fontFamily" = "Fira Code";
       "editor.fontLigatures" = true;

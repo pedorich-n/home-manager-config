@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ pkgs, lib, config, ... }:
 with lib;
 let
   cfg = config.custom.programs.gpg;
@@ -14,7 +14,10 @@ in
 
   ###### implementation
   config = mkIf cfg.enable {
-    programs.gpg.enable = true;
+    programs.gpg = {
+      package = pkgs.gnupg;
+      enable = true;
+    };
 
     services.gpg-agent = {
       enable = true;

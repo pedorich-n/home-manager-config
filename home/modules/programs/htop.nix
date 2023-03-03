@@ -1,7 +1,9 @@
-{ config, ... }:
+{ pkgs, config, ... }:
 with config.lib.htop;
 {
   programs.htop = {
+    package = pkgs.htop;
+
     settings = {
       fields = with fields; [
         PID
