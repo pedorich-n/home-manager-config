@@ -42,7 +42,7 @@ let
         description = "Rust version to install using rustup";
       };
       rustupProfile = mkOption {
-        type = types.str;
+        type = types.enum [ "minimal" "default" ];
         default = "default";
         description = "Rustup profile to use";
       };
