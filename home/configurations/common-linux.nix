@@ -4,7 +4,7 @@ let
   cfg = config.home;
   cfgCustom = config.custom.hm;
 
-  homeDirectory = "/home/${cfg.username}";
+  home = "/home/${cfg.username}";
 
   nixPkg = pkgs-unstable.nix;
   commonApps = with pkgs; [
@@ -37,13 +37,13 @@ in
     home = {
       stateVersion = "22.11";
 
-      inherit homeDirectory;
+      homeDirectory = home;
 
       packages = commonApps;
 
       shellAliases = lib.mkMerge [
         { hm = "home-manager"; }
-        (mkIf (customLib.nonEmpty cfgCustom.name) { hms = "home-manager switch --flake ${homeDirectory}/.config.nix#${cfgCustom.name}"; })
+        (mkIf (customLib.nonEmpty cfgCustom.name) { hms = "home-manager switch --flake ${home}/.config.nix#${cfgCustom.name}"; })
       ];
     };
 

@@ -65,7 +65,7 @@ in
         {
           repo = "ohmyzsh/ohmyzsh";
           subfolderPrefix = "plugins";
-          subfolders = [ "git" "command-not-found" "extract" ] ++
+          subfolders = [ "git" "extract" ] ++
             lists.optionals (customLib.nonEmpty cfg.keychainIdentities) [ "keychain" "gpg-agent" ];
         }
         {

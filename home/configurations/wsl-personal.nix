@@ -56,10 +56,7 @@ in
 
     git = {
       enable = true;
-      signing = {
-        key = gpgKey;
-        signByDefault = true;
-      };
+      signing.key = gpgKey;
     };
   };
 }

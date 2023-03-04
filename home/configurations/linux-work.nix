@@ -62,10 +62,7 @@ in
 
     git = {
       enable = true;
-      signing = {
-        key = gpgKey;
-        signByDefault = true;
-      };
+      signing.key = gpgKey;
     };
   };
 
@@ -73,6 +70,5 @@ in
     barrier
     saml2aws
     sublime4
-    # touchegg ??
   ];
 }
