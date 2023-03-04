@@ -8,6 +8,8 @@ in
   home.username = "mykytapedorich";
 
   custom = {
+    hm.name = "linuxWork";
+
     development.environments = {
       jdk.enable = true;
 

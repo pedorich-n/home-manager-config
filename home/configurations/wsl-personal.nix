@@ -8,6 +8,8 @@ in
   home.username = "pedorich_n";
 
   custom = {
+    hm.name = "wslPersonal";
+
     development.environments = {
       jdk.enable = true;
 

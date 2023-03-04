@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, lib, config, ... }:
+{ pkgs, pkgs-unstable, ... }:
 {
   programs.vscode = {
     # VSCode from pkgs is kinda old, but the one from pkgs-unstable is broken right now :(
