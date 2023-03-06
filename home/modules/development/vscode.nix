@@ -103,6 +103,8 @@
         "**/metals.sbt" = true;
         "**/target" = true;
       };
+      "python.formatting.provider" = "black";
+      "python.formatting.blackArgs" = [ "--line-length=140" ];
       "vim.normalModeKeyBindingsNonRecursive" = [
         {
           "before" = [ "u" ];
@@ -114,6 +116,7 @@
         }
       ];
       "vim.useSystemClipboard" = true;
+      "window.openFoldersInNewWindow" = "on";
       "window.zoomLevel" = 0.8;
       "workbench.colorTheme" = "Pale Fire";
     };

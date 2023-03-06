@@ -84,7 +84,16 @@ let
     };
   };
 
-  buildAlaisFor = name: source: mkIf (cfg.${name}.enable && cfg.aliases.${name}.enable) { "${cfg.aliases.root}/${cfg.aliases.${name}.name}".source = source; };
+  isAliasEnabled = name: cfg.${name}.enable && cfg.aliases.${name}.enable;
+  buildAliasPathFor = name: "${cfg.aliases.root}/${cfg.aliases.${name}.name}";
+  buildAliasFor = name: source: mkIf (isAliasEnabled name) { "${buildAliasPathFor name}".source = source; };
+
+  isMetalsExtensionEnabled =
+    let
+      isMetals = str: customLib.nonEmpty (builtins.match ".*(metals).*" str);
+      extensionNames = pkgs.lib.traceValSeq (builtins.map (ext: ext.name) config.programs.vscode.extensions);
+    in
+    builtins.any isMetals extensionNames;
 in
 {
   ###### interface
@@ -139,6 +148,7 @@ in
         (with pkgs; [
           scala
           (coursier.override { jre = cfg.jdk.package; })
+          (bloop.override { jre = cfg.jdk.package; })
           (sbt.override { jre = cfg.jdk.package; })
         ]) ++ lists.optional (scalaEnabled && cfg.scala.withIde) (pkgs.jetbrains.idea-community.override { jdk = cfg.jdk.package; });
 
@@ -163,12 +173,14 @@ in
         zsh.snap.fpaths = lists.optional rustEnabled { name = "_rustup"; command = "rustup completions zsh"; };
       };
 
+      # programs.vscode.userSettings = mkIf (config.programs.vscode.enable && isMetalsExtensionEnabled && isAliasEnabled "jdk") { "metals.javaHome" = "${config.home.homeDirectory}/" + buildAliasPathFor "jdk"; };
+
       home = {
         packages = jdkPkgs ++ scalaPkgs ++ pythonPkgs ++ rustPkgs;
 
         file = lib.mkMerge [
-          (buildAlaisFor "scala" scala)
-          (buildAlaisFor "jdk" cfg.jdk.package)
+          (buildAliasFor "scala" scala)
+          (buildAliasFor "jdk" cfg.jdk.package)
         ];
 
         extraActivationPath = lists.optionals isInstallRust rustPkgs;
