@@ -150,6 +150,7 @@ in
           (coursier.override { jre = cfg.jdk.package; })
           (bloop.override { jre = cfg.jdk.package; })
           (sbt.override { jre = cfg.jdk.package; })
+          (ammonite.override { jre = cfg.jdk.package; })
         ]) ++ lists.optional (scalaEnabled && cfg.scala.withIde) (pkgs.jetbrains.idea-community.override { jdk = cfg.jdk.package; });
 
       pythonPkgs = lists.optionals (pythonEnabled && cfg.python.withIde) (with pkgs; [
