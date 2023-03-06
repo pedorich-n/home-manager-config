@@ -114,6 +114,14 @@
           "before" = [ "C-r" ];
           "commands" = [ "redo" ];
         }
+        {
+          "before" = [ "<Space>" "s" ];
+          "commands" = [ "workbench.action.gotoSymbol" ];
+        }
+        {
+          "before" = [ "<Space>" "r" ];
+          "commands" = [ "editor.action.rename" ];
+        }
       ];
       "vim.useSystemClipboard" = true;
       "window.openFoldersInNewWindow" = "on";
