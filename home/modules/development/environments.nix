@@ -3,9 +3,8 @@ with lib;
 let
   cfg = config.custom.development.environments;
 
-  # java-17 = pkgs-unstable.temurin-bin-17.overrideAttrs (_: { meta.priority = -10; }); # TODO: try this out
-  # java-17-default = pkgs-unstable.jdk17;
-  java-17-default = pkgs.jdk;
+  # java-17-default = pkgs.temurin-bin-17; # TODO: try this out
+  java-17-default = pkgs.jdk17;
 
   withIdeOption = {
     withIde = (mkEnableOption "With IDE") // { default = true; };

@@ -2,8 +2,8 @@
   description = "Multiple machines config managed by NIX Home-Manageger and Flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -35,13 +35,13 @@
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
       };
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-vscode-extensions, flake-utils, home-manager, nix-formatter-pack, zsh-snap-flake, pyenv-flake, tomorrow-night-flake, ... }:
+  outputs = { self, nixpkgs, nix-vscode-extensions, flake-utils, home-manager, nix-formatter-pack, zsh-snap-flake, pyenv-flake, tomorrow-night-flake, ... }:
     let
       pkgsFor = system: pkgs: import pkgs {
         inherit system;
@@ -68,7 +68,6 @@
       homeManagerConfFor = system: module:
         let
           pkgs = pkgsFor system nixpkgs;
-          pkgs-unstable = pkgsFor system nixpkgs-unstable;
 
           customLib = import ./lib { inherit pkgs; };
 
@@ -77,7 +76,7 @@
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [ module ] ++ sharedModules;
-          extraSpecialArgs = { inherit self pkgs-unstable customLib zsh-snap-flake pyenv-flake tomorrow-night-flake; };
+          extraSpecialArgs = { inherit self customLib zsh-snap-flake pyenv-flake tomorrow-night-flake; };
         };
 
       formatters = with flake-utils.lib; eachDefaultSystem (system: {
@@ -99,4 +98,3 @@
       };
     } // formatters // checks;
 }
-

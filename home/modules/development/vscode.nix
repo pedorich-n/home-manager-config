@@ -1,10 +1,9 @@
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs, ... }:
 {
   programs.vscode = {
-    # VSCode from pkgs is kinda old, but the one from pkgs-unstable is broken right now :(
     package = pkgs.vscode;
 
-    extensions = (with pkgs-unstable.vscode-extensions; [
+    extensions = (with pkgs.vscode-extensions; [
       # Languages
       jnoortheen.nix-ide
       rust-lang.rust-analyzer
@@ -17,13 +16,12 @@
       donjayamanne.githistory
     ]) ++ (with pkgs.vscode-marketplace; [
       # Themes
-      zhuangtongfa.material-theme
       matklad.pale-fire
 
       # Behavior
       wmaurer.vscode-jumpy
       natqe.reload
-      # k--kato.intellij-idea-keybindings
+      k--kato.intellij-idea-keybindings
     ]);
 
     keybindings = [
@@ -116,8 +114,8 @@
         }
       ];
       "vim.useSystemClipboard" = true;
-      "window.zoomLevel" = 0.6;
-      "workbench.colorTheme" = "One Dark Pro Flat";
+      "window.zoomLevel" = 0.8;
+      "workbench.colorTheme" = "Pale Fire";
     };
   };
 }

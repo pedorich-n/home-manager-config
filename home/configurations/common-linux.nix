@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, config, lib, customLib, ... }:
+{ pkgs, config, lib, customLib, ... }:
 with lib;
 let
   cfg = config.home;
@@ -6,7 +6,7 @@ let
 
   home = "/home/${cfg.username}";
 
-  nixPkg = pkgs-unstable.nix;
+  nixPkg = pkgs.nix;
   commonApps = with pkgs; [
     bat
     curl
