@@ -88,12 +88,12 @@ let
   buildAliasPathFor = name: "${cfg.aliases.root}/${cfg.aliases.${name}.name}";
   buildAliasFor = name: source: mkIf (isAliasEnabled name) { "${buildAliasPathFor name}".source = source; };
 
-  isMetalsExtensionEnabled =
-    let
-      isMetals = str: customLib.nonEmpty (builtins.match ".*(metals).*" str);
-      extensionNames = pkgs.lib.traceValSeq (builtins.map (ext: ext.name) config.programs.vscode.extensions);
-    in
-    builtins.any isMetals extensionNames;
+  # isMetalsExtensionEnabled =
+  #   let
+  #     isMetals = str: customLib.nonEmpty (builtins.match ".*(metals).*" str);
+  #     extensionNames = pkgs.lib.traceValSeq (builtins.map (ext: ext.name) config.programs.vscode.extensions);
+  #   in
+  #   builtins.any isMetals extensionNames;
 in
 {
   ###### interface

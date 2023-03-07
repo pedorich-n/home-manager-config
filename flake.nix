@@ -4,6 +4,7 @@
   inputs = {
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-22.11";
 
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -41,7 +42,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-vscode-extensions, flake-utils, home-manager, nix-formatter-pack, zsh-snap-flake, pyenv-flake, tomorrow-night-flake, ... }:
+  outputs = { self, nixpkgs, nixpkgs-stable, nix-vscode-extensions, flake-utils, home-manager, nix-formatter-pack, zsh-snap-flake, pyenv-flake, tomorrow-night-flake, ... }:
     let
       pkgsFor = system: pkgs: import pkgs {
         inherit system;
@@ -51,7 +52,10 @@
 
       formatterPackArgsFor = system:
         let
-          pkgs = pkgsFor system nixpkgs;
+          # As of March 2023 something in this formatter is using exteremely new packages,
+          # and that results in 3GB of downloads of dependencies just to format the project
+          # so I'll resort to a stable channel for doing this for now.
+          pkgs = pkgsFor system nixpkgs-stable;
         in
         {
           inherit system pkgs;

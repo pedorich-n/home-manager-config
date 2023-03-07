@@ -1,4 +1,4 @@
-{ pkgs, config, lib, customLib, ... }:
+{ pkgs, config, lib, ... }:
 with lib;
 let
   cfg = config.home;
