@@ -66,9 +66,15 @@ in
     };
   };
 
-  home.packages = with pkgs; [
+  home.packages = (with pkgs; [
     barrier
+    caffeine-ng
     saml2aws
     sublime4
-  ];
+  ]) ++ (with pkgs.gnomeExtensions; [
+    date-menu-formatter
+    lock-keys
+    notification-timeout
+    workspace-switcher-manager
+  ]);
 }

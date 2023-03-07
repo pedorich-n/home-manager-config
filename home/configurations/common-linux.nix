@@ -13,11 +13,12 @@ let
     gdu
     jq
     keychain
+    nixPkg
     nixpkgs-fmt
     ripgrep
     rnix-lsp
     tmux
-  ] ++ [ nixPkg ];
+  ];
 
 in
 {
@@ -25,8 +26,7 @@ in
   options = {
     custom.hm = {
       name = mkOption {
-        type = with types; nullOr str;
-        default = null;
+        type = types.str;
         description = "Home-Manager Flake Configuration name; Used in alias for `home-manager switch #name`";
       };
     };
@@ -43,7 +43,7 @@ in
 
       shellAliases = lib.mkMerge [
         { hm = "home-manager"; }
-        (mkIf (customLib.nonEmpty cfgCustom.name) { hms = "home-manager switch --flake ${home}/.config.nix#${cfgCustom.name}"; })
+        { hms = "home-manager switch --flake ${home}/.config.nix#${cfgCustom.name}"; }
       ];
     };
 
