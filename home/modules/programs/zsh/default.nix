@@ -26,6 +26,7 @@ in
       envExtra = ''
         export VISUAL=vim
         export EDITOR="$VISUAL"
+        export PAGER=less
         export HOSTNAME=$(hostname)
       '';
 

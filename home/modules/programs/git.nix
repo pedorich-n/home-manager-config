@@ -12,6 +12,13 @@ in
 
     signing.signByDefault = customLib.nonEmpty cfg.signing.key;
 
+    delta = {
+      enable = true;
+      options = {
+        features = "zenburst";
+      };
+    };
+
     extraConfig = {
       pull.rebase = true;
       push.default = "simple";

@@ -10,9 +10,11 @@ let
   commonApps = with pkgs; [
     bat
     curl
+    delta
     gdu
     jq
     keychain
+    nix-tree
     nixPkg
     nixpkgs-fmt
     ripgrep
@@ -47,7 +49,10 @@ in
       ];
     };
 
-    programs.home-manager.enable = true;
+    programs = {
+      home-manager.enable = true;
+      less.enable = true;
+    };
     targets.genericLinux.enable = true;
 
     nix = {
