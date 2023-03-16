@@ -69,6 +69,7 @@ in
   home.packages = (with pkgs; [
     barrier
     caffeine-ng
+    circleci-cli
     saml2aws
     sublime4
   ]) ++ (with pkgs.gnomeExtensions; [
