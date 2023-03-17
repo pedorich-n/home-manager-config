@@ -18,10 +18,7 @@ in
         version = "nightly";
       };
 
-      python = {
-        enable = true;
-        withIde = false;
-      };
+      python.enable = true;
 
       aliases = {
         jdk = {

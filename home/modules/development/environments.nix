@@ -51,7 +51,7 @@ let
   pythonSubmodule = types.submodule {
     options = {
       enable = mkEnableOption "Python";
-    } // withIdeOption;
+    };
   };
 
   aliasSubmoduleFor = name: types.submodule {
@@ -153,9 +153,6 @@ in
           (ammonite.override { jre = cfg.jdk.package; })
         ]) ++ lists.optional (scalaEnabled && cfg.scala.withIde) pkgs.jetbrains.idea-community;
 
-      pythonPkgs = lists.optionals (pythonEnabled && cfg.python.withIde) (with pkgs; [
-        jetbrains.pycharm-community
-      ]);
 
       rustPkgs = lists.optionals rustEnabled (with pkgs; [
         rustup
@@ -177,7 +174,7 @@ in
       # programs.vscode.userSettings = mkIf (config.programs.vscode.enable && isMetalsExtensionEnabled && isAliasEnabled "jdk") { "metals.javaHome" = "${config.home.homeDirectory}/" + buildAliasPathFor "jdk"; };
 
       home = {
-        packages = jdkPkgs ++ scalaPkgs ++ pythonPkgs ++ rustPkgs;
+        packages = jdkPkgs ++ scalaPkgs ++ rustPkgs;
 
         file = lib.mkMerge [
           (buildAliasFor "scala" scala)

@@ -17,6 +17,7 @@ let
     nix-tree
     nixPkg
     nixpkgs-fmt
+    nvd
     ripgrep
     rnix-lsp
     tmux
@@ -46,6 +47,7 @@ in
       shellAliases = lib.mkMerge [
         { hm = "home-manager"; }
         { hms = "home-manager switch --flake ${home}/.config.nix#${cfgCustom.name}"; }
+        { hmd = ''home-manager generations | head -n 2 | tac | cut -d " " -f 7 | xargs nvd diff''; }
       ];
     };
 
