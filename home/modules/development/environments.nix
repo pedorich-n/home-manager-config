@@ -151,10 +151,10 @@ in
           (bloop.override { jre = cfg.jdk.package; })
           (sbt.override { jre = cfg.jdk.package; })
           (ammonite.override { jre = cfg.jdk.package; })
-        ]) ++ lists.optional (scalaEnabled && cfg.scala.withIde) (pkgs.jetbrains.idea-community.override { jdk = cfg.jdk.package; });
+        ]) ++ lists.optional (scalaEnabled && cfg.scala.withIde) pkgs.jetbrains.idea-community;
 
       pythonPkgs = lists.optionals (pythonEnabled && cfg.python.withIde) (with pkgs; [
-        (jetbrains.pycharm-community.override { jdk = cfg.jdk.package; })
+        jetbrains.pycharm-community
       ]);
 
       rustPkgs = lists.optionals rustEnabled (with pkgs; [
