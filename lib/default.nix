@@ -12,4 +12,6 @@ rec {
   nonEmpty = elem: !isNullOrEmpty elem;
 
   listNixFilesRecursive = path: builtins.filter (lib.hasSuffix ".nix") (lib.filesystem.listFilesRecursive path);
+
+  flattenAttrsets = builtins.foldl' lib.recursiveUpdate { };
 }

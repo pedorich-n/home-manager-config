@@ -50,6 +50,8 @@
         config.allowUnfree = true;
       };
 
+      customLibFor = pkgs: import "${self}/lib/" { inherit pkgs; };
+
       formatterPackArgsFor = system:
         let
           # As of March 2023 something in this formatter is using exteremely new packages,
@@ -69,17 +71,26 @@
           };
         };
 
+      shellsFor = system:
+        let
+          pkgs = pkgsFor system nixpkgs;
+          customLib = customLibFor pkgs;
+
+          allShells = builtins.map (path: import path { inherit pkgs; }) (customLib.listNixFilesRecursive "${self}/shells/");
+        in
+        customLib.flattenAttrsets allShells;
+
       homeManagerConfFor = system: module:
         let
           pkgs = pkgsFor system nixpkgs;
-
-          customLib = import ./lib { inherit pkgs; };
+          customLib = customLibFor pkgs;
 
           sharedModules = customLib.listNixFilesRecursive "${self}/home/modules/";
+          shellNamesModule = { config.custom.hm.shellNames = builtins.attrNames (shellsFor system); };
         in
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ module ] ++ sharedModules;
+          modules = sharedModules ++ [ module shellNamesModule ];
           extraSpecialArgs = { inherit self customLib zsh-snap-flake pyenv-flake tomorrow-night-flake; };
         };
 
@@ -89,6 +100,10 @@
 
       checks = with flake-utils.lib; eachDefaultSystem (system: {
         checks.nix-formatter-pack-check = nix-formatter-pack.lib.mkCheck (formatterPackArgsFor system);
+      });
+
+      shells = with flake-utils.lib; eachDefaultSystem (system: {
+        devShells = shellsFor system;
       });
     in
     {
@@ -100,5 +115,5 @@
         wslPersonal = homeManagerConfFor x86_64-linux ./home/configurations/wsl-personal.nix;
         linuxWork = homeManagerConfFor x86_64-linux ./home/configurations/linux-work.nix;
       };
-    } // formatters // checks;
+    } // formatters // checks // shells;
 }
