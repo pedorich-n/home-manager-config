@@ -39,7 +39,7 @@ def get_generations(user: str, root: str = HM_PROFILES_ROOT) -> List[HmGeneratio
             generation = HmGeneration(version=version_number, path=real_path, created_at=created_at)
 
             generations.append(generation)
-    generations = sorted(generations, key=lambda g: g.created_at, reverse=True)  # Sort from the most recent to the oldest
+    generations = sorted(generations, key=lambda g: g.version, reverse=True)  # Sort from the most recent to the oldest
 
     return generations
 

@@ -61,22 +61,23 @@ in
     };
 
     programs = {
-      home-manager.enable = true;
-      less.enable = true;
-
       zsh.initExtra = ''
         nshell () {
           nix develop ${hmConfigLocation}#$1
         }
         _nshell () {
-          local args=(
+          local -a args=(
             '1: :(${builtins.concatStringsSep " " cfgCustom.shellNames})'
           )
           _arguments $args
         }
         compdef _nshell nshell
       '';
+
+      home-manager.enable = true;
+      less.enable = true;
     };
+
     targets.genericLinux.enable = true;
 
     nix = {
