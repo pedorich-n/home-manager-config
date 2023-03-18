@@ -25,10 +25,12 @@ in
     };
 
     ignores = [
-      ".vscode/"
       ".bloop/"
       ".metals/"
+      ".venv/"
+      ".vscode/"
       "metals.sbt"
+      "venv/"
     ];
   };
 }

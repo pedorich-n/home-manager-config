@@ -26,6 +26,7 @@ let
     tmux
   ];
 
+  hmConfigLocation = "${home}/.config.nix";
 in
 {
   ###### interface
@@ -49,8 +50,8 @@ in
 
       shellAliases = lib.mkMerge [
         { hm = "home-manager"; }
-        { hms = "home-manager switch --flake ${home}/.config.nix#${cfgCustom.name}"; }
-        { hmd = ''home-manager generations | head -n 2 | tac | cut -d " " -f 7 | xargs nvd diff''; }
+        { hms = "home-manager switch --flake ${hmConfigLocation}#${cfgCustom.name}"; }
+        { hmd = "python ${hmConfigLocation}/hmd.py"; }
       ];
     };
 
