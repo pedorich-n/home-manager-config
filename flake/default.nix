@@ -49,7 +49,7 @@ rec {
       modules = sharedModules ++ [ configuration shellNamesModule ];
       extraSpecialArgs = {
         inherit customLib;
-        inherit (inputs) self zsh-snap-flake pyenv-flake tomorrow-night-flake;
+        inherit (inputs) self zsh-snap-source pyenv-source tomorrow-night-source;
       };
     };
 }

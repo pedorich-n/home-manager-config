@@ -1,4 +1,4 @@
-{ pkgs, pyenv-flake, lib, config, ... }:
+{ pkgs, pyenv-source, lib, config, ... }:
 with lib;
 let
   cfg = config.custom.programs.pyenv;
@@ -45,8 +45,8 @@ in
       source = pkgs.fetchFromGitHub {
         owner = "pyenv";
         repo = "pyenv";
-        inherit (pyenv-flake) rev;
-        sha256 = pyenv-flake.narHash;
+        inherit (pyenv-source) rev;
+        sha256 = pyenv-source.narHash;
       };
     };
 

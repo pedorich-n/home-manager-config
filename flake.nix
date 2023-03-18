@@ -18,17 +18,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zsh-snap-flake = {
+    zsh-snap-source = {
       url = "github:marlonrichert/zsh-snap";
       flake = false;
     };
 
-    pyenv-flake = {
+    pyenv-source = {
       url = "github:pyenv/pyenv";
       flake = false;
     };
 
-    tomorrow-night-flake = {
+    tomorrow-night-source = {
       url = "github:chriskempson/tomorrow-theme";
       flake = false;
     };

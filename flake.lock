@@ -162,7 +162,7 @@
         "type": "gitlab"
       }
     },
-    "pyenv-flake": {
+    "pyenv-source": {
       "flake": false,
       "locked": {
         "lastModified": 1678466286,
@@ -186,12 +186,12 @@
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
-        "pyenv-flake": "pyenv-flake",
-        "tomorrow-night-flake": "tomorrow-night-flake",
-        "zsh-snap-flake": "zsh-snap-flake"
+        "pyenv-source": "pyenv-source",
+        "tomorrow-night-source": "tomorrow-night-source",
+        "zsh-snap-source": "zsh-snap-source"
       }
     },
-    "tomorrow-night-flake": {
+    "tomorrow-night-source": {
       "flake": false,
       "locked": {
         "lastModified": 1657362863,
@@ -222,7 +222,7 @@
         "type": "github"
       }
     },
-    "zsh-snap-flake": {
+    "zsh-snap-source": {
       "flake": false,
       "locked": {
         "lastModified": 1675777300,
