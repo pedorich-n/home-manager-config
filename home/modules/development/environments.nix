@@ -188,7 +188,7 @@ in
       };
 
       xdg.configFile = {
-        "ideavim/ideavimrc" = mkIf ((scalaEnabled && cfg.scala.withIde) || (pythonEnabled && cfg.python.withIde)) { text = builtins.readFile "${self}/dotfiles/.ideavimrc"; };
+        "ideavim/ideavimrc" = mkIf (scalaEnabled && cfg.scala.withIde) { text = builtins.readFile "${self}/dotfiles/.ideavimrc"; };
       };
     };
 }

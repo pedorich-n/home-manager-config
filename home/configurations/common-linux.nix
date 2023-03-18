@@ -7,6 +7,14 @@ let
   home = "/home/${cfg.username}";
 
   nixPkg = pkgs.nix;
+  nixApps = with pkgs; [
+    nix-tree
+    nixPkg
+    nixpkgs-fmt
+    nvd
+    rnix-lsp
+  ];
+
   commonApps = with pkgs; [
     bat
     curl
@@ -14,12 +22,7 @@ let
     gdu
     jq
     keychain
-    nix-tree
-    nixPkg
-    nixpkgs-fmt
-    nvd
     ripgrep
-    rnix-lsp
     tmux
   ];
 
@@ -42,7 +45,7 @@ in
 
       homeDirectory = home;
 
-      packages = commonApps;
+      packages = nixApps ++ commonApps;
 
       shellAliases = lib.mkMerge [
         { hm = "home-manager"; }
