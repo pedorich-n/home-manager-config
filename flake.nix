@@ -42,76 +42,25 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, nix-vscode-extensions, flake-utils, home-manager, nix-formatter-pack, zsh-snap-flake, pyenv-flake, tomorrow-night-flake, ... }:
-    let
-      pkgsFor = system: pkgs: import pkgs {
-        inherit system;
-        overlays = [ nix-vscode-extensions.overlays.default ];
-        config.allowUnfree = true;
-      };
+  outputs = { flake-utils, nix-formatter-pack, ... } @ inputs:
+    with flake-utils.lib; let
+      flakeLib = import ./flake { inherit inputs; };
 
-      customLibFor = pkgs: import "${self}/lib/" { inherit pkgs; };
-
-      formatterPackArgsFor = system:
-        let
-          # As of March 2023 something in this formatter is using exteremely new packages,
-          # and that results in 3GB of downloads of dependencies just to format the project
-          # so I'll resort to a stable channel for doing this for now.
-          pkgs = pkgsFor system nixpkgs-stable;
-        in
-        {
-          inherit system pkgs;
-          checkFiles = [ self ];
-          config = {
-            tools = {
-              deadnix.enable = true;
-              nixpkgs-fmt.enable = true;
-              statix.enable = true;
-            };
-          };
-        };
-
-      shellsFor = system:
-        let
-          pkgs = pkgsFor system nixpkgs;
-          customLib = customLibFor pkgs;
-
-          allShells = builtins.map (path: import path { inherit pkgs; }) (customLib.listNixFilesRecursive "${self}/shells/");
-        in
-        customLib.flattenAttrsets allShells;
-
-      homeManagerConfFor = system: module:
-        let
-          pkgs = pkgsFor system nixpkgs;
-          customLib = customLibFor pkgs;
-
-          sharedModules = customLib.listNixFilesRecursive "${self}/home/modules/";
-          shellNamesModule = { config.custom.hm.shellNames = builtins.attrNames (shellsFor system); };
-        in
-        home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = sharedModules ++ [ module shellNamesModule ];
-          extraSpecialArgs = { inherit self customLib zsh-snap-flake pyenv-flake tomorrow-night-flake; };
-        };
-
-      formatters = with flake-utils.lib; eachDefaultSystem (system: {
-        formatter = nix-formatter-pack.lib.mkFormatter (formatterPackArgsFor system);
+      formatters = eachDefaultSystem (system: {
+        formatter = nix-formatter-pack.lib.mkFormatter (flakeLib.formatterPackArgsFor system);
       });
 
-      checks = with flake-utils.lib; eachDefaultSystem (system: {
-        checks.nix-formatter-pack-check = nix-formatter-pack.lib.mkCheck (formatterPackArgsFor system);
+      checks = eachDefaultSystem (system: {
+        checks.nix-formatter-pack-check = nix-formatter-pack.lib.mkCheck (flakeLib.formatterPackArgsFor system);
       });
 
-      shells = with flake-utils.lib; eachDefaultSystem (system: {
-        devShells = shellsFor system;
+      shells = eachDefaultSystem (system: {
+        devShells = flakeLib.shellsFor system;
       });
     in
     {
       # Schema: https://nixos.wiki/wiki/Flakes#Output_schema
-
-      #devShells = builtins.mapAttrs (name: path: import path { inherit pkgs; }) shells;
-
-      homeConfigurations = with flake-utils.lib.system; {
+      homeConfigurations = with flake-utils.lib.system; with flakeLib; {
         wslPersonal = homeManagerConfFor x86_64-linux ./home/configurations/wsl-personal.nix;
         linuxWork = homeManagerConfFor x86_64-linux ./home/configurations/linux-work.nix;
       };
