@@ -7,7 +7,7 @@
       # Languages
       jnoortheen.nix-ide
       rust-lang.rust-analyzer
-      # ms-python.python # Currently broken in unstable branch
+      ms-python.python # Currently broken in unstable branch
       scala-lang.scala
       scalameta.metals
 
