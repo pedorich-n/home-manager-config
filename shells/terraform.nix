@@ -14,7 +14,10 @@ let
   versions = builtins.attrNames versionAttrs;
 
   mkShell = attrs: pkgs.mkShell {
-    nativeBuildInputs = [ (pkgs.mkTerraform attrs) ];
+    nativeBuildInputs = with pkgs; [
+      (mkTerraform attrs)
+      saml2aws
+    ];
   };
 in
 builtins.foldl' (acc: version: acc // { "terraform_${version}" = mkShell versionAttrs.${version}; }) { } versions

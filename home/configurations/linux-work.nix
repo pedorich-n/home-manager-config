@@ -70,7 +70,6 @@ in
     barrier
     caffeine-ng
     circleci-cli
-    saml2aws
     sublime4
   ]) ++ (with pkgs.gnomeExtensions; [
     date-menu-formatter
