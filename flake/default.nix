@@ -12,8 +12,9 @@ rec {
     let
       pkgs = pkgsFor system inputs.nixpkgs;
       customLib = customLibFor pkgs;
+      minimalMkShell = import "${inputs.self}/lib/minimal-shell.nix" { inherit pkgs; };
 
-      allShells = builtins.map (path: import path { inherit pkgs; }) (customLib.listNixFilesRecursive "${inputs.self}/shells/");
+      allShells = builtins.map (path: import path { inherit pkgs minimalMkShell; }) (customLib.listNixFilesRecursive "${inputs.self}/shells/");
     in
     customLib.flattenAttrsets allShells;
 

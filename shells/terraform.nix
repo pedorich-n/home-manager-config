@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, minimalMkShell }:
 let
   versionAttrs = {
     "0_12" = {
@@ -13,8 +13,8 @@ let
 
   versions = builtins.attrNames versionAttrs;
 
-  mkShell = attrs: pkgs.mkShell {
-    nativeBuildInputs = with pkgs; [
+  mkShell = attrs: minimalMkShell {
+    packages = with pkgs; [
       (mkTerraform attrs)
       saml2aws
     ];
