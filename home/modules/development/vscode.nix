@@ -5,23 +5,25 @@
 
     extensions = (with pkgs.vscode-extensions; [
       # Languages
-      jnoortheen.nix-ide
+      # Has to be pulled from nixpkgs until this is fixed: https://github.com/nix-community/nix-vscode-extensions/issues/5
       rust-lang.rust-analyzer
-      ms-python.python # Currently broken in unstable branch
-      scala-lang.scala
-      scalameta.metals
-
-      # Behavior
-      vscodevim.vim
-      donjayamanne.githistory
     ]) ++ (with pkgs.vscode-marketplace; [
       # Themes
       matklad.pale-fire
 
+      # Languages
+      jnoortheen.nix-ide
+      ms-python.python
+      scala-lang.scala
+      scalameta.metals
+      tamasfe.even-better-toml
+
       # Behavior
-      wmaurer.vscode-jumpy
-      natqe.reload
+      donjayamanne.githistory
       k--kato.intellij-idea-keybindings
+      natqe.reload
+      vscodevim.vim
+      wmaurer.vscode-jumpy
     ]);
 
     keybindings = [
@@ -73,6 +75,8 @@
       "editor.stickyScroll.maxLineCount" = 10;
       "editor.tabSize" = 2;
       "editor.useTabStops" = false;
+      "evenBetterToml.formatter.arrayAutoCollapse" = true;
+      "evenBetterToml.formatter.columnWidth" = 150;
       "files.encoding" = "utf8";
       "files.eol" = "\n";
       "files.insertFinalNewline" = true;
