@@ -61,18 +61,24 @@ in
     };
 
     programs = {
-      zsh.initExtra = ''
-        nshell () {
-          nix develop ${hmConfigLocation}#$1
-        }
-        _nshell () {
-          local -a args=(
-            '1: :(${builtins.concatStringsSep " " cfgCustom.shellNames})'
-          )
-          _arguments $args
-        }
-        compdef _nshell nshell
-      '';
+      zsh = {
+        dirHashes = {
+          "hmc" = hmConfigLocation;
+        };
+
+        initExtra = ''
+          nshell () {
+            nix develop ${hmConfigLocation}#$1
+          }
+          _nshell () {
+            local -a args=(
+              '1: :(${builtins.concatStringsSep " " cfgCustom.shellNames})'
+            )
+            _arguments $args
+          }
+          compdef _nshell nshell
+        '';
+      };
 
       home-manager.enable = true;
       less.enable = true;
