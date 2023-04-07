@@ -128,6 +128,7 @@
         }
       ];
       "vim.useSystemClipboard" = true;
+      "window.newWindowDimensions" = "maximized";
       "window.openFoldersInNewWindow" = "on";
       "window.zoomLevel" = 0.8;
       "workbench.colorTheme" = "Pale Fire";
