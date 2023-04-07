@@ -4,13 +4,10 @@ import re
 import subprocess
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List, Optional
+from typing import List
 
-import rich
-from rich.columns import Columns
 from rich.console import Console
-from rich.pretty import pprint
-from rich.prompt import IntPrompt, Prompt
+from rich.prompt import Prompt
 
 HM_PROFILES_ROOT = "/nix/var/nix/profiles/per-user/"
 DATATIME_FORMAT = "%Y-%m-%d %H:%M"
@@ -26,7 +23,7 @@ class HmGeneration:
 def get_generations(user: str, root: str = HM_PROFILES_ROOT) -> List[HmGeneration]:
     hm_profile_regex = re.compile("home-manager-(?P<number>\d+)-link")
     path = os.path.join(root, user)
-    subfolders = [f.path for f in os.scandir(path) if f.is_dir()]
+    subfolders = [p.path for p in os.scandir(path) if p.is_dir()]
 
     generations = []
     for folder in subfolders:
@@ -49,7 +46,7 @@ def format_generation(generation: HmGeneration) -> str:
 
 
 def get_hm_generation_input(number: str, choices: List[str], console: Console) -> int:
-    result = Prompt.ask("Enter First HM Generation to compare", choices=choices, show_choices=False, console=console)
+    result = Prompt.ask(f"Enter {number} HM Generation to compare", choices=choices, show_choices=False, console=console)
     return int(result)
 
 
@@ -63,12 +60,12 @@ def main():
     for _, generation in generations_dict.items():
         console.print(format_generation(generation))
 
-    hm_generation_1 = get_hm_generation_input("first", valid_ids, console)
-    hm_generation_2 = get_hm_generation_input("second", valid_ids, console)
+    hm_generation_left_version = get_hm_generation_input("first", valid_ids, console)
+    hm_generation_right_num = get_hm_generation_input("second", valid_ids, console)
 
-    console.print(f"Comparing generations {hm_generation_1}..{hm_generation_2}")
+    console.print(f"Comparing generations {hm_generation_left_version}..{hm_generation_right_num}")
 
-    cmd = ["nvd", "diff", generations_dict[hm_generation_1].path, generations_dict[hm_generation_2].path]
+    cmd = ["nvd", "diff", generations_dict[hm_generation_left_version].path, generations_dict[hm_generation_right_num].path]
 
     subprocess.run(cmd, shell=False)
 
