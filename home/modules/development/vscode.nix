@@ -20,6 +20,7 @@
 
       # Behavior
       donjayamanne.githistory
+      gruntfuggly.todo-tree
       k--kato.intellij-idea-keybindings
       natqe.reload
       vscodevim.vim
