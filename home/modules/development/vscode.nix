@@ -109,6 +109,7 @@
       };
       "python.formatting.provider" = "black";
       "python.formatting.blackArgs" = [ "--line-length=140" ];
+      "vim.foldfix" = true;
       "vim.normalModeKeyBindingsNonRecursive" = [
         {
           "before" = [ "u" ];
