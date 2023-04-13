@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs }:
+{ pkgs, inputs }:
 pkgs.vimUtils.buildVimPluginFrom2Nix {
   pname = "tomorrow-theme";
   version = inputs.tomorrow-theme-source.shortRev;
