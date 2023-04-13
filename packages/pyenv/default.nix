@@ -1,4 +1,4 @@
-{ pkgs, stdenvNoCC, lib, inputs, makeWrapper }:
+{ stdenvNoCC, lib, inputs, makeWrapper }:
 stdenvNoCC.mkDerivation rec {
   pname = "pyenv";
   version = inputs.pyenv-source.shortRev;

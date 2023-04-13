@@ -20,4 +20,5 @@ let
     ];
   };
 in
-builtins.foldl' (acc: version: acc // { "terraform_${version}" = mkShell versionAttrs.${version}; }) { } versions
+#builtins.foldl' (acc: version: acc // { "terraform_${version}" = mkShell versionAttrs.${version}; }) { } versions
+{ }

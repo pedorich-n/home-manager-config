@@ -11,11 +11,15 @@ let
   };
 
   envsFor = cfg: shell:
-    strings.optionalString cfg.shellIntegrations.${shell}.enable ''
+    strings.optionalString cfg.shellIntegrations.${shell}.enable (mkAfter ''
       export PYENV_ROOT="${cfg.root}"
       export PATH="$PYENV_ROOT/bin:$PATH"
-      eval "$(pyenv init -)"
-    '';
+    '');
+
+  initFor = cfg: shell:
+    strings.optionalString cfg.shellIntegrations.${shell}.enable (mkAfter ''
+      eval "$(${pkgs.pyenv}/bin/pyenv init -)"
+    '');
 in
 {
   ###### interface
@@ -48,7 +52,13 @@ in
       };
     };
 
-    programs.bash.bashrcExtra = envsFor cfg "bash";
-    programs.zsh.initExtra = envsFor cfg "zsh";
+    programs.bash = {
+      profileExtra = envsFor cfg "bash";
+      bashrcExtra = initFor cfg "bash";
+    };
+    programs.zsh = {
+      envExtra = envsFor cfg "zsh";
+      initExtra = initFor cfg "zsh";
+    };
   };
 }
