@@ -5,6 +5,7 @@ stdenvNoCC.mkDerivation rec {
 
   src = inputs.pyenv-source;
 
+  dontPatch = true;
   dontConfigure = true;
   dontBuild = true;
 

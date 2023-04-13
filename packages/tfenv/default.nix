@@ -6,6 +6,7 @@ stdenvNoCC.mkDerivation rec {
 
   src = inputs.tfenv-source;
 
+  dontPatch = true;
   dontConfigure = true;
   dontBuild = true;
 

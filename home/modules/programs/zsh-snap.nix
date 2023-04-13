@@ -1,4 +1,4 @@
-{ lib, config, customLib, zsh-snap-source, ... }:
+{ lib, config, customLib, pkgs, ... }:
 with lib;
 let
   cfg = config.custom.programs.zsh.snap;
@@ -77,10 +77,13 @@ in
 
   ###### implementation
   config = mkIf cfg.enable {
-    programs.zsh.initExtra = with builtins; with customLib;
+    home.packages = [ pkgs.zsh-snap ];
+
+    programs.zsh.initExtra = with builtins;
+      with customLib;
       ''
         ${strings.optionalString (nonEmpty cfg.reposDir) "zstyle ':znap:*' repos-dir ${cfg.reposDir}"}
-        source ${zsh-snap-source}/znap.zsh
+        source ${pkgs.zsh-snap}/znap.zsh
 
         ${strings.optionalString (nonEmpty cfg.sources) (concatStringsSep "\n" (map znapSourceFor cfg.sources))}
       '';
