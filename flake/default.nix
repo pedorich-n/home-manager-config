@@ -1,10 +1,12 @@
 { inputs }:
 rec {
-  customLibFor = pkgs: import "${inputs.self}/lib/" { inherit pkgs; };
+  customLibFor = pkgs: import ../lib { inherit pkgs; };
+
+  customOverlays = import ../overlays inputs;
 
   pkgsFor = system: pkgs: import pkgs {
     inherit system;
-    overlays = [ inputs.nix-vscode-extensions.overlays.default (import ../overlays inputs) ];
+    overlays = [ inputs.nix-vscode-extensions.overlays.default customOverlays ];
     config.allowUnfree = true;
   };
 
@@ -12,9 +14,9 @@ rec {
     let
       pkgs = pkgsFor system inputs.nixpkgs;
       customLib = customLibFor pkgs;
-      minimalMkShell = import "${inputs.self}/lib/minimal-shell.nix" { inherit pkgs; };
+      minimalMkShell = import ../lib/minimal-shell.nix { inherit pkgs; };
 
-      allShells = builtins.map (path: import path { inherit pkgs minimalMkShell; }) (customLib.listNixFilesRecursive "${inputs.self}/shells/");
+      allShells = builtins.map (path: import path { inherit pkgs minimalMkShell; }) (customLib.listNixFilesRecursive ../shells);
     in
     customLib.flattenAttrsets allShells;
 
@@ -27,7 +29,7 @@ rec {
     in
     {
       inherit system pkgs;
-      checkFiles = [ inputs.self ];
+      checkFiles = [ "../" ];
       config = {
         tools = {
           deadnix.enable = true;
@@ -42,7 +44,7 @@ rec {
       pkgs = pkgsFor system inputs.nixpkgs;
       customLib = customLibFor pkgs;
 
-      sharedModules = customLib.listNixFilesRecursive "${inputs.self}/home/modules/";
+      sharedModules = customLib.listNixFilesRecursive ../home/modules;
       shellNamesModule = { config.custom.hm.shellNames = builtins.attrNames (shellsFor system); };
     in
     inputs.home-manager.lib.homeManagerConfiguration {
