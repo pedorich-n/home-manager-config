@@ -1,4 +1,4 @@
-{ pkgs, pyenv-source, lib, config, ... }:
+{ pkgs, lib, config, ... }:
 with lib;
 let
   cfg = config.custom.programs.pyenv;
@@ -12,7 +12,7 @@ let
 
   envsFor = cfg: shell:
     strings.optionalString cfg.shellIntegrations.${shell}.enable ''
-      export PYENV_ROOT="$HOME/${cfg.root}"
+      export PYENV_ROOT="${cfg.root}"
       export PATH="$PYENV_ROOT/bin:$PATH"
       eval "$(pyenv init -)"
     '';
@@ -25,8 +25,8 @@ in
 
       root = mkOption {
         type = types.str;
-        default = ".pyenv";
-        description = "Path (under $HOME) where Pyenv and its shims will be stored";
+        default = "$HOME/.pyenv";
+        description = "Path where Pyenv will store its shims";
       };
 
       shellIntegrations = mkOption {
@@ -40,22 +40,15 @@ in
 
   ###### implementation
   config = mkIf cfg.enable {
-    home.file.${cfg.root} = {
-      recursive = true;
-      source = pkgs.fetchFromGitHub {
-        owner = "pyenv";
-        repo = "pyenv";
-        inherit (pyenv-source) rev;
-        sha256 = pyenv-source.narHash;
+    home = {
+      packages = [ pkgs.pyenv ];
+      shellAliases = {
+        # "nixpkgs" has to be the same as input name in flake.nix
+        pyenv-build = "nix develop nixpkgs#python311Full";
       };
     };
 
-    home.shellAliases = {
-      # "nixpkgs" has to be the same as input name in flake.nix
-      pyenv-build = "nix develop nixpkgs#python311Full";
-    };
-
-    programs.bash.profileExtra = envsFor cfg "bash";
-    programs.zsh.envExtra = envsFor cfg "zsh";
+    programs.bash.bashrcExtra = envsFor cfg "bash";
+    programs.zsh.initExtra = envsFor cfg "zsh";
   };
 }

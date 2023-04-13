@@ -2,7 +2,7 @@
 # copied from https://github.com/pinpox/nixos/blob/c836fde/packages/tfenv/default.nix
 stdenvNoCC.mkDerivation rec {
   pname = "tfenv";
-  version = inputs.tfenv-source.rev;
+  version = inputs.tfenv-source.shortRev;
 
   src = inputs.tfenv-source;
 

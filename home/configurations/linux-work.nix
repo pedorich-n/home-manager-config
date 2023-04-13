@@ -43,12 +43,9 @@ in
         keychainIdentities = [ "work/paidy" gpgKey ];
       };
 
-      pyenv = {
-        enable = true;
-        shellIntegrations = {
-          # bash.enable = true;
-          zsh.enable = true;
-        };
+      pyenv.shellIntegrations = {
+        # bash.enable = true;
+        zsh.enable = true;
       };
     };
   };
@@ -70,7 +67,9 @@ in
     barrier
     caffeine-ng
     circleci-cli
+    saml2aws
     sublime4
+    pyenv
     tfenv
   ]) ++ (with pkgs.gnomeExtensions; [
     date-menu-formatter

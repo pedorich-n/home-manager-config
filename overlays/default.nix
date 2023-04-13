@@ -5,5 +5,6 @@ let
   inherit inputs;
 in
 self: super: {
+  pyenv = super.callPackage ../packages/pyenv { inputs = inputs; };
   tfenv = super.callPackage ../packages/tfenv { inputs = inputs; };
 }
