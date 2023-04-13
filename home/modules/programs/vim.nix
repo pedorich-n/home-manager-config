@@ -1,21 +1,15 @@
-{ pkgs, tomorrow-night-source, ... }:
-let
-  vim-tomorrow-night = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    name = "tomorrow-night";
-    src = "${tomorrow-night-source}/vim";
-  };
-in
+{ pkgs, ... }:
 {
   programs.vim = {
     packageConfigurable = pkgs.vim_configurable.override { features = "normal"; };
 
     plugins = with pkgs.vimPlugins; [
-      vim-easymotion
-      vim-gitgutter
-      tagbar
       lightline-vim
       onehalf
-      vim-tomorrow-night
+      tagbar
+      tomorrow-theme
+      vim-easymotion
+      vim-gitgutter
     ];
 
     extraConfig = ''

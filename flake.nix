@@ -33,7 +33,7 @@
       flake = false;
     };
 
-    tomorrow-night-source = {
+    tomorrow-theme-source = {
       url = "github:chriskempson/tomorrow-theme";
       flake = false;
     };

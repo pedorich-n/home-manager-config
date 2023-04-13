@@ -191,7 +191,7 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "pyenv-source": "pyenv-source",
         "tfenv-source": "tfenv-source",
-        "tomorrow-night-source": "tomorrow-night-source",
+        "tomorrow-theme-source": "tomorrow-theme-source",
         "zsh-snap-source": "zsh-snap-source"
       }
     },
@@ -226,7 +226,7 @@
         "type": "github"
       }
     },
-    "tomorrow-night-source": {
+    "tomorrow-theme-source": {
       "flake": false,
       "locked": {
         "lastModified": 1657362863,
