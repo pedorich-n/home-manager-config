@@ -71,6 +71,7 @@ in
     caffeine-ng
     circleci-cli
     sublime4
+    tfenv
   ]) ++ (with pkgs.gnomeExtensions; [
     date-menu-formatter
     lock-keys

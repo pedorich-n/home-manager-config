@@ -28,6 +28,11 @@
       flake = false;
     };
 
+    tfenv-source = {
+      url = "github:tfutils/tfenv";
+      flake = false;
+    };
+
     tomorrow-night-source = {
       url = "github:chriskempson/tomorrow-theme";
       flake = false;

@@ -190,6 +190,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "pyenv-source": "pyenv-source",
+        "tfenv-source": "tfenv-source",
         "tomorrow-night-source": "tomorrow-night-source",
         "zsh-snap-source": "zsh-snap-source"
       }
@@ -206,6 +207,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tfenv-source": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1664641260,
+        "narHash": "sha256-UNvLJQB47IRcNZpoUGXTW2g63ApijnIB3oUb7Zu4lUY=",
+        "owner": "tfutils",
+        "repo": "tfenv",
+        "rev": "1ccfddb22005b34eacaf06a9c33f58f14e816ec9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tfutils",
+        "repo": "tfenv",
         "type": "github"
       }
     },

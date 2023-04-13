@@ -4,7 +4,7 @@ rec {
 
   pkgsFor = system: pkgs: import pkgs {
     inherit system;
-    overlays = [ inputs.nix-vscode-extensions.overlays.default ];
+    overlays = [ inputs.nix-vscode-extensions.overlays.default (import ../overlays inputs) ];
     config.allowUnfree = true;
   };
 
