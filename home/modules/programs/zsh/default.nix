@@ -30,8 +30,6 @@ in
         export HOSTNAME=$(hostname)
       '';
 
-      initExtraFirst = builtins.readFile ./env_default.sh;
-
       initExtraBeforeCompInit = strings.optionalString (customLib.nonEmpty cfg.keychainIdentities) ''
         zstyle :omz:plugins:keychain agents "gpg,ssh"
         zstyle :omz:plugins:keychain identities ${(builtins.concatStringsSep " " cfg.keychainIdentities)}
@@ -61,7 +59,7 @@ in
         {
           repo = "ohmyzsh/ohmyzsh";
           subfolderPrefix = "lib";
-          subfolders = [ "git" "functions" "theme-and-appearance" "history" "key-bindings" "completion" "directories" "termsupport" ];
+          subfolders = [ "git" "functions" "theme-and-appearance" "history" "key-bindings" "completion" "termsupport" ];
         }
         {
           repo = "ohmyzsh/ohmyzsh";

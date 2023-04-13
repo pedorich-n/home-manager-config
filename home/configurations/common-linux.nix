@@ -53,11 +53,15 @@ in
 
       packages = nixApps ++ commonApps;
 
-      shellAliases = lib.mkMerge [
-        { hm = "home-manager"; }
-        { hms = "home-manager switch --flake ${hmConfigLocation}#${cfgCustom.name}"; }
-        { hmd = "python ${hmConfigLocation}/hmd.py"; }
-      ];
+      shellAliases = {
+        hm = "home-manager";
+        hms = "home-manager switch --flake ${hmConfigLocation}#${cfgCustom.name}";
+        hmd = "python ${hmConfigLocation}/hmd.py";
+
+        l = "ls -lah";
+        la = "ls -lAh";
+        ll = "ls -alF";
+      };
     };
 
     programs = {
