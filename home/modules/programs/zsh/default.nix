@@ -61,7 +61,7 @@ in
         {
           repo = "ohmyzsh/ohmyzsh";
           subfolderPrefix = "lib";
-          subfolders = [ "git" "theme-and-appearance" "history" "key-bindings" "completion" "directories" "termsupport" ];
+          subfolders = [ "git" "functions" "theme-and-appearance" "history" "key-bindings" "completion" "directories" "termsupport" ];
         }
         {
           repo = "ohmyzsh/ohmyzsh";
