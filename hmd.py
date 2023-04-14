@@ -20,9 +20,8 @@ class HmGeneration:
     created_at: datetime
 
 
-def get_generations(user: str, root: str = HM_PROFILES_ROOT) -> List[HmGeneration]:
+def get_generations(path: str) -> List[HmGeneration]:
     hm_profile_regex = re.compile("home-manager-(?P<number>\d+)-link")
-    path = os.path.join(root, user)
     subfolders = [p.path for p in os.scandir(path) if p.is_dir()]
 
     generations = []
@@ -51,7 +50,9 @@ def get_hm_generation_input(number: str, choices: List[str], console: Console) -
 
 
 def main():
-    generations = get_generations(getpass.getuser())
+    path_for_user = os.path.join(HM_PROFILES_ROOT, getpass.getuser())
+
+    generations = get_generations(path_for_user)
     generations_dict = {generation.version: generation for generation in generations}
     valid_ids = [str(key) for key in generations_dict.keys()]
 
