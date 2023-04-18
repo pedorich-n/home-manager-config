@@ -25,15 +25,8 @@ in
 
       python.enable = true;
 
-      aliases = {
-        scala = {
-          enable = true;
-          name = "scala-2.13";
-        };
-        jdk = {
-          enable = true;
-          name = "java-17";
-        };
+      aliases.additionalPackages = {
+        "java-8" = pkgs.jdk8;
       };
     };
 

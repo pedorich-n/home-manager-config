@@ -54,17 +54,6 @@ let
     };
   };
 
-  aliasSubmoduleFor = name: types.submodule {
-    options = {
-      enable = mkEnableOption "Alias for ${name}";
-      name = mkOption {
-        type = types.str;
-        default = "${name}";
-        description = "Folder name for the alias";
-      };
-    };
-  };
-
   aliasesSubmodule = types.submodule {
     options = {
       root = mkOption {
@@ -73,20 +62,17 @@ let
         description = "Root folder for aliases (under $HOME)";
       };
 
-      scala = mkOption {
-        type = aliasSubmoduleFor "scala";
+      additionalPackages = mkOption {
+        type = with types; attrsOf path;
         default = { };
-      };
-      jdk = mkOption {
-        type = aliasSubmoduleFor "jdk";
-        default = { };
+        description = "Arbitrary aliases";
       };
     };
   };
 
-  isAliasEnabled = name: cfg.${name}.enable && cfg.aliases.${name}.enable;
-  buildAliasPathFor = name: "${cfg.aliases.root}/${cfg.aliases.${name}.name}";
-  buildAliasFor = name: source: mkIf (isAliasEnabled name) { "${buildAliasPathFor name}".source = source; };
+  buildAliasAttrFor = path: source: (lib.attrsets.nameValuePair "${cfg.aliases.root}/${path}" { inherit source; });
+  buildAliasForCfg = name: path: source: lib.attrsets.optionalAttrs cfg.${name}.enable (buildAliasAttrFor path source);
+  buildAliasesForPackages = lib.attrsets.mapAttrsToList buildAliasAttrFor;
 
   # isMetalsExtensionEnabled =
   #   let
@@ -141,6 +127,7 @@ in
       enabled = cfg.enable || jdkEnabled || scalaEnabled || pythonEnabled || rustEnabled;
 
       jdkPkgs = lists.optional jdkEnabled cfg.jdk.package;
+      jdkAlias = buildAliasForCfg "jdk" "java-17" cfg.jdk.package;
 
       scala = pkgs.scala.override { majorVersion = cfg.scala.version; jre = cfg.jdk.package; };
 
@@ -153,6 +140,7 @@ in
           (ammonite.override { jre = cfg.jdk.package; })
         ]) ++ lists.optional (scalaEnabled && cfg.scala.withIde) pkgs.jetbrains.idea-community;
 
+      scalaAlias = buildAliasForCfg "scala" "scala-${cfg.scala.version}" scala;
 
       rustPkgs = lists.optionals rustEnabled (with pkgs; [
         rustup
@@ -176,10 +164,7 @@ in
       home = {
         packages = jdkPkgs ++ scalaPkgs ++ rustPkgs;
 
-        file = lib.mkMerge [
-          (buildAliasFor "scala" scala)
-          (buildAliasFor "jdk" cfg.jdk.package)
-        ];
+        file = builtins.listToAttrs ([ jdkAlias scalaAlias ] ++ (buildAliasesForPackages cfg.aliases.additionalPackages));
 
         extraActivationPath = lists.optionals isInstallRust rustPkgs;
         activation = with lib.hm; {
