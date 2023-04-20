@@ -18,12 +18,7 @@ in
         version = "2.13";
       };
 
-      rust = {
-        enable = true;
-        version = "nightly";
-      };
-
-      python.enable = true;
+      rust.enable = true;
 
       aliases.additionalPackages = {
         "java-8" = pkgs.jdk8;
@@ -36,9 +31,13 @@ in
         keychainIdentities = [ "work/paidy" gpgKey ];
       };
 
-      pyenv.shellIntegrations = {
-        # bash.enable = true;
-        zsh.enable = true;
+      pyenv = {
+        enable = true;
+        shellIntegrations.zsh.enable = true;
+      };
+
+      jetbrains = {
+        idea.enable = true;
       };
     };
   };

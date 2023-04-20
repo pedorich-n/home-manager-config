@@ -1,13 +1,16 @@
 { pkgs }:
 with pkgs;
 rec {
-  # Works for strings and lists
+  # Works for strings, lists, attrsets
   isNullOrEmpty = elem:
-    with builtins;
-    elem == null ||
-    (if (typeOf elem == "string") then elem == ""
-    else if (typeOf elem == "list") then elem == [ ]
-    else throw "Cannot check emptiness for type ${typeOf elem}");
+    let
+      type = builtins.typeOf elem;
+    in
+    if type == "null" then true
+    else if (type == "string") then elem == ""
+    else if (type == "list") then elem == [ ]
+    else if (type == "set") then elem == { }
+    else throw "Cannot check emptiness for type ${type}";
 
   nonEmpty = elem: !isNullOrEmpty elem;
 

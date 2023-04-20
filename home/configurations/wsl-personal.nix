@@ -13,19 +13,7 @@ in
     development.environments = {
       jdk.enable = true;
 
-      rust = {
-        enable = true;
-        version = "nightly";
-      };
-
-      python.enable = true;
-
-      aliases = {
-        jdk = {
-          enable = true;
-          name = "java-17";
-        };
-      };
+      rust.enable = true;
     };
 
     programs = {
@@ -36,10 +24,7 @@ in
 
       pyenv = {
         enable = true;
-        shellIntegrations = {
-          # bash.enable = true;
-          zsh.enable = true;
-        };
+        shellIntegrations.zsh.enable = true;
       };
 
       gpg.enable = true;
