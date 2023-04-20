@@ -49,6 +49,8 @@ let
           else ''{${concatStringsSep "," source.subfolders}}'');
     in
     ''znap source ${source.repo} ${prefix}${subfolders}'';
+
+  znapFpathFor = fpath: "znap fpath ${fpath.name} '${fpath.command}'";
 in
 {
   ###### interface
@@ -64,11 +66,13 @@ in
 
       sources = mkOption {
         type = with types; nullOr (listOf sourceModule);
+        default = null;
         description = "Optional list of sources to install and manage by zsh-snap";
       };
 
       fpaths = mkOption {
         type = with types; nullOr (listOf fpathModule);
+        default = null;
         description = "Optional list of fpath functions";
       };
     };
@@ -79,13 +83,14 @@ in
   config = mkIf cfg.enable {
     home.packages = [ pkgs.zsh-snap ];
 
-    programs.zsh.initExtra = with builtins;
-      with customLib;
+    programs.zsh.initExtra = with builtins; with customLib;
       ''
         ${strings.optionalString (nonEmpty cfg.reposDir) "zstyle ':znap:*' repos-dir ${cfg.reposDir}"}
         source ${pkgs.zsh-snap}/znap.zsh
 
         ${strings.optionalString (nonEmpty cfg.sources) (concatStringsSep "\n" (map znapSourceFor cfg.sources))}
+
+        ${strings.optionalString (nonEmpty cfg.fpaths) (concatStringsSep "\n" (map znapFpathFor cfg.fpaths))}
       '';
   };
 }

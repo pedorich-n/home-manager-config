@@ -15,7 +15,5 @@ in
   ###### implementation
   config = mkIf cfg.enable {
     home.packages = [ pkgs.rustup ];
-
-    custom.programs.zsh.snap.fpaths = lists.optional rustEnabled { name = "_rustup"; command = "rustup completions zsh"; };
   };
 }
