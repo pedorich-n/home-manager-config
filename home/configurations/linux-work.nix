@@ -16,8 +16,6 @@ in
         version = "2.13";
       };
 
-      rust.enable = true;
-
       aliases.additionalPackages = {
         "java-8" = pkgs.jdk8;
       };
@@ -25,6 +23,7 @@ in
 
     programs = {
       jdk.enable = true;
+      rustup.enable = true;
 
       zsh = {
         enable = true;

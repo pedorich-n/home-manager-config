@@ -10,12 +10,9 @@ in
   custom = {
     hm.name = "wslPersonal";
 
-    development.environments = {
-      rust.enable = true;
-    };
-
     programs = {
       jdk.enable = true;
+      rustup.enable = true;
 
       zsh = {
         enable = true;
