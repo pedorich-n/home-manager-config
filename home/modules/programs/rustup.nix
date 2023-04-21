@@ -1,12 +1,12 @@
 { pkgs, lib, config, ... }:
 with lib;
 let
-  cfg = config.custom.development.environments.rustup;
+  cfg = config.custom.programs.rustup;
 in
 {
   ###### interface
   options = {
-    custom.development.environments.rustup = {
+    custom.programs.rustup = {
       enable = mkEnableOption "Rustup";
     };
   };

@@ -25,5 +25,9 @@ in
   ###### implementation
   config = mkIf cfg.enable {
     home.packages = [ cfg.package ];
+
+    custom.misc.sdkLinks.paths = {
+      "java-17" = cfg.package;
+    };
   };
 }

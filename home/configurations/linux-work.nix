@@ -10,13 +10,9 @@ in
   custom = {
     hm.name = "linuxWork";
 
-    development.environments = {
-      scala = {
-        enable = true;
-        version = "2.13";
-      };
-
-      aliases.additionalPackages = {
+    misc.sdkLinks = {
+      enable = true;
+      paths = {
         "java-8" = pkgs.jdk8;
       };
     };
@@ -24,6 +20,10 @@ in
     programs = {
       jdk.enable = true;
       rustup.enable = true;
+      scala = {
+        enable = true;
+        version = "2.13";
+      };
 
       zsh = {
         enable = true;
