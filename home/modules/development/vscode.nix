@@ -23,6 +23,7 @@
       gruntfuggly.todo-tree
       k--kato.intellij-idea-keybindings
       natqe.reload
+      shd101wyy.markdown-preview-enhanced
       vscodevim.vim
       wmaurer.vscode-jumpy
     ]);

@@ -2,20 +2,7 @@
 with lib;
 let
   cfg = config.custom.development.environments;
-
-  # java-17-default = pkgs.temurin-bin-17; # TODO: try this out
-  java-17-default = pkgs.jdk17;
-
-  jdkSubmodule = types.submodule {
-    options = {
-      enable = mkEnableOption "JDK";
-      package = mkOption {
-        type = types.package;
-        default = java-17-default;
-        description = "JDK to use";
-      };
-    };
-  };
+  javaCfg = config.custom.programs.jdk;
 
   scalaSubmodule = types.submodule {
     options = {
@@ -55,11 +42,6 @@ in
     custom.development.environments = {
       enable = mkEnableOption "Development Environments";
 
-      jdk = mkOption {
-        type = jdkSubmodule;
-        default = { };
-      };
-
       scala = mkOption {
         type = scalaSubmodule;
         default = { };
@@ -76,23 +58,29 @@ in
   ###### implementation
   config =
     let
-      jdkEnabled = cfg.jdk.enable;
       scalaEnabled = cfg.scala.enable;
-      enabled = cfg.enable || jdkEnabled || scalaEnabled;
+      enabled = cfg.enable || scalaEnabled;
 
-      jdkPkgs = lists.optional jdkEnabled cfg.jdk.package;
-      jdkAlias = buildAliasForCfg "jdk" "java-17" cfg.jdk.package;
+      jdkAlias = lib.attrsets.optionalAttrs javaCfg.enable (buildAliasAttrFor "java-17" javaCfg.package);
 
-      scala = pkgs.scala.override { majorVersion = cfg.scala.version; jre = cfg.jdk.package; };
+      scala =
+        let
+          scalaVersion = pkgs.scala.override { majorVersion = cfg.scala.version; };
+        in
+        if javaCfg.enable then scalaVersion.override { jre = javaCfg.package; } else scalaVersion;
 
-      scalaPkgs = lists.optionals scalaEnabled
-        (with pkgs; [
-          scala
-          (coursier.override { jre = cfg.jdk.package; })
-          (bloop.override { jre = cfg.jdk.package; })
-          (sbt.override { jre = cfg.jdk.package; })
-          (ammonite.override { jre = cfg.jdk.package; })
-        ]);
+
+      scalaPkgs =
+        let
+          scalaPkgsVanilla = with pkgs; [
+            coursier
+            bloop
+            sbt
+            ammonite
+          ];
+        in
+        (if javaCfg.enable then builtins.map (pkg: pkg.override { jre = javaCfg.package; }) scalaPkgsVanilla
+        else scalaPkgsVanilla) ++ [ scala ];
 
       scalaAlias = buildAliasForCfg "scala" "scala-${cfg.scala.version}" scala;
 
@@ -104,7 +92,7 @@ in
       };
 
       home = {
-        packages = jdkPkgs ++ scalaPkgs;
+        packages = scalaPkgs;
 
         file = with builtins; listToAttrs (filter customLib.nonEmpty allAliases);
       };

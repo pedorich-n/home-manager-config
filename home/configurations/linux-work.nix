@@ -11,8 +11,6 @@ in
     hm.name = "linuxWork";
 
     development.environments = {
-      jdk.enable = true;
-
       scala = {
         enable = true;
         version = "2.13";
@@ -26,6 +24,8 @@ in
     };
 
     programs = {
+      jdk.enable = true;
+
       zsh = {
         enable = true;
         keychainIdentities = [ "work/paidy" gpgKey ];

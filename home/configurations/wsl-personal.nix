@@ -11,12 +11,12 @@ in
     hm.name = "wslPersonal";
 
     development.environments = {
-      jdk.enable = true;
-
       rust.enable = true;
     };
 
     programs = {
+      jdk.enable = true;
+
       zsh = {
         enable = true;
         keychainIdentities = [ "id_main" gpgKey ];
