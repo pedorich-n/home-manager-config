@@ -59,6 +59,7 @@ in
     caffeine-ng
     circleci-cli
     saml2aws
+    slack
     sublime4
     pyenv
     tfenv
