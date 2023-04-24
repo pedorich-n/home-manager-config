@@ -58,10 +58,10 @@ in
     barrier
     caffeine-ng
     circleci-cli
+    pyenv
     saml2aws
     slack
     sublime4
-    pyenv
     tfenv
   ]) ++ (with pkgs.gnomeExtensions; [
     date-menu-formatter
