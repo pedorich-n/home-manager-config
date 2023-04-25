@@ -30,7 +30,7 @@ in
         export HOSTNAME=$(hostname)
       '';
 
-      initExtraBeforeCompInit = strings.optionalString (customLib.nonEmpty cfg.keychainIdentities) ''
+      initExtraFirst = strings.optionalString (customLib.nonEmpty cfg.keychainIdentities) ''
         zstyle :omz:plugins:keychain agents "gpg,ssh"
         zstyle :omz:plugins:keychain identities ${(builtins.concatStringsSep " " cfg.keychainIdentities)}
         zstyle :omz:plugins:keychain options --quiet
@@ -54,7 +54,7 @@ in
 
     custom.programs.zsh.snap = {
       enable = true;
-      reposDir = "$HOME/.zsh-plugins";
+      reposDir = "${config.home.homeDirectory}/.zsh-plugins";
       sources = [
         {
           repo = "ohmyzsh/ohmyzsh";

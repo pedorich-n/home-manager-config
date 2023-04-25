@@ -83,7 +83,7 @@ in
   config = mkIf cfg.enable {
     home.packages = [ pkgs.zsh-snap ];
 
-    programs.zsh.initExtra = with builtins; with customLib;
+    programs.zsh.initExtraBeforeCompInit = with builtins; with customLib;
       ''
         ${strings.optionalString (nonEmpty cfg.reposDir) "zstyle ':znap:*' repos-dir ${cfg.reposDir}"}
         source ${pkgs.zsh-snap}/znap.zsh
