@@ -20,6 +20,7 @@
 
       # Behavior
       donjayamanne.githistory
+      fabiospampinato.vscode-open-in-github
       gruntfuggly.todo-tree
       k--kato.intellij-idea-keybindings
       natqe.reload
@@ -57,6 +58,11 @@
         key = "shift+alt+down";
         command = "-extension.vim_cmd+alt+down";
         when = "editorTextFocus && vim.active && !inDebugRepl";
+      }
+      {
+        key = "alt+g";
+        command = "openInGitHub.openFile";
+        when = "editorTextFocus";
       }
     ];
 
