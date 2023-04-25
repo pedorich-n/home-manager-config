@@ -25,6 +25,16 @@ in
       };
 
       gpg.enable = true;
+
+      rtx = {
+        enable = true;
+        shellIntegrations.zsh.enable = true;
+        config = {
+          tools = {
+            "python" = [ "3.11" ];
+          };
+        };
+      };
     };
   };
 

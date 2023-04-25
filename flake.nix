@@ -45,6 +45,12 @@
         flake-utils.follows = "flake-utils";
       };
     };
+
+    rtx-flake = {
+      url = "github:jdxcode/rtx";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
   outputs = { flake-utils, nix-formatter-pack, ... } @ inputs:

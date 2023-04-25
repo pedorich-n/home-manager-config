@@ -30,13 +30,19 @@ in
         keychainIdentities = [ "work/paidy" gpgKey ];
       };
 
-      pyenv = {
-        enable = true;
-        shellIntegrations.zsh.enable = true;
-      };
-
       jetbrains = {
         idea.enable = true;
+      };
+
+      rtx = {
+        enable = true;
+        shellIntegrations.zsh.enable = true;
+        config = {
+          tools = {
+            "python" = [ "3.11" ];
+            "terraform" = [ "0.15" "0.12" ];
+          };
+        };
       };
     };
   };
@@ -62,7 +68,6 @@ in
     saml2aws
     slack
     sublime4
-    tfenv
   ]) ++ (with pkgs.gnomeExtensions; [
     date-menu-formatter
     lock-keys

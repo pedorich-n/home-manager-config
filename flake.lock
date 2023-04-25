@@ -189,9 +189,33 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "pyenv-source": "pyenv-source",
+        "rtx-flake": "rtx-flake",
         "tfenv-source": "tfenv-source",
         "tomorrow-theme-source": "tomorrow-theme-source",
         "zsh-snap-source": "zsh-snap-source"
+      }
+    },
+    "rtx-flake": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1682266994,
+        "narHash": "sha256-a4CLjKqpcKAvGWcs14yknqnOIibLY8F25oNzEZaCuS8=",
+        "owner": "jdxcode",
+        "repo": "rtx",
+        "rev": "743cf4906b3c712476994655629519cd9e9e958a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jdxcode",
+        "repo": "rtx",
+        "type": "github"
       }
     },
     "systems": {
