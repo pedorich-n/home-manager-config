@@ -6,7 +6,7 @@ rec {
 
   pkgsFor = system: pkgs: import pkgs {
     inherit system;
-    overlays = [ inputs.nix-vscode-extensions.overlays.default inputs.rtx-flake.overlay customOverlays ];
+    overlays = [ inputs.nix-vscode-extensions.overlays.default customOverlays ];
     config.allowUnfree = true;
   };
 
