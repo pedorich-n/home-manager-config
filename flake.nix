@@ -23,16 +23,6 @@
       flake = false;
     };
 
-    pyenv-source = {
-      url = "github:pyenv/pyenv";
-      flake = false;
-    };
-
-    tfenv-source = {
-      url = "github:tfutils/tfenv";
-      flake = false;
-    };
-
     tomorrow-theme-source = {
       url = "github:chriskempson/tomorrow-theme";
       flake = false;

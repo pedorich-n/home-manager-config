@@ -164,22 +164,6 @@
         "type": "gitlab"
       }
     },
-    "pyenv-source": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1681665068,
-        "narHash": "sha256-4vHmtjZfUVzWonDMQu4a+wWi73ULfuJSB3UKYF7i0wI=",
-        "owner": "pyenv",
-        "repo": "pyenv",
-        "rev": "a57e0b5019c1d5d08d3311306bde3cf6c58997a2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pyenv",
-        "repo": "pyenv",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -188,9 +172,7 @@
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
-        "pyenv-source": "pyenv-source",
         "rtx-flake": "rtx-flake",
-        "tfenv-source": "tfenv-source",
         "tomorrow-theme-source": "tomorrow-theme-source",
         "zsh-snap-source": "zsh-snap-source"
       }
@@ -230,22 +212,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "tfenv-source": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1664641260,
-        "narHash": "sha256-UNvLJQB47IRcNZpoUGXTW2g63ApijnIB3oUb7Zu4lUY=",
-        "owner": "tfutils",
-        "repo": "tfenv",
-        "rev": "1ccfddb22005b34eacaf06a9c33f58f14e816ec9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tfutils",
-        "repo": "tfenv",
         "type": "github"
       }
     },

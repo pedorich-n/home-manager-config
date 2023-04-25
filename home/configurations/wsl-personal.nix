@@ -19,11 +19,6 @@ in
         keychainIdentities = [ "id_main" gpgKey ];
       };
 
-      pyenv = {
-        enable = true;
-        shellIntegrations.zsh.enable = true;
-      };
-
       gpg.enable = true;
 
       rtx = {
