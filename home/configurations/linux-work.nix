@@ -64,7 +64,6 @@ in
     barrier
     caffeine-ng
     circleci-cli
-    pyenv
     saml2aws
     slack
     sublime4
