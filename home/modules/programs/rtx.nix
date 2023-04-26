@@ -45,15 +45,7 @@ in
 
   ###### implementation
   config = mkIf cfg.enable {
-    home = {
-      packages = [ package ];
-
-      activation = with lib.hm; {
-        installRtxPackages = dag.entryAfter [ "linkGeneration" ] ''
-          $DRY_RUN_CMD ${package}/bin/rtx install --install-missing ''${VERBOSE_ARG:---log-level=error} 
-        '';
-      };
-    };
+    home.packages = [ package ];
 
     programs.zsh.initExtra = strings.optionalString cfg.shellIntegrations.zsh.enable (mkAfter ''
       eval "$(${package}/bin/rtx activate zsh)"
