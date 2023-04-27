@@ -1,7 +1,7 @@
 inputs: final: prev:
 {
   # TODO: delete this once https://github.com/NixOS/nixpkgs/pull/218450 gets merged
-  inherit (prev.callPackage ./rtx { inherit inputs; } final prev) rtx;
+  rtx = prev.callPackage ./rtx { inherit inputs; } final prev;
 
   zsh-snap = prev.callPackage ../packages/zsh-snap { inherit inputs; };
 

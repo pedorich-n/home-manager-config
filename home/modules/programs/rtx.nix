@@ -54,7 +54,7 @@ in
     xdg.configFile."rtx/config.toml" =
       let
         tomlConfig = {
-          tools = cfg.config.tools;
+          inherit (cfg.config) tools;
         };
       in
       mkIf (customLib.nonEmpty cfg.config) {
