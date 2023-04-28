@@ -5,6 +5,7 @@ let
   cfgCustom = config.custom.hm;
 
   home = "/home/${cfg.username}";
+  hmConfigLocation = "${home}/.config.nix";
 
   nixPkg = pkgs.nix;
   nixApps = with pkgs; [
@@ -17,16 +18,18 @@ let
 
   commonApps = with pkgs; [
     bat
+    coreutils-full
     curl
     delta
     gdu
+    gnused
     jq
     keychain
+    man
     ripgrep
+    screen
     tmux
   ];
-
-  hmConfigLocation = "${home}/.config.nix";
 in
 {
   ###### interface
@@ -58,9 +61,7 @@ in
         hms = "home-manager switch --flake ${hmConfigLocation}#${cfgCustom.name}";
         hmd = "python ${hmConfigLocation}/hmd.py";
 
-        l = "ls -lah";
-        la = "ls -lAh";
-        ll = "ls -alF";
+        ll = "ls -alFh";
       };
     };
 
