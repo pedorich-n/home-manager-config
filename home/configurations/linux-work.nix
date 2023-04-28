@@ -48,10 +48,7 @@ in
   };
 
   programs = {
-    bash.enable = true; # To set Home Manager's ENVs vars in .profile
-    htop.enable = true;
     direnv.enable = true;
-    vim.enable = true;
     vscode.enable = true;
 
     git = {

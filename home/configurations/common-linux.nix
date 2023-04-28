@@ -55,8 +55,8 @@ in
       packages = nixApps ++ commonApps;
 
       sessionVariables = {
-        "PAGER" = "less -R";
-        "HOSTNAME" = "$(hostname)";
+        PAGER = "less -R";
+        HOSTNAME = "$(hostname)";
       };
 
       shellAliases = {
@@ -88,9 +88,11 @@ in
         '';
       };
 
-      home-manager.enable = true;
       bat.enable = true;
+      home-manager.enable = true;
+      htop.enable = true;
       less.enable = true;
+      vim.enable = true;
     };
 
     targets.genericLinux.enable = true;

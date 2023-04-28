@@ -34,10 +34,6 @@ in
   };
 
   programs = {
-    htop.enable = true;
-    direnv.enable = true;
-    vim.enable = true;
-
     git = {
       enable = true;
       signing.key = gpgKey;

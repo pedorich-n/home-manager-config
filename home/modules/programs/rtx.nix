@@ -48,7 +48,7 @@ in
     home.packages = [ package ];
 
     programs.zsh.initExtra = strings.optionalString cfg.shellIntegrations.zsh.enable (mkAfter ''
-      eval "$(${package}/bin/rtx activate zsh)"
+      eval "$(${getExe package} activate zsh)"
     '');
 
     xdg.configFile."rtx/config.toml" =

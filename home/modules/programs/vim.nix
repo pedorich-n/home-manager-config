@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
   home.sessionVariables = {
-    "VISUAL" = "vim";
-    "EDITOR" = "$VISUAL";
+    VISUAL = "vim";
+    EDITOR = "$VISUAL";
   };
 
   programs.vim = {

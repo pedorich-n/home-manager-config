@@ -4,8 +4,8 @@ let
 in
 {
   home.sessionVariables = {
-    "DELTA_PAGER" = "less -R";
-    "LESS" = "";
+    DELTA_PAGER = "less -R";
+    LESS = "";
   };
 
   programs.git = {
