@@ -24,16 +24,9 @@ in
         enable = true;
         version = "2.13";
       };
-
-      zsh = {
-        enable = true;
-        keychainIdentities = [ "work/paidy" gpgKey ];
-      };
-
       jetbrains = {
         idea.enable = true;
       };
-
       rtx = {
         enable = true;
         shellIntegrations.zsh.enable = true;
@@ -43,6 +36,13 @@ in
             "terraform" = [ "0.15" "0.12" ];
           };
         };
+      };
+
+      gpg.enable = true;
+
+      zsh = {
+        enable = true;
+        keychainIdentities = [ "work/paidy" gpgKey ];
       };
     };
   };

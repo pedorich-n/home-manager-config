@@ -13,14 +13,6 @@ in
     programs = {
       jdk.enable = true;
       rustup.enable = true;
-
-      zsh = {
-        enable = true;
-        keychainIdentities = [ "id_main" gpgKey ];
-      };
-
-      gpg.enable = true;
-
       rtx = {
         enable = true;
         shellIntegrations.zsh.enable = true;
@@ -29,6 +21,13 @@ in
             "python" = [ "3.11" ];
           };
         };
+      };
+
+      gpg.enable = true;
+
+      zsh = {
+        enable = true;
+        keychainIdentities = [ "id_main" gpgKey ];
       };
     };
   };

@@ -69,6 +69,14 @@ in
     };
 
     programs = {
+      home-manager.enable = true;
+
+      bash.enable = true; # To set Home Manager's ENVs vars in .profile
+      bat.enable = true;
+      htop.enable = true;
+      less.enable = true;
+      vim.enable = true;
+
       zsh = {
         dirHashes = {
           "hmc" = hmConfigLocation;
@@ -87,12 +95,6 @@ in
           compdef _nshell nshell
         '';
       };
-
-      bat.enable = true;
-      home-manager.enable = true;
-      htop.enable = true;
-      less.enable = true;
-      vim.enable = true;
     };
 
     targets.genericLinux.enable = true;
