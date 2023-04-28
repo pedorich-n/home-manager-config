@@ -1,5 +1,10 @@
 { pkgs, ... }:
 {
+  home.sessionVariables = {
+    "VISUAL" = "vim";
+    "EDITOR" = "$VISUAL";
+  };
+
   programs.vim = {
     packageConfigurable = pkgs.vim_configurable.override { features = "normal"; };
 
@@ -44,7 +49,7 @@
 
       " always show status line
       set laststatus=2
-      " hide native mode name 
+      " hide native mode name
       set noshowmode
 
       " Lightline's settings

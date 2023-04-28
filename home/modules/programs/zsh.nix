@@ -23,13 +23,6 @@ in
     programs.zsh = {
       enable = true;
 
-      envExtra = ''
-        export VISUAL=vim
-        export EDITOR="$VISUAL"
-        export PAGER=less
-        export HOSTNAME=$(hostname)
-      '';
-
       initExtraFirst = strings.optionalString (customLib.nonEmpty cfg.keychainIdentities) ''
         zstyle :omz:plugins:keychain agents "gpg,ssh"
         zstyle :omz:plugins:keychain identities ${(builtins.concatStringsSep " " cfg.keychainIdentities)}

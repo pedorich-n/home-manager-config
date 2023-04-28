@@ -17,10 +17,8 @@ let
   ];
 
   commonApps = with pkgs; [
-    bat
     coreutils-full
     curl
-    delta
     gdu
     gnused
     jq
@@ -56,6 +54,11 @@ in
 
       packages = nixApps ++ commonApps;
 
+      sessionVariables = {
+        "PAGER" = "less -R";
+        "HOSTNAME" = "$(hostname)";
+      };
+
       shellAliases = {
         hm = "home-manager";
         hms = "home-manager switch --flake ${hmConfigLocation}#${cfgCustom.name}";
@@ -86,6 +89,7 @@ in
       };
 
       home-manager.enable = true;
+      bat.enable = true;
       less.enable = true;
     };
 

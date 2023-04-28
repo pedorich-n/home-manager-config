@@ -1,10 +1,14 @@
 { pkgs, lib, config, customLib, ... }:
-with lib;
 let
   cfg = config.programs.git;
 in
 {
-  config.programs.git = {
+  home.sessionVariables = {
+    "DELTA_PAGER" = "less -R";
+    "LESS" = "";
+  };
+
+  programs.git = {
     package = pkgs.git;
 
     userName = "Nikita Pedorich";
