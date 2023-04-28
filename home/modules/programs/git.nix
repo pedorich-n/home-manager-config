@@ -1,4 +1,4 @@
-{ pkgs, lib, config, customLib, ... }:
+{ pkgs, config, customLib, ... }:
 let
   cfg = config.programs.git;
 in
@@ -28,13 +28,6 @@ in
       push.default = "simple";
     };
 
-    ignores = [
-      ".bloop/"
-      ".metals/"
-      ".venv/"
-      ".vscode/"
-      "metals.sbt"
-      "venv/"
-    ];
+    ignores = config.custom.misc.globalIgnores or [ ];
   };
 }

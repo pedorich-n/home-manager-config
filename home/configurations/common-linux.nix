@@ -68,6 +68,12 @@ in
       };
     };
 
+    custom = {
+      programs = {
+        fd.enable = true;
+      };
+    };
+
     programs = {
       home-manager.enable = true;
 
@@ -75,7 +81,9 @@ in
       bat.enable = true;
       htop.enable = true;
       less.enable = true;
+      tealdeer.enable = true;
       vim.enable = true;
+
 
       zsh = {
         dirHashes = {
