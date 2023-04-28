@@ -1,9 +1,9 @@
-{ stdenvNoCC, lib, inputs }:
+{ stdenvNoCC, lib, zsh-snap-source }:
 stdenvNoCC.mkDerivation rec {
   pname = "zsh-snap";
-  version = inputs.zsh-snap-source.shortRev;
+  version = zsh-snap-source.shortRev;
 
-  src = inputs.zsh-snap-source;
+  src = zsh-snap-source;
 
   dontPatch = true;
   dontConfigure = true;

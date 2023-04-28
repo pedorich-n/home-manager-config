@@ -1,5 +1,5 @@
-{ inputs, installShellFiles }: _final: prev:
-(prev.extend inputs.rtx-flake.overlay).rtx.overrideAttrs (oldAttrs: {
+{ installShellFiles, rtx-flake }: _final: prev:
+(prev.extend rtx-flake.overlay).rtx.overrideAttrs (oldAttrs: {
   nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ installShellFiles ];
 
   postInstall = (oldAttrs.postInstall or "") + ''
