@@ -103,6 +103,8 @@
         "**/target" = true;
       };
       "git.autofetch" = false;
+      "nix.enableLanguageServer" = true;
+      "nix.serverPath" = "rnix-lsp";
       "search.exclude" = {
         "**/.ammonite" = true;
         "**/.bloop" = true;
