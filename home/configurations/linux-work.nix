@@ -48,6 +48,7 @@ in
   };
 
   programs = {
+    bash.enable = true; # To set Home Manager's ENVs vars in .profil
     direnv.enable = true;
     vscode.enable = true;
 
