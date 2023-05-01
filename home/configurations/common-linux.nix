@@ -19,7 +19,7 @@ let
   commonApps = with pkgs; [
     coreutils-full
     curl
-    # dtrx
+    dtrx
     gdu
     gnused
     jq
