@@ -2,13 +2,15 @@
 rec {
   customLibFor = pkgs: import ../lib { inherit pkgs; };
 
-  customOverlays = import ../overlays inputs;
-
-  pkgsFor = system: pkgs: import pkgs {
-    inherit system;
-    overlays = [ inputs.nix-vscode-extensions.overlays.default customOverlays ];
-    config.allowUnfree = true;
-  };
+  pkgsFor = system: pkgs:
+    let
+      customOverlays = import ../overlays inputs;
+    in
+    import pkgs {
+      inherit system;
+      overlays = [ inputs.nix-vscode-extensions.overlays.default customOverlays ];
+      config.allowUnfree = true;
+    };
 
   shellsFor = system:
     let

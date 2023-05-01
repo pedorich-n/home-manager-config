@@ -19,6 +19,7 @@ let
   commonApps = with pkgs; [
     coreutils-full
     curl
+    # dtrx
     gdu
     gnused
     jq
@@ -27,6 +28,7 @@ let
     ripgrep
     screen
     tmux
+    tree
   ];
 in
 {

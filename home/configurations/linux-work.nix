@@ -48,7 +48,6 @@ in
   };
 
   programs = {
-    bash.enable = true; # To set Home Manager's ENVs vars in .profil
     direnv.enable = true;
     vscode.enable = true;
 
@@ -62,6 +61,8 @@ in
     barrier
     caffeine-ng
     circleci-cli
+    docker-compose
+    gnome.sushi
     saml2aws
     slack
     sublime4
