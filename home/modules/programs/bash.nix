@@ -56,6 +56,15 @@
       esac
       #################################################################################################################################
 
+      # Some aliases from https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh
+      alias gaa='git add --all'
+      alias gcam='git commit --all --message'
+      alias gd='git diff'
+      alias gl='git pull'
+      alias gst='git status'
+      alias grbc='git rebase --continue'
+      alias gp='git push'
+      alias gpf='git push --force-with-lease'
     '';
   };
 }
