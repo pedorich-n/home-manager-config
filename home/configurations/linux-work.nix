@@ -62,7 +62,6 @@ in
     caffeine-ng
     circleci-cli
     docker-compose
-    gnome.gnome-calendar
     saml2aws
     slack
     sublime4
