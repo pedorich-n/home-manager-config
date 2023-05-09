@@ -13,6 +13,7 @@
 
       # Languages
       jnoortheen.nix-ide
+      ms-python.isort
       ms-python.python
       scala-lang.scala
       scalameta.metals
