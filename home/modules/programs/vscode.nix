@@ -1,4 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
+let
+  exclude =
+    let
+      toGlobal = input: if (lib.strings.hasPrefix "**/" input) then input else "**/${input}";
+    in
+    with builtins; listToAttrs (map (entry: { name = (toGlobal entry); value = true; }) config.custom.misc.globalIgnores);
+in
 {
   programs.vscode = {
     package = pkgs.vscode;
@@ -91,33 +98,12 @@
       "files.insertFinalNewline" = true;
       "files.trimFinalNewlines" = true;
       "files.trimTrailingWhitespace" = true;
-      "files.watcherExclude" = {
-        "**/.ammonite" = true;
-        "**/.bloop" = true;
-        "**/.bsp" = true;
-        "**/.history" = true;
-        "**/.idea" = true;
-        "**/.metals" = true;
-        "**/.scala-build" = true;
-        "**/.scala" = true;
-        "**/metals.sbt" = true;
-        "**/target" = true;
-      };
+      "files.watcherExclude" = exclude;
       "git.autofetch" = false;
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "rnix-lsp";
-      "search.exclude" = {
-        "**/.ammonite" = true;
-        "**/.bloop" = true;
-        "**/.bsp" = true;
-        "**/.history" = true;
-        "**/.idea" = true;
-        "**/.metals" = true;
-        "**/.scala-build" = true;
-        "**/.scala" = true;
-        "**/metals.sbt" = true;
-        "**/target" = true;
-      };
+      "search.useIgnoreFiles" = true;
+      "search.useGlobalIgnoreFiles" = true;
       "python.formatting.provider" = "black";
       "python.formatting.blackArgs" = [ "--line-length=140" ];
       "vim.foldfix" = true;

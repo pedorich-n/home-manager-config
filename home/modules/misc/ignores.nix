@@ -14,10 +14,15 @@ with lib;
   config = {
     custom.misc.globalIgnores = [
       ".bloop/"
+      ".bsp"
+      ".idea/"
       ".metals/"
+      ".scala"
+      ".scala-build"
       ".venv/"
       ".vscode/"
       "metals.sbt"
+      "target/"
       "venv/"
     ];
   };
