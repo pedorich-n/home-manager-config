@@ -4,7 +4,7 @@ let
     let
       toGlobal = input: if (lib.strings.hasPrefix "**/" input) then input else "**/${input}";
     in
-    with builtins; listToAttrs (map (entry: { name = (toGlobal entry); value = true; }) config.custom.misc.globalIgnores);
+    with builtins; listToAttrs (map (entry: { name = toGlobal entry; value = true; }) config.custom.misc.globalIgnores);
 in
 {
   programs.vscode = {

@@ -18,6 +18,7 @@ in
     };
 
     programs = {
+      gnome.dconf.enable = true;
       jdk.enable = true;
       rustup.enable = true;
       scala = {
