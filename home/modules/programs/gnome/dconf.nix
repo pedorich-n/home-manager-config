@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ lib, config, ... }:
 with lib;
 let
   cfg = config.custom.programs.gnome.dconf;
@@ -50,7 +50,7 @@ in
       };
 
       "org/gnome/shell/extensions/date-menu-formatter" = {
-        pattern = "EEE, MMMM dd  HH : mm";
+        pattern = "EEE, MMMM dd  kk : mm";
       };
 
       "org/gnome/shell/extensions/lockkeys" = {
