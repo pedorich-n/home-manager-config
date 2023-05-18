@@ -16,10 +16,7 @@ in
   config = mkIf cfg.enable {
     home.packages = [ pkgs.fd ];
 
-    xdg.configFile."fd/ignore" =
-      let
-        ignores = config.custom.misc.globalIgnores;
-      in
-      mkIf (customLib.nonEmpty ignores) { text = (builtins.concatStringsSep "\n" ignores) + "\n"; };
+    xdg.configFile."fd/ignore" = with config.custom.misc;
+      mkIf (customLib.nonEmpty globalIgnores) { text = (builtins.concatStringsSep "\n" globalIgnores) + "\n"; };
   };
 }
