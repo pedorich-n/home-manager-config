@@ -25,7 +25,6 @@ let
     jq
     keychain
     man
-    ripgrep
     screen
     tmux
     tree
@@ -73,6 +72,10 @@ in
     custom = {
       programs = {
         fd.enable = true;
+        ripgrep = {
+          enable = true;
+          config.lines = [ "--no-require-git" ];
+        };
       };
     };
 
