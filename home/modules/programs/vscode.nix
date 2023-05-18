@@ -101,7 +101,14 @@ in
       "files.watcherExclude" = exclude;
       "git.autofetch" = false;
       "nix.enableLanguageServer" = true;
-      "nix.serverPath" = "rnix-lsp";
+      "nix.serverPath" = "nil";
+      "nix.serverSettings" = {
+        "nil" = {
+          "formatting" = {
+            "command" = [ "nixpkgs-fmt" ];
+          };
+        };
+      };
       "search.useIgnoreFiles" = true;
       "search.useGlobalIgnoreFiles" = true;
       "python.formatting.provider" = "black";

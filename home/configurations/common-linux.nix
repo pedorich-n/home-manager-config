@@ -9,11 +9,11 @@ let
 
   nixPkg = pkgs.nix;
   nixApps = with pkgs; [
+    nil
     nix-tree
     nixPkg
     nixpkgs-fmt
     nvd
-    rnix-lsp
   ];
 
   commonApps = with pkgs; [
