@@ -1,7 +1,7 @@
 { lib, config, customLib, pkgs, ... }:
 with lib;
 let
-  cfg = config.custom.programs.zsh.snap;
+  cfg = config.custom.programs.zsh-snap;
 
   sourceModule = types.submodule {
     options = {
@@ -55,7 +55,7 @@ in
 {
   ###### interface
   options = {
-    custom.programs.zsh.snap = {
+    custom.programs.zsh-snap = {
       enable = mkEnableOption "zsh-snap";
 
       reposDir = mkOption {

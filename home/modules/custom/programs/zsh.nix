@@ -45,7 +45,7 @@ in
       '';
     };
 
-    custom.programs.zsh.snap = {
+    custom.programs.zsh-snap = {
       enable = true;
       reposDir = "${config.home.homeDirectory}/.zsh-plugins";
       sources = [

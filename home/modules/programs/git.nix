@@ -1,7 +1,4 @@
 { pkgs, config, customLib, ... }:
-let
-  cfg = config.programs.git;
-in
 {
   home.sessionVariables = {
     DELTA_PAGER = "less -R";
@@ -14,7 +11,7 @@ in
     userName = "Nikita Pedorich";
     userEmail = "pedorich.n@gmail.com";
 
-    signing.signByDefault = customLib.nonEmpty cfg.signing.key;
+    signing.signByDefault = customLib.nonEmpty config.programs.git.signing.key;
 
     delta = {
       enable = true;

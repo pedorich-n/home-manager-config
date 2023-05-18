@@ -2,8 +2,6 @@
 with lib;
 let
   cfg = config.custom.programs.jdk;
-
-  jdk-17-default = pkgs.jdk17;
 in
 {
   ###### interface
@@ -15,7 +13,7 @@ in
       # Just a central place to hold reference for system-wide JDK package
       package = mkOption {
         type = types.package;
-        default = jdk-17-default;
+        default = pkgs.jdk17;
         description = "JDK to use";
       };
     };
