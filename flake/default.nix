@@ -22,22 +22,24 @@ rec {
     in
     customLib.flattenAttrsets allShells;
 
-  formatterPackArgsFor = system:
+  checksFor = system:
     let
-      # As of March 2023 something in this formatter is using exteremely new packages,
-      # and that results in 3GB of downloads of dependencies just to format the project
-      # so I'll resort to a stable channel for doing this for now.
-      pkgs = pkgsFor system inputs.nixpkgs-stable;
+      pkgs = pkgsFor system inputs.nixpkgs;
     in
-    {
-      inherit system pkgs;
-      checkFiles = [ "../" ];
-      config = {
-        tools = {
-          deadnix.enable = true;
-          nixpkgs-fmt.enable = true;
-          statix.enable = true;
+    inputs.pre-commit-hooks.lib.${system}.run {
+      src = ../.;
+      hooks = {
+        # Nix
+        deadnix.enable = true;
+        nixpkgs-fmt.enable = true;
+        statix.enable = true;
+
+        # Python 
+        black = {
+          enable = true;
+          entry = with pkgs; lib.mkForce "${lib.getExe black} --line-length=150";
         };
+        isort.enable = true;
       };
     };
 
