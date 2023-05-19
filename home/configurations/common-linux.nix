@@ -17,6 +17,7 @@ let
   ];
 
   commonApps = with pkgs; [
+    black
     coreutils-full
     curl
     dtrx
@@ -26,6 +27,7 @@ let
     keychain
     man
     screen
+    shfmt
     tmux
     tree
   ];

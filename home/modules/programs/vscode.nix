@@ -20,6 +20,7 @@ in
 
       # Languages
       jnoortheen.nix-ide
+      mkhl.shfmt
       ms-python.isort
       ms-python.python
       scala-lang.scala

@@ -40,6 +40,9 @@ rec {
           entry = with pkgs; lib.mkForce "${lib.getExe black} --line-length=150";
         };
         isort.enable = true;
+
+        # Shell
+        shfmt.enable = true;
       };
     };
 
