@@ -56,22 +56,13 @@
   };
 
   outputs = { flake-utils, ... } @ inputs:
-    with flake-utils.lib; let
+    let
       flakeLib = import ./flake { inherit inputs; };
-
-      checks = eachDefaultSystem (system: {
-        checks.pre-commit-check = flakeLib.checksFor system;
-      });
-
-      shells = eachDefaultSystem (system: {
-        devShells = flakeLib.shellsFor system;
-      });
     in
-    {
-      # Schema: https://nixos.wiki/wiki/Flakes#Output_schema
-      homeConfigurations = with flake-utils.lib.system; with flakeLib; {
-        wslPersonal = homeManagerConfFor x86_64-linux ./home/configurations/wsl-personal.nix;
-        linuxWork = homeManagerConfFor x86_64-linux ./home/configurations/linux-work.nix;
+    with flake-utils.lib.system; flakeLib.flakeFor {
+      ${x86_64-linux} = {
+        wslPersonal = ./home/configurations/wsl-personal.nix;
+        linuxWork = ./home/configurations/linux-work.nix;
       };
-    } // checks // shells;
+    };
 }
