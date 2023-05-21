@@ -9,7 +9,13 @@ let
     import pkgs {
       inherit system;
       overlays = [ inputs.nix-vscode-extensions.overlays.default customOverlays ];
-      config.allowUnfree = true;
+      config = {
+        allowUnfree = true;
+        permittedInsecurePackages = [
+          "openssl-1.1.1t"
+        ];
+
+      };
     };
 
   customLibFor = pkgs: import ../lib { inherit pkgs; };
