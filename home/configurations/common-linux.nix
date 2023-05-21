@@ -18,7 +18,7 @@ let
 
   commonApps = with pkgs; [
     black # Python code formatter
-    coreutils-full # GNU coreutils (cp, mv, whoami, echo, wc, ...) 
+    coreutils-full # GNU coreutils (cp, mv, whoami, echo, wc, ...)
     curl # HTTP client
     dtrx # "Do The Right Extraction" unarchiver
     gdu # Fast disk usage analyser
@@ -32,9 +32,9 @@ let
     tree # Recursive directory listing
   ];
 
-  additionalCaches = {
-    "http://nix-community.cachix.org" = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
-  };
+  # additionalCaches = {
+  #   "http://nix-community.cachix.org" = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
+  # };
 in
 {
   ###### interface
@@ -125,8 +125,8 @@ in
       settings = {
         experimental-features = [ "nix-command" "flakes" ];
         log-lines = 50;
-        substituters = builtins.attrNames additionalCaches;
-        trusted-public-keys = builtins.attrValues additionalCaches;
+        # substituters = builtins.attrNames additionalCaches;
+        # trusted-public-keys = builtins.attrValues additionalCaches;
       };
     };
   };
