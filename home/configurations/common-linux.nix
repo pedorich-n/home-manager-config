@@ -9,28 +9,32 @@ let
 
   nixPkg = pkgs.nix;
   nixApps = with pkgs; [
-    nil
-    nix-tree
-    nixPkg
-    nixpkgs-fmt
-    nvd
+    nil # NIX language server
+    nix-tree # Interative NIX depdencey graph
+    nixPkg # NIX itself
+    nixpkgs-fmt # NIX code formatter
+    nvd # Nix Version Diff
   ];
 
   commonApps = with pkgs; [
-    black
-    coreutils-full
-    curl
-    dtrx
-    gdu
-    gnused
-    jq
-    keychain
-    man
-    screen
-    shfmt
-    tmux
-    tree
+    black # Python code formatter
+    coreutils-full # GNU coreutils (cp, mv, whoami, echo, wc, ...) 
+    curl # HTTP client
+    dtrx # "Do The Right Extraction" unarchiver
+    gdu # Fast disk usage analyser
+    gnused # GNU Stream EDitor
+    jq # Command-line JSON processor
+    keychain # ssh-agent and/or gpg-agent between logins
+    man # Man pages reader
+    screen # GNU Screen. Terminal multiplexer
+    shfmt # Shell formatter
+    tmux # Terminal MULtiplexor
+    tree # Recursive directory listing
   ];
+
+  additionalCaches = {
+    "http://nix-community.cachix.org" = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
+  };
 in
 {
   ###### interface
@@ -73,8 +77,9 @@ in
 
     custom = {
       programs = {
-        fd.enable = true;
+        fd.enable = true; # Fast "find" alternative (files/directories search)
         ripgrep = {
+          # Fast grep replacement (regex search in content)
           enable = true;
           config.lines = [ "--no-require-git" ];
         };
@@ -85,11 +90,11 @@ in
       home-manager.enable = true;
 
       bash.enable = true; # To set Home Manager's ENVs vars in .profile
-      bat.enable = true;
-      htop.enable = true;
-      less.enable = true;
-      tealdeer.enable = true;
-      vim.enable = true;
+      bat.enable = true; # Colorful `cat` replacement (text-files viewer)
+      htop.enable = true; # Interactive resource monitor
+      less.enable = true; # Interactive text-files viewer
+      tealdeer.enable = true; # Community-driven Man alternative
+      vim.enable = true; # Text editor
 
 
       zsh = {
@@ -120,6 +125,8 @@ in
       settings = {
         experimental-features = [ "nix-command" "flakes" ];
         log-lines = 50;
+        substituters = builtins.attrNames additionalCaches;
+        trusted-public-keys = builtins.attrValues additionalCaches;
       };
     };
   };
