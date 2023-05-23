@@ -62,11 +62,11 @@ def main():
         console.print(format_generation(generation))
 
     hm_generation_left_version = get_hm_generation_input("first", valid_ids, console)
-    hm_generation_right_num = get_hm_generation_input("second", valid_ids, console)
+    hm_generation_right_version = get_hm_generation_input("second", valid_ids, console)
 
-    console.print(f"Comparing generations {hm_generation_left_version}..{hm_generation_right_num}")
+    console.print(f"Comparing generations {hm_generation_left_version}..{hm_generation_right_version}")
 
-    cmd = ["nvd", "diff", generations_dict[hm_generation_left_version].path, generations_dict[hm_generation_right_num].path]
+    cmd = ["nvd", "diff", generations_dict[hm_generation_left_version].path, generations_dict[hm_generation_right_version].path]
 
     subprocess.run(cmd, shell=False)
 
