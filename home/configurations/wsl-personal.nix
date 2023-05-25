@@ -1,4 +1,4 @@
-_:
+{ pkgs, ... }:
 let
   gpgKey = "ADC7FB37D4DF4CE2";
 in
@@ -38,4 +38,6 @@ in
       signing.key = gpgKey;
     };
   };
+
+  home.packages = [ pkgs.wslu ];
 }
