@@ -88,9 +88,8 @@ in
         ${strings.optionalString (nonEmpty cfg.reposDir) "zstyle ':znap:*' repos-dir ${cfg.reposDir}"}
         source ${pkgs.zsh-snap}/znap.zsh
 
-        ${strings.optionalString (nonEmpty cfg.sources) (concatStringsSep "\n" (map znapSourceFor cfg.sources))}
-
-        ${strings.optionalString (nonEmpty cfg.fpaths) (concatStringsSep "\n" (map znapFpathFor cfg.fpaths))}
+        ${strings.optionalString (nonEmpty cfg.sources) (concatLines (map znapSourceFor cfg.sources))}
+        ${strings.optionalString (nonEmpty cfg.fpaths) (concatLines (map znapFpathFor cfg.fpaths))}
       '';
   };
 }
