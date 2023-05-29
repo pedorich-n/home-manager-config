@@ -21,6 +21,7 @@ let
     coreutils-full # GNU coreutils (cp, mv, whoami, echo, wc, ...)
     curl # HTTP client
     dtrx # "Do The Right Extraction" unarchiver
+    fd # Fast "find" alternative (files/directories search)
     gdu # Fast disk usage analyser
     gnused # GNU Stream EDitor
     jq # Command-line JSON processor
@@ -67,6 +68,8 @@ in
       };
 
       shellAliases = {
+        fd = "fd --no-require-git";
+
         hm = "home-manager";
         hms = "home-manager switch --flake ${hmConfigLocation}#${cfgCustom.name}";
         hmd = "python ${hmConfigLocation}/hmd.py";
@@ -77,7 +80,6 @@ in
 
     custom = {
       programs = {
-        fd.enable = true; # Fast "find" alternative (files/directories search)
         ripgrep = {
           # Fast grep replacement (regex search in content)
           enable = true;
