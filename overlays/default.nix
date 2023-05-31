@@ -8,4 +8,6 @@ inputs: final: prev:
   vimPlugins = prev.vimPlugins // {
     tomorrow-theme = prev.callPackage ../packages/vim-tomorrow-theme { inherit (inputs) tomorrow-theme-source; };
   };
+
+  github-copilot-intellij-agent = prev.callPackage ../packages/intellij-copilot { };
 }

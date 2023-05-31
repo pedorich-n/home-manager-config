@@ -8,6 +8,8 @@ let
       enable = mkEnableOption "Intellij IDEA";
     };
   };
+
+  getJetbrainsVersion = package: lib.versions.majorMinor (lib.strings.getVersion package);
 in
 {
   ###### interface
@@ -25,9 +27,21 @@ in
   config =
     let
       enabled = cfg.idea.enable;
+      package = pkgs.jetbrains.idea-community;
+
+      copilotAgentStorePath = getBin pkgs.github-copilot-intellij-agent;
+      copilotAgentExePath = getExe pkgs.github-copilot-intellij-agent;
+
+      copilotAgentBinRelativePath = strings.unsafeDiscardStringContext (builtins.replaceStrings [ "${copilotAgentStorePath}/" ] [ "" ] copilotAgentExePath);
     in
     mkIf enabled {
       home.packages = [ pkgs.jetbrains.idea-community ];
-      xdg.configFile."ideavim/ideavimrc".text = builtins.readFile "${self}/dotfiles/.ideavimrc";
+      xdg = {
+        configFile."ideavim/ideavimrc".text = builtins.readFile "${self}/dotfiles/.ideavimrc";
+        dataFile."JetBrains/IdeaIC${getJetbrainsVersion package}/github-copilot-intellij/copilot-agent/${copilotAgentBinRelativePath}" = {
+          source = copilotAgentExePath;
+          force = true;
+        };
+      };
     };
 }
