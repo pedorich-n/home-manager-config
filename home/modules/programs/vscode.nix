@@ -1,19 +1,27 @@
 { pkgs, config, lib, ... }:
-let
+with lib; let
   exclude =
     let
-      toGlobal = input: if (lib.strings.hasPrefix "**/" input) then input else "**/${input}";
+      toGlobal = input: if (strings.hasPrefix "**/" input) then input else "**/${input}";
     in
     with builtins; listToAttrs (map (entry: { name = toGlobal entry; value = true; }) config.custom.misc.globalIgnores);
+
+  keymapDisableOpenTabAtIndex =
+    let
+      getKeyBingingFor = index:
+        {
+          key = "alt+${index}";
+          command = "-workbench.action.openEditorAtIndex${index}";
+        };
+    in
+    with builtins; map (index: getKeyBingingFor (toString index)) (lists.range 1 9);
 in
 {
   programs.vscode = {
     package = pkgs.vscode;
 
     extensions = (with pkgs.vscode-extensions; [
-      # Languages
-      # Has to be pulled from nixpkgs until this is fixed: https://github.com/nix-community/nix-vscode-extensions/issues/5
-      rust-lang.rust-analyzer
+      github.copilot
     ]) ++ (with pkgs.vscode-marketplace; [
       # Themes
       matklad.pale-fire
@@ -23,11 +31,13 @@ in
       mkhl.shfmt
       ms-python.isort
       ms-python.python
+      rust-lang.rust-analyzer
       scala-lang.scala
       scalameta.metals
       tamasfe.even-better-toml
 
       # Behavior
+      alefragnani.bookmarks
       donjayamanne.githistory
       fabiospampinato.vscode-open-in-github
       gruntfuggly.todo-tree
@@ -73,7 +83,17 @@ in
         command = "openInGitHub.openFile";
         when = "editorTextFocus";
       }
-    ];
+      {
+        key = "alt+2";
+        command = "workbench.view.extension.bookmarks";
+        when = "editorFocus";
+      }
+      {
+        key = "alt+2";
+        command = "workbench.action.toggleSidebarVisibility";
+        when = "!editorFocus";
+      }
+    ] ++ keymapDisableOpenTabAtIndex;
 
     userSettings = {
       "editor.accessibilitySupport" = "off";
