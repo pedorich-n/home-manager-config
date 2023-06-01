@@ -2,7 +2,7 @@
 with lib; let
   watcherExclude =
     let
-      toGlobal = input: if (strings.hasPrefix "**/" input) then input else "**/${input}";
+      toGlobal = with strings; input: removeSuffix "/" (if (hasPrefix "**/" input) then input else "**/${input}");
     in
     with builtins; listToAttrs (map (entry: { name = toGlobal entry; value = true; }) config.custom.misc.globalIgnores);
 
@@ -24,7 +24,10 @@ in
       github.copilot
     ]) ++ (with pkgs.vscode-marketplace; [
       # Themes
-      matklad.pale-fire
+      evgeniypetukhov.dark-low-contrast
+      dustinsanders.an-old-hope-theme-vscode
+      pawelgrzybek.gatito-theme
+      space-ocean-kit-refined.space-ocean-kit-refined
 
       # Languages
       jnoortheen.nix-ide
@@ -38,6 +41,7 @@ in
 
       # Behavior
       alefragnani.bookmarks
+      cs50.vscode-presentation-mode
       donjayamanne.githistory
       fabiospampinato.vscode-open-in-github
       gruntfuggly.todo-tree
@@ -107,7 +111,10 @@ in
       "editor.formatOnSaveMode" = "file";
       "editor.formatOnType" = true;
       "editor.indentSize" = 2;
+      "editor.inlineSuggest.enabled" = true;
       "editor.insertSpaces" = true;
+      "editor.minimap.enabled" = false;
+      "editor.semanticHighlighting.enabled" = true;
       "editor.stickyScroll.enabled" = true;
       "editor.stickyScroll.maxLineCount" = 10;
       "editor.tabSize" = 2;
@@ -130,8 +137,24 @@ in
           };
         };
       };
+      "metals.enableSemanticHighlighting" = true;
       "search.useIgnoreFiles" = true;
       "search.useGlobalIgnoreFiles" = true;
+      "presentation-mode.active" = {
+        "commands" = [ "workbench.action.closeSidebar" ];
+        "editor.fontSize" = 18;
+        "editor.minimap.enabled" = false;
+        "workbench.activityBar.visible" = false;
+        "workbench.statusBar.visible" = false;
+        "window.zoomLevel" = 2;
+      };
+      "presentation-mode.configBackup" = {
+        "editor.fontSize" = "undefined";
+        "editor.minimap.enabled" = "undefined";
+        "workbench.activityBar.visible" = "undefined";
+        "workbench.statusBar.visible" = "undefined";
+        "window.zoomLevel" = "undefined";
+      };
       "python.formatting.provider" = "black";
       "python.formatting.blackArgs" = [ "--line-length=140" ];
       "vim.foldfix" = true;
@@ -156,8 +179,8 @@ in
       "vim.useSystemClipboard" = true;
       "window.newWindowDimensions" = "maximized";
       "window.openFoldersInNewWindow" = "on";
-      "window.zoomLevel" = 0.8;
-      "workbench.colorTheme" = "Pale Fire";
+      "window.zoomLevel" = 0.6;
+      "workbench.colorTheme" = "Dark Low Contrast Fire";
     };
   };
 }

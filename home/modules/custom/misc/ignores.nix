@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ lib, ... }:
 with lib;
 {
   ###### interface
@@ -13,6 +13,7 @@ with lib;
   ###### implementation
   config = {
     custom.misc.globalIgnores = [
+      ".ammonite"
       ".bloop/"
       ".bsp"
       ".idea/"
