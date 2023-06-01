@@ -9,13 +9,7 @@ in
     custom.programs.jdk = {
       enable = mkEnableOption "JDK";
 
-
-      # Just a central place to hold reference for system-wide JDK package
-      package = mkOption {
-        type = types.package;
-        default = pkgs.jdk17;
-        description = "JDK to use";
-      };
+      package = (mkPackageOption pkgs "jdk17" { }) // { readOnly = true; };
     };
   };
 

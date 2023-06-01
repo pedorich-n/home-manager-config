@@ -1,6 +1,6 @@
 { pkgs, config, lib, ... }:
 with lib; let
-  exclude =
+  watcherExclude =
     let
       toGlobal = input: if (strings.hasPrefix "**/" input) then input else "**/${input}";
     in
@@ -119,7 +119,7 @@ in
       "files.insertFinalNewline" = true;
       "files.trimFinalNewlines" = true;
       "files.trimTrailingWhitespace" = true;
-      "files.watcherExclude" = exclude;
+      "files.watcherExclude" = watcherExclude;
       "git.autofetch" = false;
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nil";
