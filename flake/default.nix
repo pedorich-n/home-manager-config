@@ -11,10 +11,7 @@ let
       overlays = [ inputs.nix-vscode-extensions.overlays.default customOverlays ];
       config = {
         allowUnfree = true;
-        permittedInsecurePackages = [
-          "openssl-1.1.1t"
-        ];
-
+        allowInsecurePredicate = pkg: (builtins.match "openssl-1\.1\.1.*" pkg.pname) != [ ];
       };
     };
 
@@ -39,7 +36,7 @@ let
           nixpkgs-fmt.enable = true;
           statix.enable = true;
 
-          # Python 
+          # Python
           black = {
             enable = true;
             entry = with pkgs; lib.mkForce "${lib.getExe black} --line-length=150";
