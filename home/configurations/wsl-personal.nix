@@ -39,5 +39,8 @@ in
     };
   };
 
-  home.packages = [ pkgs.wslu ];
+  home.packages = with pkgs; [
+    python311Packages.black
+    wslu
+  ];
 }

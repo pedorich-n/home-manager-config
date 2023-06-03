@@ -17,7 +17,6 @@ let
   ];
 
   commonApps = with pkgs; [
-    black # Python code formatter
     coreutils-full # GNU coreutils (cp, mv, whoami, echo, wc, ...)
     curl # HTTP client
     dtrx # "Do The Right Extraction" unarchiver
@@ -28,7 +27,6 @@ let
     keychain # ssh-agent and/or gpg-agent between logins
     man # Man pages reader
     screen # GNU Screen. Terminal multiplexer
-    shfmt # Shell formatter
     tmux # Terminal MULtiplexor
     tree # Recursive directory listing
   ];

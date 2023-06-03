@@ -11,5 +11,7 @@ inputs: final: prev:
 
   github-copilot-intellij-agent = prev.callPackage ../packages/intellij-copilot { };
 
-  cqlsh = prev.callPackage ../packages/cqlsh { inherit (inputs) cqlsh-source; };
+  python311Packages = prev.python311Packages // {
+    cqlsh = prev.callPackage ../packages/cqlsh { inherit (inputs) cqlsh-source; };
+  };
 }

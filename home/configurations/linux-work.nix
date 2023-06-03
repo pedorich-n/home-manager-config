@@ -62,11 +62,13 @@ in
     barrier
     caffeine-ng
     circleci-cli
-    cqlsh
     docker-compose
     saml2aws
     slack
     sublime4
+  ]) ++ (with pkgs.python311Packages; [
+    black
+    cqlsh
   ]) ++ (with pkgs.gnomeExtensions; [
     date-menu-formatter
     lock-keys

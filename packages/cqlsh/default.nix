@@ -9,5 +9,4 @@ buildPythonPackage {
 
   nativeBuildInputs = [ setuptools wheel ];
   propagatedBuildInputs = [ cassandra-driver six ];
-
 }
