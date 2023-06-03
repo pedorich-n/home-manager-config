@@ -78,16 +78,6 @@ in
       };
     };
 
-    custom = {
-      programs = {
-        ripgrep = {
-          # Fast grep replacement (regex search in content)
-          enable = true;
-          config.lines = [ "--no-require-git" ];
-        };
-      };
-    };
-
     programs = {
       home-manager.enable = true;
 
@@ -95,6 +85,11 @@ in
       bat.enable = true; # Colorful `cat` replacement (text-files viewer)
       htop.enable = true; # Interactive resource monitor
       less.enable = true; # Interactive text-files viewer
+      ripgrep = {
+        # Fast grep replacement (regex search in content)
+        enable = true;
+        arguments = [ "--no-require-git" ];
+      };
       tealdeer.enable = true; # Community-driven Man alternative
       vim.enable = true; # Text editor
 
