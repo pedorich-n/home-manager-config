@@ -53,6 +53,11 @@
         flake-utils.follows = "flake-utils";
       };
     };
+
+    cqlsh-source = {
+      url = "github:jeffwidman/cqlsh";
+      flake = false;
+    };
   };
 
   outputs = { flake-utils, ... } @ inputs:

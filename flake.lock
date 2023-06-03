@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "cqlsh-source": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1679691100,
+        "narHash": "sha256-piyQz1Q0EtjNZp8dHubZ2ptwEB/EPli9RSai/QejJ/0=",
+        "owner": "jeffwidman",
+        "repo": "cqlsh",
+        "rev": "874774337f282c4659d42bd617b69957163aa510",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jeffwidman",
+        "repo": "cqlsh",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -165,6 +181,7 @@
     },
     "root": {
       "inputs": {
+        "cqlsh-source": "cqlsh-source",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",

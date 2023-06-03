@@ -10,4 +10,6 @@ inputs: final: prev:
   };
 
   github-copilot-intellij-agent = prev.callPackage ../packages/intellij-copilot { };
+
+  cqlsh = prev.callPackage ../packages/cqlsh { inherit (inputs) cqlsh-source; };
 }

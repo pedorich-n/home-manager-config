@@ -62,6 +62,7 @@ in
     barrier
     caffeine-ng
     circleci-cli
+    cqlsh
     docker-compose
     saml2aws
     slack
