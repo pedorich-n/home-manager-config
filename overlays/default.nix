@@ -1,8 +1,5 @@
-inputs: final: prev:
+inputs: _: prev:
 {
-  # TODO: delete this once https://github.com/NixOS/nixpkgs/pull/218450 gets merged
-  rtx = prev.callPackage ./rtx { inherit (inputs) rtx-flake; } final prev;
-
   zsh-snap = prev.callPackage ../packages/zsh-snap { inherit (inputs) zsh-snap-source; };
 
   vimPlugins = prev.vimPlugins // {

@@ -46,14 +46,6 @@
       };
     };
 
-    rtx-flake = {
-      url = "github:jdxcode/rtx";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
-    };
-
     cqlsh-source = {
       url = "github:jeffwidman/cqlsh";
       flake = false;
