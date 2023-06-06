@@ -60,11 +60,6 @@ in
           subfolders = [ "git" "extract" ] ++
             lists.optionals (customLib.nonEmpty cfg.keychainIdentities) [ "keychain" "gpg-agent" ];
         }
-        {
-          repo = "ohmyzsh/ohmyzsh";
-          subfolderPrefix = "themes";
-          subfolders = [ "fletcherm.zsh-theme" ];
-        }
       ];
     };
 

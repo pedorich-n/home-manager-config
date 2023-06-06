@@ -88,9 +88,9 @@ in
         enable = true;
         arguments = [ "--no-require-git" ];
       };
+      starship.enable = true; # The minimal, blazing-fast, and infinitely customizable prompt
       tealdeer.enable = true; # Community-driven Man alternative
       vim.enable = true; # Text editor
-
 
       zsh = {
         dirHashes = {

@@ -48,6 +48,8 @@ in
     };
   };
 
+  fonts.fontconfig.enable = true;
+
   programs = {
     direnv.enable = true;
     vscode.enable = true;
@@ -59,6 +61,7 @@ in
   };
 
   home.packages = (with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
     barrier
     caffeine-ng
     circleci-cli
