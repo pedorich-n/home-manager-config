@@ -2,7 +2,7 @@
 {
   home.sessionVariables = {
     VISUAL = "vim";
-    EDITOR = "$VISUAL";
+    EDITOR = "vim";
   };
 
   programs.vim = {

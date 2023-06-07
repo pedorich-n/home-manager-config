@@ -28,8 +28,6 @@ with lib;
       };
 
       git_status = {
-        modified = "⚡";
-        staged = "";
         stashed = "";
       };
 
