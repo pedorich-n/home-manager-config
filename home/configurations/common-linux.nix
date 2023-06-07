@@ -1,4 +1,4 @@
-{ pkgs, config, lib, customLib, ... }:
+{ nixpkgs, pkgs, config, lib, customLib, ... }:
 with lib;
 let
   cfg = config.home;
@@ -63,6 +63,7 @@ in
       sessionVariables = {
         PAGER = "less -R";
         HOSTNAME = "$(hostname)";
+        NIX_PATH = "nixpkgs=${nixpkgs}";
       };
 
       shellAliases = {
@@ -116,6 +117,10 @@ in
 
     nix = {
       package = nixPkg;
+
+      registry = {
+        nixpkgs.flake = nixpkgs;
+      };
 
       settings = {
         experimental-features = [ "nix-command" "flakes" ];

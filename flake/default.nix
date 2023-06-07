@@ -75,7 +75,7 @@ let
       modules = sharedModules ++ [ configuration shellNamesModule ];
       extraSpecialArgs = {
         inherit customLib;
-        inherit (inputs) self;
+        inherit (inputs) self nixpkgs;
       };
     };
 in
