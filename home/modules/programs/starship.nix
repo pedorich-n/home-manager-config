@@ -4,6 +4,7 @@ with lib;
   programs.starship = {
     settings = {
       format = concatStrings [
+        "$shell"
         "$username"
         "$hostname"
         "$directory"
@@ -34,6 +35,13 @@ with lib;
 
       time = {
         disabled = false;
+      };
+
+      shell = {
+        disabled = false;
+        format = "[$indicator]($style)";
+        bash_indicator = "bsh ";
+        zsh_indicator = "";
       };
 
       status = {

@@ -38,9 +38,8 @@ in
           };
         };
       };
-
+      zellij.enable = true;
       gpg.enable = true;
-
       zsh = {
         enable = true;
         keychainIdentities = [ "work/paidy" gpgKey ];

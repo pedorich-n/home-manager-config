@@ -1,0 +1,9 @@
+layout {
+  pane split_direction="horizontal" {
+    pane command="sbt" size="70%"
+    pane name="git" size="30%"
+  }
+  pane size=1 borderless=true {
+      plugin location="zellij:status-bar"
+  }
+}
