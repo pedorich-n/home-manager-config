@@ -27,7 +27,7 @@ let
     keychain # ssh-agent and/or gpg-agent between logins
     man # Man pages reader
     screen # GNU Screen. Terminal multiplexer
-    tmux # Terminal MULtiplexor
+    tmux # Terminal MUtipleXor
     tree # Recursive directory listing
   ];
 
@@ -84,11 +84,7 @@ in
       bat.enable = true; # Colorful `cat` replacement (text-files viewer)
       htop.enable = true; # Interactive resource monitor
       less.enable = true; # Interactive text-files viewer
-      ripgrep = {
-        # Fast grep replacement (regex search in content)
-        enable = true;
-        arguments = [ "--no-require-git" ];
-      };
+      ripgrep.enable = true; # Fast grep replacement (regex search in content)
       starship.enable = true; # The minimal, blazing-fast, and infinitely customizable prompt
       tealdeer.enable = true; # Community-driven Man alternative
       vim.enable = true; # Text editor
