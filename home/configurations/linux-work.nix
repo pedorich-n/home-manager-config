@@ -59,22 +59,28 @@ in
     };
   };
 
-  home.packages = (with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
-    barrier
-    caffeine-ng
-    circleci-cli
-    docker-compose
-    saml2aws
-    slack
-    sublime4
-  ]) ++ (with pkgs.python311Packages; [
-    black
-    cqlsh
-  ]) ++ (with pkgs.gnomeExtensions; [
-    date-menu-formatter
-    lock-keys
-    notification-timeout
-    workspace-switcher-manager
-  ]);
+  home = {
+    shellAliases = {
+      "zellij_pwd" = "zellij -s $(pwd | xargs basename)";
+    };
+
+    packages = (with pkgs; [
+      (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      barrier
+      caffeine-ng
+      circleci-cli
+      docker-compose
+      saml2aws
+      slack
+      sublime4
+    ]) ++ (with pkgs.python311Packages; [
+      black
+      cqlsh
+    ]) ++ (with pkgs.gnomeExtensions; [
+      date-menu-formatter
+      lock-keys
+      notification-timeout
+      workspace-switcher-manager
+    ]);
+  };
 }
