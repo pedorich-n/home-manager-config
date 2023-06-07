@@ -47,19 +47,21 @@ in
 
     custom.programs.zsh-snap = {
       enable = true;
-      reposDir = "${config.home.homeDirectory}/.zsh-plugins";
       sources = [
         {
           repo = "ohmyzsh/ohmyzsh";
-          subfolderPrefix = "lib";
-          subfolders = [ "git" "functions" "theme-and-appearance" "history" "key-bindings" "completion" "termsupport" ];
+          path = "lib/{git,functions,theme-and-appearance,history,key-bindings,completion,termsupport}";
         }
         {
           repo = "ohmyzsh/ohmyzsh";
-          subfolderPrefix = "plugins";
-          subfolders = [ "git" "extract" ] ++
-            lists.optionals (customLib.nonEmpty cfg.keychainIdentities) [ "keychain" "gpg-agent" ];
+          path = "plugins/{git,extract}";
         }
+        (mkIf (customLib.nonEmpty cfg.keychainIdentities)
+          {
+            repo = "ohmyzsh/ohmyzsh";
+            path = "plugins/{keychain,gpg-agent}";
+          }
+        )
       ];
     };
 

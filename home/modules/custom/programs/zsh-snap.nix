@@ -10,16 +10,10 @@ let
         description = "Github repo in form of 'organization/repository'";
       };
 
-      subfolderPrefix = mkOption {
+      path = mkOption {
         type = with types; nullOr str;
         default = null;
-        description = "Optional subfolders prefix";
-      };
-
-      subfolders = mkOption {
-        type = with types; nullOr (listOf str);
-        default = null;
-        description = "Optional list of subfolders";
+        description = "Optional subfolder(s) path";
       };
     };
   };
@@ -38,18 +32,7 @@ let
     };
   };
 
-  znapSourceFor = source:
-    with builtins; with customLib;
-    let
-      prefix = strings.optionalString (nonEmpty source.subfolderPrefix) "${source.subfolderPrefix}/";
-      subfolders =
-        strings.optionalString (nonEmpty source.subfolders)
-          (if (length source.subfolders == 1)
-          then head source.subfolders
-          else ''{${concatStringsSep "," source.subfolders}}'');
-    in
-    ''znap source ${source.repo} ${prefix}${subfolders}'';
-
+  znapSourceFor = source: "znap source ${source.repo} ${builtins.toString source.path}";
   znapFpathFor = fpath: "znap fpath ${fpath.name} '${fpath.command}'";
 in
 {
@@ -59,20 +42,20 @@ in
       enable = mkEnableOption "zsh-snap";
 
       reposDir = mkOption {
-        type = with types; nullOr str;
-        default = null;
+        type = types.str;
+        default = "$HOME/.zsh-plugins";
         description = "Custom repos dir";
       };
 
       sources = mkOption {
-        type = with types; nullOr (listOf sourceModule);
-        default = null;
+        type = types.listOf sourceModule;
+        default = [ ];
         description = "Optional list of sources to install and manage by zsh-snap";
       };
 
       fpaths = mkOption {
-        type = with types; nullOr (listOf fpathModule);
-        default = null;
+        type = types.listOf fpathModule;
+        default = [ ];
         description = "Optional list of fpath functions";
       };
     };
@@ -85,7 +68,7 @@ in
 
     programs.zsh.initExtraBeforeCompInit = with builtins; with customLib;
       ''
-        ${strings.optionalString (nonEmpty cfg.reposDir) "zstyle ':znap:*' repos-dir ${cfg.reposDir}"}
+        zstyle ':znap:*' repos-dir ${cfg.reposDir}
         source ${pkgs.zsh-snap}/znap.zsh
 
         ${strings.optionalString (nonEmpty cfg.sources) (concatLines (map znapSourceFor cfg.sources))}
