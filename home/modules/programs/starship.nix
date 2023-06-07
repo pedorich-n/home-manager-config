@@ -6,7 +6,6 @@ with lib;
       format = concatStrings [
         "$shell"
         "$username"
-        "$hostname"
         "$directory"
         "$git_branch"
         "$git_commit"
@@ -23,8 +22,21 @@ with lib;
 
       add_newline = false;
 
+      directory = {
+        truncation_length = 5;
+        disabled = false;
+        truncation_symbol = ".../";
+        truncate_to_repo = false;
+      };
+
       line_break = {
         disabled = true;
+      };
+
+      git_commit = {
+        disabled = false;
+        only_detached = false;
+        tag_disabled = false;
       };
 
       git_status = {
