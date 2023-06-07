@@ -28,16 +28,6 @@ in
       jetbrains = {
         idea.enable = true;
       };
-      rtx = {
-        enable = true;
-        shellIntegrations.zsh.enable = true;
-        config = {
-          tools = {
-            "python" = [ "3.11" ];
-            "terraform" = [ "0.15" "0.12" ];
-          };
-        };
-      };
       zellij.enable = true;
       gpg.enable = true;
       zsh = {
@@ -56,6 +46,15 @@ in
     git = {
       enable = true;
       signing.key = gpgKey;
+    };
+    rtx = {
+      enable = true;
+      settings = {
+        tools = {
+          "python" = [ "3.11" ];
+          "terraform" = [ "0.15" "0.12" ];
+        };
+      };
     };
   };
 
