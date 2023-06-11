@@ -1,12 +1,14 @@
 { python3Packages, nvd }:
-with python3Packages;
-buildPythonPackage {
-  pname = "hmd";
-  version = "0.1";
+let
+  pyproject = with builtins; (fromTOML (readFile ./src/pyproject.toml)).project;
+in
+python3Packages.buildPythonPackage {
+  pname = pyproject.name;
+  inherit (pyproject) version;
+  meta.description = pyproject.description ? "";
   format = "pyproject";
 
   src = ./src;
 
-  nativeBuildInputs = [ setuptools wheel ];
-  propagatedBuildInputs = [ nvd rich ];
+  propagatedBuildInputs = [ nvd python3Packages.rich ];
 }
