@@ -1,3 +1,4 @@
+import argparse
 import getpass
 import os
 import re
@@ -66,8 +67,19 @@ def get_hm_generation_input(number: str, choices: List[str], console: Console, d
     return int(result)
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Home Manager Diff", formatter_class=lambda prog: argparse.ArgumentDefaultsHelpFormatter(prog, max_help_position=60)
+    )
+    parser.add_argument("--auto", "-a", action="store_true", required=False, help="When set, automatically compares last two generations")
+
+    return parser.parse_args()
+
+
 def main():
     console = Console()
+    args = parse_args()
+
     try:
         user = getpass.getuser()
     except Exception as e:
@@ -77,19 +89,28 @@ def main():
 
     path_for_user = get_hm_profiles_root(user)
 
-    generations_dict = {generation.version: generation for generation in get_generations(path_for_user)}
-    valid_ids = [str(key) for key in generations_dict.keys()]
+    generations = get_generations(path_for_user)
 
-    console.print("Available Home-Manager generations:")
-    for _, generation in generations_dict.items():
-        console.print(format_generation(generation))
+    if args.auto:
+        if len(generations) < 2:
+            sys.exit(0)
+        else:
+            hm_generation_first = generations[1]
+            hm_generation_second = generations[0]
+    else:
+        generations_dict = {generation.version: generation for generation in generations}
+        valid_ids = [str(key) for key in generations_dict.keys()]
 
-    if len(generations_dict) < 2:
-        console.print("At least 2 Home-Manager generations required!")
-        sys.exit(1)
+        console.print("Available Home-Manager generations:")
+        for _, generation in generations_dict.items():
+            console.print(format_generation(generation))
 
-    hm_generation_first = generations_dict[get_hm_generation_input("first", valid_ids, console, valid_ids[1])]
-    hm_generation_second = generations_dict[get_hm_generation_input("second", valid_ids, console, valid_ids[0])]
+        if len(generations_dict) < 2:
+            console.print("At least 2 Home-Manager generations required!")
+            sys.exit(1)
+
+        hm_generation_first = generations_dict[get_hm_generation_input("first", valid_ids, console, valid_ids[1])]
+        hm_generation_second = generations_dict[get_hm_generation_input("second", valid_ids, console, valid_ids[0])]
 
     console.print(f"Comparing generations {hm_generation_first.version}..{hm_generation_second.version}")
 

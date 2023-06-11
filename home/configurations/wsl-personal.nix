@@ -40,7 +40,6 @@ in
 
   home.packages = with pkgs; [
     python3Packages.black
-    python3Packages.hmd
     wslu
   ];
 }
