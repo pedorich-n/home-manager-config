@@ -8,7 +8,8 @@ inputs: _: prev:
 
   github-copilot-intellij-agent = prev.callPackage ../packages/intellij-copilot { };
 
-  python311Packages = prev.python311Packages // {
+  python3Packages = prev.python3Packages // {
     cqlsh = prev.callPackage ../packages/cqlsh { inherit (inputs) cqlsh-source; };
+    hmd = prev.callPackage ../packages/hmd { };
   };
 }

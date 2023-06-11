@@ -1,5 +1,5 @@
-{ cqlsh-source, python311Packages }:
-with python311Packages;
+{ cqlsh-source, python3Packages }:
+with python3Packages;
 buildPythonPackage {
   pname = "cqlsh";
   version = cqlsh-source.shortRev;

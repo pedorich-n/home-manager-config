@@ -72,7 +72,7 @@ in
       saml2aws
       slack
       sublime4
-    ]) ++ (with pkgs.python311Packages; [
+    ]) ++ (with pkgs.python3Packages; [
       black
       cqlsh
     ]) ++ (with pkgs.gnomeExtensions; [

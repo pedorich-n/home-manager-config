@@ -69,6 +69,3 @@ def main():
     cmd = ["nvd", "diff", generations_dict[hm_generation_left_version].path, generations_dict[hm_generation_right_version].path]
 
     subprocess.run(cmd, shell=False)
-
-
-main()

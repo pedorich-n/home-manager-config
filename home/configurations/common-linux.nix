@@ -71,7 +71,6 @@ in
 
         hm = "home-manager";
         hms = "home-manager switch --flake ${hmConfigLocation}#${cfgCustom.name}";
-        hmd = "python ${hmConfigLocation}/hmd.py";
 
         ll = "ls -alFh";
       };
