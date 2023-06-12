@@ -28,8 +28,7 @@ def get_hm_profiles_root(user: str) -> str:
     global_nix_profiles_dir = os.path.join(global_nix_state_dir, "profiles", "per-user", user)
 
     user_state_home = os.environ.get("XDG_STATE_HOME", os.path.join(os.path.expanduser("~"), ".local", "state"))
-    user_nix_state_dir = os.path.join(user_state_home, "nix")
-    user_nix_profiles_dir = os.path.join(user_nix_state_dir, "profiles", user)
+    user_nix_profiles_dir = os.path.join(user_state_home, "nix", "profiles")
 
     if os.path.exists(user_nix_profiles_dir):
         return user_nix_profiles_dir
