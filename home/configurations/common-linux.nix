@@ -1,4 +1,4 @@
-{ nixpkgs, pkgs, config, lib, customLib, ... }:
+{ nixpkgs, pkgs, config, lib, ... }:
 with lib;
 let
   cfg = config.home;
@@ -98,7 +98,7 @@ in
           "hmc" = hmConfigLocation;
         };
 
-        initExtra = strings.optionalString (customLib.nonEmpty cfgCustom.shellNames) ''
+        initExtra = strings.optionalString (cfgCustom.shellNames != [ ]) ''
           nshell () {
             nix develop ${hmConfigLocation}#$1
           }

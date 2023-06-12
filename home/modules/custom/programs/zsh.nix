@@ -1,4 +1,4 @@
-{ lib, config, customLib, ... }:
+{ lib, config, ... }:
 with lib;
 let
   cfg = config.custom.programs.zsh;
@@ -10,8 +10,8 @@ in
       enable = mkEnableOption "zsh";
 
       keychainIdentities = mkOption {
-        type = with types; nullOr (listOf str);
-        default = null;
+        type = with types; listOf str;
+        default = [ ];
         description = "Optional list of identities to add to keychain (ssh, gpg)";
       };
     };
@@ -23,7 +23,7 @@ in
     programs.zsh = {
       enable = true;
 
-      initExtraFirst = strings.optionalString (customLib.nonEmpty cfg.keychainIdentities) ''
+      initExtraFirst = strings.optionalString (cfg.keychainIdentities != [ ]) ''
         zstyle :omz:plugins:keychain agents "gpg,ssh"
         zstyle :omz:plugins:keychain identities ${(builtins.concatStringsSep " " cfg.keychainIdentities)}
         zstyle :omz:plugins:keychain options --quiet
@@ -56,7 +56,7 @@ in
           repo = "ohmyzsh/ohmyzsh";
           path = "plugins/{git,extract}";
         }
-        (mkIf (customLib.nonEmpty cfg.keychainIdentities)
+        (mkIf (cfg.keychainIdentities != [ ])
           {
             repo = "ohmyzsh/ohmyzsh";
             path = "plugins/{keychain,gpg-agent}";
