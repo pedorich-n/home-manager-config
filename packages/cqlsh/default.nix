@@ -8,5 +8,5 @@ buildPythonPackage {
   src = cqlsh-source;
 
   nativeBuildInputs = [ setuptools wheel ];
-  propagatedBuildInputs = [ cassandra-driver six ];
+  propagatedBuildInputs = [ cassandra-driver six tzlocal pytz ];
 }
