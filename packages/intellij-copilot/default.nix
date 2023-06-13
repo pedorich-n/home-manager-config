@@ -5,15 +5,20 @@ let
   binPath = "bin/copilot-agent-${platformSuffix}";
 in
 stdenv.mkDerivation rec {
+  # Plugin info at: https://plugins.jetbrains.com/api/plugins/17718/
   pname = "github-copilot-intellij-agent";
-  version = "1.2.7.2623";
+  version = "1.2.8.2631";
 
   src =
-    let updateId = "340455";
+    # updateId from https://plugins.jetbrains.com/api/plugins/17718/updates
+    # To get hash:
+    # nix-prefetch-url " https://plugins.jetbrains.com/plugin/download?updateId=$ { updateId }" --print-path --unpack
+    # nix --extra-experimental-features nix-command hash path /nix/store/....  from above
+    let updateId = "341846";
     in fetchurl {
       name = "${pname}-${version}-plugin.zip";
       url = "https://plugins.jetbrains.com/plugin/download?updateId=${updateId}";
-      hash = "sha256-FBFv/WtuY6ceetpLlIfi9mmSJbsXidXysM0K8jkia9g=";
+      hash = "sha256-0nnSMdx9Vb2WyNHreOJMP15K1+AII/kCEAOiFK5Mhik=";
     };
 
   nativeBuildInputs = [ unzip ];
