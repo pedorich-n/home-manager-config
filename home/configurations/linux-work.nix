@@ -72,6 +72,7 @@ in
       saml2aws
       slack
       sublime4
+      xclip
     ]) ++ (with pkgs.python3Packages; [
       black
       cqlsh
