@@ -69,6 +69,7 @@ in
       caffeine-ng
       circleci-cli
       docker-compose
+      google-chrome
       saml2aws
       slack
       sublime4
