@@ -21,9 +21,9 @@ in
 
     programs.zellij = {
       enable = true;
-      # settings = {
-      #   theme = "nord";
-      # };
+      settings = {
+        copy_command = "xclip -selection clipboard";
+      };
     };
   };
 }
