@@ -15,11 +15,14 @@ in
 
 
   ###### implementation
-  config = mkIf cfg.enable {
-    home.packages = [ cfg.package ];
-
-    custom.misc.sdkLinks.paths = {
-      "java-17" = cfg.package;
+  config =
+    let
+      jdkMajorVersion = versions.major (getVersion cfg.package);
+    in
+    mkIf cfg.enable {
+      home = {
+        packages = [ cfg.package ];
+        file.".sdks/java-${jdkMajorVersion}".source = cfg.package;
+      };
     };
-  };
 }

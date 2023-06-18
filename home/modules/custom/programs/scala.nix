@@ -3,7 +3,6 @@ with lib;
 let
   cfg = config.custom.programs.scala;
   cfgJdk = config.custom.programs.jdk;
-
 in
 {
   ###### interface
@@ -23,30 +22,20 @@ in
   ###### implementation
   config =
     let
-      scalaPkg =
-        let
-          scalaVersion = pkgs.scala.override { majorVersion = cfg.version; };
-        in
-        if cfgJdk.enable then scalaVersion.override { jre = cfgJdk.package; } else scalaVersion;
-
-
-      additionalPkgs =
+      allPackages =
         let
           packages = with pkgs; [
-            coursier
-            bloop
-            sbt
+            (pkgs.scala.override { majorVersion = cfg.version; })
             ammonite
+            bloop
+            coursier
+            sbt
           ];
         in
-        (if cfgJdk.enable then builtins.map (pkg: pkg.override { jre = cfgJdk.package; }) packages
-        else packages) ++ [ scalaPkg ];
+        if cfgJdk.enable then builtins.map (pkg: pkg.override { jre = cfgJdk.package; }) packages
+        else packages;
     in
     mkIf cfg.enable {
-      home.packages = [ scalaPkg ] ++ additionalPkgs;
-
-      custom.misc.sdkLinks.paths = {
-        "scala-${cfg.version}" = scalaPkg;
-      };
+      home.packages = allPackages;
     };
 }

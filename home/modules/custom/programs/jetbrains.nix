@@ -9,7 +9,7 @@ let
     };
   };
 
-  getJetbrainsVersion = package: lib.versions.majorMinor (lib.strings.getVersion package);
+  getJetbrainsVersion = package: versions.majorMinor (strings.getVersion package);
 in
 {
   ###### interface

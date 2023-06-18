@@ -10,21 +10,11 @@ in
   custom = {
     hm.name = "linuxWork";
 
-    misc.sdkLinks = {
-      enable = true;
-      paths = {
-        "java-8" = pkgs.jdk8;
-      };
-    };
-
     programs = {
       gnome.dconf.enable = true;
       jdk.enable = true;
       rustup.enable = true;
-      scala = {
-        enable = true;
-        version = "2.13";
-      };
+      scala.enable = true;
       jetbrains = {
         idea.enable = true;
       };
@@ -59,6 +49,8 @@ in
   };
 
   home = {
+    file.".sdks/java-8".source = pkgs.jdk8;
+
     shellAliases = {
       "zellij_pwd" = "zellij -s $(pwd | xargs basename)";
     };
