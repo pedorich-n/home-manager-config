@@ -66,6 +66,36 @@ in
         "reverse-popup-orientation" = true;
       };
 
+      "org/gnome/shell/extensions/unite" = {
+        app-menu-ellipsize-mode = "end";
+        enable-titlebar-actions = true;
+        extend-left-box = false;
+        greyscale-tray-icons = false;
+        hide-activities-button = "auto";
+        hide-aggregate-menu-arrow = false;
+        hide-app-menu-arrow = true;
+        hide-app-menu-icon = false;
+        hide-dropdown-arrows = false;
+        hide-window-titlebars = "maximized";
+        notifications-position = "center";
+        reduce-panel-spacing = false;
+        show-desktop-name = false;
+        show-legacy-tray = false;
+        window-buttons-placement = "last";
+        window-buttons-theme = "yaru";
+      };
+
+      "org/gnome/terminal/legacy" = {
+        default-show-menubar = false;
+        headerbar = mkJust false;
+      };
+
+      "org/gnome/terminal/legacy/keybindings" = {
+        move-tab-left = "<Shift><Alt>Left";
+        move-tab-right = "<Shift><Alt>Right";
+        next-tab = "<Alt>braceright";
+        prev-tab = "<Alt>braceleft";
+      };
     };
   };
 }

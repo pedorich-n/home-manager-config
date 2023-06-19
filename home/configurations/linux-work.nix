@@ -11,7 +11,7 @@ in
     hm.name = "linuxWork";
 
     programs = {
-      gnome.dconf.enable = true;
+      gnome.all.enable = true;
       jdk.enable = true;
       rustup.enable = true;
       scala.enable = true;
@@ -69,11 +69,6 @@ in
     ]) ++ (with pkgs.python3Packages; [
       black
       cqlsh
-    ]) ++ (with pkgs.gnomeExtensions; [
-      date-menu-formatter
-      lock-keys
-      notification-timeout
-      workspace-switcher-manager
     ]);
   };
 }
