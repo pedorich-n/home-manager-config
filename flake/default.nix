@@ -55,7 +55,7 @@ let
       customLib = customLibFor pkgs;
       minimalMkShell = import ../lib/minimal-shell.nix { inherit pkgs; };
 
-      preCommitShell = { "pre_commit" = minimalMkShell { inherit ((checksFor system).pre-commit-check) shellHook; }; };
+      preCommitShell = { "pre-commit" = minimalMkShell { inherit ((checksFor system).pre-commit-check) shellHook; }; };
       shells = builtins.map (path: import path { inherit pkgs minimalMkShell; }) (customLib.listNixFilesRecursive ../shells);
 
       allShells = [ preCommitShell ] ++ shells;
