@@ -11,7 +11,7 @@ in
     hm.name = "linuxWork";
 
     programs = {
-      gnome.all.enable = true;
+      gnome.enable = true;
       jdk.enable = true;
       rustup.enable = true;
       scala.enable = true;

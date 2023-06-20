@@ -1,19 +1,27 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 with lib;
 let
-  cfg = config.custom.programs.gnome.dconf;
+  cfg = config.custom.programs.gnome;
 in
 {
   ###### interface
   options = {
-    custom.programs.gnome.dconf = {
-      enable = mkEnableOption "Custom Dconf for Gnome";
+    custom.programs.gnome = {
+      enable = mkEnableOption "Custom configs for Gnome";
     };
   };
 
 
   ###### implementation
   config = mkIf cfg.enable {
+    home.packages = with pkgs.gnomeExtensions; [
+      date-menu-formatter
+      lock-keys
+      notification-timeout
+      unite
+      workspace-switcher-manager
+    ];
+
     dconf.settings = with lib.hm.gvariant; {
       "org/gnome/mutter" = {
         dynamic-workspaces = false;
