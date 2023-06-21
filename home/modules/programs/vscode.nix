@@ -103,7 +103,7 @@ in
       "editor.accessibilitySupport" = "off";
       "editor.cursorSurroundingLines" = 10;
       "editor.detectIndentation" = true;
-      "editor.fontFamily" = "Fira Code";
+      "editor.fontFamily" = "FiraCode Nerd Font";
       "editor.fontLigatures" = true;
       "editor.fontSize" = 14;
       "editor.formatOnPaste" = false;
