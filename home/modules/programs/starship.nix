@@ -11,6 +11,7 @@ with lib;
         "$git_commit"
         "$git_state"
         "$git_status"
+        "$aws"
         "$character"
       ];
 
@@ -22,8 +23,18 @@ with lib;
 
       add_newline = false;
 
+      aws = {
+        disabled = false;
+        format = "on [$symbol($profile )(\\[$duration\\] )]($style)";
+        profile_aliases = {
+          "aws-core-staging-dev" = "staging";
+          "aws-core-production-dev" = "production";
+        };
+        symbol = " ";
+      };
+
       directory = {
-        truncation_length = 5;
+        truncation_length = 3;
         disabled = false;
         truncation_symbol = ".../";
         truncate_to_repo = false;
