@@ -5,7 +5,6 @@ with lib;
     settings = {
       format = concatStrings [
         "$shell"
-        "$username"
         "$directory"
         "$git_branch"
         "$git_commit"
@@ -34,14 +33,10 @@ with lib;
       };
 
       directory = {
-        truncation_length = 3;
         disabled = false;
+        truncation_length = 3;
         truncation_symbol = ".../";
         truncate_to_repo = false;
-      };
-
-      line_break = {
-        disabled = true;
       };
 
       git_commit = {
@@ -51,6 +46,7 @@ with lib;
       };
 
       git_status = {
+        disabled = false;
         stashed = "";
       };
 
