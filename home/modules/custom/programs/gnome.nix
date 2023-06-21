@@ -104,6 +104,20 @@ in
         next-tab = "<Alt>braceright";
         prev-tab = "<Alt>braceleft";
       };
+
+
+      "org/gnome/terminal/legacy/profiles:" = {
+        default = "b1dcc9dd-5262-4d8d-a863-c897e6d979b9";
+      };
+
+      "org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9" = {
+        audible-bell = false;
+        default-size-columns = 140;
+        default-size-rows = 35;
+        font = "FiraCode Nerd Font 11";
+        use-system-font = false;
+        visible-name = "Default";
+      };
     };
   };
 }
