@@ -85,7 +85,7 @@ let
     builtins.mapAttrs (_: configuration: homeManagerConfigrationFor configuration) configurations;
 in
 {
-  # Input attrs (schema: { system = { name = nixPath } })
+  # Input attrs (schema: { system = { <name> = <homeManagerConfigurationPath> } })
   flakeFor = attrs:
     let
       # Input: attrs (schema: { system = { <name> = <homeManagerConfigurationPath> } })
