@@ -13,7 +13,7 @@ in
     programs = {
       gnome.enable = true;
       jdk.enable = true;
-      rustup.enable = true;
+      rust.enable = true;
       scala.enable = true;
       jetbrains = {
         idea.enable = true;

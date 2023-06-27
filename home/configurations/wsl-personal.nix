@@ -13,7 +13,7 @@ in
     programs = {
       gpg.enable = true;
       jdk.enable = true;
-      rustup.enable = true;
+      rust.enable = true;
 
       zsh = {
         enable = true;

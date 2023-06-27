@@ -8,7 +8,7 @@ let
     in
     import pkgs {
       inherit system;
-      overlays = [ inputs.nix-vscode-extensions.overlays.default customOverlays ];
+      overlays = [ inputs.nix-vscode-extensions.overlays.default inputs.rust-overlay.overlays.default customOverlays ];
       config = {
         allowUnfree = true;
         allowInsecurePredicate = pkg: (builtins.match "openssl-1\.1\.1.*" pkg.pname) != [ ];

@@ -2,6 +2,7 @@
   description = "Multiple machines config managed by NIX Home-Manageger and Flake";
 
   inputs = {
+    # Global / Meta
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
 
@@ -27,6 +28,7 @@
       };
     };
 
+    # Packages / Overlays
     zsh-snap-source = {
       url = "github:marlonrichert/zsh-snap";
       flake = false;
@@ -50,6 +52,13 @@
       url = "github:jeffwidman/cqlsh";
       flake = false;
     };
+
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
   outputs = { flake-utils, ... } @ inputs:
