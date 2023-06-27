@@ -2,6 +2,7 @@
 with lib;
 let
   cfg = config.custom.programs.jetbrains;
+  cfgJdk = config.custom.programs.jdk;
 
   ideaSubmodule = types.submodule {
     options = {
@@ -27,7 +28,8 @@ in
   config =
     let
       enabled = cfg.idea.enable;
-      package = pkgs.jetbrains.idea-community;
+      maven = if cfgJdk.enable then pkgs.maven.override { jdk = cfgJdk.package; } else pkgs.maven;
+      ideaPackage = pkgs.jetbrains.idea-community.override { inherit maven; };
 
       copilotAgentStorePath = getBin pkgs.github-copilot-intellij-agent;
       copilotAgentExePath = getExe pkgs.github-copilot-intellij-agent;
@@ -35,10 +37,10 @@ in
       copilotAgentBinRelativePath = strings.unsafeDiscardStringContext (builtins.replaceStrings [ "${copilotAgentStorePath}/" ] [ "" ] copilotAgentExePath);
     in
     mkIf enabled {
-      home.packages = [ pkgs.jetbrains.idea-community ];
+      home.packages = [ ideaPackage ];
       xdg = {
         configFile."ideavim/ideavimrc".text = builtins.readFile "${self}/dotfiles/.ideavimrc";
-        dataFile."JetBrains/IdeaIC${getJetbrainsVersion package}/github-copilot-intellij/copilot-agent/${copilotAgentBinRelativePath}" = {
+        dataFile."JetBrains/IdeaIC${getJetbrainsVersion ideaPackage}/github-copilot-intellij/copilot-agent/${copilotAgentBinRelativePath}" = {
           source = copilotAgentExePath;
           force = true;
         };
