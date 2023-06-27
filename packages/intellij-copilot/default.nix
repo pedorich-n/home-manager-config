@@ -7,18 +7,18 @@ in
 stdenv.mkDerivation rec {
   # Plugin info at: https://plugins.jetbrains.com/api/plugins/17718/
   pname = "github-copilot-intellij-agent";
-  version = "1.2.8.2631";
+  version = "1.2.9.2684";
 
   src =
     # updateId from https://plugins.jetbrains.com/api/plugins/17718/updates
     # To get hash:
-    # nix-prefetch-url " https://plugins.jetbrains.com/plugin/download?updateId=$ { updateId }" --print-path --unpack
+    # nix-prefetch-url "https://plugins.jetbrains.com/plugin/download?updateId=${updateId}" --print-path --unpack
     # nix --extra-experimental-features nix-command hash path /nix/store/....  from above
-    let updateId = "341846";
+    let updateId = "351707";
     in fetchurl {
       name = "${pname}-${version}-plugin.zip";
       url = "https://plugins.jetbrains.com/plugin/download?updateId=${updateId}";
-      hash = "sha256-0nnSMdx9Vb2WyNHreOJMP15K1+AII/kCEAOiFK5Mhik=";
+      hash = "sha256-VnvUaWWv8tIUNQzf0fiVshNuCf6c6fgoAinhHfIpIkA=";
     };
 
   nativeBuildInputs = [ unzip ];
