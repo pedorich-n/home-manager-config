@@ -11,6 +11,7 @@ with lib;
         "$git_state"
         "$git_status"
         "$aws"
+        "$python"
         "$character"
       ];
 
@@ -41,8 +42,8 @@ with lib;
 
       git_commit = {
         disabled = false;
-        only_detached = false;
-        tag_disabled = false;
+        only_detached = true;
+        tag_disabled = true;
       };
 
       git_status = {
@@ -63,6 +64,11 @@ with lib;
 
       status = {
         disabled = false;
+      };
+
+      python = {
+        disabled = false;
+        symbol = " ";
       };
     };
   };

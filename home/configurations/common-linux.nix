@@ -118,10 +118,6 @@ in
     nix = {
       package = nixPkg;
 
-      registry = {
-        nixpkgs.flake = nixpkgs;
-      };
-
       settings = {
         experimental-features = [ "nix-command" "flakes" ];
         log-lines = 50;
