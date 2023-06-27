@@ -1,14 +1,24 @@
 { inputs }:
 let
-  flatMap = f: list: builtins.foldl' (acc: entry: acc // (f entry)) { } list;
+  # Copy from: https://github.com/NixOS/nixpkgs/blob/12e01c6/lib/attrsets.nix#L772-L817 with refactoring
+  recursiveUpdate = with builtins; lhs: rhs:
+    let
+      merge = attrPath:
+        zipAttrsWith (name: values:
+          let here = attrPath ++ [ name ]; in
+          if length values == 1 || !(isAttrs (elemAt values 0) && isAttrs (elemAt values 1))
+          then
+            head values
+          else
+            merge here values
+        );
+    in
+    merge [ ] [ rhs lhs ];
 
   pkgsFor = system: pkgs:
-    let
-      customOverlays = import ../overlays inputs;
-    in
     import pkgs {
       inherit system;
-      overlays = [ inputs.nix-vscode-extensions.overlays.default inputs.rust-overlay.overlays.default customOverlays ];
+      overlays = with inputs; [ nix-vscode-extensions.overlays.default rust-overlay.overlays.default (import ../overlays inputs) ];
       config = {
         allowUnfree = true;
         allowInsecurePredicate = pkg: (builtins.match "openssl-1\.1\.1.*" pkg.pname) != [ ];
@@ -17,18 +27,11 @@ let
 
   customLibFor = pkgs: import ../lib { inherit pkgs; };
 
-  formatterFor = system:
-    let
-      pkgs = pkgsFor system inputs.nixpkgs;
-    in
-    pkgs.nixpkgs-fmt;
+  formatterFor = pkgs: pkgs.nixpkgs-fmt;
 
-  checksFor = system:
-    let
-      pkgs = pkgsFor system inputs.nixpkgs;
-    in
+  checksFor = pkgs:
     {
-      pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+      pre-commit-check = inputs.pre-commit-hooks.lib.${pkgs.system}.run {
         src = ../.;
         hooks = {
           # Nix
@@ -49,67 +52,53 @@ let
       };
     };
 
-  shellsFor = system:
+  shellsFor = pkgs:
     let
-      pkgs = pkgsFor system inputs.nixpkgs;
       customLib = customLibFor pkgs;
       minimalMkShell = import ../lib/minimal-shell.nix { inherit pkgs; };
 
-      preCommitShell = { "pre-commit" = minimalMkShell { inherit ((checksFor system).pre-commit-check) shellHook; }; };
+      preCommitShell = { "pre-commit" = minimalMkShell { inherit ((checksFor pkgs).pre-commit-check) shellHook; }; };
       shells = builtins.map (path: import path { inherit pkgs minimalMkShell; }) (customLib.listNixFilesRecursive ../shells);
 
       allShells = [ preCommitShell ] ++ shells;
     in
     customLib.flattenAttrsetsRecursive allShells;
 
-  homeManagerConfFor = system: configuration:
+  # Input: pkgs, attrs (schema: { <name> = <homeManagerConfigurationPath> })
+  # Output: attrs (schema: { <name> = <homeManagerConfiguration> })
+  homeManagerConfigurationsFor = pkgs: configurations:
     let
-      pkgs = pkgsFor system inputs.nixpkgs;
       customLib = customLibFor pkgs;
-
       sharedModules = customLib.listNixFilesRecursive ../home/modules;
-      shellNamesModule = { config.custom.hm.shellNames = builtins.attrNames (shellsFor system); };
+      shellNamesModule = { config.custom.hm.shellNames = builtins.attrNames (shellsFor pkgs); };
+
+      homeManagerConfigrationFor = configuration:
+        inputs.home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = sharedModules ++ [ configuration shellNamesModule ];
+          extraSpecialArgs = {
+            inherit customLib;
+            inherit (inputs) self nixpkgs;
+          };
+        };
     in
-    inputs.home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = sharedModules ++ [ configuration shellNamesModule ];
-      extraSpecialArgs = {
-        inherit customLib;
-        inherit (inputs) self nixpkgs;
-      };
-    };
+    builtins.mapAttrs (_: configuration: homeManagerConfigrationFor configuration) configurations;
 in
 {
   # Input attrs (schema: { system = { name = nixPath } })
   flakeFor = attrs:
     let
-      # Gets top-level names from attrs as a list
-      supportedSystems = builtins.attrNames attrs;
+      # Input: attrs (schema: { system = { <name> = <homeManagerConfigurationPath> } })
+      # Output: list of attrs (schema: { pkgs = <pkgs>; system = <system>; configurations = { <name> = <homeManagerConfigurationPath> }; })
+      flatHomeConfigurationsWithPkgs = with builtins; attrValues (mapAttrs (system: configurations: { pkgs = pkgsFor system inputs.nixpkgs; inherit system configurations; }) attrs);
 
-      # eachSystem appends ${system} to the key of attrs, so
-      # Output: attrs (schema: { checks.${system} = <checks>; devShells.${system} = <shells> })
-      flakeOutputForSupportedSystems = inputs.flake-utils.lib.eachSystem supportedSystems (system: {
-        # Schema: https://nixos.wiki/wiki/Flakes#Output_schema
-        formatter = formatterFor system;
-        checks = checksFor system;
-        devShells = shellsFor system;
-      });
-
-
-      flakeOutputHomeConfigurations =
-        let
-          # Input: string, attrs (schema: { name = nixPath })
-          # Output: attrs (schema: { name = homeManagerConfiguration })
-          homeManagerConfigurationsFor = system: configurations: builtins.mapAttrs (_: configuration: homeManagerConfFor system configuration) configurations;
-
-          # Flatmaps over all systems from attrs and builds home-manager configurations for these systems.
-          # Ouputs: flat attrs (schema: { name = homeManagerConfiguration })
-          allHomeConfigurations = flatMap (system: (homeManagerConfigurationsFor system (builtins.getAttr system attrs))) supportedSystems;
-        in
-        {
-          # https://nix-community.github.io/home-manager/index.html#sec-flakes-standalone-stable
-          homeConfigurations = allHomeConfigurations;
-        };
+      # Output: attrs (schema: { formatter.${system} = <formatter>; checks.${system} = <checks>; devShells.${system} = <shells>; homeConfigurations = { <name> = <homeManagerConfiguration>; }; })
+      outputsFor = { system, pkgs, configurations }: {
+        formatter.${system} = formatterFor pkgs;
+        checks.${system} = checksFor pkgs;
+        devShells.${system} = shellsFor pkgs;
+        homeConfigurations = homeManagerConfigurationsFor pkgs configurations;
+      };
     in
-    flakeOutputForSupportedSystems // flakeOutputHomeConfigurations;
+    builtins.foldl' (acc: input: recursiveUpdate acc (outputsFor input)) { } flatHomeConfigurationsWithPkgs;
 }
