@@ -54,7 +54,10 @@ in
       };
 
       "org/gnome/shell/world-clocks" = {
-        locations = "[<(uint32 2, <('Berlin', 'EDDT', true, [(0.91746141594945008, 0.23241968454167572)], [(0.91658875132345297, 0.23387411976724018)])>)>, <(uint32 2, <('Kyiv', 'UKKK', false, [(0.87964594300514198, 0.53348898051069749)], @a(dd) [])>)>, <(uint32 2, <('Tokyo', 'RJTI', true, [(0.62191898430954862, 2.4408429589140699)], [(0.62282074357417661, 2.4391218722853854)])>)>]";
+        # It's very hard (if possible at all) to express this structure using HomeManager's Dconf types so using this trick to set the value to a literal
+        locations = mkString "" // {
+          __toString = _: "[<(uint32 2, <('Kyiv', 'UKKK', true, [(0.87964594300514198, 0.53348898051069749)], [(0.88022771360470919, 0.53261631588470038)])>)>, <(uint32 2, <('Tokyo', 'RJTI', true, [(0.62191898430954862, 2.4408429589140699)], [(0.62282074357417661, 2.4391218722853854)])>)>]";
+        };
       };
 
       "org/gnome/shell/extensions/date-menu-formatter" = {
