@@ -36,7 +36,7 @@ with lib;
       directory = {
         disabled = false;
         truncation_length = 3;
-        truncation_symbol = ".../";
+        truncation_symbol = "…/";
         truncate_to_repo = false;
       };
 
