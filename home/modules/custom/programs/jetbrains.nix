@@ -9,8 +9,6 @@ let
       enable = mkEnableOption "Intellij IDEA";
     };
   };
-
-  getJetbrainsVersion = package: versions.majorMinor (strings.getVersion package);
 in
 {
   ###### interface
@@ -28,22 +26,22 @@ in
   config =
     let
       enabled = cfg.idea.enable;
-      maven = if cfgJdk.enable then pkgs.maven.override { jdk = cfgJdk.package; } else pkgs.maven;
-      ideaPackage = pkgs.jetbrains.idea-community.override { inherit maven; };
 
-      copilotAgentStorePath = getBin pkgs.github-copilot-intellij-agent;
-      copilotAgentExePath = getExe pkgs.github-copilot-intellij-agent;
-
-      copilotAgentBinRelativePath = strings.unsafeDiscardStringContext (builtins.replaceStrings [ "${copilotAgentStorePath}/" ] [ "" ] copilotAgentExePath);
+      ideaPackage =
+        let
+          maven = if cfgJdk.enable then pkgs.maven.override { jdk = cfgJdk.package; } else pkgs.maven;
+          baseIdea = pkgs.jetbrains.idea-community.override { inherit maven; };
+          plugins = [
+            "164" # IdeaVim https://plugins.jetbrains.com/plugin/164-ideavim
+            "17718" # Github Copilot https://plugins.jetbrains.com/plugin/17718-github-copilot
+          ];
+        in
+        pkgs.jetbrains.plugins.addPlugins baseIdea plugins;
     in
     mkIf enabled {
       home.packages = [ ideaPackage ];
       xdg = {
         configFile."ideavim/ideavimrc".text = builtins.readFile "${self}/dotfiles/.ideavimrc";
-        dataFile."JetBrains/IdeaIC${getJetbrainsVersion ideaPackage}/github-copilot-intellij/copilot-agent/${copilotAgentBinRelativePath}" = {
-          source = copilotAgentExePath;
-          force = true;
-        };
       };
     };
 }
