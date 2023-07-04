@@ -1,5 +1,6 @@
 { pkgs, config, lib, ... }:
-with lib; let
+with lib;
+let
   watcherExclude =
     let
       toGlobal = with strings; input: removeSuffix "/" (if (hasPrefix "**/" input) then input else "**/${input}");
@@ -88,6 +89,16 @@ in
         when = "editorTextFocus";
       }
       {
+        key = "alt+1";
+        command = "workbench.view.explorer";
+        when = "!view.workbench.explorer.fileView.visible";
+      }
+      {
+        key = "alt+1";
+        command = "workbench.action.toggleSidebarVisibility";
+        when = "view.workbench.explorer.fileView.visible";
+      }
+      {
         key = "alt+2";
         command = "workbench.view.extension.bookmarks";
         when = "editorFocus";
@@ -157,6 +168,7 @@ in
       };
       "python.formatting.provider" = "black";
       "python.formatting.blackArgs" = [ "--line-length=140" ];
+      "terminal.integrated.fontFamily" = "FiraCode Nerd Font";
       "vim.foldfix" = true;
       "vim.normalModeKeyBindingsNonRecursive" = [
         {
@@ -181,6 +193,7 @@ in
       "window.openFoldersInNewWindow" = "on";
       "window.zoomLevel" = 0.6;
       "workbench.colorTheme" = "Dark Low Contrast Fire";
+      "workbench.editor.wrapTabs" = true;
     };
   };
 }
