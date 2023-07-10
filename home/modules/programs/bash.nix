@@ -1,16 +1,6 @@
-{ config, ... }:
+_:
 {
   programs.bash = {
-    profileExtra = ''
-      pathadd() {
-          if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
-              PATH="$1''${PATH:+":$PATH"}"
-          fi
-      }
-
-      pathadd "${config.home.homeDirectory}/.local/bin"
-    '';
-
     initExtra = ''
       ############################################ Copied from Ubuntu 22.04 default bashrc ############################################
       # set variable identifying the chroot you work in (used in the prompt below)
@@ -55,16 +45,18 @@
           ;;
       esac
       #################################################################################################################################
-
-      # Some aliases from https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh
-      alias gaa='git add --all'
-      alias gcam='git commit --all --message'
-      alias gd='git diff'
-      alias gl='git pull'
-      alias gst='git status'
-      alias grbc='git rebase --continue'
-      alias gp='git push'
-      alias gpf='git push --force-with-lease'
     '';
+
+    shellAliases = {
+      # Some aliases from https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh
+      gaa = "git add --all";
+      gcam = "git commit --all --message";
+      gd = "git diff";
+      gl = "git pull";
+      gst = "git status";
+      grbc = "git rebase --continue";
+      gp = "git push";
+      gpf = "git push --force-with-lease";
+    };
   };
 }

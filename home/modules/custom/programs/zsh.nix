@@ -42,6 +42,12 @@ in
         setopt HIST_IGNORE_SPACE
         setopt HIST_REDUCE_BLANKS
         setopt APPEND_HISTORY
+
+        include () {
+            [[ -f "$1" ]] && source "$1"
+        }
+
+        include "${config.home.homeDirectory}/.zshrc_extra";
       '';
     };
 
