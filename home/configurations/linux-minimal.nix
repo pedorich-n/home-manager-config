@@ -8,7 +8,7 @@
   };
 
   custom = {
-    hm.name = "linuxWork";
+    hm.name = "linuxMinimal";
     programs = {
       zsh.keychainIdentities = [ "id_main" ];
     };
