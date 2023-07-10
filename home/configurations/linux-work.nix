@@ -65,6 +65,7 @@ in
       saml2aws
       slack
       sublime4
+      trilium-desktop
       xclip
     ]) ++ (with pkgs.python3Packages; [
       black
