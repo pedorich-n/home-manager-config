@@ -31,7 +31,9 @@ function build() {
 
 function activate() {
 	echo "Activating Home-Manager..."
+	set HOME_MANAGER_BACKUP_EXT="backup"
 	./result/activate
+	unset HOME_MANAGER_BACKUP_EXT
 }
 
 install_nix "$NIX_PATH" "$CONFIG" &&
