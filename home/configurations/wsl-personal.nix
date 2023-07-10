@@ -14,6 +14,7 @@ in
       gpg.enable = true;
       jdk.enable = true;
       rust.enable = true;
+      scala.enable = true;
       vscode-remote.enable = true;
 
       zsh = {
