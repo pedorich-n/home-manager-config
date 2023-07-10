@@ -11,8 +11,6 @@
     userName = "Nikita Pedorich";
     userEmail = "pedorich.n@gmail.com";
 
-    signing.signByDefault = config.programs.git.signing.key != null;
-
     delta = {
       enable = true;
       options = {

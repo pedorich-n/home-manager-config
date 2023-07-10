@@ -18,12 +18,8 @@ in
       jetbrains = {
         idea.enable = true;
       };
-      zellij.enable = true;
       gpg.enable = true;
-      zsh = {
-        enable = true;
-        keychainIdentities = [ "work/paidy" gpgKey ];
-      };
+      zsh.keychainIdentities = [ "work/paidy" gpgKey ];
     };
   };
 
@@ -33,10 +29,11 @@ in
     direnv.enable = true;
     vscode.enable = true;
 
-    git = {
-      enable = true;
-      signing.key = gpgKey;
+    git.signing = {
+      key = gpgKey;
+      signByDefault = true;
     };
+
     rtx = {
       enable = true;
       settings = {

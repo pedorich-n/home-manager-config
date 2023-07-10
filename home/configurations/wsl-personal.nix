@@ -16,18 +16,14 @@ in
       rust.enable = true;
       scala.enable = true;
       vscode-remote.enable = true;
-
-      zsh = {
-        enable = true;
-        keychainIdentities = [ "id_main" gpgKey ];
-      };
+      zsh.keychainIdentities = [ "id_main" gpgKey ];
     };
   };
 
   programs = {
-    git = {
-      enable = true;
-      signing.key = gpgKey;
+    git.signing = {
+      key = gpgKey;
+      signByDefault = true;
     };
 
     rtx = {

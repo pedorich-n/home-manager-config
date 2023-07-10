@@ -5,7 +5,7 @@ let
   cfgCustom = config.custom.hm;
 
   home = "/home/${cfg.username}";
-  hmConfigLocation = "${home}/.config.nix";
+  hmConfigLocation = "${cfg.homeDirectory}/.config.nix";
 
   nixPkg = pkgs.nix;
   nixApps = with pkgs; [
@@ -26,8 +26,6 @@ let
     jq # Command-line JSON processor
     keychain # ssh-agent and/or gpg-agent between logins
     man # Man pages reader
-    screen # GNU Screen. Terminal multiplexer
-    tmux # Terminal MUtipleXor
     tree # Recursive directory listing
   ];
 
@@ -56,7 +54,7 @@ in
     home = {
       stateVersion = "22.11";
 
-      homeDirectory = home;
+      homeDirectory = mkDefault home;
 
       packages = nixApps ++ commonApps;
 
@@ -81,11 +79,19 @@ in
       '';
     };
 
+    custom = {
+      programs = {
+        zellij.enable = true;
+        zsh.enable = true;
+      };
+    };
+
     programs = {
       home-manager.enable = true;
 
       bash.enable = true; # To set Home Manager's ENVs vars in .profile
       bat.enable = true; # Colorful `cat` replacement (text-files viewer)
+      git.enable = true; #  Distributed version control system
       htop.enable = true; # Interactive resource monitor
       less.enable = true; # Interactive text-files viewer
       ripgrep.enable = true; # Fast grep replacement (regex search in content)
