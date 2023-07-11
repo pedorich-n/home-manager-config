@@ -10,4 +10,10 @@ inputs: _: prev:
     cqlsh = prev.callPackage ../packages/cqlsh { inherit (inputs) cqlsh-source; };
     hmd = prev.callPackage ../packages/hmd { };
   };
+
+  rtx = prev.rtx.overrideAttrs (old: {
+    patches = (old.patches or [ ]) ++ [
+      ./rtx/remove_path_shell_hook.patch
+    ];
+  });
 }

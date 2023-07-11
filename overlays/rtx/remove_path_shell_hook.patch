@@ -1,0 +1,62 @@
+diff --git a/src/shell/bash.rs b/src/shell/bash.rs
+index f833b17..094ff63 100644
+--- a/src/shell/bash.rs
++++ b/src/shell/bash.rs
+@@ -12,9 +12,6 @@ impl Shell for Bash {
+         let dir = exe.parent().unwrap();
+         let status = if status { " --status" } else { "" };
+         let mut out = String::new();
+-        if !is_dir_in_path(dir) {
+-            out.push_str(&format!("export PATH=\"{}:$PATH\"\n", dir.display()));
+-        }
+         out.push_str(&formatdoc! {r#"
+             export RTX_SHELL=bash
+ 
+diff --git a/src/shell/snapshots/rtx__shell__bash__tests__hook_init.snap b/src/shell/snapshots/rtx__shell__bash__tests__hook_init.snap
+index 87e882e..270448e 100644
+--- a/src/shell/snapshots/rtx__shell__bash__tests__hook_init.snap
++++ b/src/shell/snapshots/rtx__shell__bash__tests__hook_init.snap
+@@ -2,7 +2,6 @@
+ source: src/shell/bash.rs
+ expression: "bash.activate(exe, true)"
+ ---
+-export PATH="/some/dir:$PATH"
+ export RTX_SHELL=bash
+ 
+ rtx() {
+@@ -32,4 +31,3 @@ _rtx_hook() {
+ if ! [[ "${PROMPT_COMMAND:-}" =~ _rtx_hook ]]; then
+   PROMPT_COMMAND="_rtx_hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
+ fi
+-
+diff --git a/src/shell/snapshots/rtx__shell__zsh__tests__hook_init.snap b/src/shell/snapshots/rtx__shell__zsh__tests__hook_init.snap
+index 7f0b514..b7c21d2 100644
+--- a/src/shell/snapshots/rtx__shell__zsh__tests__hook_init.snap
++++ b/src/shell/snapshots/rtx__shell__zsh__tests__hook_init.snap
+@@ -2,7 +2,6 @@
+ source: src/shell/zsh.rs
+ expression: "zsh.activate(exe, true)"
+ ---
+-export PATH="/some/dir:$PATH"
+ export RTX_SHELL=zsh
+ 
+ rtx() {
+@@ -35,4 +34,3 @@ typeset -ag chpwd_functions;
+ if [[ -z "${chpwd_functions[(r)_rtx_hook]+1}" ]]; then
+   chpwd_functions=( _rtx_hook ${chpwd_functions[@]} )
+ fi
+-
+diff --git a/src/shell/zsh.rs b/src/shell/zsh.rs
+index 86931ea..03fb181 100644
+--- a/src/shell/zsh.rs
++++ b/src/shell/zsh.rs
+@@ -16,9 +16,6 @@ impl Shell for Zsh {
+ 
+         // much of this is from direnv
+         // https://github.com/direnv/direnv/blob/cb5222442cb9804b1574954999f6073cc636eff0/internal/cmd/shell_zsh.go#L10-L22
+-        if !is_dir_in_path(dir) {
+-            out.push_str(&format!("export PATH=\"{}:$PATH\"\n", dir.display()));
+-        }
+         out.push_str(&formatdoc! {r#"
+             export RTX_SHELL=zsh
+ 
