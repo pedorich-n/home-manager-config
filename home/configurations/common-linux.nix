@@ -1,4 +1,4 @@
-{ nixpkgs, pkgs, config, lib, ... }:
+{ pkgs, config, lib, ... }:
 with lib;
 let
   cfg = config.home;
@@ -61,7 +61,6 @@ in
       sessionVariables = {
         PAGER = "less -R";
         HOSTNAME = "$(hostname)";
-        NIX_PATH = "nixpkgs=${nixpkgs}";
       };
 
       shellAliases = {
