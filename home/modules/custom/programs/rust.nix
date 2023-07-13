@@ -16,7 +16,9 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       # Default toolchain includes: cargo, clippy, rustc, rust-std, rust-docs, rustfmt
-      (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default))
+      (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
+        extensions = [ "rust-src" ];
+      }))
     ];
   };
 }
