@@ -132,6 +132,7 @@ in
       "editor.useTabStops" = false;
       "evenBetterToml.formatter.arrayAutoCollapse" = true;
       "evenBetterToml.formatter.columnWidth" = 150;
+      "files.autoSave" = "afterDelay";
       "files.encoding" = "utf8";
       "files.eol" = "\n";
       "files.insertFinalNewline" = true;
