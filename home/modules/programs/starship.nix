@@ -12,6 +12,7 @@ with lib;
         "$git_status"
         "$aws"
         "$python"
+        "$nix_shell"
         "$character"
       ];
 
@@ -49,6 +50,13 @@ with lib;
       git_status = {
         disabled = false;
         stashed = "";
+      };
+
+      nix_shell = {
+        disabled = false;
+        heuristic = true;
+        style = "cyan";
+        symbol = " ";
       };
 
       time = {
