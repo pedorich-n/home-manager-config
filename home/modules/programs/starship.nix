@@ -53,6 +53,7 @@ with lib;
       };
 
       nix_shell = {
+        format = "via [$symbol]($style) ";
         disabled = false;
         heuristic = true;
         style = "cyan";
@@ -75,6 +76,7 @@ with lib;
       };
 
       python = {
+        format = ''via [''$symbol''$pyenv_prefix(''$version )]($style)'';
         disabled = false;
         symbol = " ";
       };
