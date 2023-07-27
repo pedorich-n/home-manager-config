@@ -6,10 +6,12 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
 
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.url = "github:numtide/flake-utils"; # Only here to have single entry in the flake.lock
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
     flake-compat = {
-      url = "github:edolstra/flake-compat";
+      url = "github:edolstra/flake-compat"; # Only here to have single entry in the flake.lock
       flake = false;
     };
 
@@ -53,7 +55,13 @@
       flake = false;
     };
 
-    rust-overlay.url = "github:oxalica/rust-overlay";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
 
   outputs = { flake-utils, ... } @ inputs:
