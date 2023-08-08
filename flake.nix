@@ -31,6 +31,14 @@
     };
 
     # Packages / Overlays
+    nixgl = {
+      url = "github:guibou/nixGL";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+
     zsh-snap-source = {
       url = "github:marlonrichert/zsh-snap";
       flake = false;
