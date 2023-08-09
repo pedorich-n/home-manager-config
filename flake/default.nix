@@ -8,7 +8,6 @@ let
       overlays = with inputs; [
         nix-vscode-extensions.overlays.default
         rust-overlay.overlays.default
-        nixgl.overlay
         (import ../overlays inputs)
       ];
       config = {

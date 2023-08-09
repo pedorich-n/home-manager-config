@@ -1,21 +1,6 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 let
   gpgKey = "900C2FE784D62F8C";
-
-  # From https://github.com/guibou/nixGL/issues/44#issuecomment-1361524862
-  nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl-wrapper" { } ''
-    mkdir $out
-
-    ln -s ${pkg}/* $out
-    rm $out/bin
-    mkdir $out/bin
-
-    for bin in ${pkg}/bin/*; do
-     wrapped_bin=$out/bin/$(basename $bin)
-     echo "exec ${lib.getExe pkgs.nixgl.nixGLIntel} $bin \"\$@\"" > $wrapped_bin
-     chmod +x $wrapped_bin
-    done
-  '';
 in
 {
   imports = [ ./common-linux.nix ];
@@ -69,12 +54,10 @@ in
 
     packages = (with pkgs; [
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
-      barrier
       caffeine-ng
       circleci-cli
       docker-compose
-      (nixGLWrap google-chrome)
-      nixgl.nixGLIntel
+      google-chrome
       saml2aws
       slack
       sublime4
