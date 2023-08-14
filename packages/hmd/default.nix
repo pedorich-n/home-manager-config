@@ -5,7 +5,10 @@ in
 python3Packages.buildPythonPackage {
   pname = pyproject.name;
   inherit (pyproject) version;
-  meta.description = pyproject.description ? "";
+  meta = {
+    description = pyproject.description ? "";
+    mainProgram = "hmd";
+  };
   format = "pyproject";
 
   src = ./src;
