@@ -13,7 +13,6 @@ let
     nix-tree # Interative NIX depdencey graph
     nixPkg # NIX itself
     nixpkgs-fmt # NIX code formatter
-    python3Packages.hmd # Custom HomeManager Diff tool, built using NVM (Nix Version Diff)
   ];
 
   commonApps = with pkgs; [
@@ -72,10 +71,6 @@ in
         ll = "ls -alFh";
       };
 
-      activation.hmd = hm.dag.entryAfter [ "linkGeneration" ] ''
-        $VERBOSE_ECHO "Home Manager Generations Diff"
-        $DRY_RUN_CMD ${getExe pkgs.python3Packages.hmd} --auto
-      '';
     };
 
     custom = {
@@ -91,6 +86,7 @@ in
       bash.enable = true; # To set Home Manager's ENVs vars in .profile
       bat.enable = true; # Colorful `cat` replacement (text-files viewer)
       git.enable = true; #  Distributed version control system
+      hmd.enable = true; # HomeManager Diff tool, built using NVM (Nix Version Diff)
       htop.enable = true; # Interactive resource monitor
       less.enable = true; # Interactive text-files viewer
       ripgrep.enable = true; # Fast grep replacement (regex search in content)
