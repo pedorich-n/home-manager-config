@@ -38,7 +38,6 @@ in
 
   home.packages = with pkgs; [
     python3Packages.black
-    just
     wslu
   ];
 }

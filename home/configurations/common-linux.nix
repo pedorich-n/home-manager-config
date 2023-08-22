@@ -23,6 +23,7 @@ let
     gdu # Fast disk usage analyser
     gnused # GNU Stream EDitor
     jq # Command-line JSON processor
+    just # Handy tool to save and run project-specific commands.
     keychain # ssh-agent and/or gpg-agent between logins
     man # Man pages reader
     tree # Recursive directory listing
