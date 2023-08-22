@@ -16,41 +16,13 @@ let
       };
     };
 
-  formatterFor = pkgs: pkgs.nixpkgs-fmt;
-
-  checksFor = pkgs:
-    {
-      pre-commit-check = inputs.pre-commit-hooks.lib.${pkgs.system}.run {
-        src = ../.;
-        hooks = {
-          # Nix
-          deadnix.enable = true;
-          nixpkgs-fmt.enable = true;
-          statix.enable = true;
-
-          # Python
-          black = {
-            enable = true;
-            entry = with pkgs; lib.mkForce "${lib.getExe black} --line-length=150";
-          };
-          isort.enable = true;
-
-          # Shell
-          shfmt.enable = true;
-        };
-      };
-    };
-
   shellsFor = pkgs:
     let
       minimalMkShell = import ../lib/minimal-shell.nix { inherit pkgs; };
 
-      preCommitShell = { "pre-commit" = minimalMkShell { inherit ((checksFor pkgs).pre-commit-check) shellHook; }; };
       shells = builtins.map (path: import path { inherit pkgs minimalMkShell; }) (customLib.listNixFilesRecursive ../shells);
-
-      allShells = [ preCommitShell ] ++ shells;
     in
-    customLib.flattenAttrsetsRecursive allShells;
+    customLib.flattenAttrsetsRecursive shells;
 
   # Input: pkgs, attrs (schema: { <name> = <homeManagerConfigurationPath> })
   # Output: attrs (schema: { <name> = <homeManagerConfiguration> })
@@ -93,8 +65,6 @@ in
         _module.args.pkgs = pkgsFor system inputs.nixpkgs;
 
         devShells = shellsFor pkgs;
-        checks = checksFor pkgs;
-        formatter = formatterFor pkgs;
       };
 
       flake = {

@@ -4,37 +4,15 @@
   inputs = {
     # Global / Meta
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
+    # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
 
     flake-utils.url = "github:numtide/flake-utils"; # Only here to have single entry in the flake.lock
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    flake-compat = {
-      url = "github:edolstra/flake-compat"; # Only here to have single entry in the flake.lock
-      flake = false;
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # treefmt-nix = {
-    #   url = "github:numtide/treefmt-nix";
-    #   inputs = {
-    #     nixpkgs.follows = "nixpkgs";
-    #   };
-    # };
-
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        nixpkgs-stable.follows = "nixpkgs-stable";
-        flake-compat.follows = "flake-compat";
-        flake-utils.follows = "flake-utils";
-      };
     };
 
     # Packages / Overlays
@@ -52,7 +30,6 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-compat.follows = "flake-compat";
         flake-utils.follows = "flake-utils";
       };
     };
