@@ -23,6 +23,7 @@ in
 
     extensions = (with pkgs.vscode-extensions; [
       github.copilot
+      jebbs.plantuml
     ]) ++ (with pkgs.vscode-marketplace; [
       # Themes
       evgeniypetukhov.dark-low-contrast
