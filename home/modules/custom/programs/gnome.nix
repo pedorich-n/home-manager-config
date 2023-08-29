@@ -50,7 +50,7 @@ in
 
       "org/gnome/desktop/wm/preferences" = {
         num-workspaces = 3;
-        workspace-names = [ "Main" "Idea" "Terminal" ];
+        workspace-names = [ "Main" "IDE" "Terminal" ];
       };
 
       "org/gnome/shell/world-clocks" = {
