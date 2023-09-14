@@ -3,7 +3,7 @@
 
   inputs = {
     # Global / Meta
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
 
     flake-utils.url = "github:numtide/flake-utils"; # Only here to have single entry in the flake.lock
