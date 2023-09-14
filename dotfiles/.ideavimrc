@@ -10,10 +10,10 @@ nnoremap g<C-o> <C-o>
 nnoremap g<C-i> <C-i>
 
 " easy system clipboard copy/paste
-noremap y "*y
-noremap Y "*Y
-noremap p "*p
-noremap P "*P
+noremap y "+y
+noremap Y "+Y
+noremap p "+p
+noremap P "+P
 
 " delete won't copy the data to the clipboard
 nnoremap d "_d
