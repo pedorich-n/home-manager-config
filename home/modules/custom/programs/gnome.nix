@@ -38,7 +38,6 @@ in
       };
 
       "org/gnome/desktop/input-sources" = {
-        current = "uint32 0";
         sources = [ (mkTuple [ "xkb" "us" ]) (mkTuple [ "xkb" "ru" ]) ];
       };
 
