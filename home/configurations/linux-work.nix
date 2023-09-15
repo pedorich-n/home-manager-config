@@ -45,6 +45,10 @@ in
     };
   };
 
+  services = {
+    flameshot.enable = true;
+  };
+
   home = {
     file.".sdks/java-8".source = pkgs.jdk8;
 

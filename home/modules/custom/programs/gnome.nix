@@ -53,6 +53,26 @@ in
         workspace-names = [ "Main" "IDE" "Terminal" ];
       };
 
+      "org/gnome/settings-daemon/plugins/media-keys" = {
+        custom-keybindings = [
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
+        ];
+        screenshot = (mkEmptyArray type.string);
+      };
+
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+        binding = "<Alt>space";
+        command = "ulauncher-toggle";
+        name = "Ulauncher";
+      };
+
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+        binding = "Print";
+        command = "flameshot gui";
+        name = "Flameshot";
+      };
+
       "org/gnome/shell/world-clocks" = {
         # It's very hard (if possible at all) to express this structure using HomeManager's Dconf types so using this trick to set the value to a literal
         locations = mkString "" // {
