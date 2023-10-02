@@ -1,5 +1,5 @@
 { stdenvNoCC, lib, zsh-snap-source }:
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation {
   pname = "zsh-snap";
   version = zsh-snap-source.shortRev;
 
@@ -12,7 +12,7 @@ stdenvNoCC.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out
-    rm LICENSE *.md 
+    rm LICENSE *.md
     cp -r * $out
   '';
 

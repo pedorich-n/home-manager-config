@@ -50,7 +50,7 @@ in
   };
 
   home = {
-    file.".sdks/java-8".source = pkgs.jdk8;
+    file.".sdks/java-11".source = pkgs.jdk11;
 
     shellAliases = {
       "zellij_pwd" = "zellij -s $(pwd | xargs basename)";
