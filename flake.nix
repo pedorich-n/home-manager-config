@@ -55,6 +55,14 @@
         flake-utils.follows = "flake-utils";
       };
     };
+
+    nixgl = {
+      url = "github:guibou/nixGL";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
 
   outputs = { flake-utils, ... } @ inputs:

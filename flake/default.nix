@@ -8,6 +8,7 @@ let
       overlays = with inputs; [
         nix-vscode-extensions.overlays.default
         rust-overlay.overlays.default
+        nixgl.overlays.default
         (import ../overlays inputs)
       ];
       config = {
@@ -30,6 +31,7 @@ let
     let
       sharedModules = customLib.listNixFilesRecursive ../home/modules;
       shellNamesModule = { config.custom.hm.shellNames = builtins.attrNames (shellsFor pkgs); };
+      nixGLWrap = pkgs.callPackage ../lib/nixgl-wrap.nix { };
 
       homeManagerConfigrationFor = configuration:
         inputs.home-manager.lib.homeManagerConfiguration {
@@ -37,6 +39,7 @@ let
           modules = sharedModules ++ [ configuration shellNamesModule inputs.home-manager-diff.hmModule ];
           extraSpecialArgs = {
             inherit customLib;
+            inherit nixGLWrap;
             inherit (inputs) self nixpkgs;
           };
         };

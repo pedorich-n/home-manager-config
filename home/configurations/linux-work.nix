@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, nixGLWrap, ... }:
 let
   gpgKey = "900C2FE784D62F8C";
 in
@@ -58,10 +58,11 @@ in
 
     packages = (with pkgs; [
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      (nixGLWrap google-chrome)
       caffeine-ng
       circleci-cli
       docker-compose
-      google-chrome
+      nixgl.nixGLIntel
       saml2aws
       slack
       sublime4
