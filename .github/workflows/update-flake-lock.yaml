@@ -17,6 +17,7 @@ jobs:
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
           branch: update_flake_lock_action
+          base: main
           pr-title: "Update flake.lock"
           pr-labels: |
             dependencies
@@ -26,6 +27,7 @@ jobs:
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
           branch: update_dev_flake_lock_action
+          base: main
           path-to-flake-dir: ./dev
           pr-title: "Update dev flake.lock"
           pr-labels: |
