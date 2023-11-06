@@ -52,7 +52,9 @@
     },
     "flake-utils": {
       "inputs": {
-        "systems": "systems"
+        "systems": [
+          "systems"
+        ]
       },
       "locked": {
         "lastModified": 1694529238,
@@ -85,6 +87,36 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager-diff": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "poetry2nix": "poetry2nix",
+        "systems": [
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1699249791,
+        "narHash": "sha256-FNsT60xNOtNv6YNIB4jeEBR5s5G7w61uCuZQ6iNR0zw=",
+        "owner": "pedorich-n",
+        "repo": "home-manager-diff",
+        "rev": "1b62a5618f49f2aa3097053689d67eb06d3e5e1e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pedorich-n",
+        "repo": "home-manager-diff",
         "type": "github"
       }
     },
@@ -169,16 +201,53 @@
         "type": "github"
       }
     },
+    "poetry2nix": {
+      "inputs": {
+        "flake-utils": [
+          "home-manager-diff",
+          "flake-utils"
+        ],
+        "nix-github-actions": [
+          "home-manager-diff"
+        ],
+        "nixpkgs": [
+          "home-manager-diff",
+          "nixpkgs"
+        ],
+        "systems": [
+          "home-manager-diff",
+          "systems"
+        ],
+        "treefmt-nix": [
+          "home-manager-diff"
+        ]
+      },
+      "locked": {
+        "lastModified": 1698827751,
+        "narHash": "sha256-24zEKQqpgolmJGR9Zvaha/361BIGeMPh5aU5oReLL0k=",
+        "owner": "nix-community",
+        "repo": "poetry2nix",
+        "rev": "4099e32cb94b586fd3d213465942111964ff50ff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "poetry2nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "cqlsh-source": "cqlsh-source",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "home-manager-diff": "home-manager-diff",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
+        "systems": "systems",
         "tomorrow-theme-source": "tomorrow-theme-source",
         "zsh-snap-source": "zsh-snap-source"
       }

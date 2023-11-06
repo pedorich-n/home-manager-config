@@ -6,9 +6,12 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
 
-    flake-utils.url = "github:numtide/flake-utils"; # Only here to have single entry in the flake.lock
-
     flake-parts.url = "github:hercules-ci/flake-parts";
+    systems.url = "github:nix-systems/default";
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.systems.follows = "systems";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -47,14 +50,15 @@
       };
     };
 
-    # home-manager-diff = {
-    #   url = "github:pedorich-n/home-manager-diff";
-    #   inputs = {
-    #     nixpkgs.follows = "nixpkgs";
-    #     flake-parts.follows = "flake-parts";
-    #     flake-utils.follows = "flake-utils";
-    #   };
-    # };
+    home-manager-diff = {
+      url = "github:pedorich-n/home-manager-diff";
+      inputs = {
+        systems.follows = "systems";
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+        flake-utils.follows = "flake-utils";
+      };
+    };
 
     nixgl = {
       url = "github:guibou/nixGL";
