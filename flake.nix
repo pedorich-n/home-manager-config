@@ -69,12 +69,12 @@
     };
   };
 
-  outputs = { flake-utils, ... } @ inputs:
+  outputs = inputs:
     let
       flakeLib = import ./flake { inherit inputs; };
     in
-    with flake-utils.lib.system; flakeLib.flakeFor {
-      ${x86_64-linux} = {
+    flakeLib.flakeFor {
+      "x86_64-linux" = {
         wslPersonal = ./home/configurations/wsl-personal.nix;
         linuxMinimal = ./home/configurations/linux-minimal.nix;
         linuxWork = ./home/configurations/linux-work.nix;

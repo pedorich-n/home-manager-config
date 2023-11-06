@@ -36,7 +36,11 @@ let
       homeManagerConfigrationFor = configuration:
         inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = sharedModules ++ [ configuration shellNamesModule inputs.home-manager-diff.hmModules.default ];
+          modules = sharedModules ++ [
+            configuration
+            shellNamesModule
+            inputs.home-manager-diff.hmModules.default
+          ];
           extraSpecialArgs = {
             inherit customLib;
             inherit nixGLWrap;
