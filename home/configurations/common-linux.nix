@@ -87,7 +87,7 @@ in
       bash.enable = true; # To set Home Manager's ENVs vars in .profile
       bat.enable = true; # Colorful `cat` replacement (text-files viewer)
       git.enable = true; #  Distributed version control system
-      hmd.enable = true; # HomeManager Diff tool, built using NVM (Nix Version Diff)
+      # hmd.enable = true; # HomeManager Diff tool, built using NVM (Nix Version Diff)
       htop.enable = true; # Interactive resource monitor
       less.enable = true; # Interactive text-files viewer
       ripgrep.enable = true; # Fast grep replacement (regex search in content)

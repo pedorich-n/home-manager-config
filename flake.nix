@@ -47,14 +47,14 @@
       };
     };
 
-    home-manager-diff = {
-      url = "github:pedorich-n/home-manager-diff";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-        flake-utils.follows = "flake-utils";
-      };
-    };
+    # home-manager-diff = {
+    #   url = "github:pedorich-n/home-manager-diff";
+    #   inputs = {
+    #     nixpkgs.follows = "nixpkgs";
+    #     flake-parts.follows = "flake-parts";
+    #     flake-utils.follows = "flake-utils";
+    #   };
+    # };
 
     nixgl = {
       url = "github:guibou/nixGL";
