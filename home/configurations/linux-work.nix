@@ -59,12 +59,12 @@ in
     packages = (with pkgs; [
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
       (nixGLWrap google-chrome)
+      (nixGLWrap slack)
       caffeine-ng
       circleci-cli
       docker-compose
       nixgl.nixGLIntel
       saml2aws
-      slack
       sublime4
       trilium-desktop
       xclip

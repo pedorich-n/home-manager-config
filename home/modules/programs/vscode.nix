@@ -168,8 +168,7 @@ in
         "workbench.statusBar.visible" = "undefined";
         "window.zoomLevel" = "undefined";
       };
-      "python.formatting.provider" = "black";
-      "python.formatting.blackArgs" = [ "--line-length=140" ];
+      "black-formatter.args" = [ "--line-length=140" ];
       "terminal.integrated.fontFamily" = "FiraCode Nerd Font";
       "vim.foldfix" = true;
       "vim.normalModeKeyBindingsNonRecursive" = [
