@@ -65,6 +65,7 @@ in
       docker-compose
       nixgl.nixGLIntel
       saml2aws
+      shfmt
       sublime4
       trilium-desktop
       xclip

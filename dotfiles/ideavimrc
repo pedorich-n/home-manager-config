@@ -10,27 +10,28 @@ nnoremap g<C-o> <C-o>
 nnoremap g<C-i> <C-i>
 
 " easy system clipboard copy/paste
+set clipboard=unnamedplus,unnamed,ideaput
 noremap y "+y
 noremap Y "+Y
 noremap p "+p
 noremap P "+P
 
 " delete won't copy the data to the clipboard
-nnoremap d "_d
-xnoremap d "_d
-
-noremap D "_D
-xnoremap D "_D
-
-nnoremap dd "_dd
-
-nnoremap x "_x
-xnoremap x "_x
-
-nnoremap c "_c
-xnoremap c "_c
-
-vnoremap p "_dP
+" nnoremap d "_d
+" xnoremap d "_d
+"
+" noremap D "_D
+" xnoremap D "_D
+"
+" nnoremap dd "_dd
+"
+" nnoremap x "_x
+" xnoremap x "_x
+"
+" nnoremap c "_c
+" xnoremap c "_c
+"
+" vnoremap p "_dP
 
 " built in search
 nnoremap / :action Find<CR>

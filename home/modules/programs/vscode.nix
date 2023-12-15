@@ -24,6 +24,7 @@ in
     extensions = (with pkgs.vscode-extensions; [
       github.copilot
       jebbs.plantuml
+      ms-python.python
     ]) ++ (with pkgs.vscode-marketplace; [
       # Themes
       evgeniypetukhov.dark-low-contrast
@@ -35,7 +36,6 @@ in
       jnoortheen.nix-ide
       mkhl.shfmt
       ms-python.isort
-      ms-python.python
       rust-lang.rust-analyzer
       scala-lang.scala
       scalameta.metals
@@ -131,6 +131,7 @@ in
       "editor.stickyScroll.maxLineCount" = 10;
       "editor.tabSize" = 2;
       "editor.useTabStops" = false;
+      "extensions.autoUpdate" = false;
       "evenBetterToml.formatter.arrayAutoCollapse" = true;
       "evenBetterToml.formatter.columnWidth" = 150;
       "files.autoSave" = "afterDelay";
