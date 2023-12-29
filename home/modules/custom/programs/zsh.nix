@@ -62,12 +62,12 @@ in
           repo = "ohmyzsh/ohmyzsh";
           path = "plugins/{git,extract}";
         }
-        (mkIf (cfg.keychainIdentities != [ ])
-          {
-            repo = "ohmyzsh/ohmyzsh";
-            path = "plugins/{keychain,gpg-agent}";
-          }
-        )
+        #        (mkIf (cfg.keychainIdentities != [ ])
+        #          {
+        #            repo = "ohmyzsh/ohmyzsh";
+        #            path = "plugins/{keychain,gpg-agent}";
+        #          }
+        #        )
       ];
     };
 

@@ -21,6 +21,7 @@ in
 
     services.gpg-agent = {
       enable = true;
+      pinentryFlavor = "tty";
       # 7 days
       defaultCacheTtl = 604800;
       maxCacheTtl = 604800;

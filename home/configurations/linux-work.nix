@@ -64,6 +64,7 @@ in
       circleci-cli
       docker-compose
       nixgl.nixGLIntel
+      pinentry
       saml2aws
       shfmt
       sublime4
