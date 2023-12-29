@@ -14,14 +14,19 @@ in
 
   ###### implementation
   config = mkIf cfg.enable {
+
+    home.packages = [ pkgs.gnome.seahorse ];
+
     programs.gpg = {
       package = pkgs.gnupg;
       enable = true;
     };
 
+    services.gnome-keyring.enable = true;
+
     services.gpg-agent = {
       enable = true;
-      pinentryFlavor = "tty";
+      pinentryFlavor = "gnome3";
       # 7 days
       defaultCacheTtl = 604800;
       maxCacheTtl = 604800;
