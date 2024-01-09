@@ -52,7 +52,7 @@ in
   ###### implementation
   config = {
     home = {
-      stateVersion = "23.05";
+      stateVersion = "23.11";
 
       homeDirectory = mkDefault home;
 
