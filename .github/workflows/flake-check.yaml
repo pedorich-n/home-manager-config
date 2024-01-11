@@ -7,11 +7,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4
       - name: Install Nix
-        uses: cachix/install-nix-action@v22
+        uses: cachix/install-nix-action@v24
       - name: Flake Check Dev
-        working-directory: dev
-        run: nix flake check
+        run: nix flake check "./?dir=dev&submodules=1"
       - name: Flake Check
         run: nix flake check
