@@ -6,19 +6,6 @@ on:
 
 jobs:
   update-flake-lock:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Install Nix
-        uses: cachix/install-nix-action@v24
-      - name: Update flake.lock
-        uses: DeterminateSystems/update-flake-lock@v20
-        with:
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
-          branch: update_flake_lock_action
-          base: main
-          pr-title: "Update flake.lock"
-          pr-labels: |
-            dependencies
-            automated
+    uses: pedorich-n/github-workflows/.github/workflows/update-flake-lock.yaml@main
+    secrets:
+      gh_access_token: ${{ secrets.GH_ACCESS_TOKEN }}
