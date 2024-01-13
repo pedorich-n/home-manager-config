@@ -9,7 +9,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Install Nix
-        uses: cachix/install-nix-action@v24
+        uses: cachix/install-nix-action@v25
       - name: Flake Check Dev
         run: nix flake check "./?dir=dev&submodules=1"
       - name: Flake Check
