@@ -36,7 +36,12 @@ in
     };
   };
 
+  services = {
+    gpg-agent.pinentryFlavor = "curses";
+  };
+
   home.packages = with pkgs; [
+    pinentry-curses
     python3Packages.black
     wslu
   ];

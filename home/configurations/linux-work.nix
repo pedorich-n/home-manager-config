@@ -47,6 +47,7 @@ in
 
   services = {
     flameshot.enable = true;
+    gpg-agent.pinentryFlavor = "gnome3";
   };
 
   home = {
@@ -63,6 +64,7 @@ in
       caffeine-ng
       circleci-cli
       docker-compose
+      gnome.seahorse
       nixgl.nixGLIntel
       pinentry
       saml2aws

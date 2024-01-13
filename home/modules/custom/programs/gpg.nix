@@ -15,8 +15,6 @@ in
   ###### implementation
   config = mkIf cfg.enable {
 
-    home.packages = [ pkgs.gnome.seahorse ];
-
     programs.gpg = {
       package = pkgs.gnupg;
       enable = true;
@@ -26,7 +24,6 @@ in
 
     services.gpg-agent = {
       enable = true;
-      pinentryFlavor = "gnome3";
       # 7 days
       defaultCacheTtl = 604800;
       maxCacheTtl = 604800;
