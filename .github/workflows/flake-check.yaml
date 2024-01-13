@@ -3,14 +3,4 @@ on: push
 
 jobs:
   nix-flake-check:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Install Nix
-        uses: cachix/install-nix-action@v25
-      - name: Flake Check Dev
-        run: nix flake check "./?dir=dev&submodules=1"
-      - name: Flake Check
-        run: nix flake check
+    uses: pedorich-n/github-workflows/.github/workflows/flake-check.yaml@main
