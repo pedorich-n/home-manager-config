@@ -21,6 +21,7 @@
     extraConfig = {
       pull.rebase = true;
       push.default = "simple";
+      submodule.recurse = true;
     };
 
     ignores = config.custom.misc.globalIgnores or [ ];
