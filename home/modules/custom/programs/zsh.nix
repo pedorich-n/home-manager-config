@@ -33,8 +33,6 @@ in
       initExtra = ''
         COMPLETION_WAITING_DOTS=true
 
-        bindkey '^R' history-incremental-search-backward
-
         zstyle ':completion:*' menu yes select _complete _ignored _approximate _files
 
         setopt MENU_COMPLETE
@@ -56,11 +54,11 @@ in
       sources = [
         {
           repo = "ohmyzsh/ohmyzsh";
-          path = "lib/{git,functions,theme-and-appearance,history,key-bindings,completion,termsupport}";
+          path = "lib/{git,functions,theme-and-appearance,key-bindings,completion,termsupport}";
         }
         {
           repo = "ohmyzsh/ohmyzsh";
-          path = "plugins/{git,extract}";
+          path = "plugins/{git,extract,fzf}";
         }
         (mkIf (cfg.keychainIdentities != [ ])
           {

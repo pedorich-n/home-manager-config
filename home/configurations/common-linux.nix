@@ -87,6 +87,7 @@ in
 
       bash.enable = true; # To set Home Manager's ENVs vars in .profile
       bat.enable = true; # Colorful `cat` replacement (text-files viewer)
+      fzf.enable = true; # Command-line fuzzy finder
       git.enable = true; #  Distributed version control system
       hmd.enable = true; # HomeManager Diff tool, built using NVM (Nix Version Diff)
       htop.enable = true; # Interactive resource monitor
