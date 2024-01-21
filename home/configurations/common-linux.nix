@@ -68,8 +68,8 @@ in
         fd = "fd --no-require-git";
 
         hm = "home-manager";
-        hms = "home-manager switch --flake ${hmConfigLocation}#${cfgCustom.name}";
-        hmn = "home-manager --flake ${hmConfigLocation}#${cfgCustom.name} news";
+        hms = ''home-manager switch --flake "${hmConfigLocation}#${cfgCustom.name}"'';
+        hmn = ''home-manager --flake "${hmConfigLocation}#${cfgCustom.name} news"'';
 
         ll = "ls -alFh";
       };
@@ -78,7 +78,6 @@ in
 
     custom = {
       programs = {
-        zellij.enable = true;
         zsh.enable = true;
       };
     };
@@ -97,6 +96,7 @@ in
       starship.enable = true; # The minimal, blazing-fast, and infinitely customizable prompt
       tealdeer.enable = true; # Community-driven Man alternative
       vim.enable = true; # Text editor
+      zellij.enable = true; # A terminal workspace with batteries included
 
       zsh = {
         dirHashes = {
@@ -132,3 +132,4 @@ in
     };
   };
 }
+

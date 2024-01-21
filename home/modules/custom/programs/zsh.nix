@@ -47,27 +47,22 @@ in
 
         include "${config.home.homeDirectory}/.zshrc_extra";
       '';
-    };
 
-    custom.programs.zsh-snap = {
-      enable = true;
-      sources = [
-        {
-          repo = "ohmyzsh/ohmyzsh";
-          path = "lib/{git,functions,theme-and-appearance,key-bindings,completion,termsupport}";
-        }
-        {
-          repo = "ohmyzsh/ohmyzsh";
-          path = "plugins/{git,extract,fzf}";
-        }
-        (mkIf (cfg.keychainIdentities != [ ])
-          {
-            repo = "ohmyzsh/ohmyzsh";
-            path = "plugins/{keychain,gpg-agent}";
-          }
-        )
-      ];
+      antidote = {
+        enable = true;
+        plugins = [
+          "ohmyzsh/ohmyzsh path:lib/completion.zsh"
+          "ohmyzsh/ohmyzsh path:lib/functions.zsh"
+          "ohmyzsh/ohmyzsh path:lib/git.zsh"
+          "ohmyzsh/ohmyzsh path:lib/termsupport.zsh"
+          "ohmyzsh/ohmyzsh path:plugins/extract"
+          "ohmyzsh/ohmyzsh path:plugins/fzf"
+          "ohmyzsh/ohmyzsh path:plugins/git kind:defer"
+        ] ++ (lists.optionals (cfg.keychainIdentities != [ ]) [
+          "ohmyzsh/ohmyzsh path:plugins/keychain"
+          "ohmyzsh/ohmyzsh path:plugins/gpg-agent"
+        ]);
+      };
     };
-
   };
 }

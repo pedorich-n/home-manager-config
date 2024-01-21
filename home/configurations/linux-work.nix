@@ -18,7 +18,10 @@ in
       jetbrains = {
         idea.enable = true;
       };
-      gpg.enable = true;
+      gpg = {
+        enable = true;
+        pinentryFlavor = "gnome3";
+      };
       zsh.keychainIdentities = [ "work/paidy" gpgKey ];
     };
   };
@@ -47,7 +50,6 @@ in
 
   services = {
     flameshot.enable = true;
-    gpg-agent.pinentryFlavor = "gnome3";
   };
 
   home = {

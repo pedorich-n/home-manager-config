@@ -248,8 +248,7 @@
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
         "systems": "systems",
-        "tomorrow-theme-source": "tomorrow-theme-source",
-        "zsh-snap-source": "zsh-snap-source"
+        "tomorrow-theme-source": "tomorrow-theme-source"
       }
     },
     "rust-overlay": {
@@ -303,22 +302,6 @@
       "original": {
         "owner": "chriskempson",
         "repo": "tomorrow-theme",
-        "type": "github"
-      }
-    },
-    "zsh-snap-source": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1702537293,
-        "narHash": "sha256-rIUDt5oAQcfAMkia/TlkSIy86Nr8UqNVzob2a0uzBLQ=",
-        "owner": "marlonrichert",
-        "repo": "zsh-snap",
-        "rev": "755566ca73bfe3cc229fe90fcc0ba87d58325771",
-        "type": "github"
-      },
-      "original": {
-        "owner": "marlonrichert",
-        "repo": "zsh-snap",
         "type": "github"
       }
     }

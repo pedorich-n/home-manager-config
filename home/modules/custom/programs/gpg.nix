@@ -8,6 +8,11 @@ in
   options = {
     custom.programs.gpg = {
       enable = mkEnableOption "gpg";
+
+      pinentryFlavor = mkOption {
+        type = types.nullOr (types.enum pkgs.pinentry.flavors);
+        default = null;
+      };
     };
   };
 
@@ -27,6 +32,7 @@ in
       # 7 days
       defaultCacheTtl = 604800;
       maxCacheTtl = 604800;
+      pinentryFlavor = cfg.pinentryFlavor;
     };
   };
 }
