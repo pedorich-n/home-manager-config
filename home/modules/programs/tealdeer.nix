@@ -1,8 +1,7 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, ... }:
 with lib;
 {
   programs.tealdeer = {
-    enable = true;
     settings = {
       display = {
         use_pager = false;
@@ -11,8 +10,10 @@ with lib;
     };
   };
 
-  home.activation.tealdeerCache = hm.dag.entryAfter [ "linkGeneration" ] ''
-    $VERBOSE_ECHO "Rebuilding tealdeer cache"
-    $DRY_RUN_CMD ${getExe pkgs.tealdeer} --update
-  '';
+  home.activation = mkIf config.programs.tealdeer.enable {
+    tealdeerCache = hm.dag.entryAfter [ "linkGeneration" ] ''
+      $VERBOSE_ECHO "Rebuilding tealdeer cache"
+      $DRY_RUN_CMD ${getExe pkgs.tealdeer} --update
+    '';
+  };
 }

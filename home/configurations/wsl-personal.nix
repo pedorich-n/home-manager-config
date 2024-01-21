@@ -11,7 +11,10 @@ in
     hm.name = "wslPersonal";
 
     programs = {
-      gpg.enable = true;
+      gpg = {
+        enable = true;
+        pinentryFlavor = "curses";
+      };
       jdk.enable = true;
       rust.enable = true;
       scala.enable = true;
@@ -34,10 +37,6 @@ in
         };
       };
     };
-  };
-
-  services = {
-    gpg-agent.pinentryFlavor = "curses";
   };
 
   home.packages = with pkgs; [
