@@ -29,12 +29,15 @@ in
       signByDefault = true;
     };
 
-    rtx = {
+    mise = {
       enable = true;
-      settings = {
+      globalConfig = {
         tools = {
           "python" = [ "3.11" ];
         };
+      };
+      settings = {
+        experimental = true;
       };
     };
   };

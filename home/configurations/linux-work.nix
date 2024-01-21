@@ -37,13 +37,16 @@ in
       signByDefault = true;
     };
 
-    rtx = {
+    mise = {
       enable = true;
-      settings = {
+      globalConfig = {
         tools = {
           "python" = [ "3.11" ];
           "terraform" = [ "0.15" "0.12" ];
         };
+      };
+      settings = {
+        experimental = true;
       };
     };
   };
