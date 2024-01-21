@@ -4,7 +4,6 @@
   inputs = {
     # Global / Meta
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     systems.url = "github:nix-systems/default";
@@ -19,11 +18,6 @@
     };
 
     # Packages / Overlays
-    zsh-snap-source = {
-      url = "github:marlonrichert/zsh-snap";
-      flake = false;
-    };
-
     tomorrow-theme-source = {
       url = "github:chriskempson/tomorrow-theme";
       flake = false;

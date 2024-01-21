@@ -1,7 +1,5 @@
 inputs: _: prev:
 {
-  zsh-snap = prev.callPackage ../packages/zsh-snap { inherit (inputs) zsh-snap-source; };
-
   vimPlugins = prev.vimPlugins // {
     tomorrow-theme = prev.callPackage ../packages/vim-tomorrow-theme { inherit (inputs) tomorrow-theme-source; };
   };
