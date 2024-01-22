@@ -54,6 +54,7 @@ in
           "ohmyzsh/ohmyzsh path:lib/completion.zsh"
           "ohmyzsh/ohmyzsh path:lib/functions.zsh"
           "ohmyzsh/ohmyzsh path:lib/git.zsh"
+          "ohmyzsh/ohmyzsh path:lib/key-bindings.zsh"
           "ohmyzsh/ohmyzsh path:lib/termsupport.zsh"
           "ohmyzsh/ohmyzsh path:plugins/extract"
           "ohmyzsh/ohmyzsh path:plugins/fzf"
