@@ -105,7 +105,7 @@ in
 
         initExtra = strings.optionalString (cfgCustom.shellNames != [ ]) ''
           nshell () {
-            nix develop ${hmConfigLocation}#$1
+            nix develop "${hmConfigLocation}#$1"
           }
           _nshell () {
             local -a args=(
