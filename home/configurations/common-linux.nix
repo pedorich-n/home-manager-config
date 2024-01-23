@@ -71,7 +71,7 @@ in
         hms = ''home-manager switch --flake "${hmConfigLocation}#${cfgCustom.name}"'';
         hmn = ''home-manager --flake "${hmConfigLocation}#${cfgCustom.name}" news'';
 
-        ll = "ls -alFh";
+        ll = "ls --all --classify --human-readable --color --group-directories-first -l";
       };
 
     };
@@ -87,6 +87,7 @@ in
 
       bash.enable = true; # To set Home Manager's ENVs vars in .profile
       bat.enable = true; # Colorful `cat` replacement (text-files viewer)
+      dircolors.enable = true; # Manage .dir_colors and set LS_COLORS
       fzf.enable = true; # Command-line fuzzy finder
       git.enable = true; #  Distributed version control system
       hmd.enable = true; # HomeManager Diff tool, built using NVM (Nix Version Diff)
