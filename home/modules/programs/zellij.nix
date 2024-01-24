@@ -9,7 +9,6 @@ in
     (customLib.mapListToAttrs (path: nameValuePair (toXdgFilePath path) { text = builtins.readFile path; }) layouts);
 
   programs.zellij = {
-    enable = true;
     settings = {
       copy_command = "xclip -selection clipboard";
     };

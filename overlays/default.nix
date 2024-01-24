@@ -6,6 +6,5 @@ inputs: _: prev:
 
   python3Packages = prev.python3Packages // {
     cqlsh = prev.callPackage ../packages/cqlsh { inherit (inputs) cqlsh-source; };
-    hmd = prev.callPackage ../packages/hmd { };
   };
 }
