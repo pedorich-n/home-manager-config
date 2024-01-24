@@ -120,6 +120,7 @@ in
     };
 
     targets.genericLinux.enable = true;
+    xdg.enable = true;
 
     nix = {
       package = nixPkg;
@@ -133,4 +134,3 @@ in
     };
   };
 }
-
