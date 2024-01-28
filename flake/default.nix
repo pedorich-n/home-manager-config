@@ -30,7 +30,6 @@ let
   homeManagerConfigurationsFor = pkgs: configurations:
     let
       sharedModules = customLib.listNixFilesRecursive ../home/modules;
-      shellNamesModule = { config.custom.hm.shellNames = builtins.attrNames (shellsFor pkgs); };
       nixGLWrap = pkgs.callPackage ../lib/nixgl-wrap.nix { };
 
       homeManagerConfigrationFor = configuration:
@@ -38,7 +37,6 @@ let
           inherit pkgs;
           modules = sharedModules ++ [
             configuration
-            shellNamesModule
             inputs.home-manager-diff.hmModules.default
           ];
           extraSpecialArgs = {
