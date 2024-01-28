@@ -56,7 +56,7 @@ in
       #        withSystem :: String -> ({} -> {}), https://flake.parts/module-arguments.html#withsystem
       #        It brings everything defined in `perSystem` to the scope, so pkgs are with custom settings and overlays
       # Output: attrs (schema: { <name> = <homeManagerConfiguration>; })
-      homeConfigurations = { withSystem }: inputs.nixpkgs.lib.attrsets.foldlAttrs
+      homeConfigurations = withSystem: inputs.nixpkgs.lib.attrsets.foldlAttrs
         (acc: system: configurationsPerSystem: acc // (withSystem system ({ pkgs, ... }: homeManagerConfigurationsFor pkgs configurationsPerSystem)))
         { }
         attrs;
@@ -73,7 +73,11 @@ in
       };
 
       flake = {
-        homeConfigurations = homeConfigurations { inherit withSystem; };
+        homeConfigurations = homeConfigurations withSystem;
+
+        homeModules = {
+          shared = import ../home/configurations/_shared.nix;
+        };
       };
     });
 }
