@@ -76,7 +76,7 @@ in
         homeConfigurations = homeConfigurations withSystem;
 
         homeModules = {
-          shared = import ../home/configurations/_shared.nix;
+          common = import ../home/configurations/_common.nix;
         };
       };
     });

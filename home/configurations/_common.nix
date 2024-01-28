@@ -1,3 +1,4 @@
+# Module containing common settings
 { pkgs, ... }:
 {
   home = {

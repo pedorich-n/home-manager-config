@@ -1,3 +1,4 @@
+# Module containing common settings for standalone HM installations.
 { config, lib, ... }:
 with lib;
 let
@@ -8,7 +9,7 @@ let
   hmConfigLocation = "${cfg.homeDirectory}/.config.nix";
 in
 {
-  imports = [ ./_shared.nix ];
+  imports = [ ./_common.nix ];
 
   ###### interface
   options = {
