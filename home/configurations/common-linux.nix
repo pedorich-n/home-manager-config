@@ -1,4 +1,4 @@
-{ pkgs, config, lib, nixpkgs, ... }:
+{ config, lib, ... }:
 with lib;
 let
   cfg = config.home;
@@ -6,34 +6,10 @@ let
 
   home = "/home/${cfg.username}";
   hmConfigLocation = "${cfg.homeDirectory}/.config.nix";
-
-  nixPkg = pkgs.nix;
-  nixApps = with pkgs; [
-    nil # NIX language server
-    nix-tree # Interative NIX depdencey graph
-    nixPkg # NIX itself
-    nixpkgs-fmt # NIX code formatter
-  ];
-
-  commonApps = with pkgs; [
-    coreutils-full # GNU coreutils (cp, mv, whoami, echo, wc, ...)
-    curl # HTTP client
-    dtrx # "Do The Right Extraction" unarchiver
-    fd # Fast "find" alternative (files/directories search)
-    gdu # Fast disk usage analyser
-    gnused # GNU Stream EDitor
-    jq # Command-line JSON processor
-    just # Handy tool to save and run project-specific commands.
-    keychain # ssh-agent and/or gpg-agent between logins
-    man # Man pages reader
-    tree # Recursive directory listing
-  ];
-
-  # additionalCaches = {
-  #   "http://nix-community.cachix.org" = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
-  # };
 in
 {
+  imports = [ ./_shared.nix ];
+
   ###### interface
   options = {
     custom.hm = {
@@ -51,54 +27,17 @@ in
 
   ###### implementation
   config = {
-    home = {
-      stateVersion = "23.11";
 
+    home = {
       homeDirectory = mkDefault home;
 
-      packages = nixApps ++ commonApps;
-
-      sessionVariables = {
-        PAGER = "less -R";
-        HOSTNAME = "$(hostname)";
-        NIX_PATH = "nixpkgs=${nixpkgs}";
-      };
-
       shellAliases = {
-        fd = "fd --no-require-git";
-
-        hm = "home-manager";
         hms = ''home-manager switch --flake "${hmConfigLocation}#${cfgCustom.name}"'';
         hmn = ''home-manager --flake "${hmConfigLocation}#${cfgCustom.name}" news'';
-
-        ll = "ls --all --classify --human-readable --color --group-directories-first -l";
-      };
-
-    };
-
-    custom = {
-      programs = {
-        zsh.enable = true;
       };
     };
 
     programs = {
-      home-manager.enable = true;
-
-      bash.enable = true; # To set Home Manager's ENVs vars in .profile
-      bat.enable = true; # Colorful `cat` replacement (text-files viewer)
-      dircolors.enable = true; # Manage .dir_colors and set LS_COLORS
-      fzf.enable = true; # Command-line fuzzy finder
-      git.enable = true; #  Distributed version control system
-      hmd.enable = true; # HomeManager Diff tool, built using NVM (Nix Version Diff)
-      htop.enable = true; # Interactive resource monitor
-      less.enable = true; # Interactive text-files viewer
-      ripgrep.enable = true; # Fast grep replacement (regex search in content)
-      starship.enable = true; # The minimal, blazing-fast, and infinitely customizable prompt
-      tealdeer.enable = true; # Community-driven Man alternative
-      vim.enable = true; # Text editor
-      zellij.enable = true; # A terminal workspace with batteries included
-
       zsh = {
         dirHashes = {
           "hmc" = hmConfigLocation;
@@ -120,17 +59,5 @@ in
     };
 
     targets.genericLinux.enable = true;
-    xdg.enable = true;
-
-    nix = {
-      package = nixPkg;
-
-      settings = {
-        experimental-features = [ "nix-command" "flakes" ];
-        log-lines = 50;
-        # substituters = builtins.attrNames additionalCaches;
-        # trusted-public-keys = builtins.attrValues additionalCaches;
-      };
-    };
   };
 }
