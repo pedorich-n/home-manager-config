@@ -40,6 +40,7 @@ in
       scala-lang.scala
       scalameta.metals
       tamasfe.even-better-toml
+      skellock.just
 
       # Behavior
       alefragnani.bookmarks
