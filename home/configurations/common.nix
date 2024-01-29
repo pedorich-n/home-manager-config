@@ -45,7 +45,6 @@
     dircolors.enable = true; # Manage .dir_colors and set LS_COLORS
     fzf.enable = true; # Command-line fuzzy finder
     git.enable = true; #  Distributed version control system
-    hmd.enable = true; # HomeManager Diff tool, built using NVM (Nix Version Diff)
     htop.enable = true; # Interactive resource monitor
     less.enable = true; # Interactive text-files viewer
     ripgrep.enable = true; # Fast grep replacement (regex search in content)

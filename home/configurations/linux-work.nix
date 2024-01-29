@@ -8,11 +8,10 @@ in
   home.username = "mykytapedorich";
 
   custom = {
-    hm.name = "linuxWork";
-
     programs = {
       gnome.enable = true;
       jdk.enable = true;
+      nh.configName = "linuxWork";
       rust.enable = true;
       scala.enable = true;
       jetbrains = {

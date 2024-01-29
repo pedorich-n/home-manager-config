@@ -8,14 +8,13 @@ in
   home.username = "pedorich_n";
 
   custom = {
-    hm.name = "wslPersonal";
-
     programs = {
       gpg = {
         enable = true;
         pinentryFlavor = "curses";
       };
       jdk.enable = true;
+      nh.configName = "wslPersonal";
       rust.enable = true;
       scala.enable = true;
       vscode-remote.enable = true;
