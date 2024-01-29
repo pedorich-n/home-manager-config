@@ -9,7 +9,7 @@ let
   hmConfigLocation = "${cfg.homeDirectory}/.config.nix";
 in
 {
-  imports = [ ./_common.nix ];
+  imports = [ ./common.nix ];
 
   ###### interface
   options = {
