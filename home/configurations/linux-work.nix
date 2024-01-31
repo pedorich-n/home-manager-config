@@ -3,16 +3,15 @@ let
   gpgKey = "900C2FE784D62F8C";
 in
 {
-  imports = [ ./common-linux.nix ];
+  imports = [ ./common-standalone.nix ];
 
   home.username = "mykytapedorich";
 
   custom = {
-    hm.name = "linuxWork";
-
     programs = {
       gnome.enable = true;
       jdk.enable = true;
+      nh.configName = "linuxWork";
       rust.enable = true;
       scala.enable = true;
       jetbrains = {

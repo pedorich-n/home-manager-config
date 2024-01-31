@@ -1,6 +1,6 @@
 { ... }:
 {
-  imports = [ ./common-linux.nix ];
+  imports = [ ./common-standalone.nix ];
 
   home = {
     username = "root";

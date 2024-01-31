@@ -30,7 +30,6 @@ let
   homeManagerConfigurationsFor = pkgs: configurations:
     let
       sharedModules = customLib.listNixFilesRecursive ../home/modules;
-      shellNamesModule = { config.custom.hm.shellNames = builtins.attrNames (shellsFor pkgs); };
       nixGLWrap = pkgs.callPackage ../lib/nixgl-wrap.nix { };
 
       homeManagerConfigrationFor = configuration:
@@ -38,7 +37,6 @@ let
           inherit pkgs;
           modules = sharedModules ++ [
             configuration
-            shellNamesModule
             inputs.home-manager-diff.hmModules.default
           ];
           extraSpecialArgs = {
@@ -58,7 +56,7 @@ in
       #        withSystem :: String -> ({} -> {}), https://flake.parts/module-arguments.html#withsystem
       #        It brings everything defined in `perSystem` to the scope, so pkgs are with custom settings and overlays
       # Output: attrs (schema: { <name> = <homeManagerConfiguration>; })
-      homeConfigurations = { withSystem }: inputs.nixpkgs.lib.attrsets.foldlAttrs
+      homeConfigurations = withSystem: inputs.nixpkgs.lib.attrsets.foldlAttrs
         (acc: system: configurationsPerSystem: acc // (withSystem system ({ pkgs, ... }: homeManagerConfigurationsFor pkgs configurationsPerSystem)))
         { }
         attrs;
@@ -75,7 +73,11 @@ in
       };
 
       flake = {
-        homeConfigurations = homeConfigurations { inherit withSystem; };
+        homeConfigurations = homeConfigurations withSystem;
+
+        homeModules = {
+          common = import ../home/configurations/common.nix;
+        };
       };
     });
 }
