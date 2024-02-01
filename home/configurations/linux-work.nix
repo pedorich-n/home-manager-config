@@ -21,6 +21,7 @@ in
         enable = true;
         pinentryFlavor = "gnome3";
       };
+      python.enable = true;
       zsh.keychainIdentities = [ "work/paidy" gpgKey ];
     };
   };
@@ -40,7 +41,6 @@ in
       enable = true;
       globalConfig = {
         tools = {
-          "python" = [ "3.11" ];
           "terraform" = [ "0.15" "0.12" ];
         };
       };
@@ -61,12 +61,13 @@ in
       "zellij_pwd" = "zellij -s $(pwd | xargs basename)";
     };
 
-    packages = (with pkgs; [
+    packages = with pkgs; [
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
       (nixGLWrap google-chrome)
       (nixGLWrap slack)
       caffeine-ng
       circleci-cli
+      cqlsh
       docker-compose
       gnome.seahorse
       nixgl.nixGLIntel
@@ -76,9 +77,6 @@ in
       sublime4
       trilium-desktop
       xclip
-    ]) ++ (with pkgs.python3Packages; [
-      black
-      cqlsh
-    ]);
+    ];
   };
 }
