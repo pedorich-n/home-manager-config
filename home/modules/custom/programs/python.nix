@@ -45,11 +45,15 @@ in
         virtualenv # virtual environment manager
       ] ++ (cfg.extraPackages ps));
 
+      poetryPackage = pkgs.poetry.withPlugins (ps: with ps; [
+        poetry-plugin-up # Poetry plugin to simplify package updates
+      ]);
+
     in
     mkIf cfg.enable {
       home.packages = [
         pythonPackage # python with packages
-        pkgs.poetry # package manager with lock file
+        poetryPackage # package manager with plugins
         pkgs.ruff # linter
       ];
     };
