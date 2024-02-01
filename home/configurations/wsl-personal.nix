@@ -15,6 +15,7 @@ in
       };
       jdk.enable = true;
       nh.configName = "wslPersonal";
+      python.enable = true;
       rust.enable = true;
       scala.enable = true;
       vscode-remote.enable = true;
@@ -27,23 +28,10 @@ in
       key = gpgKey;
       signByDefault = true;
     };
-
-    mise = {
-      enable = true;
-      globalConfig = {
-        tools = {
-          "python" = [ "3.11" ];
-        };
-      };
-      settings = {
-        experimental = true;
-      };
-    };
   };
 
   home.packages = with pkgs; [
     pinentry-curses
-    python3Packages.black
     wslu
   ];
 }
