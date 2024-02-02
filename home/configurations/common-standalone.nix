@@ -28,7 +28,12 @@ in
   };
 
   programs = {
-    hmd.enable = false; # HomeManager Diff tool, built using NVM (Nix Version Diff)
+    # HomeManager Diff tool, built using NVM (Nix Version Diff)
+    hmd = {
+      enable = true;
+      runOnSwitch = false;
+    };
+
 
     zsh = {
       dirHashes = {
