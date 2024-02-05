@@ -8,17 +8,16 @@ in
   home.username = "pedorich_n";
 
   custom = {
+    runtimes.enable = true;
     programs = {
       gpg = {
         enable = true;
         pinentryFlavor = "curses";
       };
-      jdk.enable = true;
       nh.configName = "wslPersonal";
       python.enable = true;
       rust.enable = true;
       scala.enable = true;
-      vscode-remote.enable = true;
       zsh.keychainIdentities = [ "id_main" gpgKey ];
     };
   };
@@ -28,6 +27,7 @@ in
       key = gpgKey;
       signByDefault = true;
     };
+    java.enable = true;
   };
 
   home.packages = with pkgs; [
