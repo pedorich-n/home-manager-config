@@ -2,7 +2,7 @@
 with lib;
 let
   cfg = config.custom.programs.scala;
-  cfgJdk = config.custom.programs.jdk;
+  cfgJava = config.programs.java;
 in
 {
   ###### interface
@@ -22,20 +22,22 @@ in
   ###### implementation
   config =
     let
+      scalaPackage = pkgs.scala.override { majorVersion = cfg.version; };
       allPackages =
         let
           packages = with pkgs; [
-            (pkgs.scala.override { majorVersion = cfg.version; })
             ammonite
             bloop
             coursier
             sbt
+            scalaPackage
           ];
         in
-        if cfgJdk.enable then builtins.map (pkg: pkg.override { jre = cfgJdk.package; }) packages
+        if cfgJava.enable then builtins.map (pkg: pkg.override { jre = cfgJava.package; }) packages
         else packages;
     in
     mkIf cfg.enable {
       home.packages = allPackages;
+      custom.runtimes.scala = [ scalaPackage ];
     };
 }

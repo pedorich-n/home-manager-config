@@ -2,7 +2,7 @@
 with lib;
 let
   cfg = config.custom.programs.jetbrains;
-  cfgJdk = config.custom.programs.jdk;
+  cfgJava = config.programs.java;
 
   ideaSubmodule = types.submodule {
     options = {
@@ -29,7 +29,7 @@ in
 
       ideaPackage =
         let
-          maven = if cfgJdk.enable then pkgs.maven.override { jdk = cfgJdk.package; } else pkgs.maven;
+          maven = if cfgJava.enable then pkgs.maven.override { jdk = cfgJava.package; } else pkgs.maven;
           baseIdea = pkgs.jetbrains.idea-community.override { inherit maven; };
           plugins = [
             "164" # IdeaVim https://plugins.jetbrains.com/plugin/164-ideavim

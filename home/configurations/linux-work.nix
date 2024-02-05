@@ -8,9 +8,13 @@ in
   home.username = "mykytapedorich";
 
   custom = {
+    runtimes = {
+      enable = true;
+      java = [ pkgs.jdk11 ];
+    };
     programs = {
       gnome.enable = true;
-      jdk.enable = true;
+      jdk.enable = false;
       nh.configName = "linuxWork";
       rust.enable = true;
       scala.enable = true;
@@ -31,6 +35,7 @@ in
   programs = {
     direnv.enable = true;
     vscode.enable = true;
+    java.enable = true;
 
     git.signing = {
       key = gpgKey;
