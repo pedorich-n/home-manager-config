@@ -7,10 +7,4 @@ in
 {
   xdg.configFile = attrsets.optionalAttrs config.programs.zellij.enable
     (customLib.mapListToAttrs (path: nameValuePair (toXdgFilePath path) { text = builtins.readFile path; }) layouts);
-
-  programs.zellij = {
-    settings = {
-      copy_command = "xclip -selection clipboard";
-    };
-  };
 }

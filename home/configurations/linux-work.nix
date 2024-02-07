@@ -53,6 +53,8 @@ in
         experimental = true;
       };
     };
+
+    zellij.settings.copy_command = "xclip -selection clipboard";
   };
 
   services = {
