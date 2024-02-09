@@ -14,7 +14,6 @@ in
     };
     programs = {
       gnome.enable = true;
-      jdk.enable = false;
       nh.configName = "linuxWork";
       rust.enable = true;
       scala.enable = true;
@@ -62,8 +61,6 @@ in
   };
 
   home = {
-    file.".sdks/java-11".source = pkgs.jdk11;
-
     shellAliases = {
       "zellij_pwd" = "zellij -s $(pwd | xargs basename)";
     };

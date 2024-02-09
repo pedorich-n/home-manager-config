@@ -33,8 +33,11 @@ in
       space-ocean-kit-refined.space-ocean-kit-refined
 
       # Languages
+      arrterian.nix-env-selector
       charliermarsh.ruff
       jnoortheen.nix-ide
+      kdl-org.kdl
+      mads-hartmann.bash-ide-vscode
       mkhl.shfmt
       rust-lang.rust-analyzer
       scala-lang.scala
@@ -53,6 +56,7 @@ in
       shd101wyy.markdown-preview-enhanced
       vscodevim.vim
       wmaurer.vscode-jumpy
+      editorconfig.editorconfig
     ]);
 
     keybindings = [
