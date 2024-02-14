@@ -25,6 +25,7 @@ in
       github.copilot
       jebbs.plantuml
       ms-python.python
+      ms-python.vscode-pylance
     ]) ++ (with pkgs.vscode-marketplace; [
       # Themes
       evgeniypetukhov.dark-low-contrast

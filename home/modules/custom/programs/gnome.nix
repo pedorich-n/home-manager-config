@@ -136,7 +136,7 @@ in
         audible-bell = false;
         default-size-columns = 140;
         default-size-rows = 35;
-        font = "FiraCode Nerd Font 11";
+        font = "FiraCode Nerd Font Mono 11";
         use-system-font = false;
         visible-name = "Default";
       };
