@@ -2,6 +2,10 @@
 let
   customLib = import ../lib { pkgs-lib = inputs.nixpkgs.lib; };
 
+  pkgsForBare = system: pkgs: import pkgs {
+    inherit system;
+  };
+
   pkgsFor = system: pkgs:
     import pkgs {
       inherit system;
@@ -25,9 +29,9 @@ let
     in
     customLib.flattenAttrsetsRecursive shells;
 
-  # Input: pkgs, attrs (schema: { <name> = <homeManagerConfigurationPath> })
-  # Output: attrs (schema: { <name> = <homeManagerConfiguration> })
-  homeManagerConfigurationsFor = pkgs: configurations:
+  # Input: { pkgs, attrs (schema: { <name> = <homeManagerConfigurationPath> }), extraArgs }
+  # Output: list of attrs (schema: { name = <name>; value = <homeManagerConfiguration> })
+  homeManagerConfigurationsFor = { pkgs, configurations, extraArgs ? { } }:
     let
       sharedModules = customLib.listNixFilesRecursive ../home/modules;
       nixGLWrap = pkgs.callPackage ../lib/nixgl-wrap.nix { };
@@ -43,31 +47,39 @@ let
             inherit customLib;
             inherit nixGLWrap;
             inherit (inputs) self nixpkgs;
-          };
+          } // extraArgs;
         };
     in
-    builtins.mapAttrs (_: configuration: homeManagerConfigrationFor configuration) configurations;
+    pkgs.lib.mapAttrsToList (name: configuration: { inherit name; value = homeManagerConfigrationFor configuration; }) configurations;
 in
 {
   # Input attrs (schema: { system = { <name> = <homeManagerConfigurationPath> } })
   flakeFor = attrs:
     let
-      # Input: withSystem, attrs (schema: { system = { <name> = <homeManagerConfigurationPath> } }
-      #        withSystem :: String -> ({} -> {}), https://flake.parts/module-arguments.html#withsystem
-      #        It brings everything defined in `perSystem` to the scope, so pkgs are with custom settings and overlays
+      systems = builtins.attrNames attrs;
+
+      # Input: withSystem :: String -> ({} -> {}), https://flake.parts/module-arguments.html#withsystem
+      #        It brings everything defined in `perSystem` to the scope, e.g. `pkgs`, `system`, `lib`, etc.
       # Output: attrs (schema: { <name> = <homeManagerConfiguration>; })
-      homeConfigurations = withSystem: inputs.nixpkgs.lib.attrsets.foldlAttrs
-        (acc: system: configurationsPerSystem: acc // (withSystem system ({ pkgs, ... }: homeManagerConfigurationsFor pkgs configurationsPerSystem)))
-        { }
-        attrs;
+      homeConfigurations = withSystem:
+        let
+          # Output: list of attrs (schema: { name = <name>; value = <homeManagerConfiguration> })
+          mkForSystem = system: withSystem system ({ pkgs, pkgs-gnome-extensions, ... }:
+            homeManagerConfigurationsFor { inherit pkgs; configurations = attrs.${system}; extraArgs = { inherit pkgs-gnome-extensions; }; }
+          );
+        in
+        builtins.listToAttrs (builtins.concatMap mkForSystem systems);
     in
     inputs.flake-parts.lib.mkFlake { inherit inputs; } ({ withSystem, ... }: {
-      systems = builtins.attrNames attrs;
+      inherit systems;
 
       # all parameters: https://flake.parts/module-arguments.html#persystem-module-parameters
       perSystem = { pkgs, system, ... }: {
-        # pkgs with overlays and custom settings, from: https://flake.parts/overlays.html#consuming-an-overlay
-        _module.args.pkgs = pkgsFor system inputs.nixpkgs;
+        _module.args = {
+          # pkgs with overlays and custom settings, from: https://flake.parts/overlays.html#consuming-an-overlay
+          pkgs = pkgsFor system inputs.nixpkgs;
+          pkgs-gnome-extensions = pkgsForBare system inputs.nixpkgs-gnome-extensions;
+        };
 
         devShells = shellsFor pkgs;
       };

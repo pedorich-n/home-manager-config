@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs-gnome-extensions, ... }:
 with lib;
 let
   cfg = config.custom.programs.gnome;
@@ -14,7 +14,7 @@ in
 
   ###### implementation
   config = mkIf cfg.enable {
-    home.packages = with pkgs.gnomeExtensions; [
+    home.packages = with pkgs-gnome-extensions.gnomeExtensions; [
       date-menu-formatter
       lock-keys
       notification-timeout

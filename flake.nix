@@ -5,6 +5,11 @@
     # Global / Meta
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
+    # Gnome shell on linux-work machine is 3.36, so extensions from nixpkgs-unstable are not compatible
+    # Got the commit hash from https://lazamar.co.uk/nix-versions for gnome-shell-extension-workspace-switcher-manager version 7
+    # Seems to contain correct versions of other gnome extensions as well
+    nixpkgs-gnome-extensions.url = "github:nixos/nixpkgs/c2c0373ae7abf25b7d69b2df05d3ef8014459ea3";
+
     flake-parts.url = "github:hercules-ci/flake-parts";
     systems.url = "github:nix-systems/default";
     flake-utils = {

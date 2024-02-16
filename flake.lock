@@ -183,6 +183,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-gnome-extensions": {
+      "locked": {
+        "lastModified": 1663276198,
+        "narHash": "sha256-tTYbMSEJPtCujYwWhNdlBC8GWXGk3If7Q6RTYQ5GSaU=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "c2c0373ae7abf25b7d69b2df05d3ef8014459ea3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "c2c0373ae7abf25b7d69b2df05d3ef8014459ea3",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "dir": "lib",
@@ -246,6 +262,7 @@
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-gnome-extensions": "nixpkgs-gnome-extensions",
         "rust-overlay": "rust-overlay",
         "systems": "systems",
         "tomorrow-theme-source": "tomorrow-theme-source"
