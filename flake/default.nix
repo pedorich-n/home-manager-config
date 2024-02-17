@@ -2,9 +2,7 @@
 let
   customLib = import ../lib { pkgs-lib = inputs.nixpkgs.lib; };
 
-  pkgsForBare = system: pkgs: import pkgs {
-    inherit system;
-  };
+  barePkgsFor = system: pkgs: import pkgs.legacyPackages.${system};
 
   pkgsFor = system: pkgs:
     import pkgs {
@@ -78,7 +76,7 @@ in
         _module.args = {
           # pkgs with overlays and custom settings, from: https://flake.parts/overlays.html#consuming-an-overlay
           pkgs = pkgsFor system inputs.nixpkgs;
-          pkgs-gnome-extensions = pkgsForBare system inputs.nixpkgs-gnome-extensions;
+          pkgs-gnome-extensions = barePkgsFor system inputs.nixpkgs-gnome-extensions;
         };
 
         devShells = shellsFor pkgs;
