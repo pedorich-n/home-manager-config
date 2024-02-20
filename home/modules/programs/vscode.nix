@@ -45,6 +45,8 @@ in
       scalameta.metals
       skellock.just
       tamasfe.even-better-toml
+      redhat.vscode-yaml
+      ms-azuretools.vscode-docker
 
       # Behavior
       alefragnani.bookmarks
@@ -235,6 +237,12 @@ in
           "workbench.editor.wrapTabs" = true;
         };
 
+        yamlSettings = {
+          "[yaml]" = {
+            "editor.defaultFormatter" = "redhat.vscode-yaml";
+          };
+        };
+
       in
       editorSettings //
       filesSettings //
@@ -244,6 +252,7 @@ in
       scalaSettings //
       tomlSettings //
       vimSettings //
-      vscodeMiscSettings;
+      vscodeMiscSettings //
+      yamlSettings;
   };
 }
