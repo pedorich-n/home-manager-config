@@ -58,6 +58,7 @@ in
       vscodevim.vim
       wmaurer.vscode-jumpy
       editorconfig.editorconfig
+      esbenp.prettier-vscode
     ]);
 
     keybindings = [

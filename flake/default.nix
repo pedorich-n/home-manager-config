@@ -2,7 +2,7 @@
 let
   customLib = import ../lib { pkgs-lib = inputs.nixpkgs.lib; };
 
-  barePkgsFor = system: pkgs: import pkgs.legacyPackages.${system};
+  barePkgsFor = system: pkgs: pkgs.legacyPackages.${system};
 
   pkgsFor = system: pkgs:
     import pkgs {
