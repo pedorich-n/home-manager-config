@@ -23,6 +23,13 @@ in
     programs.zsh = {
       enable = true;
 
+      history = {
+        ignoreAllDups = true;
+        ignoreDups = true;
+        ignoreSpace = true;
+        share = true;
+      };
+
       initExtraFirst = strings.optionalString (cfg.keychainIdentities != [ ]) ''
         zstyle :omz:plugins:keychain agents "gpg,ssh"
         zstyle :omz:plugins:keychain identities ${(builtins.concatStringsSep " " cfg.keychainIdentities)}
@@ -31,15 +38,14 @@ in
       '';
 
       initExtra = ''
-        COMPLETION_WAITING_DOTS=true
+        set +o histexpand # Disable history expantion (annying exclamantion mark behaviour)
 
         zstyle ':completion:*' menu yes select _complete _ignored _approximate _files
 
-        setopt MENU_COMPLETE
-        setopt HIST_IGNORE_ALL_DUPS
-        setopt HIST_IGNORE_SPACE
-        setopt HIST_REDUCE_BLANKS
-        setopt APPEND_HISTORY
+        setopt MENU_COMPLETE # On ambiguous completion insert first match and show menu
+        setopt HIST_REDUCE_BLANKS # Remove superfluous blanks from history
+        setopt APPEND_HISTORY # Append history, rather than replace it. Multiple parallel zsh sessions will all write history to the histfile
+        unsetopt EXTENDED_GLOB # Don't treat the '#', '~' and '^' characters as part of patterns for filename generation, etc.
 
         include () {
             [[ -f "$1" ]] && source "$1"
