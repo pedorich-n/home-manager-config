@@ -47,6 +47,7 @@ in
 
       poetryPackage = pkgs.poetry.withPlugins (ps: with ps; [
         poetry-plugin-up # Poetry plugin to simplify package updates
+        poetry-plugin-export # Poetry plugin to export the dependencies to various formats
       ]);
 
     in
