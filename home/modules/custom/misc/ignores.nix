@@ -25,6 +25,7 @@ with lib;
       "metals.sbt"
       "target/"
       "venv/"
+      "__pycache__/"
     ];
   };
 }
