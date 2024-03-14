@@ -10,10 +10,7 @@ in
   custom = {
     runtimes.enable = true;
     programs = {
-      gpg = {
-        enable = true;
-        pinentryFlavor = "curses";
-      };
+      gpg.enable = true;
       nh.configName = "wslPersonal";
       python.enable = true;
       rust.enable = true;
@@ -29,6 +26,8 @@ in
     };
     java.enable = true;
   };
+
+  services.gpg-agent.pinentryPackage = pkgs.pinentry-curses;
 
   home.packages = with pkgs; [
     pinentry-curses
