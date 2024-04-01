@@ -32,8 +32,6 @@ in
         example = literalExpression "username@hostname";
       };
 
-      nom = mkEnableOption "Enable nix-output-monitor" // { default = true; };
-
       aliases = mkOption {
         type = aliasesSubmodule;
         default = { };
@@ -49,7 +47,6 @@ in
 
       sessionVariables = {
         FLAKE = builtins.toString cfg.flakeRef;
-        NOM = if cfg.nom then "1" else "0";
       };
 
       shellAliases = mkMerge [
