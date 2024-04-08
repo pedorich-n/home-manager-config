@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, self, ... }:
 with lib;
 let
   cfg = config.custom.programs.rust;
@@ -14,11 +14,13 @@ in
 
   ###### implementation
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
+    home.packages = [
       # Default toolchain includes: cargo, clippy, rustc, rust-std, rust-docs, rustfmt
-      (rust-bin.stable.latest.default.override {
+      (pkgs.rust-bin.stable.latest.default.override {
         extensions = [ "rust-src" ];
       })
     ];
+
+    xdg.configFile.".cargo/config.toml".text = builtins.readFile "${self}/dotfiles/.cargo/config.toml";
   };
 }
