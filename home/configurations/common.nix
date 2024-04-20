@@ -25,7 +25,6 @@
     };
 
     shellAliases = {
-      fd = "fd --no-require-git";
       hm = "home-manager";
       ll = "ls --all --classify --human-readable --color --group-directories-first -l";
     };
@@ -44,6 +43,7 @@
     bash.enable = true; # To set Home Manager's ENVs vars in .profile
     bat.enable = true; # Colorful `cat` replacement (text-files viewer)
     dircolors.enable = true; # Manage .dir_colors and set LS_COLORS
+    fd.enable = true; # A simple, fast and user-friendly alternative to 'find'
     fzf.enable = true; # Command-line fuzzy finder
     git.enable = true; #  Distributed version control system
     htop.enable = true; # Interactive resource monitor
