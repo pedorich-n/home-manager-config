@@ -46,7 +46,7 @@ nnoremap <C-Enter> o<Esc>
 nnoremap <S-Enter> O<Esc>
 
 " Useful
-nnoremap <Space>r :action RenameElement<CR><b><i>
+nnoremap <Space>r :action RenameElement<CR>
 nnoremap <C-S-u> :action ShowUsages<CR>
 nnoremap <C-S-d> :action GotoDeclaration<CR>
 nnoremap <Space>q :action CloseContent<CR>
