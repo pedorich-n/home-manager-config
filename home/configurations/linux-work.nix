@@ -8,6 +8,7 @@ in
   home.username = "mykytapedorich";
 
   custom = {
+    dotfiles.enable = true;
     runtimes = {
       enable = true;
       java = [ pkgs.jdk11 ];

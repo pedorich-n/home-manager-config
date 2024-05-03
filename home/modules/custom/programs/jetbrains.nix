@@ -1,4 +1,4 @@
-{ self, pkgs, lib, config, ... }:
+{ pkgs, lib, config, ... }:
 with lib;
 let
   cfg = config.custom.programs.jetbrains;
@@ -40,8 +40,5 @@ in
     in
     mkIf enabled {
       home.packages = [ ideaPackage ];
-      xdg = {
-        configFile."ideavim/ideavimrc".text = builtins.readFile "${self}/dotfiles/ideavimrc";
-      };
     };
 }

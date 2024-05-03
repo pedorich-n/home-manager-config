@@ -1,4 +1,4 @@
-{ pkgs, lib, config, self, ... }:
+{ pkgs, lib, config, ... }:
 with lib;
 let
   cfg = config.custom.programs.rust;
@@ -20,7 +20,5 @@ in
         extensions = [ "rust-src" ];
       })
     ];
-
-    xdg.configFile.".cargo/config.toml".text = builtins.readFile "${self}/dotfiles/.cargo/config.toml";
   };
 }
