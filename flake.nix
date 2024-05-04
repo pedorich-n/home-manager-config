@@ -17,6 +17,11 @@
       inputs.systems.follows = "systems";
     };
 
+    haumea = {
+      url = "github:nix-community/haumea";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -68,15 +73,26 @@
     };
   };
 
-  outputs = inputs:
+  outputs = inputs@{ flake-parts, systems, self, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ withSystem, flake-parts-lib, ... }:
     let
       flakeLib = import ./flake { inherit inputs; };
     in
-    flakeLib.flakeFor {
-      "x86_64-linux" = {
-        wslPersonal = ./home/configurations/wsl-personal.nix;
-        linuxMinimal = ./home/configurations/linux-minimal.nix;
-        linuxWork = ./home/configurations/linux-work.nix;
-      };
-    };
+    {
+      systems = [ "x86_64-linux" ];
+
+      imports = [
+        (flakeLib.flakeFor {
+          "x86_64-linux" = {
+            wslPersonal = ./home/configurations/wsl-personal.nix;
+            linuxMinimal = ./home/configurations/linux-minimal.nix;
+            linuxWork = ./home/configurations/linux-work.nix;
+          };
+        })
+      ] ++
+      (import ./flake-parts {
+        inherit (flake-parts-lib) importApply;
+        inherit withSystem inputs;
+        flake = self;
+      });
+    });
 }

@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, ... }:
 {
   "gnome-config-edit" = pkgs.mkShellNoCC {
     packages = with pkgs; [

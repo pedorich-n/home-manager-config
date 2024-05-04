@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, ... }:
 let
   versionAttrs = {
     "0_12" = {

@@ -19,12 +19,6 @@ let
       };
     };
 
-  shellsFor = pkgs:
-    let
-      shells = builtins.map (path: import path { inherit pkgs; }) (customLib.listNixFilesRecursive ../shells);
-    in
-    customLib.flattenAttrsetsRecursive shells;
-
   # Input: { pkgs, attrs (schema: { <name> = <homeManagerConfigurationPath> }), extraArgs }
   # Output: list of attrs (schema: { name = <name>; value = <homeManagerConfiguration> })
   homeManagerConfigurationsFor = { pkgs, configurations, extraArgs ? { } }:
@@ -77,8 +71,6 @@ in
           pkgs = pkgsFor system inputs.nixpkgs;
           pkgs-gnome-extensions = barePkgsFor system inputs.nixpkgs-gnome-extensions;
         };
-
-        devShells = shellsFor pkgs;
       };
 
       flake = {
