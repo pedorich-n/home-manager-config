@@ -6,7 +6,6 @@ let
   homeManagerConfigurationsFor = { pkgs, configurations, extraArgs ? { } }:
     let
       sharedModules = flake.lib.listNixFilesRecursive ../home/modules;
-      nixGLWrap = pkgs.callPackage ../lib/nixgl-wrap.nix { };
 
       homeManagerConfigrationFor = configuration:
         inputs.home-manager.lib.homeManagerConfiguration {
@@ -16,9 +15,8 @@ let
             inputs.home-manager-diff.hmModules.default
           ];
           extraSpecialArgs = {
-            inherit nixGLWrap;
             inherit (inputs) nixpkgs;
-            flake = inputs.self;
+            inherit flake;
           } // extraArgs;
         };
     in
