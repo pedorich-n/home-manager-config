@@ -73,26 +73,12 @@
     };
   };
 
-  outputs = inputs@{ flake-parts, systems, self, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ withSystem, flake-parts-lib, ... }:
-    let
-      flakeLib = import ./flake { inherit inputs; };
-    in
+  outputs = inputs@{ flake-parts, self, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ withSystem, flake-parts-lib, ... }:
     {
-      systems = [ "x86_64-linux" ];
-
-      imports = [
-        (flakeLib.flakeFor {
-          "x86_64-linux" = {
-            wslPersonal = ./home/configurations/wsl-personal.nix;
-            linuxMinimal = ./home/configurations/linux-minimal.nix;
-            linuxWork = ./home/configurations/linux-work.nix;
-          };
-        })
-      ] ++
-      (import ./flake-parts {
+      imports = import ./flake-parts {
         inherit (flake-parts-lib) importApply;
         inherit withSystem inputs;
         flake = self;
-      });
+      };
     });
 }
