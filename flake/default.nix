@@ -21,9 +21,7 @@ let
 
   shellsFor = pkgs:
     let
-      minimalMkShell = import ../lib/minimal-shell.nix { inherit pkgs; };
-
-      shells = builtins.map (path: import path { inherit pkgs minimalMkShell; }) (customLib.listNixFilesRecursive ../shells);
+      shells = builtins.map (path: import path { inherit pkgs; }) (customLib.listNixFilesRecursive ../shells);
     in
     customLib.flattenAttrsetsRecursive shells;
 
@@ -44,7 +42,8 @@ let
           extraSpecialArgs = {
             inherit customLib;
             inherit nixGLWrap;
-            inherit (inputs) self nixpkgs;
+            inherit (inputs) nixpkgs;
+            flake = inputs.self;
           } // extraArgs;
         };
     in

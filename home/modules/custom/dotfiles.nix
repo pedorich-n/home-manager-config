@@ -1,4 +1,4 @@
-{ self, config, lib, ... }:
+{ flake, config, lib, ... }:
 let
   cfg = config.custom.dotfiles;
 
@@ -15,7 +15,7 @@ in
 
       root = mkOption {
         type = types.path;
-        default = "${self}/dotfiles";
+        default = "${flake}/dotfiles";
       };
     };
   };

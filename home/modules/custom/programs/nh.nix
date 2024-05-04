@@ -18,7 +18,7 @@ in
       flakeRef = mkOption {
         type = with types; either str path;
         description = ''
-          Full path to this flake configuration on system. Should not be `self`!
+          Full path to this flake configuration on system. Should not be `flake`!
         '';
         example = literalExpression "/home/user/.config.nix";
       };

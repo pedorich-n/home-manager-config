@@ -1,6 +1,6 @@
-{ pkgs, minimalMkShell }:
+{ pkgs }:
 {
-  "gnome-config-edit" = minimalMkShell {
+  "gnome-config-edit" = pkgs.mkShellNoCC {
     packages = with pkgs; [
       dconf2nix
       gnome.dconf-editor
