@@ -46,10 +46,6 @@ let
 
       flake = {
         homeConfigurations = homeConfigurations withSystem;
-
-        # homeModules = {
-        #   common = import ../home/configurations/common.nix;
-        # };
       };
     };
 in
