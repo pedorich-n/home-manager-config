@@ -1,11 +1,17 @@
-{ pkgs-lib }:
-with pkgs-lib;
-rec {
-  listFilesWithExtension = ext: path: builtins.filter (hasSuffix ext) (filesystem.listFilesRecursive path);
-
-  listNixFilesRecursive = path: listFilesWithExtension ".nix" path;
-
-  flattenAttrsetsRecursive = list: builtins.foldl' recursiveUpdate { } list;
-
-  mapListToAttrs = with builtins; func: list: listToAttrs (map func list);
+{ haumea, lib }:
+let
+  # Given an attrset, takes all the values recursivelly and joins them into a single list
+  foldAttrValuesToListRecursive = attrset:
+    lib.concatLists (lib.mapAttrsToList
+      (_: value:
+        if builtins.isAttrs value then foldAttrValuesToListRecursive value else [ value ]
+      )
+      attrset);
+in
+{
+  listNixFilesRecursive = path:
+    foldAttrValuesToListRecursive (haumea.lib.load {
+      src = path;
+      loader = haumea.lib.loaders.path;
+    });
 }

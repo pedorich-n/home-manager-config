@@ -1,4 +1,4 @@
-{ pkgs, nixGLWrap, ... }:
+{ pkgs, ... }:
 let
   gpgKey = "900C2FE784D62F8C";
 in
@@ -66,8 +66,8 @@ in
 
     packages = with pkgs; [
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
-      (nixGLWrap google-chrome)
-      (nixGLWrap slack)
+      (pkgs.nixGLWrap google-chrome)
+      (pkgs.nixGLWrap slack)
       caffeine-ng
       circleci-cli
       cqlsh

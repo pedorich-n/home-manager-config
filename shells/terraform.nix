@@ -1,4 +1,4 @@
-{ pkgs, minimalMkShell }:
+{ pkgs, ... }:
 let
   versionAttrs = {
     "0_12" = {
@@ -13,7 +13,7 @@ let
 
   versions = builtins.attrNames versionAttrs;
 
-  mkShell = attrs: minimalMkShell {
+  mkShell = attrs: pkgs.mkShellNoCC {
     packages = with pkgs; [
       (mkTerraform attrs)
       saml2aws
