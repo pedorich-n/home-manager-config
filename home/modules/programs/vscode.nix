@@ -24,8 +24,6 @@ in
     extensions = (with pkgs.vscode-extensions; [
       github.copilot
       jebbs.plantuml
-      ms-python.python
-      ms-python.vscode-pylance
     ]) ++ (with pkgs.vscode-marketplace; [
       # Themes
       evgeniypetukhov.dark-low-contrast
@@ -47,6 +45,8 @@ in
       tamasfe.even-better-toml
       redhat.vscode-yaml
       ms-azuretools.vscode-docker
+      ms-python.python
+      ms-python.vscode-pylance
 
       # Behavior
       ast-grep.ast-grep-vscode
