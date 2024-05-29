@@ -67,7 +67,7 @@ in
     packages = with pkgs; [
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
       (pkgs.nixGLWrap google-chrome)
-      (pkgs.nixGLWrap slack)
+      slack
       caffeine-ng
       circleci-cli
       cqlsh
