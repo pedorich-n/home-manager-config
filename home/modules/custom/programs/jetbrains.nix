@@ -2,7 +2,6 @@
 with lib;
 let
   cfg = config.custom.programs.jetbrains;
-  cfgJava = config.programs.java;
 
   ideaSubmodule = types.submodule {
     options = {
@@ -29,8 +28,7 @@ in
 
       ideaPackage =
         let
-          maven = if cfgJava.enable then pkgs.maven.override { jdk = cfgJava.package; } else pkgs.maven;
-          baseIdea = pkgs.jetbrains.idea-community.override { inherit maven; };
+          baseIdea = pkgs.jetbrains.idea-community-bin;
           plugins = [
             "164" # IdeaVim https://plugins.jetbrains.com/plugin/164-ideavim
             "17718" # Github Copilot https://plugins.jetbrains.com/plugin/17718-github-copilot
