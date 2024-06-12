@@ -11,7 +11,7 @@ in
     dotfiles.enable = true;
     runtimes = {
       enable = true;
-      java = [ pkgs.jdk11 ];
+      java = [ pkgs.jdk11 pkgs.jdk8 ];
     };
     programs = {
       gnome.enable = true;
