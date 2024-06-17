@@ -16,8 +16,6 @@ in
 {
   home = {
     packages = nixApps;
-    # FIXME: remove after nixPath becomes available
-    sessionVariables.NIX_PATH = "nixpkgs=${nixpkgs}";
   };
 
   nix = {
@@ -25,9 +23,9 @@ in
 
     registry.nixpkgs.flake = nixpkgs;
 
-    # FIXME: Waiting for this to be merged:
-    # https://github.com/nix-community/home-manager/pull/4031
-    # nixPath = [ "nixpkgs=${nixpkgs}" ]; # Enables use of `nix-shell -p ...` etc
+    nixPath = [
+      "nixpkgs=${pkgs.path}"
+    ];
 
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
