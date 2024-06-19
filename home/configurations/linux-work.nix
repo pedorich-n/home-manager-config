@@ -39,18 +39,6 @@ in
       signByDefault = true;
     };
 
-    mise = {
-      enable = true;
-      globalConfig = {
-        tools = {
-          "terraform" = [ "0.15" "0.12" ];
-        };
-      };
-      settings = {
-        experimental = true;
-      };
-    };
-
     zellij.settings.copy_command = "xclip -selection clipboard";
   };
 
