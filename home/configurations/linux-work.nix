@@ -53,21 +53,21 @@ in
     };
 
     packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "FiraCode" ]; })
-      (pkgs.nixGLWrap google-chrome)
-      slack
-      caffeine-ng
-      circleci-cli
-      cqlsh
-      docker-compose
-      gnome.seahorse
-      nixgl.nixGLIntel
-      pinentry
-      saml2aws
-      shfmt
-      sublime4
-      trilium-desktop
-      xclip
+      (nerdfonts.override { fonts = [ "FiraCode" ]; }) # IDE & terminal font
+      (pkgs.nixGLWrap google-chrome) # Web browser
+      slack # Messaging
+      caffeine-ng # Disable screensaver
+      circleci-cli # CI/CD
+      cqlsh # Cassandra
+      docker-compose # Docker
+      gnome.seahorse # Gnome encryption
+      obsidian # Note-taking
+      nixgl.nixGLIntel # NixGL
+      pinentry # GnuPG’s interface to passphrase input
+      saml2aws # AWS SSO
+      shfmt # Shell formatter
+      sublime4 # Text editor
+      xclip # CLI Clipboard manager
     ];
   };
 }
