@@ -5,12 +5,10 @@ let
   # Output: list of attrs (schema: { name = <name>; value = <homeManagerConfiguration> })
   homeManagerConfigurationsFor = { pkgs, configurations, extraArgs ? { } }:
     let
-      sharedModules = flake.lib.listNixFilesRecursive ../home/modules;
-
       homeManagerConfigrationFor = configuration:
         inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = sharedModules ++ [
+          modules = flake.homeModules.sharedModules ++ [
             configuration
             inputs.home-manager-diff.hmModules.default
           ];

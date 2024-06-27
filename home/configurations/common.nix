@@ -5,10 +5,8 @@
     stateVersion = "23.11";
 
     packages = with pkgs; [
-      ast-grep # A fast and polyglot tool for code searching, linting, rewriting at large scale
       coreutils-full # GNU coreutils (cp, mv, whoami, echo, wc, ...)
       curl # HTTP client
-      dtrx # "Do The Right Extraction" unarchiver
       fd # Fast "find" alternative (files/directories search)
       gdu # Fast disk usage analyser
       gnused # GNU Stream EDitor

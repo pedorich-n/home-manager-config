@@ -55,17 +55,18 @@ in
     packages = with pkgs; [
       (nerdfonts.override { fonts = [ "FiraCode" ]; }) # IDE & terminal font
       (pkgs.nixGLWrap google-chrome) # Web browser
-      slack # Messaging
+      ast-grep # A fast and polyglot tool for code searching, linting, rewriting at large scale
       caffeine-ng # Disable screensaver
       circleci-cli # CI/CD
       cqlsh # Cassandra
       docker-compose # Docker
       gnome.seahorse # Gnome encryption
-      obsidian # Note-taking
       nixgl.nixGLIntel # NixGL
+      obsidian # Note-taking
       pinentry # GnuPG’s interface to passphrase input
       saml2aws # AWS SSO
       shfmt # Shell formatter
+      slack # Messaging
       sublime4 # Text editor
       xclip # CLI Clipboard manager
     ];
