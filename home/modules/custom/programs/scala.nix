@@ -22,7 +22,7 @@ in
   ###### implementation
   config =
     let
-      scalaPackage = pkgs.scala.override { majorVersion = cfg.version; };
+      scalaPackage = pkgs.scala_2_13.override { majorVersion = cfg.version; };
       allPackages =
         let
           packages = with pkgs; [
