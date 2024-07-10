@@ -62,14 +62,6 @@
         flake-utils.follows = "flake-utils";
       };
     };
-
-    nixgl = {
-      url = "github:guibou/nixGL";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
-    };
   };
 
   outputs = inputs@{ flake-parts, self, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ withSystem, flake-parts-lib, ... }:

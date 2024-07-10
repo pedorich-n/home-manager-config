@@ -164,29 +164,6 @@
         "type": "github"
       }
     },
-    "nixgl": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1713543440,
-        "narHash": "sha256-lnzZQYG0+EXl/6NkGpyIz+FEOc/DSEG57AP1VsdeNrM=",
-        "owner": "guibou",
-        "repo": "nixGL",
-        "rev": "310f8e49a149e4c9ea52f1adf70cdc768ec53f8a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "guibou",
-        "repo": "nixGL",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1719760900,
@@ -275,7 +252,6 @@
         "home-manager": "home-manager",
         "home-manager-diff": "home-manager-diff",
         "nix-vscode-extensions": "nix-vscode-extensions",
-        "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
         "nixpkgs-gnome-extensions": "nixpkgs-gnome-extensions",
         "rust-overlay": "rust-overlay",

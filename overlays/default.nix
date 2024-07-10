@@ -5,6 +5,4 @@ inputs: _: prev:
   };
 
   cqlsh = prev.callPackage ../packages/cqlsh { inherit (inputs) cqlsh-source; };
-
-  nixGLWrap = pkg: (prev.callPackage ../packages/nixgl-wrap { }) pkg;
 }
