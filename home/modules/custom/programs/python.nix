@@ -37,8 +37,6 @@ in
   config =
     let
       pythonPackage = cfg.package.withPackages (ps: with ps; [
-        black # code formatter
-        isort # import sorter
         mypy # static type checker
         pip # package manager
         setuptools # utilities
@@ -55,7 +53,7 @@ in
       home.packages = [
         pythonPackage # python with packages
         poetryPackage # package manager with plugins
-        pkgs.ruff # linter
+        pkgs.ruff # linter & formatter
       ];
     };
 }
