@@ -22,7 +22,12 @@ in
         idea.enable = true;
       };
       gpg.enable = true;
-      python.enable = true;
+      python = {
+        enable = true;
+        extraPackages = pythonPkgs: with pythonPkgs; [
+          requests
+        ];
+      };
       zsh.keychainIdentities = [ "work/paidy" gpgKey ];
     };
   };
