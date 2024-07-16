@@ -64,7 +64,7 @@ in
       circleci-cli # CI/CD
       cqlsh # Cassandra
       docker-compose # Docker
-      gnome.seahorse # Gnome encryption
+      seahorse # Gnome encryption
       obsidian # Note-taking
       pinentry # GnuPG’s interface to passphrase input
       saml2aws # AWS SSO
