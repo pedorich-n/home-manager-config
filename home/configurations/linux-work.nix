@@ -26,6 +26,7 @@ in
         enable = true;
         extraPackages = pythonPkgs: with pythonPkgs; [
           requests
+          pandas
         ];
       };
       zsh.keychainIdentities = [ "work/paidy" gpgKey ];
