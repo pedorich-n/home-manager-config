@@ -1,4 +1,4 @@
-{ lib, config, pkgs-gnome-extensions, ... }:
+{ lib, config, ... }:
 with lib;
 let
   cfg = config.custom.programs.gnome;
@@ -14,14 +14,6 @@ in
 
   ###### implementation
   config = mkIf cfg.enable {
-    home.packages = with pkgs-gnome-extensions.gnomeExtensions; [
-      date-menu-formatter
-      lock-keys
-      notification-timeout
-      unite
-      workspace-switcher-manager
-    ];
-
     dconf.settings = with lib.hm.gvariant; {
       "org/gnome/mutter" = {
         dynamic-workspaces = false;
