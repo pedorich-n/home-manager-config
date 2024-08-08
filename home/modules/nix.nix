@@ -3,6 +3,7 @@ let
   nixPkg = pkgs.nix;
   nixApps = with pkgs; [
     nil # NIX language server
+    nixd # A better NIX language server
     nix-tree # Interative NIX depdencey graph
     nixPkg # NIX itself
     nixpkgs-fmt # NIX code formatter

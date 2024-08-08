@@ -61,6 +61,8 @@
 
   outputs = inputs@{ flake-parts, self, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ withSystem, flake-parts-lib, ... }:
     {
+      debug = true; # Needed for nixd
+
       imports = builtins.attrValues (inputs.haumea.lib.load {
         src = ./flake-parts;
         loader = args: path: flake-parts-lib.importApply path args;
