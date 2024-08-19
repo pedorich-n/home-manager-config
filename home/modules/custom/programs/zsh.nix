@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 with lib;
 let
   cfg = config.custom.programs.zsh;
@@ -50,6 +50,9 @@ in
         include () {
             [[ -f "$1" ]] && source "$1"
         }
+
+        # Remove this once https://github.com/nix-community/home-manager/pull/5643 is merged
+        ${getExe pkgs.nix-your-shell} zsh | source /dev/stdin
 
         include "${config.home.homeDirectory}/.zshrc_extra";
       '';
