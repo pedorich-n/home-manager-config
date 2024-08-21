@@ -1,4 +1,5 @@
-{ inputs, withSystem, flake, ... }:
+{ withSystem, flake, ... }:
+{ inputs, ... }:
 let
 
   # Input: { pkgs, attrs (schema: { <name> = <homeManagerConfigurationPath> }), extraArgs }
@@ -31,8 +32,8 @@ let
       homeConfigurations = withSystem:
         let
           # Output: list of attrs (schema: { name = <name>; value = <homeManagerConfiguration> })
-          mkForSystem = system: withSystem system ({ pkgs, pkgs-gnome-extensions, ... }:
-            homeManagerConfigurationsFor { inherit pkgs; configurations = attrs.${system}; extraArgs = { inherit pkgs-gnome-extensions; }; }
+          mkForSystem = system: withSystem system ({ pkgs, ... }:
+            homeManagerConfigurationsFor { inherit pkgs; configurations = attrs.${system}; extraArgs = { }; }
           );
         in
         builtins.listToAttrs (builtins.concatMap mkForSystem systems);

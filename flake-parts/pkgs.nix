@@ -1,7 +1,6 @@
+_:
 { inputs, ... }:
 let
-  barePkgsFor = system: pkgs: pkgs.legacyPackages.${system};
-
   pkgsFor = system: pkgs:
     import pkgs {
       inherit system;
@@ -17,11 +16,14 @@ let
     };
 in
 {
-  perSystem = { system, ... }: {
+  perSystem = { system, pkgs, ... }: {
     _module.args = {
       # pkgs with overlays and custom settings, from: https://flake.parts/overlays.html#consuming-an-overlay
       pkgs = pkgsFor system inputs.nixpkgs;
-      pkgs-gnome-extensions = barePkgsFor system inputs.nixpkgs-gnome-extensions;
+    };
+
+    packages = {
+      bootstrap = pkgs.callPackage ../packages/bootstrap { };
     };
   };
 }

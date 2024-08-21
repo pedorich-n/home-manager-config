@@ -1,3 +1,4 @@
+_:
 { inputs, ... }:
 {
   perSystem = { lib, pkgs, ... }:
