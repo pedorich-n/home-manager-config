@@ -47,6 +47,7 @@ in
       ms-azuretools.vscode-docker
       ms-python.python
       ms-python.vscode-pylance
+      wholroyd.jinja
 
       # Behavior
       ast-grep.ast-grep-vscode
