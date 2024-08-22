@@ -1,6 +1,6 @@
-{ pkgs, configName ? "", ... }:
+{ pkgs, lib, configName ? "", ... }:
 pkgs.writeShellApplication {
-  name = "hm-bootrstrap";
+  name = "hm-bootrstrap${lib.optionalString (configName != "") "-${configName}"}";
   runtimeInputs = with pkgs; [
     gitMinimal
     home-manager

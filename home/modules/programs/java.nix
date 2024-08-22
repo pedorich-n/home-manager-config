@@ -1,9 +1,8 @@
 { lib, config, pkgs, ... }:
-with lib;
 {
-  config = mkMerge [
-    { programs.java.package = mkDefault pkgs.jdk17; }
-    (mkIf config.programs.java.enable {
+  config = lib.mkMerge [
+    { programs.java.package = lib.mkDefault pkgs.jdk17; }
+    (lib.mkIf config.programs.java.enable {
       custom.runtimes.java = [ config.programs.java.package ];
     })
   ];

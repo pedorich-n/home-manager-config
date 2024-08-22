@@ -1,20 +1,14 @@
 { pkgs, lib, config, ... }:
-with lib;
 let
   cfg = config.custom.programs.python;
 in
 {
   ###### interface
-  options = {
+  options = with lib; {
     custom.programs.python = {
       enable = mkEnableOption "Python";
 
-      package = mkOption {
-        type = types.package;
-        default = pkgs.python3;
-        defaultText = literalExpression ''pkgs.python3'';
-        description = "Python package to use";
-      };
+      package = mkPackageOption pkgs "python3" { };
 
       extraPackages = mkOption {
         type = types.functionTo (types.listOf types.package);
@@ -49,7 +43,7 @@ in
       ]);
 
     in
-    mkIf cfg.enable {
+    lib.mkIf cfg.enable {
       home.packages = [
         pythonPackage # python with packages
         poetryPackage # package manager with plugins
