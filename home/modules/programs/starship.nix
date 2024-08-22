@@ -1,9 +1,8 @@
 { lib, ... }:
-with lib;
 {
   programs.starship = {
     settings = {
-      format = concatStrings [
+      format = lib.concatStrings [
         "$shell"
         "$directory"
         "$git_branch"
@@ -16,7 +15,7 @@ with lib;
         "$character"
       ];
 
-      right_format = concatStrings [
+      right_format = lib.concatStrings [
         "$time"
         "$cmd_duration"
         "$status"

@@ -1,11 +1,10 @@
 { pkgs, lib, config, ... }:
-with lib;
 let
   cfg = config.custom.programs.gpg;
 in
 {
   ###### interface
-  options = {
+  options = with lib; {
     custom.programs.gpg = {
       enable = mkEnableOption "gpg";
     };
@@ -13,7 +12,7 @@ in
 
 
   ###### implementation
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     programs.gpg = {
       package = pkgs.gnupg;

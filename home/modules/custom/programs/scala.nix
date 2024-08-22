@@ -1,12 +1,11 @@
 { pkgs, lib, config, ... }:
-with lib;
 let
   cfg = config.custom.programs.scala;
   cfgJava = config.programs.java;
 in
 {
   ###### interface
-  options = {
+  options = with lib;{
     custom.programs.scala = {
       enable = mkEnableOption "Scala";
 
@@ -36,7 +35,7 @@ in
         if cfgJava.enable then builtins.map (pkg: pkg.override { jre = cfgJava.package; }) packages
         else packages;
     in
-    mkIf cfg.enable {
+    lib.mkIf cfg.enable {
       home.packages = allPackages;
       custom.runtimes.scala = [ scalaPackage ];
     };

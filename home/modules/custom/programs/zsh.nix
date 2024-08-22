@@ -1,11 +1,10 @@
-{ lib, config, pkgs, ... }:
-with lib;
+{ lib, config, ... }:
 let
   cfg = config.custom.programs.zsh;
 in
 {
   ###### interface
-  options = {
+  options = with lib;{
     custom.programs.zsh = {
       enable = mkEnableOption "zsh";
 
@@ -19,7 +18,7 @@ in
 
 
   ###### implementation
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.zsh = {
       enable = true;
 
@@ -30,7 +29,7 @@ in
         share = true;
       };
 
-      initExtraFirst = strings.optionalString (cfg.keychainIdentities != [ ]) ''
+      initExtraFirst = lib.strings.optionalString (cfg.keychainIdentities != [ ]) ''
         zstyle :omz:plugins:keychain agents "gpg,ssh"
         zstyle :omz:plugins:keychain identities ${(builtins.concatStringsSep " " cfg.keychainIdentities)}
         zstyle :omz:plugins:keychain options --quiet
@@ -51,9 +50,6 @@ in
             [[ -f "$1" ]] && source "$1"
         }
 
-        # Remove this once https://github.com/nix-community/home-manager/pull/5643 is merged
-        ${getExe pkgs.nix-your-shell} zsh | source /dev/stdin
-
         include "${config.home.homeDirectory}/.zshrc_extra";
       '';
 
@@ -68,7 +64,7 @@ in
           "ohmyzsh/ohmyzsh path:plugins/extract"
           "ohmyzsh/ohmyzsh path:plugins/fzf"
           "ohmyzsh/ohmyzsh path:plugins/git kind:defer"
-        ] ++ (lists.optionals (cfg.keychainIdentities != [ ]) [
+        ] ++ (lib.lists.optionals (cfg.keychainIdentities != [ ]) [
           "ohmyzsh/ohmyzsh path:plugins/keychain"
           "ohmyzsh/ohmyzsh path:plugins/gpg-agent"
         ]);

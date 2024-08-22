@@ -1,8 +1,7 @@
 { lib, ... }:
-with lib;
 {
   ###### interface
-  options = {
+  options = with lib; {
     custom.misc.globalIgnores = mkOption {
       type = with types; listOf str;
       readOnly = true;

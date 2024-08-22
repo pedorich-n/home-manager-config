@@ -1,9 +1,8 @@
 { pkgs, config, lib, ... }:
-with lib;
 let
   watcherExclude =
     let
-      toGlobal = with strings; input: removeSuffix "/" (if (hasPrefix "**/" input) then input else "**/${input}");
+      toGlobal = with lib.strings; input: removeSuffix "/" (if (hasPrefix "**/" input) then input else "**/${input}");
     in
     with builtins; listToAttrs (map (entry: { name = toGlobal entry; value = true; }) config.custom.misc.globalIgnores);
 
@@ -15,7 +14,7 @@ let
           command = "-workbench.action.openEditorAtIndex${index}";
         };
     in
-    with builtins; map (index: getKeyBingingFor (toString index)) (lists.range 1 9);
+    with builtins; map (index: getKeyBingingFor (toString index)) (lib.lists.range 1 9);
 in
 {
   programs.vscode = {

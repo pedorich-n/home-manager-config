@@ -2,11 +2,17 @@
 let
   # Given an attrset, takes all the values recursivelly and joins them into a single list
   foldAttrValuesToListRecursive = attrset:
-    lib.concatLists (lib.mapAttrsToList
-      (_: value:
-        if builtins.isAttrs value then foldAttrValuesToListRecursive value else [ value ]
+    lib.foldl'
+      (acc: value:
+        if (lib.isPath value || lib.isString value || lib.isDerivation value) then
+          acc ++ [ value ]
+        else if (lib.isAttrs value) then
+          acc ++ (foldAttrValuesToListRecursive value)
+        else
+          lib.trace value (abort "Unknown type of value!")
       )
-      attrset);
+      [ ]
+      (builtins.attrValues attrset);
 in
 {
   listNixFilesRecursive = path:

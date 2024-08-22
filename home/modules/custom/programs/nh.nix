@@ -1,17 +1,10 @@
 { pkgs, lib, config, ... }:
-with lib;
 let
   cfg = config.custom.programs.nh;
-
-  aliasesSubmodule = types.submodule {
-    options = {
-      homeManager = mkEnableOption "Home Manager Switch Alias";
-    };
-  };
 in
 {
   ###### interface
-  options = {
+  options = with lib; {
     custom.programs.nh = {
       enable = mkEnableOption "nh";
 
@@ -32,16 +25,15 @@ in
         example = literalExpression "username@hostname";
       };
 
-      aliases = mkOption {
-        type = aliasesSubmodule;
-        default = { };
+      aliases = {
+        homeManager = mkEnableOption "Home Manager Switch Alias";
       };
     };
   };
 
 
   ###### implementation
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     home = {
       packages = [ pkgs.nh ];
 
@@ -49,9 +41,9 @@ in
         FLAKE = builtins.toString cfg.flakeRef;
       };
 
-      shellAliases = mkMerge [
-        (mkIf cfg.aliases.homeManager {
-          hms = "nh home switch" + optionalString (cfg.configName != null) " --configuration ${cfg.configName}";
+      shellAliases = lib.mkMerge [
+        (lib.mkIf cfg.aliases.homeManager {
+          hms = "nh home switch" + lib.optionalString (cfg.configName != null) " --configuration ${cfg.configName}";
         })
       ];
 

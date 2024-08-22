@@ -1,11 +1,10 @@
 { lib, config, ... }:
-with lib;
 let
   cfg = config.custom.programs.gnome;
 in
 {
   ###### interface
-  options = {
+  options = with lib; {
     custom.programs.gnome = {
       enable = mkEnableOption "Custom configs for Gnome";
     };
@@ -13,7 +12,7 @@ in
 
 
   ###### implementation
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     dconf.settings = with lib.hm.gvariant; {
       "org/gnome/mutter" = {
         dynamic-workspaces = false;

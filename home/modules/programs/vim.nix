@@ -1,7 +1,6 @@
 { pkgs, config, lib, ... }:
-with lib;
 {
-  home.sessionVariables = mkIf config.programs.vim.enable {
+  home.sessionVariables = lib.mkIf config.programs.vim.enable {
     VISUAL = "vim";
     EDITOR = "vim";
   };

@@ -1,21 +1,14 @@
 { pkgs, lib, config, ... }:
-with lib;
 let
   cfg = config.custom.programs.jetbrains;
 
-  ideaSubmodule = types.submodule {
-    options = {
-      enable = mkEnableOption "Intellij IDEA";
-    };
-  };
 in
 {
   ###### interface
-  options = {
+  options = with lib; {
     custom.programs.jetbrains = {
-      idea = mkOption {
-        type = ideaSubmodule;
-        default = { };
+      idea = {
+        enable = mkEnableOption "Intellij IDEA";
       };
     };
   };
@@ -36,7 +29,7 @@ in
         in
         pkgs.jetbrains.plugins.addPlugins baseIdea plugins;
     in
-    mkIf enabled {
+    lib.mkIf enabled {
       home.packages = [ ideaPackage ];
     };
 }

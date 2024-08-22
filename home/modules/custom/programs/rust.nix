@@ -1,11 +1,10 @@
 { pkgs, lib, config, ... }:
-with lib;
 let
   cfg = config.custom.programs.rust;
 in
 {
   ###### interface
-  options = {
+  options = with lib; {
     custom.programs.rust = {
       enable = mkEnableOption "Rust";
     };
@@ -13,7 +12,7 @@ in
 
 
   ###### implementation
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = [
       # Default toolchain includes: cargo, clippy, rustc, rust-std, rust-docs, rustfmt
       (pkgs.rust-bin.stable.latest.default.override {

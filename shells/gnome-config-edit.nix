@@ -3,8 +3,8 @@
   "gnome-config-edit" = pkgs.mkShellNoCC {
     packages = with pkgs; [
       dconf2nix
-      gnome.dconf-editor
-      gnome.gnome-tweaks
+      dconf-editor
+      gnome-tweaks
       gnome-extension-manager
     ];
   };

@@ -67,7 +67,7 @@
         src = ./flake-parts;
         loader = args: path: flake-parts-lib.importApply path args;
         inputs = {
-          inherit withSystem inputs;
+          inherit withSystem;
           flake = self;
         };
       });

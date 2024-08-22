@@ -1,6 +1,5 @@
 # Module containing common settings for standalone HM installations.
 { config, lib, ... }:
-with lib;
 let
   cfg = config.home;
 
@@ -11,7 +10,7 @@ in
   imports = [ ./common.nix ];
 
   home = {
-    homeDirectory = mkDefault home;
+    homeDirectory = lib.mkDefault home;
 
     shellAliases = {
       # hms = ''home-manager switch --flake "${hmConfigLocation}#${cfgCustom.name}"'';
@@ -22,7 +21,7 @@ in
   custom.programs = {
     nh = {
       enable = true;
-      flakeRef = mkDefault hmConfigLocation;
+      flakeRef = lib.mkDefault hmConfigLocation;
       aliases.homeManager = true;
     };
   };
