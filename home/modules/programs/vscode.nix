@@ -24,6 +24,7 @@ in
     extensions = (with pkgs.vscode-extensions; [
       github.copilot
       jebbs.plantuml
+      hashicorp.terraform
     ]) ++ (with pkgs.vscode-marketplace; [
       # Themes
       evgeniypetukhov.dark-low-contrast
@@ -154,6 +155,9 @@ in
           "files.trimFinalNewlines" = true;
           "files.trimTrailingWhitespace" = true;
           "files.watcherExclude" = watcherExclude;
+          "files.associations" = {
+            "*.uml" = "plantuml";
+          };
         };
 
         nixSettings = {
