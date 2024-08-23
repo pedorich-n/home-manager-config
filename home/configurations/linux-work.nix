@@ -65,6 +65,7 @@ in
       circleci-cli # CI/CD
       cqlsh # Cassandra
       docker-compose # Docker
+      localsend-deb # Local file sharing
       seahorse # Gnome encryption
       obsidian # Note-taking
       pinentry # GnuPG’s interface to passphrase input

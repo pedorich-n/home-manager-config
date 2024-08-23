@@ -5,4 +5,6 @@ inputs: _: prev:
   };
 
   cqlsh = prev.callPackage ../packages/cqlsh { inherit (inputs) cqlsh-source; python3Packages = prev.python311Packages; };
+
+  localsend-deb = prev.callPackage ../packages/localsend { };
 }
