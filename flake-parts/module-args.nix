@@ -16,14 +16,10 @@ let
     };
 in
 {
-  perSystem = { system, pkgs, ... }: {
+  perSystem = { system, ... }: {
     _module.args = {
       # pkgs with overlays and custom settings, from: https://flake.parts/overlays.html#consuming-an-overlay
       pkgs = pkgsFor system inputs.nixpkgs;
-    };
-
-    packages = {
-      bootstrap = pkgs.callPackage ../packages/bootstrap { };
     };
   };
 }
