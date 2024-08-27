@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  gpgKey = "900C2FE784D62F8C";
+  gpgKey = "D98000B630763B21";
 in
 {
   imports = [ ./common-standalone.nix ];
