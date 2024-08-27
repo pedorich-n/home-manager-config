@@ -40,9 +40,14 @@ in
     vscode.enable = true;
     java.enable = true;
 
-    git.signing = {
-      key = gpgKey;
-      signByDefault = true;
+    git = {
+      userName = "Mykyta Pedorich";
+      userEmail = "mykyta.pedorich@paidy.com";
+
+      signing = {
+        key = gpgKey;
+        signByDefault = true;
+      };
     };
 
     zellij.settings.copy_command = "xclip -selection clipboard";

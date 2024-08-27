@@ -20,9 +20,14 @@ in
   };
 
   programs = {
-    git.signing = {
-      key = gpgKey;
-      signByDefault = true;
+    git = {
+      userName = "Nikita Pedorich";
+      userEmail = "pedorich.n@gmail.com";
+
+      signing = {
+        key = gpgKey;
+        signByDefault = true;
+      };
     };
     java.enable = true;
   };
