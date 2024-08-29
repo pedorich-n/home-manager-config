@@ -29,7 +29,6 @@ in
           pandas
         ];
       };
-      zsh.keychainIdentities = [ "work/paidy" gpgKey ];
     };
   };
 
@@ -50,12 +49,13 @@ in
       };
     };
 
+    keychain.keys = [ "work/paidy" gpgKey ];
+
     zellij.settings.copy_command = "xclip -selection clipboard";
   };
 
   services = {
     flameshot.enable = true;
-    gpg-agent.pinentryPackage = pkgs.pinentry-gnome3;
   };
 
   home = {

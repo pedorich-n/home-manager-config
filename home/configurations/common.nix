@@ -7,18 +7,15 @@
     packages = with pkgs; [
       coreutils-full # GNU coreutils (cp, mv, whoami, echo, wc, ...)
       curl # HTTP client
-      fd # Fast "find" alternative (files/directories search)
       gdu # Fast disk usage analyser
       gnused # GNU Stream EDitor
       jq # Command-line JSON processor
       just # Handy tool to save and run project-specific commands.
-      keychain # ssh-agent and/or gpg-agent between logins
-      man # Man pages reader
       tree # Recursive directory listing
     ];
 
     sessionVariables = {
-      PAGER = "less -R";
+      PAGER = "less -R"; # Enable colors in less
       HOSTNAME = "$(hostname)";
     };
 
@@ -27,12 +24,6 @@
       ll = "ls --all --classify --human-readable --color --group-directories-first -l";
     };
 
-  };
-
-  custom = {
-    programs = {
-      zsh.enable = true;
-    };
   };
 
   programs = {
@@ -45,12 +36,15 @@
     fzf.enable = true; # Command-line fuzzy finder
     git.enable = true; #  Distributed version control system
     htop.enable = true; # Interactive resource monitor
+    keychain.enable = true; # ssh-agent and/or gpg-agent between logins
     less.enable = true; # Interactive text-files viewer
+    man.enable = true; # Man pages reader
     ripgrep.enable = true; # Fast grep replacement (regex search in content)
     starship.enable = true; # The minimal, blazing-fast, and infinitely customizable prompt
     tealdeer.enable = true; # Community-driven Man alternative
     vim.enable = true; # Text editor
     zellij.enable = true; # A terminal workspace with batteries included
+    zsh.enable = true; # Main shell
   };
 
   xdg.enable = true;

@@ -15,7 +15,6 @@ in
       python.enable = true;
       rust.enable = true;
       scala.enable = true;
-      zsh.keychainIdentities = [ "id_main" gpgKey ];
     };
   };
 
@@ -30,9 +29,8 @@ in
       };
     };
     java.enable = true;
+    keychain.keys = [ "id_main" gpgKey ];
   };
-
-  services.gpg-agent.pinentryPackage = pkgs.pinentry-curses;
 
   home.packages = with pkgs; [
     pinentry-curses

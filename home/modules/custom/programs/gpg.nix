@@ -7,6 +7,7 @@ in
   options = with lib; {
     custom.programs.gpg = {
       enable = mkEnableOption "gpg";
+      description = "Enables GPG support and GPG agen service. Mostly neeed to set the settings";
     };
   };
 
@@ -19,10 +20,12 @@ in
       enable = true;
     };
 
-    services.gnome-keyring.enable = true;
-
     services.gpg-agent = {
       enable = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
+      pinentryPackage = lib.mkDefault pkgs.pinentry-curses;
+
       # 7 days
       defaultCacheTtl = 604800;
       maxCacheTtl = 604800;

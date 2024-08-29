@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ config, pkgs, lib, ... }:
 let
   cfg = config.custom.programs.gnome;
 in
@@ -13,6 +13,11 @@ in
 
   ###### implementation
   config = lib.mkIf cfg.enable {
+    services = {
+      gnome-keyring.enable = true;
+      gpg-agent.pinentryPackage = pkgs.pinentry-gnome3;
+    };
+
     dconf.settings = with lib.hm.gvariant; {
       "org/gnome/mutter" = {
         dynamic-workspaces = false;
