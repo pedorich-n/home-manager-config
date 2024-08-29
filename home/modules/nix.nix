@@ -1,4 +1,4 @@
-{ nixpkgs, pkgs, ... }:
+{ nixpkgs, pkgs, lib, ... }:
 let
   nixPkg = pkgs.nix;
   nixApps = with pkgs; [
@@ -20,15 +20,15 @@ in
   };
 
   nix = {
-    package = nixPkg;
+    package = lib.mkDefault nixPkg;
 
-    registry.nixpkgs.flake = nixpkgs;
+    registry = lib.mkDefault { nixpkgs.flake = nixpkgs; };
 
-    nixPath = [
+    nixPath = lib.mkDefault [
       "nixpkgs=${pkgs.path}"
     ];
 
-    settings = {
+    settings = lib.mkDefault {
       experimental-features = [ "nix-command" "flakes" ];
       log-lines = 50;
       # substituters = builtins.attrNames additionalCaches;
