@@ -1,10 +1,10 @@
-{ pkgs, config, ... }:
-with config.lib.htop;
+{ config, pkgs, lib, ... }:
 {
   programs.htop = {
     package = pkgs.htop;
 
-    settings = {
+    # Defined in https://github.com/nix-community/home-manager/blob/c2cd2a52e02f1dfa1c88f95abeb89298d46023be/modules/programs/htop.nix#L167-L169
+    settings = lib.mkDefault (with config.lib.htop; {
       fields = with fields; [
         PID
         USER
@@ -43,6 +43,6 @@ with config.lib.htop;
       (text "Uptime")
       (text "Tasks")
       (text "LoadAverage")
-    ]);
+    ]));
   };
 }

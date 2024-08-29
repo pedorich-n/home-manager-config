@@ -16,19 +16,19 @@ in
   config = lib.mkIf cfg.enable {
 
     programs.gpg = {
-      package = pkgs.gnupg;
-      enable = true;
+      package = lib.mkDefault pkgs.gnupg;
+      enable = lib.mkDefault true;
     };
 
     services.gpg-agent = {
-      enable = true;
-      enableBashIntegration = true;
-      enableZshIntegration = true;
+      enable = lib.mkDefault true;
+      enableBashIntegration = lib.mkDefault true;
+      enableZshIntegration = lib.mkDefault true;
       pinentryPackage = lib.mkDefault pkgs.pinentry-curses;
 
       # 7 days
-      defaultCacheTtl = 604800;
-      maxCacheTtl = 604800;
+      defaultCacheTtl = lib.mkDefault 604800;
+      maxCacheTtl = lib.mkDefault 604800;
     };
   };
 }

@@ -20,17 +20,17 @@ in
 
   custom.programs = {
     nh = {
-      enable = true;
+      enable = lib.mkDefault true;
       flakeRef = lib.mkDefault hmConfigLocation;
-      aliases.homeManager = true;
+      aliases.homeManager = lib.mkDefault true;
     };
   };
 
   programs = {
     # HomeManager Diff tool, built using NVM (Nix Version Diff)
     hmd = {
-      enable = true;
-      runOnSwitch = false;
+      enable = lib.mkDefault true;
+      runOnSwitch = lib.mkDefault false;
     };
 
 
@@ -41,5 +41,5 @@ in
     };
   };
 
-  targets.genericLinux.enable = true;
+  targets.genericLinux.enable = lib.mkDefault true;
 }

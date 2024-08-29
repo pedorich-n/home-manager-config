@@ -1,6 +1,7 @@
-_:
+{ lib, ... }:
 {
   programs.direnv = {
-    enableZshIntegration = true;
+    enableBashIntegration = lib.mkDefault true;
+    enableZshIntegration = lib.mkDefault true;
   };
 }

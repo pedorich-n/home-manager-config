@@ -1,6 +1,6 @@
-_: {
+{ lib, ... }: {
   services.flameshot = {
-    settings = {
+    settings = lib.mkDefault {
       # https://github.com/flameshot-org/flameshot/blob/master/flameshot.example.ini
       General = {
         allowMultipleGuiInstances = true;

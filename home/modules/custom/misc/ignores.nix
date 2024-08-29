@@ -4,7 +4,7 @@
   options = with lib; {
     custom.misc.globalIgnores = mkOption {
       type = with types; listOf str;
-      readOnly = true;
+      description = "List of global ignores for all programs, like .gitignore";
     };
   };
 

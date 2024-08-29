@@ -1,7 +1,7 @@
 { lib, ... }:
 {
   programs.starship = {
-    settings = {
+    settings = lib.mkDefault {
       format = lib.concatStrings [
         "$shell"
         "$directory"

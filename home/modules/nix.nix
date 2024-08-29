@@ -1,4 +1,4 @@
-{ pkgs, nixpkgs, ... }:
+{ nixpkgs, pkgs, ... }:
 let
   nixPkg = pkgs.nix;
   nixApps = with pkgs; [

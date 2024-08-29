@@ -1,6 +1,6 @@
-{
+{ lib, ... }: {
   programs.fzf = {
-    enableBashIntegration = true;
-    enableZshIntegration = true;
+    enableBashIntegration = lib.mkDefault true;
+    enableZshIntegration = lib.mkDefault true;
   };
 }

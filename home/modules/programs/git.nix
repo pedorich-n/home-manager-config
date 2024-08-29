@@ -1,21 +1,21 @@
 { pkgs, config, lib, ... }:
 {
   home.sessionVariables = lib.mkIf config.programs.git.enable {
-    DELTA_PAGER = "less -R";
-    LESS = "";
+    DELTA_PAGER = lib.mkDefault "less -R";
+    LESS = lib.mkDefault "";
   };
 
   programs.git = {
-    package = pkgs.git;
+    package = lib.mkDefault pkgs.git;
 
     delta = {
-      enable = true;
-      options = {
+      enable = lib.mkDefault true;
+      options = lib.mkDefault {
         features = "zenburst";
       };
     };
 
-    extraConfig = {
+    extraConfig = lib.mkDefault {
       pull.rebase = true;
       push.default = "simple";
       submodule.recurse = true;
