@@ -20,7 +20,6 @@
     };
 
     shellAliases = {
-      hm = "home-manager";
       ll = "ls --all --classify --human-readable --color --group-directories-first -l";
     };
 
