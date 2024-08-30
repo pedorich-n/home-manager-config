@@ -71,6 +71,7 @@ in
       cqlsh # Cassandra
       docker-compose # Docker
       localsend-deb # Local file sharing
+      nautilus # File manager, because Gnome's one has an issue with JSON files. See https://gitlab.gnome.org/GNOME/nautilus/-/issues/3273
       seahorse # Gnome encryption
       obsidian # Note-taking
       pinentry # GnuPG’s interface to passphrase input
