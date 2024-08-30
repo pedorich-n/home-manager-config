@@ -1,12 +1,2 @@
-{ cqlsh-source, python3Packages }:
-with python3Packages;
-buildPythonPackage {
-  pname = "cqlsh";
-  version = cqlsh-source.shortRev;
-  format = "pyproject";
-
-  src = cqlsh-source;
-
-  nativeBuildInputs = [ setuptools wheel ];
-  propagatedBuildInputs = [ cassandra-driver six tzlocal pytz ];
-}
+{ pkgs, lib, ... }:
+pkgs.linkFarm "cqlsh" [{ name = "bin/cqlsh"; path = lib.getExe' pkgs.cassandra_3_11 "cqlsh"; }]

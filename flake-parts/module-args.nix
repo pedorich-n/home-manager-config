@@ -1,25 +1,28 @@
-_:
-{ inputs, ... }:
+{ flake, ... }:
+{ inputs, lib, ... }:
 let
-  pkgsFor = system: pkgs:
-    import pkgs {
-      inherit system;
-      overlays = with inputs; [
-        nix-vscode-extensions.overlays.default
-        rust-overlay.overlays.default
-        (import ../overlays inputs)
-      ];
-      config = {
-        allowUnfree = true;
-        allowInsecurePredicate = pkg: (builtins.match "openssl-1\.1\.1.*" pkg.pname) != [ ];
-      };
-    };
+  getName = pkg: pkg.name or pkg.meta.name or "${pkg.pname or "none"}-${pkg.version or "none"}";
+
+  allowedInsecurePackages = [
+    "openssl-1.1.1" # Dependency of Sublime Text 4
+    "python-2.7" # Dependency of cqlsh (Cassandra 3.11)
+  ];
 in
 {
   perSystem = { system, ... }: {
     _module.args = {
-      # pkgs with overlays and custom settings, from: https://flake.parts/overlays.html#consuming-an-overlay
-      pkgs = pkgsFor system inputs.nixpkgs;
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        overlays = [
+          inputs.nix-vscode-extensions.overlays.default
+          inputs.rust-overlay.overlays.default
+          flake.overlays.default
+        ];
+        config = {
+          allowUnfree = true;
+          allowInsecurePredicate = pkg: builtins.any (prefix: lib.hasPrefix prefix (getName pkg)) allowedInsecurePackages;
+        };
+      };
     };
   };
 }

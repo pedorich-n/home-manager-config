@@ -36,11 +36,6 @@
       };
     };
 
-    cqlsh-source = {
-      url = "github:jeffwidman/cqlsh";
-      flake = false;
-    };
-
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs = {
