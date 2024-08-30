@@ -1,6 +1,6 @@
 _:
-{ inputs, ... }: {
+{ inputs, lib, ... }: {
   flake = {
-    lib = import ../lib { inherit (inputs.nixpkgs) lib; inherit (inputs) haumea; };
+    lib = import ../lib { inherit lib; inherit (inputs) haumea; };
   };
 }
