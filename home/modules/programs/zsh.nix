@@ -1,4 +1,15 @@
-{ config, lib, ... }:
+{ config, pkgs, lib, ... }:
+let
+
+  omzLibs = builtins.map (file: "source ${pkgs.oh-my-zsh}/share/oh-my-zsh/lib/${file}.zsh") [
+    "completion"
+    "functions"
+    "key-bindings"
+    "termsupport"
+  ];
+
+  omzPlugins = builtins.map (file: { name = file; src = "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/${file}"; }) [ "extract" "git" ];
+in
 {
   programs.zsh = {
 
@@ -10,6 +21,8 @@
       ignoreSpace = lib.mkDefault true; # Don't record an entry starting with a space.
       share = lib.mkDefault true; # Share history between all sessions.
     };
+
+    initExtraBeforeCompInit = lib.concatLines omzLibs;
 
     initExtra = ''
       set +o histexpand # Disable history expantion (annying exclamantion mark behaviour)
@@ -28,18 +41,6 @@
       include "${config.home.homeDirectory}/.zshrc_extra";
     '';
 
-    antidote = {
-      enable = lib.mkDefault true;
-      plugins = [
-        "ohmyzsh/ohmyzsh path:lib/completion.zsh"
-        "ohmyzsh/ohmyzsh path:lib/functions.zsh"
-        "ohmyzsh/ohmyzsh path:lib/git.zsh"
-        "ohmyzsh/ohmyzsh path:lib/key-bindings.zsh"
-        "ohmyzsh/ohmyzsh path:lib/termsupport.zsh"
-        "ohmyzsh/ohmyzsh path:plugins/extract"
-        "ohmyzsh/ohmyzsh path:plugins/fzf"
-        "ohmyzsh/ohmyzsh path:plugins/git kind:defer"
-      ];
-    };
+    plugins = omzPlugins;
   };
 }
