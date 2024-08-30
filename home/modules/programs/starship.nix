@@ -4,6 +4,7 @@
     settings = lib.mkDefault {
       format = lib.concatStrings [
         "$shell"
+        "$username"
         "$directory"
         "$git_branch"
         "$git_commit"
@@ -78,6 +79,11 @@
         format = ''via [''$symbol''$pyenv_prefix(''$version )]($style)'';
         disabled = false;
         symbol = " ";
+      };
+
+      username = {
+        show_always = false;
+        disabled = false;
       };
     };
   };
