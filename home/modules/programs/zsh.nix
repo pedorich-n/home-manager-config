@@ -14,8 +14,7 @@ in
   programs.zsh = {
 
     history = {
-      # TODO: uncomment after update
-      # append = lib.mkDefault true; # Append history, rather than replace it. Multiple parallel zsh sessions will all write history to the histfile
+      append = lib.mkDefault true; # Append history, rather than replace it. Multiple parallel zsh sessions will all write history to the histfile
       ignoreAllDups = lib.mkDefault true; # Delete old recorded entry if new entry is a duplicate.
       ignoreDups = lib.mkDefault true; # Don't record an entry that was just recorded again.
       ignoreSpace = lib.mkDefault true; # Don't record an entry starting with a space.
@@ -29,7 +28,6 @@ in
 
       zstyle ':completion:*' menu yes select _complete _ignored _approximate _files
 
-      setopt APPEND_HISTORY
       setopt MENU_COMPLETE # On ambiguous completion insert first match and show menu
       setopt HIST_REDUCE_BLANKS # Remove superfluous blanks from history
       unsetopt EXTENDED_GLOB # Don't treat the '#', '~' and '^' characters as part of patterns for filename generation, etc.
