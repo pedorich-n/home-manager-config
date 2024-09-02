@@ -1,5 +1,4 @@
-{ withSystem, flake, ... }:
-{ inputs, ... }:
+{ withSystem, flake, inputs, ... }:
 let
 
   # Input: { pkgs, attrs (schema: { <name> = <homeManagerConfigurationPath> }), extraArgs }
