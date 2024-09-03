@@ -4,6 +4,7 @@ let
   omzLibs = builtins.map (file: "source ${pkgs.oh-my-zsh}/share/oh-my-zsh/lib/${file}.zsh") [
     "completion"
     "functions"
+    "git"
     "key-bindings"
     "termsupport"
   ];
