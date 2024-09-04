@@ -1,5 +1,4 @@
-{ withSystem, flake, ... }:
-{ inputs, ... }:
+{ withSystem, flake, inputs, ... }:
 let
 
   # Input: { pkgs, attrs (schema: { <name> = <homeManagerConfigurationPath> }), extraArgs }
@@ -9,9 +8,10 @@ let
       homeManagerConfigrationFor = configuration:
         inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = flake.homeModules.sharedModules ++ [
-            configuration
+          modules = [
+            flake.homeModules.sharedModules
             inputs.home-manager-diff.hmModules.default
+            configuration
           ];
           extraSpecialArgs = {
             inherit (inputs) nixpkgs;

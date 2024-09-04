@@ -1,8 +1,12 @@
 { flake, ... }: {
+  imports = [
+    ./_options/homeModules.nix
+  ];
+
   flake = {
     homeModules = {
-      common = import ../home/configurations/common.nix;
-      sharedModules = flake.lib.listNixFilesRecursive ../home/modules;
+      common = { imports = [ ../home/configurations/common.nix ]; };
+      sharedModules = { imports = flake.lib.listNixFilesRecursive ../home/modules; };
     };
   };
 }
