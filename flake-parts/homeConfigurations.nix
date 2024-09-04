@@ -39,8 +39,6 @@ let
         builtins.listToAttrs (builtins.concatMap mkForSystem systems);
     in
     {
-      inherit systems;
-
       flake = {
         homeConfigurations = homeConfigurations withSystem;
       };
