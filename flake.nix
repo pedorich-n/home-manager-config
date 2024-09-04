@@ -6,7 +6,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
-    systems.url = "github:nix-systems/default";
+    systems.url = "github:nix-systems/default-linux";
     flake-utils = {
       url = "github:numtide/flake-utils";
       inputs.systems.follows = "systems";
@@ -54,17 +54,14 @@
     };
   };
 
-  outputs = inputs@{ flake-parts, self, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ withSystem, flake-parts-lib, ... }:
-    {
-      debug = true; # Needed for nixd
+  outputs = inputs@{ flake-parts, systems, ... }: flake-parts.lib.mkFlake { inherit inputs; } {
+    debug = true; # Needed for nixd
 
-      imports = builtins.attrValues (inputs.haumea.lib.load {
-        src = ./flake-parts;
-        loader = args: path: flake-parts-lib.importApply path args;
-        inputs = {
-          inherit withSystem;
-          flake = self;
-        };
-      });
+    systems = import systems;
+
+    imports = builtins.attrValues (inputs.haumea.lib.load {
+      src = ./flake-parts;
+      loader = inputs.haumea.lib.loaders.path;
     });
+  };
 }

@@ -1,5 +1,4 @@
-{ flake, ... }:
-{ lib, ... }: {
+{ flake, lib, ... }: {
   perSystem = { pkgs, ... }: {
     apps =
       let

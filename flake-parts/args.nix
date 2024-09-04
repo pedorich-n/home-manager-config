@@ -1,5 +1,4 @@
-{ flake, ... }:
-{ inputs, lib, ... }:
+{ self, inputs, lib, ... }:
 let
   getName = pkg: pkg.name or pkg.meta.name or "${pkg.pname or "none"}-${pkg.version or "none"}";
 
@@ -9,6 +8,9 @@ let
   ];
 in
 {
+  # Helps to avoid confusion between haumea's and flake-parts' `self`. This `self` is flake-parts' and points to the flake (outputs).
+  _module.args.flake = self;
+
   perSystem = { system, ... }: {
     _module.args = {
       pkgs = import inputs.nixpkgs {
@@ -16,7 +18,7 @@ in
         overlays = [
           inputs.nix-vscode-extensions.overlays.default
           inputs.rust-overlay.overlays.default
-          flake.overlays.default
+          self.overlays.default
         ];
         config = {
           allowUnfree = true;

@@ -3,7 +3,7 @@ let
   gpgKey = "ADC7FB37D4DF4CE2";
 in
 {
-  imports = [ ./common-standalone.nix ];
+  imports = [ ./commonStandalone.nix ];
 
   home.username = "pedorich_n";
 
