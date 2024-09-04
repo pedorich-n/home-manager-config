@@ -6,6 +6,11 @@
       homeModules = lib.mkOption {
         type = with lib.types; lazyAttrsOf deferredModule;
         default = { };
+        apply = lib.mapAttrs (_: module: {
+          # As per https://github.com/nix-community/home-manager/commit/26e72d85e6fbda36bf2266f1447215501ec376fd
+          _class = "homeManager";
+          imports = [ module ];
+        });
       };
     };
   };
