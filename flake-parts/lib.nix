@@ -1,4 +1,4 @@
-{ withSystem, inputs, lib, ... }: {
+{ withSystem, flake, inputs, lib, ... }: {
   imports = [
     ./_options/lib.nix
   ];
@@ -7,7 +7,7 @@
     lib = inputs.haumea.lib.load {
       src = ../lib;
       inputs = {
-        inherit inputs lib withSystem;
+        inherit inputs lib withSystem flake;
         inherit (inputs) haumea;
       };
     };
