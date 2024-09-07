@@ -54,14 +54,11 @@
     };
   };
 
-  outputs = inputs@{ flake-parts, systems, ... }: flake-parts.lib.mkFlake { inherit inputs; } {
+  outputs = inputs@{ flake-parts, systems, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ lib, ... }: {
     debug = true; # Needed for nixd
 
     systems = import systems;
 
-    imports = builtins.attrValues (inputs.haumea.lib.load {
-      src = ./flake-parts;
-      loader = inputs.haumea.lib.loaders.path;
-    });
-  };
+    imports = lib.filesystem.listFilesRecursive ./flake-parts;
+  });
 }

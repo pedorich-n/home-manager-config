@@ -1,8 +1,4 @@
 { flake, ... }: {
-  imports = [
-    ./_options/homeModules.nix
-  ];
-
   flake = {
     homeModules = {
       common = { imports = [ ../home/configurations/common.nix ]; };

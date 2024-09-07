@@ -1,8 +1,4 @@
 { withSystem, flake, inputs, lib, ... }: {
-  imports = [
-    ./_options/lib.nix
-  ];
-
   flake = {
     lib = inputs.haumea.lib.load {
       src = ../lib;
