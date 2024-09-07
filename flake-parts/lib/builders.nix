@@ -11,7 +11,7 @@ let
           modules = [
             flake.homeModules.sharedModules
             inputs.home-manager-diff.hmModules.default
-            ../home/configurations/${name}.nix
+            "${flake}/home/configurations/${name}.nix"
           ];
           extraSpecialArgs = {
             inherit (inputs) nixpkgs;
@@ -21,5 +21,7 @@ let
     };
 in
 {
-  inherit mkHomeConfiguration;
+  flake.lib.builders = {
+    inherit mkHomeConfiguration;
+  };
 }
