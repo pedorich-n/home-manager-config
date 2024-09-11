@@ -5,7 +5,7 @@ let
 in
 {
   ###### interface
-  options = with lib;{
+  options = with lib; {
     custom.programs.scala = {
       enable = mkEnableOption "Scala";
 

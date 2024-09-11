@@ -2,9 +2,9 @@
 let
   watcherExclude =
     let
-      toGlobal = with lib.strings; input: removeSuffix "/" (if (hasPrefix "**/" input) then input else "**/${input}");
+      toGlobal = input: lib.strings.removeSuffix "/" (if (lib.strings.hasPrefix "**/" input) then input else "**/${input}");
     in
-    with builtins; listToAttrs (map (entry: { name = toGlobal entry; value = true; }) config.custom.misc.globalIgnores);
+    lib.foldl' (acc: entry: acc // { ${toGlobal entry} = true; }) { } config.custom.misc.globalIgnores;
 
   keymapDisableOpenTabAtIndex =
     let
@@ -14,13 +14,14 @@ let
           command = "-workbench.action.openEditorAtIndex${index}";
         };
     in
-    with builtins; map (index: getKeyBingingFor (toString index)) (lib.lists.range 1 9);
+    builtins.map (index: getKeyBingingFor (builtins.toString index)) (lib.lists.range 1 9);
 in
 {
   programs.vscode = {
     package = pkgs.vscode;
 
     extensions = (with pkgs.vscode-extensions; [
+      # Using those from nixpkgs, because they require extra setup which is not provivided in vscode-marketplace
       github.copilot
       jebbs.plantuml
       hashicorp.terraform
