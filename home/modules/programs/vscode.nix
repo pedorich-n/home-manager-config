@@ -64,6 +64,7 @@ in
       wmaurer.vscode-jumpy
       editorconfig.editorconfig
       esbenp.prettier-vscode
+      exodiusstudios.comment-anchors
     ]);
 
     keybindings = [
