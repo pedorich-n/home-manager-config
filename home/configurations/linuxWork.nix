@@ -37,7 +37,10 @@ in
   programs = {
     direnv.enable = true;
     vscode.enable = true;
-    java.enable = true;
+    java = {
+      enable = true;
+      package = pkgs.jdk17;
+    };
 
     git = {
       userName = "Mykyta Pedorich";

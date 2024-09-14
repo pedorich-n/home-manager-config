@@ -6,7 +6,10 @@
   };
 
   programs.vim = {
-    packageConfigurable = lib.mkDefault (pkgs.vim_configurable.override { features = "normal"; });
+    packageConfigurable = lib.mkDefault (pkgs.vim-full.override {
+      features = "normal";
+      guiSupport = false;
+    });
 
     plugins = with pkgs.vimPlugins; [
       lightline-vim
