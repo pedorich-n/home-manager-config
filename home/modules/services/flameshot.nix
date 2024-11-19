@@ -13,7 +13,7 @@
         disabledTrayIcon = false;
         showDesktopNotification = false;
         showStartupLaunchMessage = false;
-        startupLaunch = true;
+        startupLaunch = false;
       };
     };
   };
