@@ -250,6 +250,12 @@ in
           };
         };
 
+        jsonSettings = {
+          "[json]" = {
+            "editor.defaultFormatter" = "esbenp.prettier-vscode";
+          };
+        };
+
       in
       editorSettings //
       filesSettings //
@@ -260,6 +266,7 @@ in
       tomlSettings //
       vimSettings //
       vscodeMiscSettings //
-      yamlSettings;
+      yamlSettings //
+      jsonSettings;
   };
 }
