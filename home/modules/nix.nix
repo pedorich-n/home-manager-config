@@ -1,6 +1,6 @@
 { nixpkgs, pkgs, lib, ... }:
 let
-  nixPkg = pkgs.nix;
+  nixPkg = pkgs.nixVersions.nix_2_20;
   nixApps = with pkgs; [
     nil # NIX language server
     nixd # A better NIX language server
