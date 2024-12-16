@@ -30,10 +30,20 @@ in
     };
     java.enable = true;
     keychain.keys = [ "id_main" gpgKey ];
+
+    # See https://1password.community/discussion/comment/673567/#Comment_673567
+    #LINK - packages/wsl-1password-cli/default.nix
+    zsh.initExtra = ''
+      if command -v op &>/dev/null; then
+       eval "$(op completion zsh 2>/dev/null || true)"
+       compdef _op op
+      fi
+    '';
   };
 
   home.packages = with pkgs; [
     pinentry-curses
     wslu
+    wsl-1password-cli
   ];
 }
