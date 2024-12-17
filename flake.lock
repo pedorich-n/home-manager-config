@@ -156,6 +156,22 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/5487e69da40cbd611ab2cadee0b4637225f7cfae.tar.gz"
       }
     },
+    "nixpkgs-nix": {
+      "locked": {
+        "lastModified": 1731957308,
+        "narHash": "sha256-dEkUbzblgGcAUAL9X0slwl3KTP7CqlqUQok//9jUp3A=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "23cd038879f9b5effb9ae9298037039808f55673",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "23cd038879f9b5effb9ae9298037039808f55673",
+        "type": "github"
+      }
+    },
     "poetry2nix": {
       "inputs": {
         "flake-utils": [
@@ -199,6 +215,7 @@
         "home-manager-diff": "home-manager-diff",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-nix": "nixpkgs-nix",
         "rust-overlay": "rust-overlay",
         "systems": "systems",
         "tomorrow-theme-source": "tomorrow-theme-source"
