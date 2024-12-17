@@ -5,9 +5,8 @@
     # Global / Meta
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    # Latest commit where nix 2.20 is available.
     # Needed until https://github.com/NixOS/nix/issues/11181 is fixed
-    nixpkgs-nix.url = "github:nixos/nixpkgs/23cd038879f9b5effb9ae9298037039808f55673";
+    nixpkgs-nix.url = "github:nixos/nixpkgs/a61cd8ff1b45f760bdf142914d517e0ccd31ffed";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     systems.url = "github:nix-systems/default-linux";
