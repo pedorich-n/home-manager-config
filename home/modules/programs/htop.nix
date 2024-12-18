@@ -19,8 +19,6 @@
         TIME
         COMM
       ];
-      tree_view = 1;
-
       highlight_base_name = 1;
       highlight_megabytes = 1;
       highlight_threads = 1;
