@@ -34,5 +34,13 @@ in
       # substituters = builtins.attrNames additionalCaches;
       # trusted-public-keys = builtins.attrValues additionalCaches;
     };
+
+    gc = {
+      automatic = lib.mkDefault true;
+
+      frequency = lib.mkDefault "*-*-01 11:00:00"; # On the first of every month at 11:00
+
+      persistent = lib.mkDefault true;
+    };
   };
 }
