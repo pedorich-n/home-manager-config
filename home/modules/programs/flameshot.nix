@@ -1,5 +1,5 @@
 { lib, ... }: {
-  services.flameshot = {
+  custom.programs.flameshot = {
     settings = lib.mkDefault {
       # https://github.com/flameshot-org/flameshot/blob/master/flameshot.example.ini
       General = {
