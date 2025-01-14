@@ -39,8 +39,8 @@ in
 
       "org/gnome/desktop/wm/keybindings" = {
         switch-input-source = [ "<Super>space" "XF86Keyboard" ];
-        switch-to-workspace-down = [ "<Primary><Alt>Right" ];
-        switch-to-workspace-up = [ "<Primary><Alt>Left" ];
+        switch-to-workspace-down = [ "<Control><Alt>Right" ];
+        switch-to-workspace-up = [ "<Control><Alt>Left" ];
       };
 
       "org/gnome/desktop/wm/preferences" = {
