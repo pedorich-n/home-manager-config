@@ -14,6 +14,7 @@ in
       java = [ pkgs.jdk11 pkgs.jdk8 ];
     };
     programs = {
+      flameshot.enable = true;
       gnome.enable = true;
       nh.configName = "linuxWork";
       rust.enable = true;
@@ -55,10 +56,6 @@ in
     keychain.keys = [ "work/paidy" gpgKey ];
 
     zellij.settings.copy_command = "xclip -selection clipboard";
-  };
-
-  services = {
-    flameshot.enable = true;
   };
 
   home = {
