@@ -77,6 +77,7 @@ in
       shfmt # Shell formatter
       slack # Messaging
       sublime4 # Text editor
+      terraform # Infrastructure as code
       xclip # CLI Clipboard manager
     ];
   };
