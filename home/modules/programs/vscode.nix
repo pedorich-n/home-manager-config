@@ -192,12 +192,13 @@ in
         };
 
         pythonSettings = {
-          "ruff.lint.args" = [ "--line-length=140" ];
-          "ruff.format.args" = [ "--line-length=140" ];
+          "ruff.lineLength" = 140;
           "[python]" = {
             "editor.defaultFormatter" = "charliermarsh.ruff";
           };
-        };
+        } // (lib.optionalAttrs config.custom.programs.python.enable {
+          "python.defaultInterpreterPath" = lib.getExe config.custom.programs.python.resultEnv;
+        });
 
         scalaSettings = {
           "metals.enableSemanticHighlighting" = true;
