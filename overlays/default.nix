@@ -6,7 +6,5 @@ inputs: _: prev:
 
   cqlsh = prev.callPackage ../packages/cqlsh { };
 
-  localsend-deb = prev.callPackage ../packages/localsend { };
-
   wsl-1password-cli = prev.callPackage ../packages/wsl-1password-cli { };
 }

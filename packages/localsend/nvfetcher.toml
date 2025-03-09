@@ -1,4 +1,0 @@
-[localsend]
-src.prefix = "v"
-src.github = "localsend/localsend"
-fetch.url = "https://github.com/localsend/localsend/releases/download/v$ver/LocalSend-$ver-linux-x86-64.deb"
