@@ -7,8 +7,8 @@ pkgs.writeShellApplication {
   ];
 
   text = ''
-    REPO_URL="git@github.com:pedorich-n/config.nix.git"
-    FLAKE_PATH="$HOME/.config.nix"
+    REPO_URL="git@github.com:pedorich-n/home-manager-config.git"
+    FLAKE_PATH="$HOME/home-manager-config"
 
     config_name=''${1:-${configName}}
 
