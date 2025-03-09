@@ -8,15 +8,16 @@ in
   home.username = "mykytapedorich";
 
   custom = {
+    aliases.hms.configName = "linuxWork";
     dotfiles.enable = true;
     runtimes = {
       enable = true;
       java = [ pkgs.jdk11 pkgs.jdk8 ];
     };
+
     programs = {
       flameshot.enable = true;
       gnome.enable = true;
-      nh.configName = "linuxWork";
       rust.enable = true;
       scala.enable = true;
       jetbrains = {

@@ -11,19 +11,13 @@ in
 
   home = {
     homeDirectory = lib.mkDefault home;
-
-    shellAliases = {
-      hm = "home-manager";
-      # hms = ''home-manager switch --flake "${hmConfigLocation}#${cfgCustom.name}"'';
-      # hmn = ''home-manager --flake "${hmConfigLocation}#${cfgCustom.name}" news'';
-    };
   };
 
-  custom.programs = {
-    nh = {
+  custom = {
+    aliases = {
       enable = lib.mkDefault true;
-      flakeRef = lib.mkDefault hmConfigLocation;
-      aliases.homeManager = lib.mkDefault true;
+      hm.enable = lib.mkDefault true;
+      hms.enable = lib.mkDefault true;
     };
   };
 
@@ -34,6 +28,10 @@ in
       runOnSwitch = lib.mkDefault false;
     };
 
+    nh = {
+      enable = lib.mkDefault true;
+      flake = hmConfigLocation;
+    };
 
     zsh = {
       dirHashes = {

@@ -8,10 +8,10 @@ in
   home.username = "pedorich_n";
 
   custom = {
+    aliases.hms.configName = "wslPersonal";
     runtimes.enable = true;
     programs = {
       gpg.enable = true;
-      nh.configName = "wslPersonal";
       python.enable = true;
       rust.enable = true;
       scala.enable = true;
