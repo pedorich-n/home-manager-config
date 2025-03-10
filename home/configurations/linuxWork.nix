@@ -1,6 +1,7 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
   gpgKey = "E3763F185F33AEA7";
+  hmConfigLocation = "${config.home.homeDirectory}/home-manager-config";
 in
 {
   imports = [ ./commonStandalone.nix ];
@@ -55,8 +56,15 @@ in
     };
 
     keychain.keys = [ "risk_engineering" gpgKey ];
+    nh.flake = hmConfigLocation;
 
     zellij.settings.copy_command = "xclip -selection clipboard";
+
+    zsh = {
+      dirHashes = {
+        hmc = hmConfigLocation;
+      };
+    };
   };
 
   home = {
@@ -76,7 +84,6 @@ in
       postman
       saml2aws # AWS SSO
       shfmt # Shell formatter
-      slack # Messaging
       sublime4 # Text editor
       terraform # Infrastructure as code
       xclip # CLI Clipboard manager
