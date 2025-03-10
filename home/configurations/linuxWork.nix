@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  gpgKey = "D98000B630763B21";
+  gpgKey = "E3763F185F33AEA7";
 in
 {
   imports = [ ./commonStandalone.nix ];
@@ -54,7 +54,7 @@ in
       };
     };
 
-    keychain.keys = [ "work/paidy" gpgKey ];
+    keychain.keys = [ "risk_engineering" gpgKey ];
 
     zellij.settings.copy_command = "xclip -selection clipboard";
   };
@@ -73,6 +73,7 @@ in
       nerd-fonts.fira-code # IDE & terminal font
       obsidian # Note-taking
       pinentry # GnuPG’s interface to passphrase input
+      postman
       saml2aws # AWS SSO
       shfmt # Shell formatter
       slack # Messaging

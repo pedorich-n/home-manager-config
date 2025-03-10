@@ -30,12 +30,12 @@ in
 
     nh = {
       enable = lib.mkDefault true;
-      flake = hmConfigLocation;
+      flake = lib.mkDefault hmConfigLocation;
     };
 
     zsh = {
       dirHashes = {
-        "hmc" = hmConfigLocation;
+        hmc = lib.mkDefault hmConfigLocation;
       };
     };
   };
