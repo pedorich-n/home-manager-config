@@ -41,6 +41,9 @@ in
 
       package = lib.mkPackageOption pkgs "ondir";
 
+      enableBashIntegration = lib.hm.shell.mkBashIntegrationOption { inherit config; };
+      enableZshIntegration = lib.hm.shell.mkZshIntegrationOption { inherit config; };
+
       config = lib.mkOption {
         type = lib.types.attrsOf (lib.types.listOf entrySubmodule);
         default = { };
