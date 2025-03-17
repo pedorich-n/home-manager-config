@@ -9,18 +9,7 @@ let
       };
 
       script = lib.mkOption {
-        type = lib.types.submodule {
-          options = {
-            text = lib.mkOption {
-              default = null;
-              type = lib.types.nullOr lib.types.lines;
-            };
-
-            source = lib.mkOption {
-              type = lib.types.path;
-            };
-          };
-        };
+        type = lib.types.lines;
       };
     };
   };
@@ -29,17 +18,19 @@ let
     let
       generateEntry = path: entry: ''
         ${entry.type} ${path}
-        \t${entry.script.text or entry.script.source}
+        ${entry.script}
       '';
+
+      generatedEntryList = lib.flatten (lib.mapAttrsToList (path: entries: lib.map (entry: generateEntry path entry) entries) cfg.config);
     in
-    lib.mapAttrsToList (path: entries: "") cfg.config;
+    lib.concatLines generatedEntryList;
 in
 {
   options = {
     custom.programs.ondir = {
       enable = lib.mkEnableOption "Enable ondir";
 
-      package = lib.mkPackageOption pkgs "ondir";
+      package = lib.mkPackageOption pkgs "ondir" { };
 
       enableBashIntegration = lib.hm.shell.mkBashIntegrationOption { inherit config; };
       enableZshIntegration = lib.hm.shell.mkZshIntegrationOption { inherit config; };
@@ -55,8 +46,35 @@ in
     home = {
       packages = [ cfg.package ];
 
-      file.".ondirrc".source = "";
+      file = lib.mkIf (cfg.config != { }) {
+        ".ondirrc".text = generatedSettings;
+      };
     };
 
+    # programs = {
+    #   bash.initExtra = lib.optionalString cfg.enableBashIntegration ''
+    #     cd() {
+    #     	builtin cd "$@" && eval "`ondir \"$OLDPWD\" \"$PWD\"`"
+    #     }
+
+    #     pushd() {
+    #     	builtin pushd "$@" && eval "`ondir \"$OLDPWD\" \"$PWD\"`"
+    #     }
+
+    #     popd() {
+    #     	builtin popd "$@" && eval "`ondir \"$OLDPWD\" \"$PWD\"`"
+    #     }
+
+    #     # Run ondir on login
+    #     eval "`ondir /`"
+    #   '';
+
+    #   zsh.initExtra = lib.optionalString cfg.enableZshIntegration ''
+    #     eval_ondir() {
+    #        eval "`ondir \"$OLDPWD\" \"$PWD\"`"
+    #     }
+    #     chpwd_functions=(eval_ondir $chpwd_functions)
+    #   '';
+    # };
   };
 }

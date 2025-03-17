@@ -32,6 +32,18 @@ in
           pandas
         ];
       };
+
+      ondir = {
+        enable = true;
+        config = {
+          "test" = [{
+            type = "enter";
+            script = ''
+              echo 'Entering test'
+            '';
+          }];
+        };
+      };
     };
   };
 
