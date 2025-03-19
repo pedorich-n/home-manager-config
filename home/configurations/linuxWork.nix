@@ -23,6 +23,7 @@ in
       scala.enable = true;
       jetbrains = {
         idea.enable = true;
+        datagrip.enable = true;
       };
       gpg.enable = true;
       python = {
@@ -74,14 +75,15 @@ in
 
     packages = with pkgs; [
       ast-grep # A fast and polyglot tool for code searching, linting, rewriting at large scale
+      awscli2 # AWS CLI
+      aws-sso-cli # AWS SSO Manager
       caffeine-ng # Disable screensaver
-      circleci-cli # CI/CD
       cqlsh # Cassandra
       docker-compose # Docker
       nerd-fonts.fira-code # IDE & terminal font
       obsidian # Note-taking
       pinentry # GnuPG’s interface to passphrase input
-      postman
+      postman # Client for RESTful APIs
       saml2aws # AWS SSO
       shfmt # Shell formatter
       sublime4 # Text editor
