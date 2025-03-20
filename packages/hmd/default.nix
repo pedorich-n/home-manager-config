@@ -1,13 +1,13 @@
 { writeShellApplication
-, fzf
 , ripgrep
+, gum
 , nvd
 , ...
 }:
 writeShellApplication {
   name = "hmd";
   runtimeInputs = [
-    fzf
+    gum
     ripgrep
     nvd
   ];
@@ -32,19 +32,30 @@ writeShellApplication {
       exit 0
     fi
 
-    if [[ "''${1:-}" == "--auto" ]]; then
-      selections=("''${generations[0]}" "''${generations[1]}")
-    else
-      for prompt in "first" "second"; do
-          selections+=("$(printf "%s\n" "''${generations[@]}" | fzf --header="Select $prompt generation" --border --height 10 --cycle --no-multi)")
-      done
-    fi
-
     make_profile_path() {
       printf "%s/home-manager-%d-link\n" "$HM_PROFILES_DIR" "$1"
     }
 
-    # shellcheck disable=SC2086
-    nvd diff "$(make_profile_path ''${selections[0]})" "$(make_profile_path ''${selections[1]})"
+    if [[ "''${1:-}" == "--auto" ]]; then
+      # shellcheck disable=SC2086
+      selections=("$(make_profile_path ''${generations[0]})" "$(make_profile_path ''${generations[1]})")
+    else
+      declare -a choices=()
+      for generation in "''${generations[@]}"; do
+        # shellcheck disable=SC2086
+        path="$(make_profile_path $generation)"
+        createdAtEpoch=$(stat -c "%Z" "$path")
+        createdAtHuman=$(date "+%F %T" -d "@$createdAtEpoch")
+        choice=$(printf "%d: %s|%s" "$generation" "$createdAtHuman" "$path")
+        choices+=("$choice")
+      done
+
+      for prompt in "first" "second"; do
+        selected=$(printf "%s\n" "''${choices[@]}" | gum choose --header="Select $prompt generation" --label-delimiter="|" --height=10 --limit=1)
+        selections+=("$selected")
+      done
+    fi
+
+    nvd diff "''${selections[0]}" "''${selections[1]}"
   '';
 }
