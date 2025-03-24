@@ -23,7 +23,6 @@ in
       scala.enable = true;
       jetbrains = {
         idea.enable = true;
-        datagrip.enable = true;
       };
       gpg.enable = true;
       python = {
