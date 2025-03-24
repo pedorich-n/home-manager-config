@@ -7,4 +7,6 @@ inputs: _: prev:
   cqlsh = prev.callPackage ../packages/cqlsh { };
 
   wsl-1password-cli = prev.callPackage ../packages/wsl-1password-cli { };
+
+  hmd = prev.callPackage ../packages/hmd { };
 }

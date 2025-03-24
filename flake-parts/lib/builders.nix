@@ -10,7 +10,6 @@ let
           inherit pkgs;
           modules = [
             flake.homeModules.sharedModules
-            inputs.home-manager-diff.hmModules.default
             "${flake}/home/configurations/${name}.nix"
           ];
           extraSpecialArgs = {
