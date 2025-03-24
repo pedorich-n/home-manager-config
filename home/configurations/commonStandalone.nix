@@ -19,15 +19,17 @@ in
       hm.enable = lib.mkDefault true;
       hms.enable = lib.mkDefault true;
     };
+
+    programs = {
+      # HomeManager Diff tool, built using NVM (Nix Version Diff)
+      hmd = {
+        enable = lib.mkDefault true;
+        runOnSwitch = lib.mkDefault false;
+      };
+    };
   };
 
   programs = {
-    # HomeManager Diff tool, built using NVM (Nix Version Diff)
-    hmd = {
-      enable = lib.mkDefault true;
-      runOnSwitch = lib.mkDefault false;
-    };
-
     nh = {
       enable = lib.mkDefault true;
       flake = lib.mkDefault hmConfigLocation;

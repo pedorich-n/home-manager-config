@@ -40,16 +40,6 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-
-    home-manager-diff = {
-      url = "github:pedorich-n/home-manager-diff";
-      inputs = {
-        systems.follows = "systems";
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-        flake-utils.follows = "flake-utils";
-      };
-    };
   };
 
   outputs = inputs@{ flake-parts, systems, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ lib, ... }: {
