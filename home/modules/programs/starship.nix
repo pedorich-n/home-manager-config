@@ -41,6 +41,11 @@
         truncate_to_repo = false;
       };
 
+      git_branch = {
+        disabled = false;
+        truncation_length = 15;
+      };
+
       git_commit = {
         disabled = false;
         only_detached = true;
