@@ -23,6 +23,10 @@
       ll = "ls --all --classify --human-readable --color --group-directories-first -l";
     };
 
+    shell = {
+      enableBashIntegration = lib.mkDefault true;
+      enableZshIntegration = lib.mkDefault true;
+    };
   };
 
   programs = {

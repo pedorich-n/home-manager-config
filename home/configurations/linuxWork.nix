@@ -39,6 +39,7 @@ in
 
   programs = {
     direnv.enable = true;
+    mise.enable = true;
     vscode.enable = true;
     java = {
       enable = true;
