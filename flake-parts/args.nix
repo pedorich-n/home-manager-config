@@ -24,10 +24,6 @@ in
           allowInsecurePredicate = pkg: builtins.any (prefix: lib.hasPrefix prefix (getName pkg)) allowedInsecurePackages;
         };
       };
-
-      pkgs-nix = import inputs.nixpkgs-nix {
-        inherit system;
-      };
     };
   };
 }

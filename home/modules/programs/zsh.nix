@@ -24,23 +24,24 @@ in
       share = lib.mkDefault true; # Share history between all sessions.
     };
 
-    initExtraBeforeCompInit = lib.concatLines omzLibs;
+    initContent = lib.mkMerge [
+      (lib.mkOrder 850 (lib.concatLines omzLibs))
+      (lib.mkOrder 1200 ''
+        set +o histexpand # Disable history expantion (annying exclamantion mark behaviour)
 
-    initExtra = ''
-      set +o histexpand # Disable history expantion (annying exclamantion mark behaviour)
+        zstyle ':completion:*' menu yes select _complete _ignored _approximate _files
 
-      zstyle ':completion:*' menu yes select _complete _ignored _approximate _files
+        setopt MENU_COMPLETE # On ambiguous completion insert first match and show menu
+        setopt HIST_REDUCE_BLANKS # Remove superfluous blanks from history
+        unsetopt EXTENDED_GLOB # Don't treat the '#', '~' and '^' characters as part of patterns for filename generation, etc.
 
-      setopt MENU_COMPLETE # On ambiguous completion insert first match and show menu
-      setopt HIST_REDUCE_BLANKS # Remove superfluous blanks from history
-      unsetopt EXTENDED_GLOB # Don't treat the '#', '~' and '^' characters as part of patterns for filename generation, etc.
+        include () {
+            [[ -f "$1" ]] && source "$1"
+        }
 
-      include () {
-          [[ -f "$1" ]] && source "$1"
-      }
-
-      include "${config.home.homeDirectory}/.zshrc_extra";
-    '';
+        include "${config.home.homeDirectory}/.zshrc_extra";
+      '')
+    ];
 
     plugins = omzPlugins;
   };

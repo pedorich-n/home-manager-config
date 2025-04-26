@@ -112,22 +112,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-nix": {
-      "locked": {
-        "lastModified": 1730735745,
-        "narHash": "sha256-NjoafRvrkYXurHxzs2kcoQ6HBkO/9fV/rmjRy9nkLd0=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "a61cd8ff1b45f760bdf142914d517e0ccd31ffed",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "a61cd8ff1b45f760bdf142914d517e0ccd31ffed",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -135,7 +119,6 @@
         "home-manager": "home-manager",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-nix": "nixpkgs-nix",
         "rust-overlay": "rust-overlay",
         "systems": "systems",
         "tomorrow-theme-source": "tomorrow-theme-source"

@@ -5,7 +5,7 @@ let
     , name
     }:
     {
-      ${name} = withSystem system ({ pkgs, pkgs-nix, ... }:
+      ${name} = withSystem system ({ pkgs, ... }:
         inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
@@ -14,7 +14,7 @@ let
           ];
           extraSpecialArgs = {
             inherit (inputs) nixpkgs;
-            inherit flake pkgs-nix;
+            inherit flake;
           };
         });
     };
