@@ -17,7 +17,6 @@ in
         overlays = [
           inputs.nix-vscode-extensions.overlays.default
           inputs.rust-overlay.overlays.default
-          inputs.nixd-upstream.overlays.default
           self.overlays.default
         ];
         config = {

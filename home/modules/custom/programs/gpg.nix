@@ -24,7 +24,7 @@ in
       enable = lib.mkDefault true;
       enableBashIntegration = lib.mkDefault true;
       enableZshIntegration = lib.mkDefault true;
-      pinentryPackage = lib.mkDefault pkgs.pinentry-curses;
+      pinentry.package = lib.mkDefault pkgs.pinentry-curses;
 
       # 7 days
       defaultCacheTtl = lib.mkDefault 604800;
