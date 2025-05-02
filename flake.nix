@@ -39,15 +39,6 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-
-    nixd-upstream = {
-      url = "github:nix-community/nixd";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-        treefmt-nix.follows = "";
-      };
-    };
   };
 
   outputs = inputs@{ flake-parts, systems, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ lib, ... }: {

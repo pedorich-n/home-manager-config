@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   gpgKey = "ADC7FB37D4DF4CE2";
 in
@@ -33,7 +33,7 @@ in
 
     # See https://1password.community/discussion/comment/673567/#Comment_673567
     #LINK - packages/wsl-1password-cli/default.nix
-    zsh.initExtra = ''
+    zsh.initExtra = lib.mkOrder 1200 ''
       if command -v op &>/dev/null; then
        eval "$(op completion zsh 2>/dev/null || true)"
        compdef _op op
