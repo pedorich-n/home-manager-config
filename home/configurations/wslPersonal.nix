@@ -43,7 +43,6 @@ in
 
   home.packages = with pkgs; [
     pinentry-curses
-    terraform
     wslu
     wsl-1password-cli
   ];
