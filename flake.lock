@@ -137,6 +137,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-cassandra": {
+      "locked": {
+        "lastModified": 1737545071,
+        "narHash": "sha256-j4HeaLw1LZxkCvuOxdO1xTnPYLSOQuzOjGEuCK80X2w=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "21808d22b1cda1898b71cf1a1beb524a97add2c4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "21808d22b1cda1898b71cf1a1beb524a97add2c4",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1743296961,
@@ -160,6 +176,7 @@
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixd-upstream": "nixd-upstream",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-cassandra": "nixpkgs-cassandra",
         "rust-overlay": "rust-overlay",
         "systems": "systems",
         "tomorrow-theme-source": "tomorrow-theme-source"
