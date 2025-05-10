@@ -33,7 +33,7 @@ in
 
     # See https://1password.community/discussion/comment/673567/#Comment_673567
     #LINK - packages/wsl-1password-cli/default.nix
-    zsh.initExtra = lib.mkOrder 1200 ''
+    zsh.initContent = lib.mkOrder 1200 ''
       if command -v op &>/dev/null; then
        eval "$(op completion zsh 2>/dev/null || true)"
        compdef _op op
@@ -45,5 +45,7 @@ in
     pinentry-curses
     wslu
     wsl-1password-cli
+    opentofu
+    opentofu-ls
   ];
 }
