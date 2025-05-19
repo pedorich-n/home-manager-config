@@ -15,7 +15,7 @@ in
   config = lib.mkIf cfg.enable {
     services = {
       gnome-keyring.enable = true;
-      gpg-agent.pinentryPackage = pkgs.pinentry-gnome3;
+      gpg-agent.pinentry.package = pkgs.pinentry-gnome3;
     };
 
     dconf.settings = with lib.hm.gvariant; {

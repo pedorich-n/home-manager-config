@@ -22,7 +22,7 @@ in
     let
       plugins = [
         "164" # IdeaVim https://plugins.jetbrains.com/plugin/164-ideavim
-        "17718" # Github Copilot https://plugins.jetbrains.com/plugin/17718-github-copilot
+        # "17718" # Github Copilot https://plugins.jetbrains.com/plugin/17718-github-copilot
       ];
 
       withDefaultPlugins = pkg: pkgs.jetbrains.plugins.addPlugins pkg plugins;
