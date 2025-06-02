@@ -9,12 +9,12 @@ in
 
   custom = {
     aliases.hms.configName = "wslPersonal";
-    runtimes.enable = true;
     programs = {
       gpg.enable = true;
-      python.enable = true;
-      rust.enable = true;
-      scala.enable = true;
+      python = {
+        enable = true;
+        poetry.enable = true;
+      };
     };
   };
 

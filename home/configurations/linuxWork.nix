@@ -31,6 +31,8 @@ in
           requests
           pandas
         ];
+
+        poetry.enable = true;
       };
     };
   };

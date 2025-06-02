@@ -4,19 +4,19 @@ let
 in
 {
   ###### interface
-  options = with lib; {
+  options = {
     custom.programs.python = {
-      enable = mkEnableOption "Python";
+      enable = lib.mkEnableOption "Python";
 
-      package = mkPackageOption pkgs "python3" { };
+      package = lib.mkPackageOption pkgs "python3" { };
 
-      extraPackages = mkOption {
-        type = types.functionTo (types.listOf types.package);
+      extraPackages = lib.mkOption {
+        type = lib.types.functionTo (lib.types.listOf lib.types.package);
         default = _: [ ];
-        defaultText = literalExpression ''
+        defaultText = lib.literalExpression ''
           python3Packages: with python3Packages; [];
         '';
-        example = literalExpression ''
+        example = lib.literalExpression ''
           python3Packages: with python3Packages; [
             requests
           ];
@@ -24,36 +24,59 @@ in
         description = "Extra Python packages to install";
       };
 
-      resultEnv = mkOption {
-        type = types.package;
+      poetry = {
+        enable = lib.mkEnableOption "Poetry";
+
+        package = lib.mkPackageOption pkgs "poetry" { };
+
+        plugins = lib.mkOption {
+          type = lib.types.functionTo (lib.types.listOf lib.types.package);
+          default = _: [ ];
+        };
+
+        resultPackage = lib.mkOption {
+          type = lib.types.package;
+          readOnly = true;
+          internal = true;
+          default = cfg.poetry.package.withPlugins (ps: (cfg.poetry.plugins ps));
+        };
+      };
+
+      resultEnv = lib.mkOption {
+        type = lib.types.package;
         readOnly = true;
         internal = true;
-        default = cfg.package.withPackages (ps: with ps; [
-          mypy # static type checker
-          pip # package manager
-          setuptools # utilities
-          virtualenv # virtual environment manager
-          isort # import sorter
-        ] ++ (cfg.extraPackages ps));
+        default = cfg.package.withPackages (ps: (cfg.extraPackages ps));
       };
     };
   };
 
 
   ###### implementation
-  config =
-    let
-      poetryPackage = pkgs.poetry.withPlugins (ps: with ps; [
-        poetry-plugin-up # Poetry plugin to simplify package updates
-        poetry-plugin-export # Poetry plugin to export the dependencies to various formats
-      ]);
+  config = lib.mkIf cfg.enable {
 
-    in
-    lib.mkIf cfg.enable {
-      home.packages = [
-        cfg.resultEnv # python with packages
-        poetryPackage # package manager with plugins
-        pkgs.ruff # linter & formatter
+    # Default config
+    # TODO: move to a separate file?
+    custom.programs.python = {
+      extraPackages = python3Packages: with python3Packages; [
+        mypy # static type checker
+        pip # package manager
+        setuptools # utilities
+        virtualenv # virtual environment manager
+        isort # import sorter
+        ruff # linter & formatter
       ];
+
+      poetry = lib.mkIf cfg.poetry.enable {
+        plugins = poetryPlugins: with poetryPlugins; [
+          poetry-plugin-up # Poetry plugin to simplify package updates
+          poetry-plugin-export # Poetry plugin to export the dependencies to various formats
+        ];
+      };
     };
+
+    home.packages = [
+      cfg.resultEnv
+    ] ++ lib.optional cfg.poetry.enable cfg.poetry.resultPackage;
+  };
 }
