@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 let
   cfg = config.custom.programs.gnome;
 in
@@ -13,11 +13,6 @@ in
 
   ###### implementation
   config = lib.mkIf cfg.enable {
-    services = {
-      gnome-keyring.enable = true;
-      gpg-agent.pinentry.package = pkgs.pinentry-gnome3;
-    };
-
     dconf.settings = with lib.hm.gvariant; {
       "org/gnome/mutter" = {
         dynamic-workspaces = false;
@@ -51,28 +46,14 @@ in
       "org/gnome/settings-daemon/plugins/media-keys" = {
         custom-keybindings = [
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
         ];
         screenshot = [ ];
       };
 
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-        binding = "<Alt>space";
-        command = "ulauncher-toggle";
-        name = "Ulauncher";
-      };
-
-      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
         binding = "Print";
         command = "flameshot gui";
         name = "Flameshot";
-      };
-
-      "org/gnome/shell/world-clocks" = {
-        # It's very hard (if possible at all) to express this structure using HomeManager's Dconf types so using this trick to set the value to a literal
-        locations = mkString "" // {
-          __toString = _: "[<(uint32 2, <('Kyiv', 'UKKK', true, [(0.87964594300514198, 0.53348898051069749)], [(0.88022771360470919, 0.53261631588470038)])>)>, <(uint32 2, <('Tokyo', 'RJTI', true, [(0.62191898430954862, 2.4408429589140699)], [(0.62282074357417661, 2.4391218722853854)])>)>]";
-        };
       };
 
       "org/gnome/shell/extensions/date-menu-formatter" = {
@@ -90,25 +71,6 @@ in
 
       "org/gnome/shell/extensions/workspace-switcher-manager" = {
         "reverse-popup-orientation" = true;
-      };
-
-      "org/gnome/shell/extensions/unite" = {
-        app-menu-ellipsize-mode = "end";
-        enable-titlebar-actions = true;
-        extend-left-box = false;
-        greyscale-tray-icons = false;
-        hide-activities-button = "auto";
-        hide-aggregate-menu-arrow = false;
-        hide-app-menu-arrow = true;
-        hide-app-menu-icon = false;
-        hide-dropdown-arrows = false;
-        hide-window-titlebars = "maximized";
-        notifications-position = "center";
-        reduce-panel-spacing = false;
-        show-desktop-name = false;
-        show-legacy-tray = false;
-        window-buttons-placement = "last";
-        window-buttons-theme = "yaru";
       };
 
       "org/gnome/terminal/legacy" = {
