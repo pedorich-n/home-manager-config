@@ -53,7 +53,6 @@ in
         wholroyd.jinja
 
         # Behavior
-        ast-grep.ast-grep-vscode
         alefragnani.bookmarks
         cs50.vscode-presentation-mode
         donjayamanne.githistory

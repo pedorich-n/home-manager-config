@@ -76,7 +76,6 @@ in
     };
 
     packages = with pkgs; [
-      ast-grep # A fast and polyglot tool for code searching, linting, rewriting at large scale
       awscli2 # AWS CLI
       aws-sso-cli # AWS SSO Manager
       caffeine-ng # Disable screensaver
@@ -89,7 +88,6 @@ in
       saml2aws # AWS SSO
       shfmt # Shell formatter
       sublime4 # Text editor
-      terraform # Infrastructure as code
       xclip # CLI Clipboard manager
     ];
   };
