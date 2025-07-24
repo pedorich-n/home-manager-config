@@ -57,6 +57,7 @@ in
       };
 
       "org/gnome/shell/extensions/date-menu-formatter" = {
+        fonr-size = 12;
         pattern = "EEE, MMMM dd  kk : mm";
       };
 
