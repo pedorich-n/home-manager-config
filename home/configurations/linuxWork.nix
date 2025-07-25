@@ -17,6 +17,7 @@ in
     };
 
     programs = {
+      aws-sso-cli.enable = true;
       flameshot.enable = true;
       gnome.enable = true;
       rust.enable = true;
@@ -77,7 +78,6 @@ in
 
     packages = with pkgs; [
       awscli2 # AWS CLI
-      aws-sso-cli # AWS SSO Manager
       caffeine-ng # Disable screensaver
       cqlsh # Cassandra
       docker-compose # Docker

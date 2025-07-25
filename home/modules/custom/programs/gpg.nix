@@ -7,7 +7,6 @@ in
   options = with lib; {
     custom.programs.gpg = {
       enable = mkEnableOption "gpg";
-      description = "Enables GPG support and GPG agen service. Mostly neeed to set the settings";
     };
   };
 
