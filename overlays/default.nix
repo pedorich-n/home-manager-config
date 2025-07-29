@@ -11,7 +11,7 @@ inputs: _: prev:
   hmd = prev.callPackage ../packages/hmd { };
 
   # For some reason aws-sso-cli can't build on my due to the checkPhase, so I have to ignore some tests
-  aws-sso-cli = prev.aws-sso-cli.overrideAttrs (old: {
+  aws-sso-cli = prev.aws-sso-cli.overrideAttrs {
     checkFlags =
       let
         skippedTests = [
@@ -24,5 +24,5 @@ inputs: _: prev:
         ];
       in
       [ "-skip=^${builtins.concatStringsSep "$|^" skippedTests}$" ];
-  });
+  };
 }

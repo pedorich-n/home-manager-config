@@ -2,6 +2,8 @@
   description = "Multiple machines config managed by NIX Home-Manageger and Flake";
 
   inputs = {
+    self.submodules = true;
+
     # Global / Meta
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
