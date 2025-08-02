@@ -46,6 +46,6 @@ in
     wslu
     wsl-1password-cli
     opentofu
-    opentofu-ls
+    tofu-ls
   ];
 }

@@ -4,7 +4,7 @@ let
   cfg = config.home;
 
   home = "/home/${cfg.username}";
-  hmConfigLocation = "${cfg.homeDirectory}/.config.nix";
+  hmConfigLocation = "${cfg.homeDirectory}/home-manager-config";
 in
 {
   imports = [ ./common.nix ];
@@ -32,7 +32,7 @@ in
   programs = {
     nh = {
       enable = lib.mkDefault true;
-      flake = lib.mkDefault hmConfigLocation;
+      homeFlake = lib.mkDefault hmConfigLocation;
     };
 
     zsh = {
