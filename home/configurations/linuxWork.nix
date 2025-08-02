@@ -1,7 +1,6 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 let
   gpgKey = "E3763F185F33AEA7";
-  hmConfigLocation = "${config.home.homeDirectory}/home-manager-config";
 in
 {
   imports = [ ./commonStandalone.nix ];
@@ -60,15 +59,8 @@ in
     };
 
     keychain.keys = [ "risk_engineering" gpgKey ];
-    nh.flake = hmConfigLocation;
 
     zellij.settings.copy_command = "xclip -selection clipboard";
-
-    zsh = {
-      dirHashes = {
-        hmc = hmConfigLocation;
-      };
-    };
   };
 
   home = {
