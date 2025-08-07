@@ -7,6 +7,7 @@ let
     nix-tree # Interative NIX depdencey graph
     nixPkg # NIX itself
     nixpkgs-fmt # NIX code formatter
+    nixfmt
   ];
 in
 {
