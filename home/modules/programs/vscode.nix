@@ -1,18 +1,24 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   watcherExclude =
     let
-      toGlobal = input: lib.strings.removeSuffix "/" (if (lib.strings.hasPrefix "**/" input) then input else "**/${input}");
+      toGlobal =
+        input:
+        lib.strings.removeSuffix "/" (if (lib.strings.hasPrefix "**/" input) then input else "**/${input}");
     in
     lib.foldl' (acc: entry: acc // { ${toGlobal entry} = true; }) { } config.custom.misc.globalIgnores;
 
   keymapDisableOpenTabAtIndex =
     let
-      getKeyBingingFor = index:
-        {
-          key = "alt+${index}";
-          command = "-workbench.action.openEditorAtIndex${index}";
-        };
+      getKeyBingingFor = index: {
+        key = "alt+${index}";
+        command = "-workbench.action.openEditorAtIndex${index}";
+      };
     in
     builtins.map (index: getKeyBingingFor (builtins.toString index)) (lib.lists.range 1 9);
 in
@@ -22,51 +28,53 @@ in
 
     profiles.default = {
 
-      extensions = (with pkgs.vscode-extensions; [
-        # Using those from nixpkgs, because they require extra setup which is not provivided in vscode-marketplace
-        github.copilot
-        jebbs.plantuml
-        hashicorp.terraform
-      ]) ++ (with pkgs.vscode-marketplace; [
-        # Themes
-        evgeniypetukhov.dark-low-contrast
-        dustinsanders.an-old-hope-theme-vscode
-        pawelgrzybek.gatito-theme
-        space-ocean-kit-refined.space-ocean-kit-refined
+      extensions =
+        (with pkgs.vscode-extensions; [
+          # Using those from nixpkgs, because they require extra setup which is not provivided in vscode-marketplace
+          github.copilot
+          jebbs.plantuml
+          hashicorp.terraform
+        ])
+        ++ (with pkgs.vscode-marketplace; [
+          # Themes
+          evgeniypetukhov.dark-low-contrast
+          dustinsanders.an-old-hope-theme-vscode
+          pawelgrzybek.gatito-theme
+          space-ocean-kit-refined.space-ocean-kit-refined
 
-        # Languages
-        arrterian.nix-env-selector
-        charliermarsh.ruff
-        jnoortheen.nix-ide
-        kdl-org.kdl
-        mads-hartmann.bash-ide-vscode
-        mkhl.shfmt
-        rust-lang.rust-analyzer
-        scala-lang.scala
-        scalameta.metals
-        skellock.just
-        tamasfe.even-better-toml
-        redhat.vscode-yaml
-        ms-azuretools.vscode-docker
-        ms-python.python
-        ms-python.vscode-pylance
-        wholroyd.jinja
+          # Languages
+          arrterian.nix-env-selector
+          charliermarsh.ruff
+          jnoortheen.nix-ide
+          kdl-org.kdl
+          mads-hartmann.bash-ide-vscode
+          mkhl.shfmt
+          rust-lang.rust-analyzer
+          scala-lang.scala
+          scalameta.metals
+          skellock.just
+          tamasfe.even-better-toml
+          redhat.vscode-yaml
+          ms-azuretools.vscode-docker
+          ms-python.python
+          ms-python.vscode-pylance
+          wholroyd.jinja
 
-        # Behavior
-        alefragnani.bookmarks
-        cs50.vscode-presentation-mode
-        donjayamanne.githistory
-        fabiospampinato.vscode-open-in-github
-        gruntfuggly.todo-tree
-        k--kato.intellij-idea-keybindings
-        natqe.reload
-        shd101wyy.markdown-preview-enhanced
-        vscodevim.vim
-        wmaurer.vscode-jumpy
-        editorconfig.editorconfig
-        esbenp.prettier-vscode
-        exodiusstudios.comment-anchors
-      ]);
+          # Behavior
+          alefragnani.bookmarks
+          cs50.vscode-presentation-mode
+          donjayamanne.githistory
+          fabiospampinato.vscode-open-in-github
+          gruntfuggly.todo-tree
+          k--kato.intellij-idea-keybindings
+          natqe.reload
+          shd101wyy.markdown-preview-enhanced
+          vscodevim.vim
+          wmaurer.vscode-jumpy
+          editorconfig.editorconfig
+          esbenp.prettier-vscode
+          exodiusstudios.comment-anchors
+        ]);
 
       keybindings = [
         {
@@ -123,7 +131,8 @@ in
           command = "workbench.action.toggleSidebarVisibility";
           when = "!editorFocus";
         }
-      ] ++ keymapDisableOpenTabAtIndex;
+      ]
+      ++ keymapDisableOpenTabAtIndex;
 
       userSettings =
         let
@@ -197,7 +206,8 @@ in
             "[python]" = {
               "editor.defaultFormatter" = "charliermarsh.ruff";
             };
-          } // (lib.optionalAttrs config.custom.programs.python.enable {
+          }
+          // (lib.optionalAttrs config.custom.programs.python.enable {
             "python.defaultInterpreterPath" = lib.getExe config.custom.programs.python.resultEnv;
           });
 
@@ -222,11 +232,17 @@ in
                 "commands" = [ "redo" ];
               }
               {
-                "before" = [ "<Space>" "s" ];
+                "before" = [
+                  "<Space>"
+                  "s"
+                ];
                 "commands" = [ "workbench.action.gotoSymbol" ];
               }
               {
-                "before" = [ "<Space>" "r" ];
+                "before" = [
+                  "<Space>"
+                  "r"
+                ];
                 "commands" = [ "editor.action.rename" ];
               }
             ];
@@ -259,17 +275,17 @@ in
           };
 
         in
-        editorSettings //
-        filesSettings //
-        nixSettings //
-        presentationModeSettings //
-        pythonSettings //
-        scalaSettings //
-        tomlSettings //
-        vimSettings //
-        vscodeMiscSettings //
-        yamlSettings //
-        jsonSettings;
+        editorSettings
+        // filesSettings
+        // nixSettings
+        // presentationModeSettings
+        // pythonSettings
+        // scalaSettings
+        // tomlSettings
+        // vimSettings
+        // vscodeMiscSettings
+        // yamlSettings
+        // jsonSettings;
     };
   };
 

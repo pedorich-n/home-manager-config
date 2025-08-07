@@ -1,4 +1,9 @@
-{ nixpkgs, pkgs, lib, ... }:
+{
+  nixpkgs,
+  pkgs,
+  lib,
+  ...
+}:
 let
   nixPkg = pkgs.nix;
   nixApps = with pkgs; [
@@ -24,15 +29,20 @@ in
       "nixpkgs=${pkgs.path}"
     ];
 
-    settings = lib.mkDefault (lib.mkMerge [
-      {
-        experimental-features = [ "nix-command" "flakes" ];
-        log-lines = 50;
-      }
-      (lib.mkIf (lib.versionAtLeast nixPkg.version "2.26") {
-        # See https://nix.dev/manual/nix/2.26/command-ref/conf-file.html#conf-allow-dirty-locks
-        allow-dirty-locks = true;
-      })
-    ]);
+    settings = lib.mkDefault (
+      lib.mkMerge [
+        {
+          experimental-features = [
+            "nix-command"
+            "flakes"
+          ];
+          log-lines = 50;
+        }
+        (lib.mkIf (lib.versionAtLeast nixPkg.version "2.26") {
+          # See https://nix.dev/manual/nix/2.26/command-ref/conf-file.html#conf-allow-dirty-locks
+          allow-dirty-locks = true;
+        })
+      ]
+    );
   };
 }

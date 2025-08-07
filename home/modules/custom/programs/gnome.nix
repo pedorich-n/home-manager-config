@@ -10,7 +10,6 @@ in
     };
   };
 
-
   ###### implementation
   config = lib.mkIf cfg.enable {
     dconf.settings = with lib.hm.gvariant; {
@@ -29,18 +28,34 @@ in
       };
 
       "org/gnome/desktop/input-sources" = {
-        sources = [ (mkTuple [ "xkb" "us" ]) (mkTuple [ "xkb" "ru" ]) ];
+        sources = [
+          (mkTuple [
+            "xkb"
+            "us"
+          ])
+          (mkTuple [
+            "xkb"
+            "ru"
+          ])
+        ];
       };
 
       "org/gnome/desktop/wm/keybindings" = {
-        switch-input-source = [ "<Super>space" "XF86Keyboard" ];
+        switch-input-source = [
+          "<Super>space"
+          "XF86Keyboard"
+        ];
         switch-to-workspace-down = [ "<Control><Alt>Right" ];
         switch-to-workspace-up = [ "<Control><Alt>Left" ];
       };
 
       "org/gnome/desktop/wm/preferences" = {
         num-workspaces = 3;
-        workspace-names = [ "Main" "IDE" "Terminal" ];
+        workspace-names = [
+          "Main"
+          "IDE"
+          "Terminal"
+        ];
       };
 
       "org/gnome/settings-daemon/plugins/media-keys" = {
@@ -85,7 +100,6 @@ in
         next-tab = "<Alt>braceright";
         prev-tab = "<Alt>braceleft";
       };
-
 
       "org/gnome/terminal/legacy/profiles:" = {
         default = "b1dcc9dd-5262-4d8d-a863-c897e6d979b9";

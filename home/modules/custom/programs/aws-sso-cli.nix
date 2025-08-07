@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.custom.programs.aws-sso-cli;
 in
@@ -15,7 +20,6 @@ in
     };
   };
 
-
   config = lib.mkIf cfg.enable {
     home.packages = [ cfg.package ];
 
@@ -28,7 +32,6 @@ in
         eval "$(${lib.getExe cfg.package} setup completions --source --shell=zsh)"
       '';
     };
-
 
   };
 

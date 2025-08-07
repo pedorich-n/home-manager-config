@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.custom.programs.rust;
 in
@@ -9,7 +14,6 @@ in
       enable = mkEnableOption "Rust";
     };
   };
-
 
   ###### implementation
   config = lib.mkIf cfg.enable {

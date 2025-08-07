@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.custom.programs.python;
 in
@@ -51,32 +56,34 @@ in
     };
   };
 
-
   ###### implementation
   config = lib.mkIf cfg.enable {
 
     # Default config
     # TODO: move to a separate file?
     custom.programs.python = {
-      extraPackages = python3Packages: with python3Packages; [
-        mypy # static type checker
-        pip # package manager
-        setuptools # utilities
-        virtualenv # virtual environment manager
-        isort # import sorter
-        ruff # linter & formatter
-      ];
+      extraPackages =
+        python3Packages: with python3Packages; [
+          mypy # static type checker
+          pip # package manager
+          setuptools # utilities
+          virtualenv # virtual environment manager
+          isort # import sorter
+          ruff # linter & formatter
+        ];
 
       poetry = lib.mkIf cfg.poetry.enable {
-        plugins = poetryPlugins: with poetryPlugins; [
-          poetry-plugin-up # Poetry plugin to simplify package updates
-          poetry-plugin-export # Poetry plugin to export the dependencies to various formats
-        ];
+        plugins =
+          poetryPlugins: with poetryPlugins; [
+            poetry-plugin-up # Poetry plugin to simplify package updates
+            poetry-plugin-export # Poetry plugin to export the dependencies to various formats
+          ];
       };
     };
 
     home.packages = [
       cfg.resultEnv
-    ] ++ lib.optional cfg.poetry.enable cfg.poetry.resultPackage;
+    ]
+    ++ lib.optional cfg.poetry.enable cfg.poetry.resultPackage;
   };
 }

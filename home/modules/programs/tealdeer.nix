@@ -1,4 +1,5 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
   programs.tealdeer = {
     settings = lib.mkDefault {
       updates = {

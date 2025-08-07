@@ -1,11 +1,18 @@
-{ withSystem, flake, inputs, ... }:
+{
+  withSystem,
+  flake,
+  inputs,
+  ...
+}:
 let
   mkHomeConfiguration =
-    { system
-    , name
+    {
+      system,
+      name,
     }:
     {
-      ${name} = withSystem system ({ pkgs, ... }:
+      ${name} = withSystem system (
+        { pkgs, ... }:
         inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
@@ -16,7 +23,8 @@ let
             inherit (inputs) nixpkgs;
             inherit flake;
           };
-        });
+        }
+      );
     };
 in
 {

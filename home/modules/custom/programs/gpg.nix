@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.custom.programs.gpg;
 in
@@ -9,7 +14,6 @@ in
       enable = mkEnableOption "gpg";
     };
   };
-
 
   ###### implementation
   config = lib.mkIf cfg.enable {

@@ -1,11 +1,23 @@
-{ flake, config, lib, ... }:
+{
+  flake,
+  config,
+  lib,
+  ...
+}:
 let
   cfg = config.custom.dotfiles;
 
   root = if (lib.hasSuffix "/" cfg.root) then cfg.root else "${cfg.root}/";
   toRelativePath = path: lib.strings.removePrefix root (lib.strings.unsafeDiscardStringContext path);
   allDotiles = lib.filesystem.listFilesRecursive cfg.root;
-  mappedDotfiles = builtins.listToAttrs (builtins.map (file: { name = toRelativePath file; value = { source = file; }; }) allDotiles);
+  mappedDotfiles = builtins.listToAttrs (
+    builtins.map (file: {
+      name = toRelativePath file;
+      value = {
+        source = file;
+      };
+    }) allDotiles
+  );
 in
 {
   ###### interface
@@ -19,7 +31,6 @@ in
       };
     };
   };
-
 
   ###### implementation
   config = lib.mkIf cfg.enable {

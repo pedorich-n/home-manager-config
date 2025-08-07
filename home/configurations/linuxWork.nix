@@ -12,7 +12,10 @@ in
     dotfiles.enable = true;
     runtimes = {
       enable = true;
-      java = [ pkgs.jdk11 pkgs.jdk8 ];
+      java = [
+        pkgs.jdk11
+        pkgs.jdk8
+      ];
     };
 
     programs = {
@@ -27,10 +30,11 @@ in
       gpg.enable = true;
       python = {
         enable = true;
-        extraPackages = pythonPkgs: with pythonPkgs; [
-          requests
-          pandas
-        ];
+        extraPackages =
+          pythonPkgs: with pythonPkgs; [
+            requests
+            pandas
+          ];
 
         poetry.enable = true;
       };
@@ -58,7 +62,10 @@ in
       };
     };
 
-    keychain.keys = [ "risk_engineering" gpgKey ];
+    keychain.keys = [
+      "risk_engineering"
+      gpgKey
+    ];
 
     zellij.settings.copy_command = "xclip -selection clipboard";
   };
