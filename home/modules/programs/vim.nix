@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   home.sessionVariables = lib.mkIf config.programs.vim.enable {
     VISUAL = lib.mkDefault "vim";

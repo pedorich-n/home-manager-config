@@ -43,11 +43,16 @@
     };
   };
 
-  outputs = inputs@{ flake-parts, systems, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ lib, ... }: {
-    debug = true; # Needed for nixd
+  outputs =
+    inputs@{ flake-parts, systems, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      { lib, ... }:
+      {
+        debug = true; # Needed for nixd
 
-    systems = import systems;
+        systems = import systems;
 
-    imports = lib.filesystem.listFilesRecursive ./flake-parts;
-  });
+        imports = lib.filesystem.listFilesRecursive ./flake-parts;
+      }
+    );
 }

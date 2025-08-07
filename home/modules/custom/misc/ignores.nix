@@ -8,7 +8,6 @@
     };
   };
 
-
   ###### implementation
   config = {
     custom.misc.globalIgnores = [

@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   config = lib.mkMerge [
     { programs.java.package = lib.mkDefault pkgs.jdk17_headless; }

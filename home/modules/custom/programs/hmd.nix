@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.custom.programs.hmd;
 in
@@ -9,7 +14,9 @@ in
 
       package = lib.mkPackageOption pkgs "hmd" { };
 
-      runOnSwitch = lib.mkEnableOption "Run HMD on home-manage switch" // { default = true; };
+      runOnSwitch = lib.mkEnableOption "Run HMD on home-manage switch" // {
+        default = true;
+      };
     };
   };
 

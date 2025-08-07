@@ -1,4 +1,9 @@
-{ pkgs, lib, configName ? "", ... }:
+{
+  pkgs,
+  lib,
+  configName ? "",
+  ...
+}:
 pkgs.writeShellApplication {
   name = "hm-bootrstrap${lib.optionalString (configName != "") "-${configName}"}";
   runtimeInputs = with pkgs; [

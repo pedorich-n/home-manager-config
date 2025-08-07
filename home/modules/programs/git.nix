@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 {
   home.sessionVariables = lib.mkIf config.programs.git.enable {
     DELTA_PAGER = lib.mkDefault "less -R";

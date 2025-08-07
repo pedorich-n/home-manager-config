@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.custom.programs.jetbrains;
 
@@ -15,7 +20,6 @@ in
       };
     };
   };
-
 
   ###### implementation
   config =

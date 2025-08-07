@@ -29,7 +29,10 @@ in
       };
     };
     java.enable = true;
-    keychain.keys = [ "id_main" gpgKey ];
+    keychain.keys = [
+      "id_main"
+      gpgKey
+    ];
 
     # See https://1password.community/discussion/comment/673567/#Comment_673567
     #LINK - packages/wsl-1password-cli/default.nix

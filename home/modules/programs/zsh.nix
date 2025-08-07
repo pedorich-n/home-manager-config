@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
 
   omzLibs = builtins.map (file: "source ${pkgs.oh-my-zsh}/share/oh-my-zsh/lib/${file}.zsh") [
@@ -9,7 +14,16 @@ let
     "termsupport"
   ];
 
-  omzPlugins = builtins.map (file: { name = file; src = "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/${file}"; }) [ "extract" "git" ];
+  omzPlugins =
+    builtins.map
+      (file: {
+        name = file;
+        src = "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/${file}";
+      })
+      [
+        "extract"
+        "git"
+      ];
 in
 {
   programs.zsh = {

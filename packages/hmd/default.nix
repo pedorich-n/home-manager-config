@@ -1,8 +1,9 @@
-{ writeShellApplication
-, ripgrep
-, gum
-, nvd
-, ...
+{
+  writeShellApplication,
+  ripgrep,
+  gum,
+  nvd,
+  ...
 }:
 writeShellApplication {
   name = "hmd";

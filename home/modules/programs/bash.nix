@@ -1,5 +1,4 @@
-_:
-{
+_: {
   programs.bash = {
     shellAliases = {
       # Some aliases from https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh
