@@ -41,10 +41,7 @@ in
             scalaPackage
           ];
         in
-        if cfgJava.enable then
-          builtins.map (pkg: pkg.override { jre = cfgJava.package; }) packages
-        else
-          packages;
+        if cfgJava.enable then builtins.map (pkg: pkg.override { jre = cfgJava.package; }) packages else packages;
     in
     lib.mkIf cfg.enable {
       home.packages = allPackages;

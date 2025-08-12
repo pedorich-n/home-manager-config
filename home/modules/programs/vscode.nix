@@ -7,9 +7,7 @@
 let
   watcherExclude =
     let
-      toGlobal =
-        input:
-        lib.strings.removeSuffix "/" (if (lib.strings.hasPrefix "**/" input) then input else "**/${input}");
+      toGlobal = input: lib.strings.removeSuffix "/" (if (lib.strings.hasPrefix "**/" input) then input else "**/${input}");
     in
     lib.foldl' (acc: entry: acc // { ${toGlobal entry} = true; }) { } config.custom.misc.globalIgnores;
 

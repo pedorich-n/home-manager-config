@@ -28,8 +28,7 @@ in
           ];
           config = {
             allowUnfree = true;
-            allowInsecurePredicate =
-              pkg: builtins.any (prefix: lib.hasPrefix prefix (getName pkg)) allowedInsecurePackages;
+            allowInsecurePredicate = pkg: builtins.any (prefix: lib.hasPrefix prefix (getName pkg)) allowedInsecurePackages;
           };
         };
       };
