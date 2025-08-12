@@ -50,5 +50,6 @@ in
     wsl-1password-cli
     opentofu
     tofu-ls
+    uv
   ];
 }
