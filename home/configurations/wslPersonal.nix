@@ -14,6 +14,7 @@ in
       python = {
         enable = true;
         poetry.enable = true;
+        uv.enable = true;
       };
     };
   };
@@ -50,6 +51,5 @@ in
     wsl-1password-cli
     opentofu
     tofu-ls
-    uv
   ];
 }

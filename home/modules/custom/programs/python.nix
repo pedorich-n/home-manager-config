@@ -47,6 +47,12 @@ in
         };
       };
 
+      uv = {
+        enable = lib.mkEnableOption "uv";
+
+        package = lib.mkPackageOption pkgs "uv" { };
+      };
+
       resultEnv = lib.mkOption {
         type = lib.types.package;
         readOnly = true;
@@ -84,6 +90,7 @@ in
     home.packages = [
       cfg.resultEnv
     ]
-    ++ lib.optional cfg.poetry.enable cfg.poetry.resultPackage;
+    ++ lib.optional cfg.poetry.enable cfg.poetry.resultPackage
+    ++ lib.optional cfg.uv.enable cfg.uv.package;
   };
 }
