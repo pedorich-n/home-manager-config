@@ -24,9 +24,6 @@ in
       gnome.enable = true;
       rust.enable = true;
       scala.enable = true;
-      jetbrains = {
-        idea.enable = true;
-      };
       gpg.enable = true;
       python = {
         enable = true;
