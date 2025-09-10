@@ -27,10 +27,6 @@
       aws = {
         disabled = false;
         format = "on [$symbol($profile )(\\[$duration\\] )]($style)";
-        profile_aliases = {
-          "aws-core-staging-dev" = "staging";
-          "aws-core-production-dev" = "production";
-        };
         symbol = " ";
       };
 

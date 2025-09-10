@@ -1,8 +1,7 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
+{ pkgs
+, config
+, lib
+, ...
 }:
 let
   watcherExclude =
@@ -56,6 +55,7 @@ in
           ms-azuretools.vscode-docker
           ms-python.python
           ms-python.vscode-pylance
+          ms-python.black-formatter
           wholroyd.jinja
 
           # Behavior
@@ -66,12 +66,13 @@ in
           gruntfuggly.todo-tree
           k--kato.intellij-idea-keybindings
           natqe.reload
-          shd101wyy.markdown-preview-enhanced
           vscodevim.vim
           wmaurer.vscode-jumpy
           editorconfig.editorconfig
           esbenp.prettier-vscode
           exodiusstudios.comment-anchors
+          repreng.csv
+          yzhang.markdown-all-in-one
         ]);
 
       keybindings = [
@@ -272,6 +273,12 @@ in
             };
           };
 
+          shellSettings = {
+            "[shellscript]" = {
+              "editor.defaultFormatter" = "mkhl.shfmt";
+            };
+          };
+
         in
         editorSettings
         // filesSettings
@@ -283,7 +290,8 @@ in
         // vimSettings
         // vscodeMiscSettings
         // yamlSettings
-        // jsonSettings;
+        // jsonSettings
+        // shellSettings;
     };
   };
 
