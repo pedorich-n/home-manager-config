@@ -22,6 +22,7 @@ inputs: _: prev: {
           "TestFileEdit"
           "TestUtilsSuite"
           "TestGenerateNewFile"
+          "TestEnsureDirExists"
         ];
       in
       [ "-skip=^${builtins.concatStringsSep "$|^" skippedTests}$" ];
