@@ -1,12 +1,7 @@
-{ pkgs, nixpkgs-cassandra, ... }:
-let
-  pkgs-cassandra = import nixpkgs-cassandra {
-    inherit (pkgs) system;
-  };
-in
+{ pkgs, ... }:
 pkgs.symlinkJoin {
   name = "cqlsh";
-  paths = [ pkgs-cassandra.cassandra_3_11 ];
+  paths = [ pkgs.cassandra ];
   nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
 
   postBuild = ''

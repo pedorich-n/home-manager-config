@@ -27,4 +27,9 @@ inputs: _: prev: {
       in
       [ "-skip=^${builtins.concatStringsSep "$|^" skippedTests}$" ];
   };
+
+  flameshot =
+    (import inputs.nixpkgs-flameshot {
+      system = prev.system;
+    }).flameshot;
 }
