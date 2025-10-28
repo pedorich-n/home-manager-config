@@ -51,8 +51,10 @@ in
     };
 
     git = {
-      userName = "Mykyta Pedorich";
-      userEmail = "mykyta.pedorich@paidy.com";
+      settings.user = {
+        name = "Mykyta Pedorich";
+        email = "mykyta.pedorich@paidy.com";
+      };
 
       signing = {
         key = gpgKey;

@@ -21,8 +21,10 @@ in
 
   programs = {
     git = {
-      userName = "Nikita Pedorich";
-      userEmail = "pedorich.n@gmail.com";
+      settings.user = {
+        name = "Nikita Pedorich";
+        email = "pedorich.n@gmail.com";
+      };
 
       signing = {
         key = gpgKey;
