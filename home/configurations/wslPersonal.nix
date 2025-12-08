@@ -48,7 +48,6 @@ in
   };
 
   home.packages = with pkgs; [
-    pinentry-curses
     wslu
     wsl-1password-cli
     opentofu

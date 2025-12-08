@@ -82,7 +82,6 @@ in
       docker-compose # Docker
       nerd-fonts.fira-code # IDE & terminal font
       obsidian # Note-taking
-      pinentry # GnuPG’s interface to passphrase input
       postman # Client for RESTful APIs
       saml2aws # AWS SSO
       shfmt # Shell formatter
