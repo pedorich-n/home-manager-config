@@ -30,6 +30,8 @@ in
 
     enableCompletion = lib.mkDefault true;
 
+    dotDir = lib.mkDefault "${config.xdg.configHome}/zsh";
+
     history = {
       append = lib.mkDefault true; # Append history, rather than replace it. Multiple parallel zsh sessions will all write history to the histfile
       ignoreAllDups = lib.mkDefault true; # Delete old recorded entry if new entry is a duplicate.
