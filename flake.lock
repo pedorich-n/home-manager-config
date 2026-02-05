@@ -94,22 +94,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-flameshot": {
-      "locked": {
-        "lastModified": 1770234882,
-        "narHash": "sha256-XiNLRCEKQc2MlCiZMogLw1NugIOtJ14Kjr5m+CcKEqM=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "2d2f8a9bdd6e176feb3735e675b6e3da8793be21",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "2d2f8a9bdd6e176feb3735e675b6e3da8793be21",
-        "type": "github"
-      }
-    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1769909678,
@@ -132,7 +116,6 @@
         "home-manager": "home-manager",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-flameshot": "nixpkgs-flameshot",
         "rust-overlay": "rust-overlay",
         "systems": "systems",
         "tomorrow-theme-source": "tomorrow-theme-source"

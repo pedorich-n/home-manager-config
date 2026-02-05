@@ -7,9 +7,6 @@
     # Global / Meta
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    # Version 12.1.0-unstable-2025-05-04
-    nixpkgs-flameshot.url = "github:nixos/nixpkgs/2d2f8a9bdd6e176feb3735e675b6e3da8793be21";
-
     flake-parts.url = "github:hercules-ci/flake-parts";
     systems.url = "github:nix-systems/default-linux";
     flake-utils = {
