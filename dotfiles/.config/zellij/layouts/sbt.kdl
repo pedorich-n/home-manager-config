@@ -5,25 +5,9 @@ layout {
         plugin location="zellij:status-bar"
     }
   }
-  swap_tiled_layout name="static" exact_panes=3 {
-    with-status-bar {
-      pane split_direction="horizontal" {
-        pane size="70%"
-        pane size="30%"
-      }
-    }
-  }
-  swap_tiled_layout name="stacked" {
-    with-status-bar {
-      pane stacked=true {
-        pane
-        pane
-      }
-    }
-  }
 
-  pane {
-    pane command="sbt"
+  pane stacked=true {
+    pane command="sbt" expanded=true focus=true
     pane name="git"
   }
   pane size=1 borderless=true {
