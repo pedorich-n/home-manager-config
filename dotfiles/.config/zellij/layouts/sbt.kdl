@@ -7,7 +7,7 @@ layout {
   }
 
   pane stacked=true {
-    pane command="sbt" expanded=true focus=true
+    pane command="sbt" args="-J-Xmx=5000M" expanded=true focus=true
     pane name="git"
   }
   pane size=1 borderless=true {
