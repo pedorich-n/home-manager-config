@@ -19,18 +19,17 @@ in
         enable = true;
         uv.enable = true;
       };
+    };
 
-      runtimes = {
-        enable = true;
-        java = [
-          pkgs.jdk21
-        ];
-      };
+    runtimes = {
+      enable = true;
+      java = [
+        pkgs.jdk21
+      ];
     };
   };
 
   programs = {
-    dconf.enable = true;
     git = {
       settings.user = {
         name = "Nikita Pedorich";
