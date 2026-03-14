@@ -19,10 +19,18 @@ in
         enable = true;
         uv.enable = true;
       };
+
+      runtimes = {
+        enable = true;
+        java = [
+          pkgs.jdk21
+        ];
+      };
     };
   };
 
   programs = {
+    dconf.enable = true;
     git = {
       settings.user = {
         name = "Nikita Pedorich";
@@ -40,16 +48,19 @@ in
     ];
     mise.enable = true;
     obsidian.enable = true;
+    obs-studio.enable = true;
     vscode.enable = true;
   };
 
   services = {
     caffeine.enable = true;
+    easyeffects.enable = true;
   };
 
   home.packages = with pkgs; [
     opentofu
     tofu-ls
+    telegram-desktop
     nerd-fonts.fira-code # IDE & terminal font
   ];
 }
