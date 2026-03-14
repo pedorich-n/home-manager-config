@@ -14,7 +14,10 @@ in
     aliases.hms.configName = "desktopPersonal";
     programs = {
       gpg.enable = true;
-      flameshot.enable = true;
+      flameshot = {
+        enable = true;
+        package = null;
+      };
       python = {
         enable = true;
         uv.enable = true;
@@ -52,7 +55,6 @@ in
   };
 
   services = {
-    caffeine.enable = true;
     easyeffects.enable = true;
   };
 
