@@ -13,7 +13,6 @@ in
       gpg.enable = true;
       python = {
         enable = true;
-        poetry.enable = true;
         uv.enable = true;
       };
     };
