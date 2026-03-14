@@ -9,5 +9,9 @@
       system = "x86_64-linux";
       name = "linuxWork";
     })
+    (flake.lib.builders.mkHomeConfiguration {
+      system = "x86_64-linux";
+      name = "desktopPersonal";
+    })
   ];
 }
