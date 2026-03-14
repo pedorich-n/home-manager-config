@@ -9,7 +9,6 @@ let
 
   allowedInsecurePackages = [
     "openssl-1.1.1" # Dependency of Sublime Text 4
-    "python-2.7" # Dependency of cqlsh (Cassandra 3.11)
   ];
 in
 {

@@ -78,7 +78,6 @@ in
     packages = with pkgs; [
       awscli2 # AWS CLI
       caffeine-ng # Disable screensaver
-      cqlsh # Cassandra
       docker-compose # Docker
       nerd-fonts.fira-code # IDE & terminal font
       obsidian # Note-taking
