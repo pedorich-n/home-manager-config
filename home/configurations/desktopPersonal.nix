@@ -50,7 +50,6 @@ in
     ];
     mise.enable = true;
     obsidian.enable = true;
-    obs-studio.enable = true;
     vscode.enable = true;
   };
 
@@ -59,9 +58,9 @@ in
   };
 
   home.packages = with pkgs; [
-    opentofu
-    tofu-ls
-    telegram-desktop
     nerd-fonts.fira-code # IDE & terminal font
+    opentofu
+    telegram-desktop
+    tofu-ls
   ];
 }
