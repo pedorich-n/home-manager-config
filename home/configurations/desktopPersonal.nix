@@ -53,10 +53,6 @@ in
     vscode.enable = true;
   };
 
-  services = {
-    easyeffects.enable = true;
-  };
-
   home.packages = with pkgs; [
     nerd-fonts.fira-code # IDE & terminal font
     opentofu
