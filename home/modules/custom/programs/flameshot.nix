@@ -19,7 +19,7 @@ in
       enable = lib.mkEnableOption "Custom configs for Flameshot";
 
       package = lib.mkOption {
-        type = lib.types.package;
+        type = with lib.types; nullOr package;
         default = pkgs.flameshot;
       };
 
@@ -31,7 +31,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ cfg.package ];
+    home.packages = lib.optional (cfg.package != null) cfg.package;
 
     xdg.configFile = lib.mkIf (cfg.settings != { }) {
       "flameshot/flameshot.ini".source = iniFile;
