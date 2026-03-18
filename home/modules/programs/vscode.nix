@@ -31,7 +31,6 @@ in
           # Using those from nixpkgs, because they require extra setup which is not provivided in vscode-marketplace
           github.copilot
           jebbs.plantuml
-          hashicorp.terraform
         ])
         ++ (with pkgs.vscode-marketplace; [
           # Themes
@@ -58,6 +57,7 @@ in
           ms-python.vscode-pylance
           ms-python.black-formatter
           wholroyd.jinja
+          opentofu.vscode-opentofu
 
           # Behavior
           alefragnani.bookmarks

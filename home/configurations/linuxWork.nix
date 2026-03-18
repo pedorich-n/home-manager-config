@@ -86,6 +86,8 @@ in
       shfmt # Shell formatter
       sublime4 # Text editor
       xclip # CLI Clipboard manager
+      opentofu
+      tofu-ls
     ];
   };
 
