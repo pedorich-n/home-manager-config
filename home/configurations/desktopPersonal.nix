@@ -11,6 +11,7 @@ in
   home.username = "nikita";
 
   custom = {
+    selinux.enable = true;
     aliases.hms.configName = "desktopPersonal";
     programs = {
       gpg.enable = true;
