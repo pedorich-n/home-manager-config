@@ -38,6 +38,11 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+
+    motto-plasma-theme = {
+      url = "github:L4ki/Motto-Plasma-Themes";
+      flake = false;
+    };
   };
 
   outputs =

@@ -58,6 +58,22 @@
         "type": "github"
       }
     },
+    "motto-plasma-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1765444721,
+        "narHash": "sha256-dBsUjsNkcvjcsX2NTpvZL89ykBfmXfz+MrwgOyZfXc4=",
+        "owner": "L4ki",
+        "repo": "Motto-Plasma-Themes",
+        "rev": "1fe29e40e8938e57fa16582a468dba0bb74f685e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "L4ki",
+        "repo": "Motto-Plasma-Themes",
+        "type": "github"
+      }
+    },
     "nix-vscode-extensions": {
       "inputs": {
         "nixpkgs": [
@@ -114,6 +130,7 @@
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "motto-plasma-theme": "motto-plasma-theme",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
