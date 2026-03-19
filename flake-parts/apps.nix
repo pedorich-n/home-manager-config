@@ -12,6 +12,9 @@
             };
           };
         in
-        lib.mapAttrs' (name: _: mkBootstrap name) flake.homeConfigurations;
+        {
+          install-nix-selinux.program = pkgs.callPackage ../packages/nix-selinux/install.nix { };
+        }
+        // (lib.mapAttrs' (name: _: mkBootstrap name) flake.homeConfigurations);
     };
 }
