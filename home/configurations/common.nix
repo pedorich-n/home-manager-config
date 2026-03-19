@@ -7,6 +7,7 @@
     packages = with pkgs; [
       coreutils-full # GNU coreutils (cp, mv, whoami, echo, wc, ...)
       curl # HTTP client
+      dig # DNS lookup utility
       gdu # Fast disk usage analyser
       gnused # GNU Stream EDitor
       jq # Command-line JSON processor
