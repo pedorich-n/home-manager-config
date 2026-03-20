@@ -136,6 +136,10 @@ in
 
       userSettings =
         let
+          globalSettins = {
+            "update.mode" = "none";
+          };
+
           editorSettings = {
             "editor.accessibilitySupport" = "off";
             "editor.cursorSurroundingLines" = 10;
@@ -281,7 +285,8 @@ in
           };
 
         in
-        editorSettings
+        globalSettins
+        // editorSettings
         // filesSettings
         // nixSettings
         // presentationModeSettings
