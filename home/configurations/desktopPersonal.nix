@@ -35,8 +35,10 @@ in
     kde = {
       enable = true;
       themes = [
+        pkgs.kde-themes.otto
         pkgs.kde-themes.otto-light
         (pkgs.qogir-icon-theme.override { themeVariants = [ "default" ]; })
+        pkgs.whitesur-cursors
       ];
     };
   };

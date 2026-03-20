@@ -43,6 +43,11 @@
       url = "gitlab:jomada/otto-light";
       flake = false;
     };
+
+    otto-theme = {
+      url = "gitlab:jomada/otto";
+      flake = false;
+    };
   };
 
   outputs =

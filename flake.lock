@@ -125,6 +125,22 @@
         "type": "gitlab"
       }
     },
+    "otto-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1737124289,
+        "narHash": "sha256-58Aqiu/umLmedGldZJMWEkk/5bs05Pl4+rrKfAs4lyA=",
+        "owner": "jomada",
+        "repo": "otto",
+        "rev": "55a8dc6e2de4b7b2c8c171b4a36e87b71104da21",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "jomada",
+        "repo": "otto",
+        "type": "gitlab"
+      }
+    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -133,6 +149,7 @@
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
         "otto-light-theme": "otto-light-theme",
+        "otto-theme": "otto-theme",
         "rust-overlay": "rust-overlay",
         "systems": "systems",
         "tomorrow-theme-source": "tomorrow-theme-source"
