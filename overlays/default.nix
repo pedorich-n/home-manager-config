@@ -10,7 +10,7 @@ inputs: _: prev: {
   hmd = prev.callPackage ../packages/hmd { };
 
   kde-themes = {
-    motto = prev.callPackage ../packages/kde-themes/motto { inherit (inputs) motto-plasma-theme; };
+    otto-light = prev.callPackage ../packages/kde-themes/otto-light.nix { inherit (inputs) otto-light-theme; };
   };
 
   # For some reason aws-sso-cli can't build on my due to the checkPhase, so I have to ignore some tests

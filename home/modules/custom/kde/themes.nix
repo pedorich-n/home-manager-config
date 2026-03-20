@@ -1,41 +1,58 @@
 {
-  # config,
-  # pkgs,
+  config,
+  pkgs,
   lib,
   ...
 }:
+let
+  cfg = config.custom.kde;
+
+  packagesToLink = lib.filter (pkg: pkg ? link) cfg.themes;
+
+  filterBySubdir = subdir: lib.filter (pkg: builtins.pathExists "${pkg.link}/${subdir}") packagesToLink;
+
+  mkSource =
+    {
+      name,
+      prefix ? name,
+      paths,
+    }:
+    pkgs.symlinkJoin {
+      name = "kde-themes-${name}";
+      paths = map (pkg: pkg.link) paths;
+      stripPrefix = "/${prefix}";
+    };
+
+  kvantumPackages = filterBySubdir "kvantum";
+in
 {
   options = {
-    custom.kde.themes = {
-      plasma = lib.mkOption {
-        type = lib.attrsOf lib.types.path;
-        description = "Plasma themes to be installed.";
-      };
+    custom.kde = {
+      enable = lib.mkEnableOption "Whether to enable custom KDE features.";
 
-      lookAndFeel = lib.mkOption {
-        type = lib.attrsOf lib.types.path;
-        description = "Look and feel themes to be installed.";
+      themes = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        default = [ ];
+        description = "List of KDE themes to be installed. Expected outputs: `$out`, `$link`.";
       };
+    };
+  };
 
-      colorSchemes = lib.mkOption {
-        type = lib.attrsOf lib.types.path;
-        description = "Color schemes to be installed.";
-      };
+  config = lib.mkIf cfg.enable {
+    home = {
+      packages = lib.mkIf (cfg.themes != [ ]) cfg.themes;
 
-      aurorae = lib.mkOption {
-        type = lib.attrsOf lib.types.path;
-        description = "Aurorae themes to be installed.";
-      };
-
-      kvantum = lib.mkOption {
-        type = lib.attrsOf lib.types.path;
-        description = "Kvantum themes to be installed.";
-      };
-
-      gtk = lib.mkOption {
-        type = lib.attrsOf lib.types.path;
-        description = "GTK themes to be installed.";
-      };
+      file = lib.mkMerge [
+        (lib.mkIf (kvantumPackages != [ ]) {
+          ".config/Kvantum" = {
+            recursive = true;
+            source = mkSource {
+              name = "kvantum";
+              paths = kvantumPackages;
+            };
+          };
+        })
+      ];
     };
   };
 }

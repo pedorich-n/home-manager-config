@@ -31,6 +31,14 @@ in
         pkgs.jdk21
       ];
     };
+
+    kde = {
+      enable = true;
+      themes = [
+        pkgs.kde-themes.otto-light
+        (pkgs.qogir-icon-theme.override { themeVariants = [ "default" ]; })
+      ];
+    };
   };
 
   programs = {
