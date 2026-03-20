@@ -8,7 +8,7 @@ in
 {
   imports = [ ./commonStandalone.nix ];
 
-  home.username = "nikita";
+  fonts.fontconfig.enable = true;
 
   custom = {
     selinux.enable = true;
@@ -64,10 +64,15 @@ in
     vscode.enable = true;
   };
 
-  home.packages = with pkgs; [
-    nerd-fonts.fira-code # IDE & terminal font
-    opentofu
-    telegram-desktop
-    tofu-ls
-  ];
+  home = {
+    username = "nikita";
+
+    packages = with pkgs; [
+      nerd-fonts.fira-code # IDE & terminal font
+      rubik # UI font
+      opentofu
+      telegram-desktop
+      tofu-ls
+    ];
+  };
 }

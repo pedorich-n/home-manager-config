@@ -28,12 +28,17 @@ in
 {
   options = {
     custom.kde.themes = {
-      enable = lib.mkEnableOption "Whether to enable custom KDE features.";
+      enable = lib.mkEnableOption "Whether to enable custom KDE themes features.";
 
       packages = lib.mkOption {
         type = lib.types.listOf lib.types.package;
         default = [ ];
-        description = "List of KDE themes to be installed. Expected outputs: `$out`, `$link`.";
+        description = ''
+          List of KDE themes to be installed.
+          Expected outputs:
+            - `$out/share`. Should include plasma themes, aurorae themes, icons, and other KDE-related files.
+            - `$link`. Should include extra files that need to be linked to the home directory, such as Kvantum themes.
+        '';
       };
     };
   };
