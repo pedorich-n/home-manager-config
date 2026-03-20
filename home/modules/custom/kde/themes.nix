@@ -5,9 +5,9 @@
   ...
 }:
 let
-  cfg = config.custom.kde;
+  cfg = config.custom.kde.themes;
 
-  packagesToLink = lib.filter (pkg: pkg ? link) cfg.themes;
+  packagesToLink = lib.filter (pkg: pkg ? link) cfg.packages;
 
   filterBySubdir = subdir: lib.filter (pkg: builtins.pathExists "${pkg.link}/${subdir}") packagesToLink;
 
@@ -27,10 +27,10 @@ let
 in
 {
   options = {
-    custom.kde = {
+    custom.kde.themes = {
       enable = lib.mkEnableOption "Whether to enable custom KDE features.";
 
-      themes = lib.mkOption {
+      packages = lib.mkOption {
         type = lib.types.listOf lib.types.package;
         default = [ ];
         description = "List of KDE themes to be installed. Expected outputs: `$out`, `$link`.";
@@ -40,7 +40,7 @@ in
 
   config = lib.mkIf cfg.enable {
     home = {
-      packages = lib.mkIf (cfg.themes != [ ]) cfg.themes;
+      packages = lib.mkIf (cfg.packages != [ ]) cfg.packages;
 
       file = lib.mkMerge [
         (lib.mkIf (kvantumPackages != [ ]) {

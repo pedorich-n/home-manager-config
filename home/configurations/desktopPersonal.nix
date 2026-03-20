@@ -32,9 +32,9 @@ in
       ];
     };
 
-    kde = {
+    kde.themes = {
       enable = true;
-      themes = [
+      packages = [
         pkgs.kde-themes.otto
         pkgs.kde-themes.otto-light
         (pkgs.qogir-icon-theme.override { themeVariants = [ "default" ]; })
