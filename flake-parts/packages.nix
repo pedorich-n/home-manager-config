@@ -10,7 +10,7 @@
 
         hmd = pkgs.callPackage ../packages/hmd { };
 
-        motto = pkgs.callPackage ../packages/kde-themes/motto.nix { inherit (inputs) motto-plasma-theme; };
+        otto-light = pkgs.callPackage ../packages/kde-themes/otto-light.nix { inherit (inputs) otto-light-theme; };
       };
     };
 }

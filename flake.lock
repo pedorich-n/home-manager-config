@@ -58,22 +58,6 @@
         "type": "github"
       }
     },
-    "motto-plasma-theme": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1765444721,
-        "narHash": "sha256-dBsUjsNkcvjcsX2NTpvZL89ykBfmXfz+MrwgOyZfXc4=",
-        "owner": "L4ki",
-        "repo": "Motto-Plasma-Themes",
-        "rev": "1fe29e40e8938e57fa16582a468dba0bb74f685e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "L4ki",
-        "repo": "Motto-Plasma-Themes",
-        "type": "github"
-      }
-    },
     "nix-vscode-extensions": {
       "inputs": {
         "nixpkgs": [
@@ -125,14 +109,30 @@
         "type": "github"
       }
     },
+    "otto-light-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1737124347,
+        "narHash": "sha256-rlFlmkS7gH9ekYBYWr/DEvr62cAv2s/7Qx3vsOUGso0=",
+        "owner": "jomada",
+        "repo": "otto-light",
+        "rev": "3ff655817ebccc2e4f27f66740235b84098a5644",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "jomada",
+        "repo": "otto-light",
+        "type": "gitlab"
+      }
+    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
-        "motto-plasma-theme": "motto-plasma-theme",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
+        "otto-light-theme": "otto-light-theme",
         "rust-overlay": "rust-overlay",
         "systems": "systems",
         "tomorrow-theme-source": "tomorrow-theme-source"
