@@ -17,6 +17,8 @@ stdenv.mkDerivation {
   ];
 
   installPhase = ''
+    runHook preInstall
+
     mkdir -p $out/share/{plasma/desktoptheme,plasma/look-and-feel,color-schemes,aurorae/themes,konsole}
     mkdir -p $link/kvantum
 
@@ -27,5 +29,12 @@ stdenv.mkDerivation {
     cp -r "$src/konsole/"*.colorscheme $out/share/konsole/
 
     cp -r "$src/kvantum/Otto" $link/kvantum/
+
+    runHook postInstall
+  '';
+
+  postInstall = ''
+    substituteInPlace $link/kvantum/Otto/Otto.kvconfig \
+      --replace-fail 'transparent_dolphin_view=true' 'transparent_dolphin_view=false'
   '';
 }
