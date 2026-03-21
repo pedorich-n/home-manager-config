@@ -39,6 +39,7 @@ in
         pkgs.kde-themes.otto-light
         (pkgs.qogir-icon-theme.override { themeVariants = [ "default" ]; })
         pkgs.whitesur-cursors
+        pkgs.custom-wallpapers
       ];
     };
   };
@@ -71,7 +72,6 @@ in
       nerd-fonts.fira-code # IDE & terminal font
       rubik # UI font
       opentofu
-      telegram-desktop
       tofu-ls
     ];
   };
