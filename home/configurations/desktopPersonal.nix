@@ -62,6 +62,7 @@ in
     ];
     mise.enable = true;
     obsidian.enable = true;
+    plasma.enable = true;
     vscode.enable = true;
   };
 
@@ -69,8 +70,6 @@ in
     username = "nikita";
 
     packages = with pkgs; [
-      nerd-fonts.fira-code # IDE & terminal font
-      rubik # UI font
       opentofu
       tofu-ls
     ];
