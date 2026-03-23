@@ -15,10 +15,6 @@ in
     aliases.hms.configName = "desktopPersonal";
     programs = {
       gpg.enable = true;
-      flameshot = {
-        enable = true;
-        package = null;
-      };
       python = {
         enable = true;
         uv.enable = true;
@@ -64,6 +60,10 @@ in
     obsidian.enable = true;
     plasma.enable = true;
     vscode.enable = true;
+  };
+
+  services = {
+    easyeffects.enable = true;
   };
 
   home = {
