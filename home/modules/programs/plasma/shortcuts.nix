@@ -38,8 +38,6 @@ in
   programs.plasma.shortcuts = {
     "services/net.local.1password.desktop"._launch = "Ctrl+.";
 
-    "services/org.kde.krunner.desktop"._launch = "Meta";
-
     "KDE Keyboard Layout Switcher" = {
       "Switch to Next Keyboard Layout" = [ "Meta+Space" ];
       "Switch to Last-Used Keyboard Layout" = [ ];

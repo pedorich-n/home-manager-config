@@ -1,6 +1,7 @@
 {
   programs.plasma.krunner = {
     position = "center";
-    historyBehavior = "disabled";
+    historyBehavior = "enableSuggestions";
+    shortcuts.launch = "Meta";
   };
 }
