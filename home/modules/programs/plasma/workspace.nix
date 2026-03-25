@@ -4,6 +4,10 @@
   pkgs,
   ...
 }:
+let
+  catpuccinVariant = "latte";
+  catpuccinAccent = "green";
+in
 {
   custom.programs.plasma.themes = lib.mkIf config.programs.plasma.enable {
     packages = [
@@ -14,12 +18,16 @@
       pkgs.papirus-icon-theme
       (pkgs.qogir-icon-theme.override { themeVariants = [ "default" ]; })
       (pkgs.catppuccin-kvantum.override {
-        variant = "latte";
-        accent = "green";
+        variant = catpuccinVariant;
+        accent = catpuccinAccent;
       })
       (pkgs.catppuccin-kde.override {
-        flavour = [ "latte" ];
-        accents = [ "green" ];
+        flavour = [ catpuccinVariant ];
+        accents = [ catpuccinAccent ];
+      })
+      (pkgs.catppuccin-gtk.override {
+        variant = catpuccinVariant;
+        accents = [ catpuccinAccent ];
       })
     ];
   };
