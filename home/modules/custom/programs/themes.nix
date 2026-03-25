@@ -5,7 +5,7 @@
   ...
 }:
 let
-  cfg = config.custom.kde.themes;
+  cfg = config.custom.programs.plasma.themes;
 
   packagesToLink = lib.filter (pkg: pkg ? link) cfg.packages;
 
@@ -27,7 +27,7 @@ let
 in
 {
   options = {
-    custom.kde.themes = {
+    custom.programs.plasma.themes = {
       enable = lib.mkEnableOption "Whether to enable custom KDE themes features.";
 
       packages = lib.mkOption {

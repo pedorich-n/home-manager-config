@@ -1,8 +1,20 @@
 {
   config,
+  lib,
+  pkgs,
   ...
 }:
 {
+  custom.programs.plasma.themes = lib.mkIf config.programs.plasma.enable {
+    packages = [
+      pkgs.kde-themes.otto
+      pkgs.kde-themes.otto-light
+      (pkgs.qogir-icon-theme.override { themeVariants = [ "default" ]; })
+      pkgs.whitesur-cursors
+      pkgs.custom-wallpapers
+    ];
+  };
+
   programs.plasma = {
     configFile = {
       "Kvantum/kvantum.kvconfig" = {

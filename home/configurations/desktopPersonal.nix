@@ -19,23 +19,13 @@ in
         enable = true;
         uv.enable = true;
       };
+      plasma.themes.enable = true;
     };
 
     runtimes = {
       enable = true;
       java = [
         pkgs.jdk21
-      ];
-    };
-
-    kde.themes = {
-      enable = true;
-      packages = [
-        pkgs.kde-themes.otto
-        pkgs.kde-themes.otto-light
-        (pkgs.qogir-icon-theme.override { themeVariants = [ "default" ]; })
-        pkgs.whitesur-cursors
-        pkgs.custom-wallpapers
       ];
     };
   };
