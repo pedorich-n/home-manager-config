@@ -11,6 +11,7 @@
       pkgs.kde-themes.otto-light
       pkgs.whitesur-cursors
       pkgs.custom-wallpapers
+      pkgs.papirus-icon-theme
       (pkgs.qogir-icon-theme.override { themeVariants = [ "default" ]; })
       (pkgs.catppuccin-kvantum.override {
         variant = "latte";
