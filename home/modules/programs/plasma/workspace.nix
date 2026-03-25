@@ -35,8 +35,8 @@
           # LookAndFeelSet = "Otto-Light";
         };
         SystemIconGeneration = {
-          KlassyDarkIconThemeInherits = "Qogir-Dark";
-          KlassyIconThemeInherits = "Qogir";
+          KlassyDarkIconThemeInherits = "Papirus-Dark";
+          KlassyIconThemeInherits = "Papirus";
         };
         ButtonColors = {
           CloseButtonIconColorActive = "AsSelected";
@@ -49,7 +49,7 @@
         };
 
         Windeco = {
-          ButtonIconStyle = "StyleOxygen";
+          ButtonIconStyle = "StyleFluent";
           ButtonShape = "ShapeFullHeightRoundedRectangle";
           IconSize = "IconMedium";
           MatchTitleBarToApplicationColor = true;
