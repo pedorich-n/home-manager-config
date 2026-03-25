@@ -9,21 +9,29 @@
     packages = [
       pkgs.kde-themes.otto
       pkgs.kde-themes.otto-light
-      (pkgs.qogir-icon-theme.override { themeVariants = [ "default" ]; })
       pkgs.whitesur-cursors
       pkgs.custom-wallpapers
+      (pkgs.qogir-icon-theme.override { themeVariants = [ "default" ]; })
+      (pkgs.catppuccin-kvantum.override {
+        variant = "latte";
+        accent = "green";
+      })
+      (pkgs.catppuccin-kde.override {
+        flavour = [ "latte" ];
+        accents = [ "green" ];
+      })
     ];
   };
 
   programs.plasma = {
     configFile = {
       "Kvantum/kvantum.kvconfig" = {
-        General.theme = "Otto-Light";
+        # General.theme = "Otto-Light";
       };
 
       "klassy/klassyrc" = {
         Global = {
-          LookAndFeelSet = "Otto-Light";
+          # LookAndFeelSet = "Otto-Light";
         };
         SystemIconGeneration = {
           KlassyDarkIconThemeInherits = "Qogir-Dark";
@@ -50,8 +58,8 @@
     };
 
     workspace = {
-      colorScheme = "OttoLight";
-      theme = "Otto-Light";
+      # colorScheme = "OttoLight";
+      # theme = "Otto-Light";
       # Enabling this brings too many dependencies, see: https://github.com/nix-community/plasma-manager/blob/a4b33606111c9/modules/workspace.nix#L569
       # iconTheme = "Qogir";
       widgetStyle = "kvantum";
@@ -61,7 +69,7 @@
       };
       cursor = {
         size = 24;
-        theme = "WhiteSur-cursors";
+        # theme = "WhiteSur-cursors";
       };
       wallpaper = "${config.home.profileDirectory}/share/wallpapers/green-leaves.jpg";
     };

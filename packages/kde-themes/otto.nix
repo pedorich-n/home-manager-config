@@ -11,30 +11,23 @@ stdenv.mkDerivation {
   dontBuild = true;
   dontPatch = true;
 
-  outputs = [
-    "out"
-    "link"
-  ];
-
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/share/{plasma/desktoptheme,plasma/look-and-feel,color-schemes,aurorae/themes,konsole}
-    mkdir -p $link/kvantum
+    mkdir -p $out/share/{plasma/desktoptheme,plasma/look-and-feel,color-schemes,aurorae/themes,konsole,Kvantum}
 
     cp -r "$src/color-schemes/"*.colors $out/share/color-schemes/
     cp -r "$src/Otto/" $out/share/plasma/desktoptheme/
     cp -r "$src/look-and-feel/Otto" $out/share/plasma/look-and-feel/
     cp -r "$src/aurorae/Otto" $out/share/aurorae/themes/
     cp -r "$src/konsole/"*.colorscheme $out/share/konsole/
-
-    cp -r "$src/kvantum/Otto" $link/kvantum/
+    cp -r "$src/kvantum/Otto" $out/share/Kvantum/
 
     runHook postInstall
   '';
 
   postInstall = ''
-    substituteInPlace $link/kvantum/Otto/Otto.kvconfig \
+    substituteInPlace $out/share/Kvantum/Otto/Otto.kvconfig \
       --replace-fail 'transparent_dolphin_view=true' 'transparent_dolphin_view=false'
   '';
 }

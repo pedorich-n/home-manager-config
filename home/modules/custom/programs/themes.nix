@@ -7,23 +7,21 @@
 let
   cfg = config.custom.programs.plasma.themes;
 
-  packagesToLink = lib.filter (pkg: pkg ? link) cfg.packages;
-
-  filterBySubdir = subdir: lib.filter (pkg: builtins.pathExists "${pkg.link}/${subdir}") packagesToLink;
+  filterBySubdir = subdir: lib.filter (pkg: builtins.pathExists "${pkg}/${subdir}") cfg.packages;
 
   mkSource =
     {
       name,
-      prefix ? name,
+      prefix,
       paths,
     }:
     pkgs.symlinkJoin {
       name = "kde-themes-${name}";
-      paths = map (pkg: pkg.link) paths;
       stripPrefix = "/${prefix}";
+      inherit paths;
     };
 
-  kvantumPackages = filterBySubdir "kvantum";
+  kvantumPackages = filterBySubdir "share/Kvantum";
 in
 {
   options = {
@@ -37,7 +35,6 @@ in
           List of KDE themes to be installed.
           Expected outputs:
             - `$out/share`. Should include plasma themes, aurorae themes, icons, and other KDE-related files.
-            - `$link`. Should include extra files that need to be linked to the home directory, such as Kvantum themes.
         '';
       };
     };
@@ -53,6 +50,7 @@ in
             recursive = true;
             source = mkSource {
               name = "kvantum";
+              prefix = "share/Kvantum";
               paths = kvantumPackages;
             };
           };
