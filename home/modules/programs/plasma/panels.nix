@@ -34,7 +34,7 @@
           digitalClock = {
             date = {
               enable = true;
-              format = "isoDate";
+              format.custom = "yyyy-MM-dd, ddd";
               position = "adaptive";
             };
 
@@ -123,7 +123,6 @@
               showAllAppsInGrid = false;
               showAllAppsInList = true;
               useSystemFontSettings = true;
-
             };
             Shortcuts = {
               global = "";
