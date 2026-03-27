@@ -7,6 +7,9 @@
 let
   catpuccinVariant = "latte";
   catpuccinAccent = "green";
+
+  #LINK - packages/wallpapers/default.nix
+  wallpaperPath = "${config.home.profileDirectory}/share/wallpapers/green-leaves.jpg";
 in
 {
   custom.programs.plasma.themes = lib.mkIf config.programs.plasma.enable {
@@ -35,12 +38,12 @@ in
   programs.plasma = {
     configFile = {
       "Kvantum/kvantum.kvconfig" = {
-        # General.theme = "Otto-Light";
+        General.theme = "catppuccin-latte-green";
       };
 
       "klassy/klassyrc" = {
         Global = {
-          # LookAndFeelSet = "Otto-Light";
+          LookAndFeelSet = "Catppuccin-Latte-Green";
         };
         SystemIconGeneration = {
           KlassyDarkIconThemeInherits = "Papirus-Dark";
@@ -67,10 +70,10 @@ in
     };
 
     workspace = {
-      # colorScheme = "OttoLight";
-      # theme = "Otto-Light";
+      colorScheme = "CatppuccinLatteGreen";
+      theme = "default"; # Breeze
       # Enabling this brings too many dependencies, see: https://github.com/nix-community/plasma-manager/blob/a4b33606111c9/modules/workspace.nix#L569
-      # iconTheme = "Qogir";
+      # iconTheme = "Papirus-Light";
       widgetStyle = "kvantum";
       windowDecorations = {
         theme = "Klassy";
@@ -78,9 +81,17 @@ in
       };
       cursor = {
         size = 24;
-        # theme = "WhiteSur-cursors";
+        theme = "Qogir";
       };
-      wallpaper = "${config.home.profileDirectory}/share/wallpapers/green-leaves.jpg";
+      wallpaper = wallpaperPath;
+    };
+
+    kscreenlocker = {
+      appearance = {
+        alwaysShowClock = true;
+        showMediaControls = true;
+        wallpaper = wallpaperPath;
+      };
     };
   };
 }
