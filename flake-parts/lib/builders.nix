@@ -9,6 +9,7 @@ let
     {
       system,
       name,
+      modules ? [ ],
     }:
     {
       ${name} = withSystem system (
@@ -18,7 +19,8 @@ let
           modules = [
             flake.homeModules.sharedModules
             "${flake}/home/configurations/${name}.nix"
-          ];
+          ]
+          ++ modules;
           extraSpecialArgs = {
             inherit (inputs) nixpkgs;
             inherit flake;

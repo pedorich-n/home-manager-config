@@ -8,21 +8,18 @@ in
 {
   imports = [ ./commonStandalone.nix ];
 
-  home.username = "nikita";
+  fonts.fontconfig.enable = true;
 
   custom = {
     selinux.enable = true;
     aliases.hms.configName = "desktopPersonal";
     programs = {
       gpg.enable = true;
-      flameshot = {
-        enable = true;
-        package = null;
-      };
       python = {
         enable = true;
         uv.enable = true;
       };
+      plasma.themes.enable = true;
     };
 
     runtimes = {
@@ -51,13 +48,20 @@ in
     ];
     mise.enable = true;
     obsidian.enable = true;
+    plasma.enable = true;
     vscode.enable = true;
   };
 
-  home.packages = with pkgs; [
-    nerd-fonts.fira-code # IDE & terminal font
-    opentofu
-    telegram-desktop
-    tofu-ls
-  ];
+  services = {
+    easyeffects.enable = true;
+  };
+
+  home = {
+    username = "nikita";
+
+    packages = with pkgs; [
+      opentofu
+      tofu-ls
+    ];
+  };
 }

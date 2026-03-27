@@ -1,4 +1,9 @@
-{ flake, lib, ... }:
+{
+  inputs,
+  flake,
+  lib,
+  ...
+}:
 {
   flake.homeConfigurations = lib.mkMerge [
     (flake.lib.builders.mkHomeConfiguration {
@@ -12,6 +17,9 @@
     (flake.lib.builders.mkHomeConfiguration {
       system = "x86_64-linux";
       name = "desktopPersonal";
+      modules = [
+        inputs.plasma-manager.homeModules.plasma-manager
+      ];
     })
   ];
 }

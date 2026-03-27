@@ -9,6 +9,13 @@ inputs: _: prev: {
 
   hmd = prev.callPackage ../packages/hmd { };
 
+  kde-themes = {
+    otto = prev.callPackage ../packages/kde-themes/otto.nix { inherit (inputs) otto-theme; };
+    otto-light = prev.callPackage ../packages/kde-themes/otto-light.nix { inherit (inputs) otto-light-theme; };
+  };
+
+  custom-wallpapers = prev.callPackage ../packages/wallpapers/default.nix { };
+
   # For some reason aws-sso-cli can't build on my due to the checkPhase, so I have to ignore some tests
   aws-sso-cli = prev.aws-sso-cli.overrideAttrs {
     checkFlags =

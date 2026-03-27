@@ -109,6 +109,61 @@
         "type": "github"
       }
     },
+    "otto-light-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1737124347,
+        "narHash": "sha256-rlFlmkS7gH9ekYBYWr/DEvr62cAv2s/7Qx3vsOUGso0=",
+        "owner": "jomada",
+        "repo": "otto-light",
+        "rev": "3ff655817ebccc2e4f27f66740235b84098a5644",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "jomada",
+        "repo": "otto-light",
+        "type": "gitlab"
+      }
+    },
+    "otto-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1737124289,
+        "narHash": "sha256-58Aqiu/umLmedGldZJMWEkk/5bs05Pl4+rrKfAs4lyA=",
+        "owner": "jomada",
+        "repo": "otto",
+        "rev": "55a8dc6e2de4b7b2c8c171b4a36e87b71104da21",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "jomada",
+        "repo": "otto",
+        "type": "gitlab"
+      }
+    },
+    "plasma-manager": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772361940,
+        "narHash": "sha256-B1Cz+ydL1iaOnGlwOFld/C8lBECPtzhiy/pP93/CuyY=",
+        "owner": "nix-community",
+        "repo": "plasma-manager",
+        "rev": "a4b33606111c9c5dcd10009042bb710307174f51",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "plasma-manager",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -116,6 +171,9 @@
         "home-manager": "home-manager",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
+        "otto-light-theme": "otto-light-theme",
+        "otto-theme": "otto-theme",
+        "plasma-manager": "plasma-manager",
         "rust-overlay": "rust-overlay",
         "systems": "systems",
         "tomorrow-theme-source": "tomorrow-theme-source"
