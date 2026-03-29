@@ -11,7 +11,6 @@ let
     "functions"
     "git"
     "key-bindings"
-    "termsupport"
   ];
 
   omzPlugins =
@@ -59,6 +58,11 @@ in
       '')
     ];
 
-    plugins = omzPlugins;
+    plugins = omzPlugins ++ [
+      {
+        name = "zsh-tab-title";
+        src = "${pkgs.zsh-tab-title}/share/zsh/plugins/zsh-tab-title.plugin.zsh";
+      }
+    ];
   };
 }
