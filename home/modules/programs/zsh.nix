@@ -45,7 +45,10 @@ in
     };
 
     initContent = lib.mkMerge [
-      (lib.mkOrder 850 (lib.concatLines omzLibs))
+      (lib.mkOrder 850 (lib.concatLines omzLibs)) # After compinit, but before plugins
+      (lib.mkOrder 860 ''
+        ZSH_TAB_TITLE_DEFAULT_DISABLE_PREFIX=true
+      '')
       (lib.mkOrder 1200 ''
         set +o histexpand # Disable history expantion (annying exclamantion mark behaviour)
 
