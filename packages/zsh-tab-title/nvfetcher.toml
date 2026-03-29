@@ -1,0 +1,4 @@
+[zsh-tab-title]
+src.github = "trystan2k/zsh-tab-title"
+src.prefix = "v"
+fetch.url = "https://github.com/trystan2k/zsh-tab-title/blob/v$ver/zsh-tab-title.plugin.zsh"
