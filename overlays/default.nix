@@ -16,8 +16,6 @@ inputs: _: prev: {
 
   custom-wallpapers = prev.callPackage ../packages/wallpapers/default.nix { };
 
-  zsh-tab-title = prev.callPackage ../packages/zsh-tab-title { };
-
   # For some reason aws-sso-cli can't build on my due to the checkPhase, so I have to ignore some tests
   aws-sso-cli = prev.aws-sso-cli.overrideAttrs {
     checkFlags =
