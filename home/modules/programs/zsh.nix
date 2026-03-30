@@ -6,12 +6,16 @@
 }:
 let
 
+  zsh-tab-title = pkgs.fetchurl {
+    url = "https://github.com/trystan2k/zsh-tab-title/blob/v3.4.0/zsh-tab-title.plugin.zsh";
+    sha256 = "sha256-XKRLbay+c5e5UIUM96VNcnX0SOGDx1UOdxXjF4uaByQ=";
+  };
+
   omzLibs = builtins.map (file: "source ${pkgs.oh-my-zsh}/share/oh-my-zsh/lib/${file}.zsh") [
     "completion"
     "functions"
     "git"
     "key-bindings"
-    "termsupport"
   ];
 
   omzPlugins =
@@ -41,7 +45,10 @@ in
     };
 
     initContent = lib.mkMerge [
-      (lib.mkOrder 850 (lib.concatLines omzLibs))
+      (lib.mkOrder 850 (lib.concatLines omzLibs)) # After compinit, but before plugins
+      (lib.mkOrder 860 ''
+        ZSH_TAB_TITLE_DEFAULT_DISABLE_PREFIX=true
+      '')
       (lib.mkOrder 1200 ''
         set +o histexpand # Disable history expantion (annying exclamantion mark behaviour)
 
@@ -59,6 +66,11 @@ in
       '')
     ];
 
-    plugins = omzPlugins;
+    plugins = omzPlugins ++ [
+      {
+        name = "zsh-tab-title";
+        src = zsh-tab-title;
+      }
+    ];
   };
 }
