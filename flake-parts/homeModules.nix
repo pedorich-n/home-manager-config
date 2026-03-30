@@ -1,4 +1,8 @@
-{ flake, ... }:
+{
+  inputs,
+  flake,
+  ...
+}:
 {
   flake = {
     homeModules = {
@@ -6,7 +10,9 @@
         imports = [ ../home/configurations/common.nix ];
       };
       sharedModules = {
-        imports = flake.lib.loaders.listFilesRecursivelly { src = ../home/modules; };
+        imports = (flake.lib.loaders.listFilesRecursivelly { src = ../home/modules; }) ++ [
+          inputs.plasma-manager.homeModules.plasma-manager
+        ];
       };
     };
   };
