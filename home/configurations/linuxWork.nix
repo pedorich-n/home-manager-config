@@ -42,6 +42,7 @@ in
   fonts.fontconfig.enable = true;
 
   programs = {
+    claude-code.enable = true;
     direnv.enable = true;
     mise.enable = true;
     vscode.enable = true;
