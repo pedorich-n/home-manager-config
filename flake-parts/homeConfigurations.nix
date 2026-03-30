@@ -1,5 +1,4 @@
 {
-  inputs,
   flake,
   lib,
   ...
@@ -17,9 +16,6 @@
     (flake.lib.builders.mkHomeConfiguration {
       system = "x86_64-linux";
       name = "desktopPersonal";
-      modules = [
-        inputs.plasma-manager.homeModules.plasma-manager
-      ];
     })
   ];
 }
