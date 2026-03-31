@@ -1,8 +1,8 @@
 {
-  stdenv,
+  stdenvNoCC,
   ...
 }:
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   name = "custom-wallpapers";
   src = ./pictures;
 

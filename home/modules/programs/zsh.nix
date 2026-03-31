@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   pkgs,
   lib,
@@ -65,7 +64,7 @@ in
     plugins = omzPlugins ++ [
       {
         name = "zsh-tab-title";
-        src = inputs.zsh-tab-title;
+        src = "${pkgs.zsh-tab-title}/share/zsh/plugins/zsh-tab-title";
       }
     ];
   };

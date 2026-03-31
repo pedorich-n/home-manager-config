@@ -1,9 +1,9 @@
 {
   otto-theme,
-  stdenv,
+  stdenvNoCC,
   ...
 }:
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   pname = "otto-theme";
   src = otto-theme;
   version = otto-theme.shortRev;
