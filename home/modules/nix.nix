@@ -1,5 +1,5 @@
 {
-  nixpkgs,
+  inputs,
   pkgs,
   lib,
   ...
@@ -22,7 +22,7 @@ in
   nix = {
     package = lib.mkDefault nixPkg;
 
-    registry = lib.mkDefault { nixpkgs.flake = nixpkgs; };
+    registry = lib.mkDefault { nixpkgs.flake = inputs.nixpkgs; };
 
     nixPath = lib.mkDefault [
       "nixpkgs=${pkgs.path}"

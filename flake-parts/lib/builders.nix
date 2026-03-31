@@ -22,8 +22,7 @@ let
           ]
           ++ modules;
           extraSpecialArgs = {
-            inherit (inputs) nixpkgs;
-            inherit flake;
+            inherit flake inputs;
           };
         }
       );

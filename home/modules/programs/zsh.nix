@@ -1,15 +1,11 @@
 {
+  inputs,
   config,
   pkgs,
   lib,
   ...
 }:
 let
-
-  zsh-tab-title = pkgs.fetchurl {
-    url = "https://github.com/trystan2k/zsh-tab-title/blob/v3.4.0/zsh-tab-title.plugin.zsh";
-    sha256 = "sha256-XKRLbay+c5e5UIUM96VNcnX0SOGDx1UOdxXjF4uaByQ=";
-  };
 
   omzLibs = builtins.map (file: "source ${pkgs.oh-my-zsh}/share/oh-my-zsh/lib/${file}.zsh") [
     "completion"
@@ -69,7 +65,7 @@ in
     plugins = omzPlugins ++ [
       {
         name = "zsh-tab-title";
-        src = zsh-tab-title;
+        src = inputs.zsh-tab-title;
       }
     ];
   };

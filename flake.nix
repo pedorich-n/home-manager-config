@@ -54,6 +54,11 @@
       url = "gitlab:jomada/otto";
       flake = false;
     };
+
+    zsh-tab-title = {
+      url = "github:trystan2k/zsh-tab-title";
+      flake = false;
+    };
   };
 
   outputs =
