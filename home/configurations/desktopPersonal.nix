@@ -44,6 +44,7 @@ in
     };
     java.enable = true;
     keychain.keys = [
+      "id_main"
       gpgKey
     ];
     mise.enable = true;
