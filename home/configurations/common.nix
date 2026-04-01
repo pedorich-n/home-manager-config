@@ -2,7 +2,7 @@
 { pkgs, lib, ... }:
 {
   home = {
-    stateVersion = lib.mkDefault "23.11";
+    stateVersion = lib.mkDefault "26.05";
 
     packages = with pkgs; [
       curl # HTTP client
@@ -50,5 +50,8 @@
     zsh.enable = lib.mkDefault true; # Main shell
   };
 
-  xdg.enable = lib.mkDefault true;
+  xdg = {
+    enable = lib.mkDefault true;
+    userDirs.setSessionVariables = lib.mkDefault true;
+  };
 }

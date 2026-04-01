@@ -26,6 +26,7 @@ in
       };
 
       signing = {
+        format = "openpgp";
         key = gpgKey;
         signByDefault = true;
       };
