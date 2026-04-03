@@ -43,7 +43,10 @@ in
         signByDefault = true;
       };
     };
-    java.enable = true;
+    java = {
+      enable = true;
+      package = pkgs.jre;
+    };
     keychain.keys = [
       "id_main"
       gpgKey
@@ -62,6 +65,7 @@ in
     username = "nikita";
 
     packages = with pkgs; [
+      jquake
       opentofu
       tofu-ls
     ];
