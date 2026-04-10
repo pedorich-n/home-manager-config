@@ -1,6 +1,10 @@
-{ lib, ... }:
 {
-  programs.nh = {
+  config,
+  lib,
+  ...
+}:
+{
+  programs.nh = lib.mkIf config.custom.deploymentType.isStandalone {
     clean = {
       enable = lib.mkDefault true;
       dates = lib.mkDefault "*-*-01,14 11:00:00"; # On the 1st and 14th of every month at 11:00

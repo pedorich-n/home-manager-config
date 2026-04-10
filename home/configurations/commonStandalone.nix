@@ -14,6 +14,8 @@ in
   };
 
   custom = {
+    deploymentType.isStandalone = true;
+
     aliases = {
       enable = lib.mkDefault true;
       hm.enable = lib.mkDefault true;
