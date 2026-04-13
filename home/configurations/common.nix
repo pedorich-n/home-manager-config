@@ -30,8 +30,6 @@
   };
 
   programs = {
-    home-manager.enable = lib.mkDefault true;
-
     bash.enable = lib.mkDefault true; # To set Home Manager's ENVs vars in .profile
     bat.enable = lib.mkDefault true; # Colorful `cat` replacement (text-files viewer)
     dircolors.enable = lib.mkDefault true; # Manage .dir_colors and set LS_COLORS

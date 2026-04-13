@@ -32,6 +32,8 @@ in
   };
 
   programs = {
+    home-manager.enable = lib.mkDefault true;
+
     nh = {
       enable = lib.mkDefault true;
       homeFlake = lib.mkDefault hmConfigLocation;
