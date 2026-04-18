@@ -44,6 +44,7 @@ in
   programs = {
     claude-code.enable = true;
     direnv.enable = true;
+    gh.enable = true;
     mise.enable = true;
     vscode.enable = true;
     java = {
