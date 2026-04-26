@@ -43,6 +43,7 @@ in
         signByDefault = true;
       };
     };
+    gh.enable = true;
     java = {
       enable = true;
       package = pkgs.jre;

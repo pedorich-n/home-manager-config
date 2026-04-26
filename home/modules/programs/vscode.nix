@@ -284,6 +284,10 @@ in
             };
           };
 
+          chatSettings = {
+            "chat.viewSessions.orientation" = "stacked";
+          };
+
         in
         globalSettins
         // editorSettings
@@ -297,7 +301,8 @@ in
         // vscodeMiscSettings
         // yamlSettings
         // jsonSettings
-        // shellSettings;
+        // shellSettings
+        // chatSettings;
     };
   };
 
