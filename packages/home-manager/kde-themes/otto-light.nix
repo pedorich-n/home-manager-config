@@ -1,7 +1,6 @@
 {
   otto-light-theme,
   stdenvNoCC,
-  ...
 }:
 stdenvNoCC.mkDerivation {
   pname = "otto-light-theme";

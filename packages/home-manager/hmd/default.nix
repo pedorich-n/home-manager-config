@@ -3,7 +3,6 @@
   ripgrep,
   gum,
   nvd,
-  ...
 }:
 writeShellApplication {
   name = "hmd";

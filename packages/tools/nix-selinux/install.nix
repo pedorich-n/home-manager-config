@@ -2,7 +2,6 @@
   callPackage,
   writeShellApplication,
   gnugrep,
-  ...
 }:
 let
   nix-selinux = callPackage ./package.nix { };

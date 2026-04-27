@@ -2,7 +2,6 @@
   zsh-tab-title,
   stdenvNoCC,
   lib,
-  ...
 }:
 stdenvNoCC.mkDerivation {
   pname = "zsh-tab-title";
