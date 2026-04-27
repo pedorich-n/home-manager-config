@@ -13,14 +13,17 @@
   programs.vim = {
     packageConfigurable = lib.mkDefault pkgs.vim-full;
 
-    plugins = with pkgs.vimPlugins; [
-      lightline-vim
-      onehalf
-      tagbar
-      tomorrow-theme
-      vim-easymotion
-      vim-gitgutter
-    ];
+    plugins =
+      (with pkgs.vimPlugins; [
+        lightline-vim
+        onehalf
+        tagbar
+        vim-easymotion
+        vim-gitgutter
+      ])
+      ++ [
+        pkgs.vim-tomorrow-theme
+      ];
 
     extraConfig = ''
       " Use system clipboard

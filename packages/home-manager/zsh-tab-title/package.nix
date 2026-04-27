@@ -1,12 +1,12 @@
 {
-  zsh-tab-title,
+  inputs,
   stdenvNoCC,
   lib,
 }:
 stdenvNoCC.mkDerivation {
   pname = "zsh-tab-title";
-  version = zsh-tab-title.shortRev;
-  src = lib.cleanSource zsh-tab-title;
+  version = inputs.zsh-tab-title.shortRev;
+  src = lib.cleanSource inputs.zsh-tab-title;
 
   dontBuild = true;
 

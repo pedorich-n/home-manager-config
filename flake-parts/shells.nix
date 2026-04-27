@@ -9,7 +9,7 @@
         So one file can contain multiple shells
       */
       devShells = lib.pipe ../shells [
-        (src: flake.lib.loaders.listFilesRecursivelly { inherit src; })
+        (src: flake.lib.loaders.listFilesRecursively { inherit src; })
         (builtins.map (shell: import shell { inherit pkgs lib; }))
         (lib.foldl' (acc: attrs: lib.recursiveUpdate acc attrs) { })
       ];

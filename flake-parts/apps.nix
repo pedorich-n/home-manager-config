@@ -1,20 +1,31 @@
-{ flake, lib, ... }:
+{
+  flake,
+  ...
+}:
 {
   perSystem =
-    { pkgs, ... }:
     {
-      apps =
-        let
-          mkBootstrap = name: {
-            name = "bootstrap-${name}";
-            value = {
-              program = pkgs.callPackage ../packages/bootstrap { configName = name; };
-            };
-          };
-        in
-        {
-          install-nix-selinux.program = pkgs.callPackage ../packages/nix-selinux/install.nix { };
-        }
-        // (lib.mapAttrs' (name: _: mkBootstrap name) flake.homeConfigurations);
+      pkgs,
+      lib,
+      ...
+    }:
+    let
+      tools = lib.filesystem.packagesFromDirectoryRecursive {
+        inherit (pkgs) callPackage;
+        directory = ../pkgs/tools;
+      };
+
+      mkBootstrap = name: {
+        name = "bootstrap-${name}";
+        value = {
+          program = tools.bootstrap.override { configName = name; };
+        };
+      };
+    in
+    {
+      apps = {
+        install-nix-selinux.program = tools.nix-selinux.install;
+      }
+      // (lib.mapAttrs' (name: _: mkBootstrap name) flake.homeConfigurations);
     };
 }
