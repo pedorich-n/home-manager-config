@@ -12,7 +12,7 @@
     let
       tools = lib.filesystem.packagesFromDirectoryRecursive {
         inherit (pkgs) callPackage;
-        directory = ../packages/tools;
+        directory = ../pkgs/tools;
       };
 
       mkBootstrap = name: {

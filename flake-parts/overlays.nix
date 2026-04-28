@@ -7,9 +7,8 @@
 {
   flake.overlays =
     let
-      dir = ../overlays;
       overlayFiles = flake.lib.loaders.listFilesRecursively {
-        src = dir;
+        src = ../overlays;
       };
 
       getOverlayName = path: lib.removeSuffix ".nix" (baseNameOf path);
