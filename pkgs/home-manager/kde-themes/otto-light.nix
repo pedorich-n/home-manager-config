@@ -1,12 +1,11 @@
 {
-  otto-light-theme,
+  inputs,
   stdenvNoCC,
-  ...
 }:
 stdenvNoCC.mkDerivation {
   pname = "otto-light-theme";
-  src = otto-light-theme;
-  version = otto-light-theme.shortRev;
+  src = inputs.otto-light-theme;
+  version = inputs.otto-light-theme.shortRev;
 
   dontBuild = true;
   dontPatch = true;

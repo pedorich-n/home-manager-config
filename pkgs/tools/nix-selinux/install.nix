@@ -2,10 +2,9 @@
   callPackage,
   writeShellApplication,
   gnugrep,
-  ...
 }:
 let
-  nix-selinux = callPackage ./package.nix { };
+  nix-selinux = callPackage ./build.nix { };
 in
 writeShellApplication {
   name = "install-nix-selinux";

@@ -1,6 +1,5 @@
 {
   stdenvNoCC,
-  ...
 }:
 stdenvNoCC.mkDerivation {
   name = "custom-wallpapers";

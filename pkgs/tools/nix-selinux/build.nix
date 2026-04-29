@@ -3,7 +3,6 @@
   libselinux,
   semodule-utils,
   checkpolicy,
-  ...
 }:
 # Copied from https://github.com/nix-community/nix-installers/blob/3ed29c693f06e5/default.nix#L36-L58
 stdenv.mkDerivation {
