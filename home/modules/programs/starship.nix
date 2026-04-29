@@ -77,7 +77,7 @@
       };
 
       python = {
-        format = ''via [''$symbol''$pyenv_prefix(''$version )]($style)'';
+        format = "via [$symbol$pyenv_prefix($version )]($style)";
         disabled = false;
         symbol = " ";
       };

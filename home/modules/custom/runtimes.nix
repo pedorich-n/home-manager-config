@@ -40,7 +40,7 @@ in
         javaRuntimeEntries = lib.mapAttrs' (version: pkg: lib.nameValuePair "${cfg.root}/java-${version}" { source = pkg.home; }) javaPkgs;
 
         scalaPkgs = lib.foldl' (acc: pkg: acc // { "${getMajorMinorVersion pkg}" = pkg; }) { } (lib.unique cfg.scala);
-        scalaAliases = lib.mapAttrs' (version: pkg: lib.nameValuePair "scala_${version}" ''${lib.getExe' pkg "scala"}'') scalaPkgs;
+        scalaAliases = lib.mapAttrs' (version: pkg: lib.nameValuePair "scala_${version}" "${lib.getExe' pkg "scala"}") scalaPkgs;
         scalaRuntimeEntries = lib.mapAttrs' (version: pkg: lib.nameValuePair "${cfg.root}/scala-${version}" { source = pkg; }) scalaPkgs;
       in
       {
