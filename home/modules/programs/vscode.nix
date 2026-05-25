@@ -40,7 +40,6 @@ in
           space-ocean-kit-refined.space-ocean-kit-refined
 
           # Languages
-          arrterian.nix-env-selector
           charliermarsh.ruff
           jnoortheen.nix-ide
           kdl-org.kdl
