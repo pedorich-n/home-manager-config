@@ -87,7 +87,7 @@ in
       postman # Client for RESTful APIs
       saml2aws # AWS SSO
       shfmt # Shell formatter
-      sublime4 # Text editor
+      sublime4-dev # Text editor
       xclip # CLI Clipboard manager
       opentofu
       tofu-ls

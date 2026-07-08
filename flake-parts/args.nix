@@ -1,16 +1,8 @@
 {
   self,
   inputs,
-  lib,
   ...
 }:
-let
-  getName = pkg: pkg.name or pkg.meta.name or "${pkg.pname or "none"}-${pkg.version or "none"}";
-
-  allowedInsecurePackages = [
-    "openssl-1.1.1" # Dependency of Sublime Text 4
-  ];
-in
 {
   _module.args.flake = self;
 
@@ -27,7 +19,6 @@ in
           ];
           config = {
             allowUnfree = true;
-            allowInsecurePredicate = pkg: builtins.any (prefix: lib.hasPrefix prefix (getName pkg)) allowedInsecurePackages;
           };
         };
       };
