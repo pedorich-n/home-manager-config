@@ -53,7 +53,7 @@ in
     gh.enable = true;
     mise.enable = true;
     nh.clean.dates = "monthly";
-    # vscode.enable = true;
+    vscode.enable = true;
     java = {
       enable = true;
       package = pkgs.jdk17;
