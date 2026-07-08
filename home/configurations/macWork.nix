@@ -1,11 +1,18 @@
-{ pkgs, ... }:
-let
-  # gpgKey = "E3763F185F33AEA7";
-in
+{
+  config,
+  pkgs,
+  ...
+}:
+# let
+# gpgKey = "E3763F185F33AEA7";
+# in
 {
   imports = [ ./commonStandalone.nix ];
 
-  home.username = "mpedorich";
+  home = {
+    username = "mpedorich";
+    homeDirectory = "/Users/${config.home.username}";
+  };
 
   custom = {
     aliases.hms.configName = "macWork";
