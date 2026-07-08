@@ -19,6 +19,15 @@
       ];
     };
 
+    macWork = {
+      system = "aarch64-darwin";
+      withSharedModules = true;
+      presets = [
+        "common"
+        "standalone"
+      ];
+    };
+
     wslPersonal = {
       system = "x86_64-linux";
       withSharedModules = true;
