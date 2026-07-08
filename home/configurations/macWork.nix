@@ -3,9 +3,9 @@
   pkgs,
   ...
 }:
-# let
-# gpgKey = "E3763F185F33AEA7";
-# in
+let
+  gpgKey = "BB80A0D1C0EF81CD";
+in
 {
   imports = [ ./commonStandalone.nix ];
 
@@ -65,16 +65,16 @@
         email = "mykyta.pedorich@paidy.com";
       };
 
-      # signing = {
-      #   format = "openpgp";
-      #   key = gpgKey;
-      #   signByDefault = true;
-      # };
+      signing = {
+        format = "openpgp";
+        key = gpgKey;
+        signByDefault = true;
+      };
     };
 
     keychain.keys = [
       "risk_engineering"
-      # gpgKey
+      gpgKey
     ];
   };
 
