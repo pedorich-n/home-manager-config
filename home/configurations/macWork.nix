@@ -45,6 +45,7 @@ in
     direnv.enable = true;
     gh.enable = true;
     mise.enable = true;
+    nh.clean.dates = "monthly";
     # vscode.enable = true;
     java = {
       enable = true;
