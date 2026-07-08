@@ -253,7 +253,7 @@ in
           };
 
           vscodeMiscSettings = {
-            "extensions.autoUpdate" = false;
+            "extensions.autoUpdate" = "off";
             "git.autofetch" = false;
             "search.useIgnoreFiles" = true;
             "search.useGlobalIgnoreFiles" = true;
