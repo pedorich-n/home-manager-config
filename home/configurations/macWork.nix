@@ -86,11 +86,8 @@ in
     packages = with pkgs; [
       awscli2 # AWS CLI
       nerd-fonts.fira-code # IDE & terminal font
-      # obsidian # Note-taking
-      # postman # Client for RESTful APIs
       saml2aws # AWS SSO
       shfmt # Shell formatter
-      # sublime4-dev # Text editor
       opentofu
       tofu-ls
     ];
