@@ -19,6 +19,10 @@
       name = "linuxWork";
     })
     (flake.lib.builders.mkHomeConfiguration {
+      system = "aarch64-darwin";
+      name = "macWork";
+    })
+    (flake.lib.builders.mkHomeConfiguration {
       system = "x86_64-linux";
       name = "desktopPersonal";
     })
