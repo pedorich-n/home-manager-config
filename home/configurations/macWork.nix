@@ -50,7 +50,10 @@ in
   programs = {
     claude-code.enable = true;
     direnv.enable = true;
-    gh.enable = true;
+    gh = {
+      enable = true;
+      settings.git_protocol = "https";
+    };
     mise.enable = true;
     nh.clean.dates = "monthly";
     vscode.enable = true;
