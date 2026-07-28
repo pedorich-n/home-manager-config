@@ -28,6 +28,8 @@ in
         pkgs.jdk21
       ];
     };
+
+    xdg.thumbnailers.enable = true;
   };
 
   programs = {
@@ -66,6 +68,7 @@ in
     username = "nikita";
 
     packages = with pkgs; [
+      freecad-thumbnailer
       jquake
       opentofu
       tofu-ls
