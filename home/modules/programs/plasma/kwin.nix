@@ -1,9 +1,7 @@
 {
   programs.plasma.kwin = {
     titlebarButtons = {
-      left = [
-        "application-menu"
-      ];
+      left = [ ];
 
       right = [
         "minimize"
