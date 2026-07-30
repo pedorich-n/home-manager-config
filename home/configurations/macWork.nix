@@ -9,11 +9,6 @@ in
 {
   imports = [ ./commonStandalone.nix ];
 
-  home = {
-    username = "mpedorich";
-    homeDirectory = "/Users/${config.home.username}";
-  };
-
   custom = {
     aliases.hms.configName = "macWork";
     dotfiles.enable = true;
@@ -82,9 +77,8 @@ in
   };
 
   home = {
-    shellAliases = {
-      "zellij_pwd" = "zellij --session $(pwd | xargs basename)";
-    };
+    username = "mpedorich";
+    homeDirectory = "/Users/${config.home.username}";
 
     packages = with pkgs; [
       awscli2 # AWS CLI
@@ -94,6 +88,10 @@ in
       opentofu
       tofu-ls
     ];
+
+    shellAliases = {
+      "zellij_pwd" = "zellij --session $(pwd | xargs basename)";
+    };
   };
 
   targets = {
