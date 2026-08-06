@@ -20,6 +20,7 @@
       ".scala-build"
       ".venv/"
       ".vscode/"
+      ".claude/"
       "metals.sbt"
       "target/"
       "venv/"
