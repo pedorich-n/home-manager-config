@@ -29,24 +29,6 @@ in
         description = "Extra Python packages to install";
       };
 
-      poetry = {
-        enable = lib.mkEnableOption "Poetry";
-
-        package = lib.mkPackageOption pkgs "poetry" { };
-
-        plugins = lib.mkOption {
-          type = lib.types.functionTo (lib.types.listOf lib.types.package);
-          default = _: [ ];
-        };
-
-        resultPackage = lib.mkOption {
-          type = lib.types.package;
-          readOnly = true;
-          internal = true;
-          default = cfg.poetry.package.withPlugins (ps: (cfg.poetry.plugins ps));
-        };
-      };
-
       uv = {
         enable = lib.mkEnableOption "uv";
 
@@ -77,20 +59,11 @@ in
           isort # import sorter
           ruff # linter & formatter
         ];
-
-      poetry = lib.mkIf cfg.poetry.enable {
-        plugins =
-          poetryPlugins: with poetryPlugins; [
-            poetry-plugin-up # Poetry plugin to simplify package updates
-            poetry-plugin-export # Poetry plugin to export the dependencies to various formats
-          ];
-      };
     };
 
     home.packages = [
       cfg.resultEnv
     ]
-    ++ lib.optional cfg.poetry.enable cfg.poetry.resultPackage
     ++ lib.optional cfg.uv.enable cfg.uv.package;
   };
 }
