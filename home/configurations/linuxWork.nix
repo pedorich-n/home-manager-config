@@ -33,7 +33,6 @@ in
             pandas
           ];
 
-        poetry.enable = true;
         uv.enable = true;
       };
     };
@@ -87,7 +86,6 @@ in
       postman # Client for RESTful APIs
       saml2aws # AWS SSO
       shfmt # Shell formatter
-      sublime4-dev # Text editor
       xclip # CLI Clipboard manager
       opentofu
       tofu-ls
