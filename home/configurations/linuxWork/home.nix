@@ -14,7 +14,6 @@
       awscli2 # AWS CLI
       caffeine-ng # Disable screensaver
       docker-compose # Docker
-      nerd-fonts.fira-code # IDE & terminal font
       obsidian # Note-taking
       postman # Client for RESTful APIs
       saml2aws # AWS SSO

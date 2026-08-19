@@ -7,6 +7,8 @@
       presets = [
         "common"
         "standalone"
+        "gui"
+        "linux"
       ];
     };
 
@@ -16,6 +18,19 @@
       presets = [
         "common"
         "standalone"
+        "gui"
+        "linux"
+      ];
+    };
+
+    macWork = {
+      system = "aarch64-darwin";
+      withSharedModules = true;
+      presets = [
+        "common"
+        "standalone"
+        "gui"
+        "mac"
       ];
     };
 
@@ -25,6 +40,7 @@
       presets = [
         "common"
         "standalone"
+        "linux"
       ];
     };
   };
