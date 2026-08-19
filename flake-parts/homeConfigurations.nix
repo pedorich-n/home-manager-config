@@ -7,6 +7,8 @@
       presets = [
         "common"
         "standalone"
+        "gui"
+        "linux"
       ];
     };
 
@@ -16,6 +18,8 @@
       presets = [
         "common"
         "standalone"
+        "gui"
+        "linux"
       ];
     };
 
@@ -25,6 +29,7 @@
       presets = [
         "common"
         "standalone"
+        "gui"
       ];
     };
 
@@ -34,6 +39,7 @@
       presets = [
         "common"
         "standalone"
+        "linux"
       ];
     };
   };
