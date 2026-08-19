@@ -1,26 +1,31 @@
 {
-  inputs,
-  flake,
-  lib,
-  ...
-}:
-{
-  imports = [
-    inputs.home-manager.flakeModules.default
-  ];
 
-  flake.homeConfigurations = lib.mkMerge [
-    (flake.lib.builders.mkHomeConfiguration {
+  flake.builders.homeConfigurations = {
+    desktopPersonal = {
       system = "x86_64-linux";
-      name = "wslPersonal";
-    })
-    (flake.lib.builders.mkHomeConfiguration {
+      withSharedModules = true;
+      presets = [
+        "common"
+        "standalone"
+      ];
+    };
+
+    linuxWork = {
       system = "x86_64-linux";
-      name = "linuxWork";
-    })
-    (flake.lib.builders.mkHomeConfiguration {
+      withSharedModules = true;
+      presets = [
+        "common"
+        "standalone"
+      ];
+    };
+
+    wslPersonal = {
       system = "x86_64-linux";
-      name = "desktopPersonal";
-    })
-  ];
+      withSharedModules = true;
+      presets = [
+        "common"
+        "standalone"
+      ];
+    };
+  };
 }
