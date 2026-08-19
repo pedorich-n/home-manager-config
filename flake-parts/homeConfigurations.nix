@@ -18,5 +18,14 @@
         "standalone"
       ];
     };
+
+    wslPersonal = {
+      system = "x86_64-linux";
+      withSharedModules = true;
+      presets = [
+        "common"
+        "standalone"
+      ];
+    };
   };
 }

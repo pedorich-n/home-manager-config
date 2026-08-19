@@ -1,23 +1,11 @@
-{ pkgs, lib, ... }:
+{
+  lib,
+  ...
+}:
 let
   gpgKey = "ADC7FB37D4DF4CE2";
 in
 {
-  imports = [ ./commonStandalone.nix ];
-
-  home.username = "pedorich_n";
-
-  custom = {
-    aliases.hms.configName = "wslPersonal";
-    programs = {
-      gpg.enable = true;
-      python = {
-        enable = true;
-        uv.enable = true;
-      };
-    };
-  };
-
   programs = {
     git = {
       settings.user = {
@@ -46,11 +34,4 @@ in
       fi
     '';
   };
-
-  home.packages = with pkgs; [
-    wslu
-    wsl-1password-cli
-    opentofu
-    tofu-ls
-  ];
 }
