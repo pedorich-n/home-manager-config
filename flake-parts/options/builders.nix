@@ -7,18 +7,18 @@
   ...
 }:
 let
-  hmPresetModules =
+  presetsRoot = "${flake}/home/presets";
+  availablePresets = lib.attrNames (lib.filterAttrs (_: type: type == "directory") (builtins.readDir presetsRoot));
+
+  mkPresetModules =
+    presets:
     let
-      root = "${flake}/home/presets";
-      availablePresets = lib.attrNames (lib.filterAttrs (_: type: type == "directory") (builtins.readDir root));
       mkPresetModule = preset: {
-        ${preset} = {
-          _file = "${./builders.nix}#hmPresetModules.${lib.escapeNixIdentifier preset}"; # Helps with debugging
-          imports = flake.lib.loaders.listFilesRecursively { src = "${root}/${preset}"; };
-        };
+        _file = "${./builders.nix}#hmPresetModules.${lib.escapeNixIdentifier preset}"; # Helps with debugging
+        imports = flake.lib.loaders.listFilesRecursively { src = "${presetsRoot}/${preset}"; };
       };
     in
-    lib.foldl' (acc: preset: acc // (mkPresetModule preset)) { } availablePresets;
+    lib.map mkPresetModule presets;
 
   loadConfig = name: flake.lib.loaders.listFilesRecursively { src = "${flake}/home/configurations/${name}"; };
 
@@ -30,7 +30,7 @@ let
         inherit pkgs;
         modules =
           lib.optional cfg.withSharedModules flake.homeModules.sharedModules
-          ++ (cfg.withPresets hmPresetModules)
+          ++ (mkPresetModules cfg.presets)
           ++ cfg.extraModules
           ++ (loadConfig name);
         extraSpecialArgs = {
@@ -40,6 +40,10 @@ let
     );
 in
 {
+  imports = [
+    inputs.home-manager.flakeModules.default
+  ];
+
   options.flake = flake-parts-lib.mkSubmoduleOptions {
     builders = {
       homeConfigurations = lib.mkOption {
@@ -57,10 +61,10 @@ in
                 default = true;
               };
 
-              withPresets = lib.mkOption {
-                type = lib.types.functionTo (lib.types.listOf lib.types.deferredModule);
+              presets = lib.mkOption {
+                type = lib.types.listOf (lib.types.enum availablePresets);
                 description = "Presets to include";
-                default = _: [ ];
+                default = [ ];
               };
 
               extraModules = lib.mkOption {
