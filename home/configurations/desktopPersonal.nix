@@ -55,6 +55,7 @@ in
     mise.enable = true;
     obsidian.enable = true;
     plasma.enable = true;
+    rclone.enable = true;
     vscode.enable = true;
   };
 
