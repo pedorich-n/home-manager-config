@@ -7,18 +7,9 @@
   ...
 }:
 let
-  presetsRoot = "${flake}/home/presets";
-  availablePresets = lib.attrNames (lib.filterAttrs (_: type: type == "directory") (builtins.readDir presetsRoot));
+  availablePresets = lib.attrNames flake.homePresetModules;
 
-  mkPresetModules =
-    presets:
-    let
-      mkPresetModule = preset: {
-        _file = "${./builders.nix}#hmPresetModules.${lib.escapeNixIdentifier preset}"; # Helps with debugging
-        imports = flake.lib.loaders.listFilesRecursively { src = "${presetsRoot}/${preset}"; };
-      };
-    in
-    lib.map mkPresetModule presets;
+  mkPresetModules = presets: lib.map (preset: flake.homePresetModules.${preset}) presets;
 
   loadConfig = name: flake.lib.loaders.listFilesRecursively { src = "${flake}/home/configurations/${name}"; };
 
