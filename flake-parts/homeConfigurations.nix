@@ -30,6 +30,7 @@
         "common"
         "standalone"
         "gui"
+        "mac"
       ];
     };
 

@@ -1,12 +1,10 @@
 {
-  config,
   pkgs,
   ...
 }:
 {
   home = {
     username = "mpedorich";
-    homeDirectory = "/Users/${config.home.username}";
 
     packages = with pkgs; [
       awscli2 # AWS CLI
