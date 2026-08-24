@@ -15,7 +15,7 @@
 
       dimDisplay = {
         enable = true;
-        idleTimeout = 600;
+        idleTimeout = 1200;
       };
 
       turnOffDisplay = {
