@@ -32,6 +32,15 @@ in
     obsidian.enable = true;
     plasma.enable = true;
     rclone.enable = true;
-    vscode.enable = true;
+    vscode = {
+      enable = true;
+      profiles.default = {
+        extensions = [
+          pkgs.vscode-extensions.continue.continue
+        ];
+      };
+    };
+    rustup.enable = true;
+
   };
 }
