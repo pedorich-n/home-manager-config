@@ -1,0 +1,3 @@
+{
+  programs.mcp.enable = true;
+}
