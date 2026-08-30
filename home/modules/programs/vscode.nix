@@ -29,7 +29,6 @@ in
       extensions =
         (with pkgs.vscode-extensions; [
           # Using those from nixpkgs, because they require extra setup which is not provivided in vscode-marketplace
-          github.copilot
           jebbs.plantuml
         ])
         ++ (with pkgs.vscode-marketplace; [
