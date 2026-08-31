@@ -58,6 +58,23 @@
         "type": "github"
       }
     },
+    "home-manager-config-secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1788183206,
+        "narHash": "sha256-NBRHCd4WYyqVe09/qymfHenzJdIli7PfTnejqjWJjvo=",
+        "ref": "refs/heads/main",
+        "rev": "384e123bbdf71dc526427fdf836d519989713548",
+        "revCount": 2,
+        "type": "git",
+        "url": "ssh://git@github.com/pedorich-n/home-manager-config-secrets"
+      },
+      "original": {
+        "ref": "refs/heads/main",
+        "type": "git",
+        "url": "ssh://git@github.com/pedorich-n/home-manager-config-secrets"
+      }
+    },
     "nix-vscode-extensions": {
       "inputs": {
         "nixpkgs": [
@@ -169,12 +186,14 @@
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "home-manager-config-secrets": "home-manager-config-secrets",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
         "otto-light-theme": "otto-light-theme",
         "otto-theme": "otto-theme",
         "plasma-manager": "plasma-manager",
         "rust-overlay": "rust-overlay",
+        "sops-nix": "sops-nix",
         "systems": "systems",
         "tomorrow-theme-source": "tomorrow-theme-source",
         "zsh-tab-title": "zsh-tab-title"
@@ -197,6 +216,26 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786629091,
+        "narHash": "sha256-gkig4nPi1CWc4Z50GBsjE4ygSE7hMpl/TwID2an2Cck=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "a8627b21b9107c5711c96b84f32a9a4b3d45295f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
         "type": "github"
       }
     },
