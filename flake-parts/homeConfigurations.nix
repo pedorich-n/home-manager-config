@@ -9,7 +9,7 @@
         "standalone"
         "gui"
         "linux"
-        "sops"
+        "secrets"
       ];
     };
 
