@@ -4,7 +4,6 @@
 }:
 {
   custom = {
-    aliases.hms.configName = "macWork";
     dotfiles.enable = true;
     runtimes = {
       enable = true;
