@@ -9,6 +9,7 @@
         "standalone"
         "gui"
         "linux"
+        "sops"
       ];
     };
 
