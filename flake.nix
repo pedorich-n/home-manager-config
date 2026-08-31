@@ -69,7 +69,7 @@
 
     # Custom
     home-manager-config-secrets = {
-      url = "git+ssh://git@github.com/pedorich-n/home-manager-config-secrets?ref=refs/heads/main";
+      url = "git+ssh://git@github.com/pedorich-n/home-manager-config-secrets?ref=refs/heads/linuxWork";
       flake = false;
     };
 

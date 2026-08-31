@@ -21,6 +21,7 @@
         "standalone"
         "gui"
         "linux"
+        "secrets"
       ];
     };
 
