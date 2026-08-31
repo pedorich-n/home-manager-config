@@ -5,8 +5,6 @@
   ...
 }:
 let
-  jsonFormat = pkgs.formats.json { };
-
   # Copied from https://github.com/nix-community/home-manager/blob/99c9ec/modules/programs/opencode.nix#L24-L58
   toOpencodeShape =
     s:
@@ -46,7 +44,7 @@ let
 in
 {
   xdg.configFile."opencode/mcps.json" = lib.mkIf (config.programs.opencode.enable && transformedMcpServers != { }) {
-    source = jsonFormat.generate "opencode-mcps.json" {
+    source = pkgs.writers.writeJSON "opencode-mcps.json" {
       mcp = transformedMcpServers;
     };
   };
