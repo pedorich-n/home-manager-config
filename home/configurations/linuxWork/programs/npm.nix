@@ -1,0 +1,5 @@
+{
+  programs.npm = {
+    enable = true;
+  };
+}
