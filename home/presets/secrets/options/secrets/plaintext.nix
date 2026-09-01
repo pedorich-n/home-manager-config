@@ -4,6 +4,9 @@
   lib,
   ...
 }:
+let
+  file = "${inputs.home-manager-config-secrets}/plaintext/rendered/${config.custom.configName}/variables.nix";
+in
 {
   options = {
     custom.secrets.plaintext = lib.mkOption {
@@ -13,6 +16,6 @@
   };
 
   config = {
-    custom.secrets.plaintext = import "${inputs.home-manager-config-secrets}/plaintext/rendered/${config.custom.configName}/variables.nix";
+    custom.secrets.plaintext = if builtins.pathExists file then import file else { };
   };
 }
