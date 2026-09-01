@@ -4,10 +4,8 @@
 }:
 {
   sops = {
-    age = {
-      sshKeyPaths = [
-        "${config.home.homeDirectory}/.ssh/id_main"
-      ];
+    gnupg = {
+      home = "${config.home.homeDirectory}/.gnupg";
     };
 
     secrets = {

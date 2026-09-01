@@ -10,7 +10,6 @@
   config = {
     sops = {
       defaultSopsFile = lib.mkDefault "${sopsLib.secretsRoot}/secrets.yaml";
-      age.generateKey = lib.mkDefault true;
     };
   };
 }
