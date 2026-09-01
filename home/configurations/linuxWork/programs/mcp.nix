@@ -14,6 +14,10 @@
           "CF-Access-Client-Secret" = "{file:${config.sops.secrets."mcp/searxng/cf_client_secret".path}}";
         };
       };
+
+      confluence = {
+        url = "https://mcp.atlassian.com/v1/mcp";
+      };
     };
   };
 }
