@@ -22,6 +22,11 @@ let
         modules =
           lib.optional cfg.withSharedModules flake.homeModules.sharedModules
           ++ (mkPresetModules cfg.presets)
+          ++ [
+            {
+              custom.configName = lib.mkDefault name;
+            }
+          ]
           ++ cfg.extraModules
           ++ (loadConfig name);
         extraSpecialArgs = {

@@ -4,7 +4,6 @@
 }:
 {
   custom = {
-    aliases.hms.configName = "linuxWork";
     dotfiles.enable = true;
     runtimes = {
       enable = true;

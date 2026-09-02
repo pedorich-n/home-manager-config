@@ -25,6 +25,13 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     # Packages / Overlays
     tomorrow-theme-source = {
       url = "github:chriskempson/tomorrow-theme";
@@ -59,6 +66,13 @@
       url = "github:trystan2k/zsh-tab-title";
       flake = false;
     };
+
+    # Custom
+    home-manager-config-secrets = {
+      url = "git+ssh://git@github.com/pedorich-n/home-manager-config-secrets?ref=refs/heads/main";
+      flake = false;
+    };
+
   };
 
   outputs =

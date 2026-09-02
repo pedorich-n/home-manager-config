@@ -9,6 +9,7 @@
         "standalone"
         "gui"
         "linux"
+        "secrets"
       ];
     };
 
@@ -20,6 +21,7 @@
         "standalone"
         "gui"
         "linux"
+        "secrets"
       ];
     };
 

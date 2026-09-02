@@ -1,6 +1,5 @@
 {
   custom = {
-    aliases.hms.configName = "wslPersonal";
     programs = {
       gpg.enable = true;
       python = {

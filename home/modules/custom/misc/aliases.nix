@@ -1,4 +1,8 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 let
   cfg = config.custom.aliases;
 in
@@ -15,6 +19,7 @@ in
 
       configName = lib.mkOption {
         type = lib.types.nonEmptyStr;
+        default = config.custom.configName;
         description = "Name of the HomeManager config to switch to";
       };
     };
