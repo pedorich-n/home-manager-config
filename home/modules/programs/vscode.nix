@@ -31,7 +31,7 @@ in
           # Using those from nixpkgs, because they require extra setup which is not provivided in vscode-marketplace
           jebbs.plantuml
         ])
-        ++ (with pkgs.vscode-marketplace; [
+        ++ (with pkgs.vscode-marketplace-release; [
           # Themes
           evgeniypetukhov.dark-low-contrast
           dustinsanders.an-old-hope-theme-vscode
