@@ -10,6 +10,7 @@
         "gui"
         "linux"
         "secrets"
+        "ai"
       ];
     };
 
@@ -22,6 +23,7 @@
         "gui"
         "linux"
         "secrets"
+        "ai"
       ];
     };
 
@@ -33,6 +35,7 @@
         "standalone"
         "gui"
         "mac"
+        "ai"
       ];
     };
 

@@ -4,10 +4,12 @@
   ...
 }:
 let
-  uv = pkgs.uv;
+  uvx = lib.getExe' pkgs.uv "uvx";
 in
 {
   programs.mcp = {
+    enable = lib.mkDefault true;
+
     servers = {
       nix = {
         enabled = lib.mkDefault true;
@@ -16,7 +18,7 @@ in
 
       fetch = {
         enabled = lib.mkDefault true;
-        command = lib.getExe' uv "uvx";
+        command = uvx;
         args = [ "mcp-server-fetch" ];
       };
     };
