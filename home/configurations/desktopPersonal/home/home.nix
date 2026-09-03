@@ -10,6 +10,7 @@
       jquake
       opentofu
       tofu-ls
+      worktrunk
     ];
   };
 }
