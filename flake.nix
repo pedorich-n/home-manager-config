@@ -53,12 +53,14 @@
     };
 
     otto-light-theme = {
-      url = "gitlab:jomada/otto-light";
+      # gitlab: fetcher throws 403 for me 😕
+      url = "git+https://gitlab.com/jomada/otto-light.git";
       flake = false;
     };
 
     otto-theme = {
-      url = "gitlab:jomada/otto";
+      # gitlab: fetcher throws 403 for me 😕
+      url = "git+https://gitlab.com/jomada/otto.git";
       flake = false;
     };
 
