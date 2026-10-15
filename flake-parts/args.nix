@@ -13,9 +13,9 @@
         pkgs = import inputs.nixpkgs {
           inherit system;
           overlays = [
+            self.overlays.default
             inputs.nix-vscode-extensions.overlays.default
             inputs.rust-overlay.overlays.default
-            self.overlays.default
           ];
           config = {
             allowUnfree = true;
