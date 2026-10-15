@@ -35,6 +35,7 @@
         "standalone"
         "gui"
         "mac"
+        "secrets"
         "ai"
       ];
     };
