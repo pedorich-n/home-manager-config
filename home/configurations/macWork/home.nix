@@ -5,11 +5,11 @@
   ...
 }:
 let
-  # Proxy CA certificates installed by the company software
-  proxyCaGlob = "/usr/local/etc/openssl/certs/*_proxy_cacerts.pem";
-  # Public CAs + proxy CAs, rebuilt on activation
+  # Root CA installed by the company software
+  proxyRootCa = "/usr/local/etc/openssl/certs/*_root_ca.pem";
+  # Public CAs + company Root CA, rebuilt on activation
   customCaBundle = "${config.xdg.dataHome}/certs/ca-bundle.pem";
-  # JDK public CAs + proxy root CA, rebuilt on activation
+  # JDK public CAs + company Root CA, rebuilt on activation
   javaTrustStore = "${config.xdg.dataHome}/certs/java-truststore.jks";
   jdk = config.programs.java.package;
 in
@@ -29,26 +29,31 @@ in
       "zellij_pwd" = "zellij --session $(pwd | xargs basename)";
     };
 
-    # Rebuild the CA bundle on every switch so proxy CA rotations get picked up
-    activation.buildCaBundle = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      proxyCas=(${proxyCaGlob})
-      if [ -r "''${proxyCas[0]}" ]; then
-        run mkdir -p "$(dirname ${customCaBundle})"
-        run sh -c 'cat ${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt "$@" > ${customCaBundle}.tmp \
-          && mv ${customCaBundle}.tmp ${customCaBundle}' sh "''${proxyCas[@]}"
-        noteEcho "Custom CA bundle updated: ${customCaBundle}"
-      else
-        warnEcho "No ${proxyCaGlob} found, keeping the existing CA bundle"
-      fi
-    '';
+    activation = {
+      # Rebuild the CA bundle on every switch so proxy CA rotations get picked up
+      buildCaBundle = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        if [ -r ${proxyRootCa} ]; then
+          run mkdir -p "$(dirname ${customCaBundle})"
+          run sh -c 'cat ${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt ${proxyRootCa} > ${customCaBundle}.tmp \
+            && mv ${customCaBundle}.tmp ${customCaBundle}'
+          noteEcho "Custom CA bundle updated: ${customCaBundle}"
+        else
+          warnEcho "No ${proxyRootCa} found, keeping the existing CA bundle"
+        fi
+      '';
 
-    # Java needs its own certificates truststore
-    activation.buildJavaTrustStore = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      run install -D -m 644 ${jdk.home}/lib/security/cacerts ${javaTrustStore}
-      run ${lib.getExe' jdk "keytool"} -importcert -noprompt -alias proxy-root-ca -storepass changeit \
-        -file /usr/local/etc/openssl/certs/*_root_ca.pem -keystore ${javaTrustStore}
-      noteEcho "Custom Java truststore updated: ${javaTrustStore}"
-    '';
+      # Java needs its own certificates truststore
+      buildJavaTrustStore = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        if [ -r ${proxyRootCa} ]; then
+          run install -D -m 644 ${jdk.home}/lib/security/cacerts ${javaTrustStore}
+          run ${lib.getExe' jdk "keytool"} -importcert -noprompt -alias proxy-root-ca -storepass changeit \
+            -file ${proxyRootCa} -keystore ${javaTrustStore}
+          noteEcho "Custom Java truststore updated: ${javaTrustStore}"
+        else
+          warnEcho "No ${proxyRootCa} found, keeping the existing Java truststore"
+        fi
+      '';
+    };
 
     sessionVariables = {
       # Make various programs use custom SSL certificates
