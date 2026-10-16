@@ -9,7 +9,6 @@ let
   cfgJava = config.programs.java;
 in
 {
-  ###### interface
   options = with lib; {
     custom.programs.scala = {
       enable = mkEnableOption "Scala";
@@ -24,10 +23,16 @@ in
         default = "2.13";
         description = "Major Scala 2.X version to install";
       };
+
+      sbtOptions = mkOption {
+        type = with types; listOf str;
+        default = [ ];
+        example = [ "-Xmx8G" ];
+        description = "JVM options to set in SBT_OPTS. Picked up by the sbt launcher only.";
+      };
     };
   };
 
-  ###### implementation
   config =
     let
       scalaPackage = pkgs.scala_2_13.override { majorVersion = cfg.version; };
@@ -45,6 +50,9 @@ in
     in
     lib.mkIf cfg.enable {
       home.packages = allPackages;
+      home.sessionVariables = lib.mkIf (cfg.sbtOptions != [ ]) {
+        SBT_OPTS = lib.concatStringsSep " " cfg.sbtOptions;
+      };
       custom.runtimes.scala = [ scalaPackage ];
     };
 }

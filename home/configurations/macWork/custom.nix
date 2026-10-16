@@ -17,7 +17,10 @@
       aws-sso-cli.enable = true;
       flameshot.enable = true;
       rust.enable = true;
-      scala.enable = true;
+      scala = {
+        enable = true;
+        sbtOptions = [ "-Xmx8000M" ];
+      };
       gpg.enable = true;
       python = {
         enable = true;
