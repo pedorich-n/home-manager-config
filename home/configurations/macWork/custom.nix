@@ -19,7 +19,9 @@
       rust.enable = true;
       scala = {
         enable = true;
-        sbtOptions = [ "-Xmx8000M" ];
+        sbtOptions = ''
+          -J-Xmx8000M
+        '';
       };
       gpg.enable = true;
       python = {

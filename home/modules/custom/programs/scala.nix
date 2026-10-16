@@ -25,10 +25,19 @@ in
       };
 
       sbtOptions = mkOption {
-        type = with types; listOf str;
+        type = types.lines;
         default = [ ];
-        example = [ "-Xmx8G" ];
-        description = "JVM options to set in SBT_OPTS. Picked up by the sbt launcher only.";
+        example = [
+          "-J-Xmx8G"
+          "--client"
+        ];
+        description = ''
+          SBT launcher options to write to the `$XDG_CONFIG_HOME/sbt/sbtopts` file.
+
+          ::: {.note}
+          Pass JVM options with the `-J` prefix.
+          :::
+        '';
       };
     };
   };
@@ -46,12 +55,16 @@ in
             scalaPackage
           ];
         in
-        if cfgJava.enable then builtins.map (pkg: pkg.override { jre = cfgJava.package; }) packages else packages;
+        if cfgJava.enable then
+          builtins.map (pkg: pkg.override { jre = cfgJava.package; }) packages
+        else
+          packages;
     in
     lib.mkIf cfg.enable {
       home.packages = allPackages;
-      home.sessionVariables = lib.mkIf (cfg.sbtOptions != [ ]) {
-        SBT_OPTS = lib.concatStringsSep " " cfg.sbtOptions;
+
+      xdg.configFile."sbt/sbtopts" = lib.mkIf (cfg.sbtOptions != [ ]) {
+        text = cfg.sbtOptions;
       };
       custom.runtimes.scala = [ scalaPackage ];
     };
