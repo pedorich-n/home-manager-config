@@ -1,5 +1,11 @@
 {
+  pkgs,
+  ...
+}:
+{
   programs.vscode = {
-    package = null; # Let the company software manage the VSCode
+    # VSCode itself is managed by the company software; this only forwards `code` to it and makes HM think VSCode is installed.
+    package = pkgs.vscode-stub;
   };
+
 }

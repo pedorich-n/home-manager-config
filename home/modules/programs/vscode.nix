@@ -63,7 +63,6 @@ in
           donjayamanne.githistory
           fabiospampinato.vscode-open-in-github
           gruntfuggly.todo-tree
-          k--kato.intellij-idea-keybindings
           natqe.reload
           vscodevim.vim
           wmaurer.vscode-jumpy
