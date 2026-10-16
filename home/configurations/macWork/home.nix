@@ -9,6 +9,9 @@ let
   proxyCaGlob = "/usr/local/etc/openssl/certs/*_proxy_cacerts.pem";
   # Public CAs + proxy CAs, rebuilt on activation
   customCaBundle = "${config.xdg.dataHome}/certs/ca-bundle.pem";
+  # JDK public CAs + proxy root CA, rebuilt on activation
+  javaTrustStore = "${config.xdg.dataHome}/certs/java-truststore.jks";
+  jdk = config.programs.java.package;
 in
 {
   home = {
@@ -39,6 +42,14 @@ in
       fi
     '';
 
+    # Java needs its own certificates truststore
+    activation.buildJavaTrustStore = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      run install -D -m 644 ${jdk.home}/lib/security/cacerts ${javaTrustStore}
+      run ${lib.getExe' jdk "keytool"} -importcert -noprompt -alias proxy-root-ca -storepass changeit \
+        -file /usr/local/etc/openssl/certs/*_root_ca.pem -keystore ${javaTrustStore}
+      noteEcho "Custom Java truststore updated: ${javaTrustStore}"
+    '';
+
     sessionVariables = {
       # Make various programs use custom SSL certificates
       SSL_CERT_FILE = customCaBundle; # OpenSSL and most tools
@@ -50,4 +61,6 @@ in
       AWS_CA_BUNDLE = customCaBundle; # AWS CLI, boto3
     };
   };
+
+  custom.programs.java.toolOptions = [ "-Djavax.net.ssl.trustStore=${javaTrustStore}" ];
 }
