@@ -12,6 +12,16 @@ let
   # JDK public CAs + company Root CA, rebuilt on activation
   javaTrustStore = "${config.xdg.dataHome}/certs/java-truststore.jks";
   jdk = config.programs.java.package;
+
+  sslEnvVariables = [
+    "SSL_CERT_FILE" # OpenSSL and most tools
+    "NIX_SSL_CERT_FILE" # Nix
+    "NODE_EXTRA_CA_CERTS" # Node.js, Bun
+    "REQUESTS_CA_BUNDLE" # Python requests
+    "PIP_CERT" # pip
+    "CARGO_HTTP_CAINFO" # cargo
+    "AWS_CA_BUNDLE" # AWS CLI, boto3
+  ];
 in
 {
   home = {
@@ -55,16 +65,7 @@ in
       '';
     };
 
-    sessionVariables = {
-      # Make various programs use custom SSL certificates
-      SSL_CERT_FILE = customCaBundle; # OpenSSL and most tools
-      NIX_SSL_CERT_FILE = customCaBundle; # Nix
-      NODE_EXTRA_CA_CERTS = customCaBundle; # Node.js, Bun
-      REQUESTS_CA_BUNDLE = customCaBundle; # Python requests
-      PIP_CERT = customCaBundle; # pip
-      CARGO_HTTP_CAINFO = customCaBundle; # cargo
-      AWS_CA_BUNDLE = customCaBundle; # AWS CLI, boto3
-    };
+    sessionVariables = lib.genAttrs sslEnvVariables (_name: customCaBundle);
   };
 
   custom.programs.java.toolOptions = [ "-Djavax.net.ssl.trustStore=${javaTrustStore}" ];
