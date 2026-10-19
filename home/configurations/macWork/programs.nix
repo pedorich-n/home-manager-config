@@ -5,7 +5,6 @@
 }:
 {
   programs = {
-    claude-code.enable = true;
     direnv.enable = true;
     gh = {
       enable = true;
@@ -13,13 +12,9 @@
     };
     mise.enable = true;
     nh.clean.dates = "monthly";
-    vscode.enable = true;
     java = {
       enable = true;
       package = pkgs.jdk17;
-    };
-
-    git = {
     };
 
     keychain.keys = [
