@@ -8,5 +8,24 @@
   programs.opencode = {
     enable = lib.mkDefault true;
     enableMcpIntegration = lib.mkDefault true;
+
+    context = ''
+      # Working rules
+
+      ## Scope
+      - Do only what was asked. No extra refactors, cleanups, or "while I'm here" changes.
+      - Never create or amend commits, push, create tags unless I explicitly ask.
+
+      ## Uncertainty
+      - If requirements are ambiguous or you'd have to guess at behavior, naming, or scope, stop and ask. Don't guess.
+      - Say plainly when you haven't verified something, instead of presenting it as fact.
+      - Ask all your questions in one batch, not one at a time.
+
+      ## Code comments
+      - Comments must make sense to a reader who has never seen this task or conversation.
+      - Never write comments that refer to the task, the prompt, or the change itself. Examples: "implemented like X", "added per request", "new helper", "changed from Y".
+      - Comment only the why: non-obvious constraints, tradeoffs, workarounds. Don't restate what the code does.
+      - Don't remove existing comments unless the code they describe is gone.
+    '';
   };
 }
