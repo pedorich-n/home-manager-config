@@ -15,7 +15,6 @@
 
     programs = {
       aws-sso-cli.enable = true;
-      flameshot.enable = true;
       rust.enable = true;
       scala = {
         enable = true;

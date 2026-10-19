@@ -28,8 +28,10 @@ in
     username = "mpedorich";
 
     packages = with pkgs; [
-      awscli2 # AWS CLI
-      saml2aws # AWS SSO
+      awscli2
+      caffeine
+      hidden-bar # Utility to hide menu bar items
+      mos # Smooths scrolling and set mouse scroll directions independently
       shfmt # Shell formatter
       opentofu
       tofu-ls
