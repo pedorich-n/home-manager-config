@@ -12,7 +12,6 @@
     };
 
     secrets = {
-      "mcp/searxng/url" = { };
     };
   };
 }
