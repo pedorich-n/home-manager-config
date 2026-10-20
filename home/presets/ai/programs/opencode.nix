@@ -14,6 +14,7 @@
 
       ## Scope
       - Do only what was asked. No extra refactors, cleanups, or "while I'm here" changes.
+      - Before applying any changes, write 1-3 sentences saying what you're about to change and why
       - Never create or amend commits, push, create tags unless I explicitly ask.
 
       ## Uncertainty
