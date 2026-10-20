@@ -12,6 +12,7 @@ in
     cask "karabiner-elements" # Keyboard customiser
     cask "macshot"            # Screenshot and screen recording tool
     cask "middleclick"        # Utility to extend trackpad functionality
+    cask "ghostty"            # Terminal emulator that uses platform-native UI and GPU acceleration
   '';
 
   home.shellAliases.brew_bundle = "brew bundle cleanup --install --force --verbose --file ${config.xdg.configHome}/${hmBrewfile}";
