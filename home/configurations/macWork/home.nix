@@ -68,6 +68,10 @@ in
     };
 
     sessionVariables = lib.genAttrs sslEnvVariables (_name: customCaBundle);
+
+    sessionPath = [
+      "$HOME/.rd/bin"
+    ];
   };
 
   custom.programs.java.toolOptions = [ "-Djavax.net.ssl.trustStore=${javaTrustStore}" ];
