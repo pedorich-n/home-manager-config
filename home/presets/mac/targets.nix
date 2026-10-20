@@ -13,6 +13,9 @@
         ApplePressAndHoldEnabled = lib.mkDefault false;
         KeyRepeat = lib.mkDefault 2;
         InitialKeyRepeat = lib.mkDefault 25;
+        AppleICUForce24HourTime = lib.mkDefault true;
+        # 1 = Sunday, 2 = Monday.
+        AppleFirstWeekday.gregorian = lib.mkDefault 2;
       };
 
       "com.apple.dock" = {
@@ -26,7 +29,7 @@
         AppleShowAllFiles = lib.mkDefault true;
       };
 
-      # Tap to click; the trackpad driver and the Bluetooth trackpad driver keep separate copies.
+      # Tap to click
       "com.apple.AppleMultitouchTrackpad".Clicking = lib.mkDefault true;
 
       # Don't reopen windows when logging back in.
