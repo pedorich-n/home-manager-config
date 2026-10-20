@@ -7,7 +7,7 @@
 let
   cfg = config.custom.programs.hunk;
 
-  skillsRoot = "${cfg.package}/share/skills/hunk";
+  skillsRoot = "${cfg.package}/share/skills/${cfg.package.pname}";
 
   tomlFormat = pkgs.formats.toml { };
 in
@@ -18,7 +18,7 @@ in
     package = lib.mkPackageOption pkgs "hunk" { };
 
     installOpencodeSkills = lib.mkEnableOption "installing hunk's skills to OpenCode" // {
-      default = true;
+      default = config.programs.opencode.enable;
     };
 
     settings = lib.mkOption {
