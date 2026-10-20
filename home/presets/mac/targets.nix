@@ -36,6 +36,10 @@
         # Pressing 🌐/Control alone does nothing; by default it switches the input source.
         AppleFnUsageType = lib.mkDefault 0;
       };
+
+      "com.lwouis.alt-tab-macos" = {
+        updatePolicy = lib.mkDefault "0";
+      };
     };
   };
 }
