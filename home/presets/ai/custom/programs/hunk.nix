@@ -7,9 +7,9 @@
     enable = lib.mkDefault true;
 
     settings = {
-      agent_notes = lib.mkDefault true;
+      agent_notes = true;
 
-      vcs.watch = lib.mkDefault true;
+      vcs.watch = true;
     };
   };
 }
