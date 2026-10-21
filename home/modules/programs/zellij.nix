@@ -1,4 +1,7 @@
-{ lib, ... }:
+{
+  lib,
+  ...
+}:
 {
   programs.zellij = {
     enableBashIntegration = lib.mkDefault false;
@@ -6,6 +9,7 @@
 
     settings = {
       session_serialization = false;
+      stacked_pane_list = false;
     };
   };
 }
