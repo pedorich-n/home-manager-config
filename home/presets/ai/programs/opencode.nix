@@ -32,7 +32,7 @@
       '')
       (lib.mkIf (config.programs.mcp.servers.fff.enabled or false) ''
         ## Search
-        For any file search or grep in the current git-indexed directory, prefer fff tools (`fff-mcp`, `ffgrep`, `fffind`).
+        For any file search or grep prefer fff tools (`fff-mcp`, `ffgrep`, `fffind`).
         Include the known directory or module in the first search. Use definitions_only for declarations. ]
         Read more source only when the returned lines need context.
         Fall back to `fd`/`rg` via shell when nothing faster is available.
