@@ -20,6 +20,8 @@
     keybind = [
       "shift+alt+arrow_left=move_tab:-1"
       "shift+alt+arrow_right=move_tab:1"
+      "shift+alt+bracket_left=previous_tab"
+      "shift+alt+bracket_right=next_tab"
     ];
   };
 }
