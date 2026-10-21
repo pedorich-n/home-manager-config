@@ -1,5 +1,5 @@
 {
-  description = "Multiple machines config managed by NIX Home-Manageger and Flake";
+  description = "Multiple machines config managed by NIX Home-Manager and Flake";
 
   inputs = {
     self.submodules = true;

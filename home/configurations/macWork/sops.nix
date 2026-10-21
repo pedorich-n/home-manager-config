@@ -9,8 +9,6 @@
     };
 
     secrets = {
-      "mcp/searxng/cf_client_id" = { };
-      "mcp/searxng/cf_client_secret" = { };
     };
   };
 }

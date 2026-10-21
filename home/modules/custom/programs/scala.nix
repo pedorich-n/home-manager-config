@@ -9,7 +9,6 @@ let
   cfgJava = config.programs.java;
 in
 {
-  ###### interface
   options = with lib; {
     custom.programs.scala = {
       enable = mkEnableOption "Scala";
@@ -24,10 +23,25 @@ in
         default = "2.13";
         description = "Major Scala 2.X version to install";
       };
+
+      sbtOptions = mkOption {
+        type = types.lines;
+        default = [ ];
+        example = [
+          "-J-Xmx8G"
+          "--client"
+        ];
+        description = ''
+          SBT launcher options to write to the `$XDG_CONFIG_HOME/sbt/sbtopts` file.
+
+          ::: {.note}
+          Pass JVM options with the `-J` prefix.
+          :::
+        '';
+      };
     };
   };
 
-  ###### implementation
   config =
     let
       scalaPackage = pkgs.scala_2_13.override { majorVersion = cfg.version; };
@@ -45,6 +59,10 @@ in
     in
     lib.mkIf cfg.enable {
       home.packages = allPackages;
+
+      xdg.configFile."sbt/sbtopts" = lib.mkIf (cfg.sbtOptions != [ ]) {
+        text = cfg.sbtOptions;
+      };
       custom.runtimes.scala = [ scalaPackage ];
     };
 }
