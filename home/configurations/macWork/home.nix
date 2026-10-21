@@ -30,10 +30,10 @@ in
     packages = with pkgs; [
       awscli2
       caffeine
-      hidden-bar # Utility to hide menu bar items
       mos # Smooths scrolling and set mouse scroll directions independently
-      shfmt # Shell formatter
+      shfmt
       opentofu
+      thaw # Menu bar manager
       tofu-ls
     ];
 
