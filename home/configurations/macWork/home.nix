@@ -33,7 +33,6 @@ in
       mos # Smooths scrolling and set mouse scroll directions independently
       shfmt
       opentofu
-      thaw # Menu bar manager
       tofu-ls
     ];
 

@@ -14,6 +14,7 @@ in
     cask "middleclick"        # Utility to extend trackpad functionality
     cask "ghostty"            # Terminal emulator that uses platform-native UI and GPU acceleration
     cask "alt-tab"            # Window switcher, Windows/Linux-style
+    cask "thaw"               # Menu bar manager
   '';
 
   home.shellAliases.brew_bundle = "brew bundle cleanup --install --force --verbose --file ${config.xdg.configHome}/${hmBrewfile}";
