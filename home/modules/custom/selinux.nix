@@ -4,6 +4,9 @@
   pkgs,
   ...
 }:
+let
+  selinuxSupport = config.custom.selinux.enable;
+in
 {
 
   options = {
@@ -14,7 +17,9 @@
 
   config = {
     home.packages = [
-      (pkgs.coreutils-full.override { selinuxSupport = config.custom.selinux.enable; })
+      ((pkgs.coreutils-full.override { inherit selinuxSupport; }).overrideAttrs {
+        doCheck = !selinuxSupport;
+      })
     ];
   };
 }
