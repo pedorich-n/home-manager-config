@@ -29,8 +29,6 @@ in
 
     packages = with pkgs; [
       awscli2
-      caffeine
-      mos # Smooths scrolling and set mouse scroll directions independently
       shfmt
       opentofu
       tofu-ls
