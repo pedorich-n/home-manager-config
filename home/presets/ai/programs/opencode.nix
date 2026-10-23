@@ -5,16 +5,34 @@
   ...
 }:
 let
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+
   osTmpEnv =
     if pkgs.stdenv.hostPlatform.isDarwin then
       "TMPDIR"
-    else if pkgs.stdenv.hostPlatform.isLinux then
+    else if isLinux then
       "XDG_RUNTIME_DIR"
     else
       throw "Unexpected hostPlatform!";
 
 in
 {
+  systemd.user.tmpfiles.rules = lib.mkIf isLinux [
+    "d %t/opencode 0700 - - -"
+  ];
+
+  launchd.agents.opencode-scratch-dir = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
+    domain = "user";
+    config = {
+      ProgramArguments = [
+        "/bin/sh"
+        "-c"
+        "/bin/mkdir -p \"$(/usr/bin/getconf DARWIN_USER_TEMP_DIR)opencode\""
+      ];
+      RunAtLoad = true;
+    };
+  };
+
   # This writes the config to `opencode.json` file, leaving the `opencode.jsonc` file mutable.
   # OpenCode loads both of these files and merges configs, so it's possible to have both a mutable and immutable configs
   programs.opencode = {
