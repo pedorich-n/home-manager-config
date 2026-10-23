@@ -1,8 +1,13 @@
 {
   programs.opencode = {
-    enable = true;
-    # This will write the config to `opencode/opencode.json` file, leaving the `opencode.jsonc` file mutable.
-    # OpenCode loads both of these files and merges configs.
-    enableMcpIntegration = true;
+    settings = {
+      permissions = [
+        {
+          action = "external_directory";
+          resource = "$HOME/Work/*";
+          effect = "allow";
+        }
+      ];
+    };
   };
 }

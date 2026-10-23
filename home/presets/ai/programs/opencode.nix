@@ -1,14 +1,42 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  osTmpEnv =
+    if isDarwin then
+      "TMPDIR"
+    else if pkgs.stdenv.hostPlatform.isLinux then
+      "XDG_RUNTIME_DIR"
+    else
+      throw "Unexpected hostPlatform!";
+in
 {
-  # This writes the config to `opencode.json` file, leaving the `opencode.jsonc` file mutable.
-  # OpenCode loads both of these files and merges configs, so it's possible to have both a mutable and immutable configs
+
   programs.opencode = {
     enable = lib.mkDefault true;
+    # This will write the config to `opencode/opencode.json` file, leaving the `opencode.jsonc` file mutable.
+    # OpenCode loads both of these files and merges configs.
     enableMcpIntegration = lib.mkDefault true;
+
+    settings = {
+      permissions = [
+        {
+          action = "external_directory";
+          resource = "*";
+          effect = "ask";
+        }
+        {
+          action = "external_directory";
+          # TMPDIR ends in a slash on Darwin; XDG_RUNTIME_DIR does not on Linux.
+          resource = if isDarwin then "{env:TMPDIR}opencode/*" else "{env:XDG_RUNTIME_DIR}/opencode/*";
+          effect = "allow";
+        }
+      ];
+    };
 
     context = lib.mkMerge [
       (lib.mkBefore ''
@@ -31,6 +59,12 @@
         Never write comments that refer to the task, the prompt, or the change itself. Examples: "implemented like X", "added per request", "new helper", "changed from Y".
         Comment only the why: non-obvious constraints, tradeoffs, workarounds. Don't restate what the code does.
         Don't remove existing comments unless the code they describe is gone.
+
+        ## Temporary scratch directory
+        Directory `${"$"}${osTmpEnv}/opencode/` is the scratch files root for OpenCode.
+        Create a per-session directory using `mktemp -d` under this root. Use this directory to store disposable non-secret work.
+        Assume this directory is deleted when the session ends; save persistent outputs in the project or another explicitly requested location.
+        Don't delete the session or root directories yourself.
       '')
       (lib.mkIf (config.programs.mcp.servers.fff.enabled or false) ''
         ## Search
