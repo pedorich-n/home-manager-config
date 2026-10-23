@@ -5,8 +5,9 @@
   ...
 }:
 let
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
   osTmpEnv =
-    if pkgs.stdenv.hostPlatform.isDarwin then
+    if isDarwin then
       "TMPDIR"
     else if pkgs.stdenv.hostPlatform.isLinux then
       "XDG_RUNTIME_DIR"
@@ -15,18 +16,26 @@ let
 in
 {
 
-  # This writes the config to `opencode.json` file, leaving the `opencode.jsonc` file mutable.
-  # OpenCode loads both of these files and merges configs, so it's possible to have both a mutable and immutable configs
   programs.opencode = {
     enable = lib.mkDefault true;
+    # This will write the config to `opencode/opencode.json` file, leaving the `opencode.jsonc` file mutable.
+    # OpenCode loads both of these files and merges configs.
     enableMcpIntegration = lib.mkDefault true;
 
     settings = {
-      permission = {
-        external_directory = {
-          "{env:${osTmpEnv}}/opencode/**" = "allow";
-        };
-      };
+      permissions = [
+        {
+          action = "external_directory";
+          resource = "*";
+          effect = "ask";
+        }
+        {
+          action = "external_directory";
+          # TMPDIR ends in a slash on Darwin; XDG_RUNTIME_DIR does not on Linux.
+          resource = if isDarwin then "{env:TMPDIR}opencode/*" else "{env:XDG_RUNTIME_DIR}/opencode/*";
+          effect = "allow";
+        }
+      ];
     };
 
     context = lib.mkMerge [
