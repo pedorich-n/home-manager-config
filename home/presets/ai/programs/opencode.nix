@@ -4,16 +4,6 @@
   pkgs,
   ...
 }:
-let
-  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
-  osTmpEnv =
-    if isDarwin then
-      "TMPDIR"
-    else if pkgs.stdenv.hostPlatform.isLinux then
-      "XDG_RUNTIME_DIR"
-    else
-      throw "Unexpected hostPlatform!";
-in
 {
 
   programs.opencode = {
@@ -32,7 +22,12 @@ in
         {
           action = "external_directory";
           # TMPDIR ends in a slash on Darwin; XDG_RUNTIME_DIR does not on Linux.
-          resource = if isDarwin then "{env:TMPDIR}opencode/*" else "{env:XDG_RUNTIME_DIR}/opencode/*";
+          resource = if pkgs.stdenv.hostPlatform.isDarwin then "{env:TMPDIR}opencode/*" else "{env:XDG_RUNTIME_DIR}/opencode/*";
+          effect = "allow";
+        }
+        {
+          action = "read";
+          resource = "/nix/store/*";
           effect = "allow";
         }
       ];
@@ -61,10 +56,9 @@ in
         Don't remove existing comments unless the code they describe is gone.
 
         ## Temporary scratch directory
-        Directory `${"$"}${osTmpEnv}/opencode/` is the scratch files root for OpenCode.
-        Create a per-session directory using `mktemp -d` under this root. Use this directory to store disposable non-secret work.
-        Assume this directory is deleted when the session ends; save persistent outputs in the project or another explicitly requested location.
-        Don't delete the session or root directories yourself.
+        Work in a per-session subdirectory of the scratch root, created with `mktemp -d`; never write into
+        the root itself and don't delete it. Contents are disposable, non-secret, and gone when the session
+        ends — put anything persistent in the project or an explicitly requested location.
       '')
       (lib.mkIf (config.programs.mcp.servers.fff.enabled or false) ''
         ## Search
