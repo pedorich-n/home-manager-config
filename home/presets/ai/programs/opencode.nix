@@ -6,9 +6,10 @@
 }:
 let
   isLinux = pkgs.stdenv.hostPlatform.isLinux;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
 
   osTmpEnv =
-    if pkgs.stdenv.hostPlatform.isDarwin then
+    if isDarwin then
       "TMPDIR"
     else if isLinux then
       "XDG_RUNTIME_DIR"
@@ -21,13 +22,14 @@ in
     "d %t/opencode 0700 - - -"
   ];
 
-  launchd.agents.opencode-scratch-dir = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
+  launchd.agents.opencode-scratch-dir = lib.mkIf isDarwin {
     domain = "user";
+    enable = true;
     config = {
       ProgramArguments = [
         "/bin/sh"
         "-c"
-        "/bin/mkdir -p \"$(/usr/bin/getconf DARWIN_USER_TEMP_DIR)opencode\""
+        ''scratch_dir="$(/usr/bin/getconf DARWIN_USER_TEMP_DIR)opencode"; /bin/mkdir -p -m 700 "$scratch_dir" && /bin/chmod 700 "$scratch_dir"''
       ];
       RunAtLoad = true;
     };
