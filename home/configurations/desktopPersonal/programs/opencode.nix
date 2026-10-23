@@ -18,6 +18,11 @@
           resource = "$HOME/Projects/*";
           effect = "allow";
         }
+        {
+          action = "edit";
+          resource = "$HOME/Projects/*";
+          effect = "allow";
+        }
       ];
     };
   };

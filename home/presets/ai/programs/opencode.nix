@@ -4,6 +4,27 @@
   pkgs,
   ...
 }:
+let
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+
+  scratchDir =
+    if isDarwin then
+      # Apparently not all processes inherit `TMPDIR`, so `getconf` is more reliable
+      "$(getconf DARWIN_USER_TEMP_DIR)opencode"
+    else if isLinux then
+      "$XDG_RUNTIME_DIR/opencode"
+    else
+      throw "Unexpected hostPlatform!";
+
+  permissionsScratchDir =
+    if isDarwin then
+      "{env:TMPDIR}opencode/*" # TMPDIR ends in a slash on Darwin
+    else if isLinux then
+      "{env:XDG_RUNTIME_DIR}/opencode/*" # XDG_RUNTIME_DIR does not on Linux
+    else
+      throw "Unexpected hostPlatform!";
+in
 {
 
   programs.opencode = {
@@ -13,7 +34,7 @@
     enableMcpIntegration = lib.mkDefault true;
 
     settings = {
-      permissions = [
+      permissions = lib.mkBefore [
         {
           action = "external_directory";
           resource = "*";
@@ -21,13 +42,22 @@
         }
         {
           action = "external_directory";
-          # TMPDIR ends in a slash on Darwin; XDG_RUNTIME_DIR does not on Linux.
-          resource = if pkgs.stdenv.hostPlatform.isDarwin then "{env:TMPDIR}opencode/*" else "{env:XDG_RUNTIME_DIR}/opencode/*";
+          resource = "/nix/store/*";
           effect = "allow";
         }
         {
           action = "read";
           resource = "/nix/store/*";
+          effect = "allow";
+        }
+        {
+          action = "external_directory";
+          resource = permissionsScratchDir;
+          effect = "allow";
+        }
+        {
+          action = "edit";
+          resource = permissionsScratchDir;
           effect = "allow";
         }
       ];
@@ -56,8 +86,8 @@
         Don't remove existing comments unless the code they describe is gone.
 
         ## Temporary scratch directory
-        Work in a per-session subdirectory of the scratch root, created with `mktemp -d`; never write into
-        the root itself and don't delete it. Contents are disposable, non-secret, and gone when the session
+        Work in a per-session subdirectory of the scratch root, created with `mktemp -d "${scratchDir}/session.XXXXXX"`;
+        never write into the root itself and don't delete it. Contents are disposable, non-secret, and gone when the session
         ends — put anything persistent in the project or an explicitly requested location.
       '')
       (lib.mkIf (config.programs.mcp.servers.fff.enabled or false) ''

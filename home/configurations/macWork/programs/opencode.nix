@@ -7,6 +7,11 @@
           resource = "$HOME/Work/*";
           effect = "allow";
         }
+        {
+          action = "edit";
+          resource = "$HOME/Work/*";
+          effect = "allow";
+        }
       ];
     };
   };
