@@ -86,7 +86,7 @@
 
         systems = import systems;
 
-        imports = lib.filesystem.listFilesRecursive ./flake-parts;
+        imports = builtins.filter (path: lib.hasSuffix ".nix" path) (lib.filesystem.listFilesRecursive ./flake-parts);
       }
     );
 }
