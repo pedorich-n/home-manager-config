@@ -22,10 +22,6 @@ in
         args = [ "mcp-server-fetch" ];
       };
 
-      fff = {
-        enabled = lib.mkDefault true;
-        command = lib.getExe pkgs.fff-mcp;
-      };
     };
   };
 }

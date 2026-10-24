@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   pkgs,
   ...
@@ -89,13 +88,6 @@ in
         Work in a per-session subdirectory of the scratch root, created with `mktemp -d "${scratchDir}/session.XXXXXX"`;
         never write into the root itself and don't delete it. Contents are disposable, non-secret, and gone when the session
         ends — put anything persistent in the project or an explicitly requested location.
-      '')
-      (lib.mkIf (config.programs.mcp.servers.fff.enabled or false) ''
-        ## Search
-        For any file search or grep in the current git-indexed directory, prefer fff tools (`fff-mcp`, `ffgrep`, `fffind`).
-        Include the known directory or module in the first search. Use definitions_only for declarations.
-        Read more source only when the returned lines need context.
-        If `fff` tools are unavailable, error out, or return nothing, fall back to `rg`/`fd`
       '')
     ];
   };
