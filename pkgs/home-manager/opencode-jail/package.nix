@@ -26,11 +26,11 @@ let
       quoted = path: "\"${path}\"";
 
       bind = {
-        rw = path: try-rw-bind (noescape (quoted path)) (noescape (quoted path));
-        ro = path: try-ro-bind (noescape (quoted path)) (noescape (quoted path));
+        rw = path: try-readwrite (noescape (quoted path));
+        ro = path: try-readonly (noescape (quoted path));
       };
 
-      set = name: value: set-env name (noescape (quoted value));
+      set-env-quoted = name: value: set-env name (noescape (quoted value));
     in
     [
       network
@@ -50,6 +50,13 @@ let
       (bind.rw "$XDG_RUNTIME_DIR/opencode")
       (add-path (quoted "$HOME/.nix-profile/bin"))
 
+      # Minimal config with sane defaults
+      (write-text "/etc/nix/nix.conf" ''
+        experimental-features = nix-command flakes
+      '')
+      # Nix builder is outside of jail, so we need to let its socked inside
+      (bind.ro "/nix/var/nix/daemon-socket/socket")
+
       # Some sane defaults expected by Opencode
       (add-pkg-deps (
         with pkgs;
@@ -65,19 +72,28 @@ let
         ]
       ))
 
-      (set "SHELL" pkgs.runtimeShell)
-      (set "TMPDIR" "$XDG_RUNTIME_DIR")
-      (set "XDG_CONFIG_HOME" "$HOME/.config")
-      (set "XDG_DATA_HOME" "$HOME/.local/share")
-      (set "XDG_CACHE_HOME" "$HOME/.cache")
-      (set "XDG_STATE_HOME" "$HOME/.local/state")
+      # Opencode's system prompt sets the scratch directory to /tmp/opencode on Linux (https://github.com/anomalyco/opencode/blob/2a3e7c0f349ba0e9454fa0/packages/core/src/instructions/builtins.ts#L43)
+      # And it's hard to convince it to use anything else, since the system prompt has higher priority
+      # So instead by setting TMPDIR=XDG_RUNTIME_DIR, the opencode will inject the correct folder into the system prompt
+      # See:
+      #  - https://github.com/anomalyco/opencode/issues/49073
+      #  - https://github.com/anomalyco/opencode/issues/55006
+      (set-env-quoted "TMPDIR" "$XDG_RUNTIME_DIR")
+
+      (set-env-quoted "SHELL" pkgs.runtimeShell)
+      (set-env-quoted "XDG_CONFIG_HOME" "$HOME/.config")
+      (set-env-quoted "XDG_DATA_HOME" "$HOME/.local/share")
+      (set-env-quoted "XDG_CACHE_HOME" "$HOME/.cache")
+      (set-env-quoted "XDG_STATE_HOME" "$HOME/.local/state")
+      (set-env-quoted "NIX_REMOTE" "daemon")
       (try-fwd-env "XDG_RUNTIME_DIR")
       (try-fwd-env "COLORTERM")
       (try-fwd-env "EDITOR")
+
+      # Defer mounting CWD as r/w until the very to ensure it has the highest priority
+      (defer mount-cwd)
     ]
-    ++ (extraPermissions (combinators // { inherit bind quoted set; }))
-    # Mount CWD as r/w as the very last step to ensure it has the highest priority
-    ++ [ mount-cwd ];
+    ++ (extraPermissions (combinators // { inherit bind quoted set-env-quoted; }));
 
   unjailed =
     pkgs.runCommand "opencode-unjailed-${opencode.version}"
