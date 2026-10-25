@@ -12,7 +12,7 @@ let
       # Apparently not all processes inherit `TMPDIR`, so `getconf` is more reliable
       "$(getconf DARWIN_USER_TEMP_DIR)opencode"
     else if isLinux then
-      "$XDG_RUNTIME_DIR/opencode"
+      "/tmp/opencode"
     else
       throw "Unexpected hostPlatform!";
 
@@ -20,7 +20,7 @@ let
     if isDarwin then
       "{env:TMPDIR}opencode/*" # TMPDIR ends in a slash on Darwin
     else if isLinux then
-      "{env:XDG_RUNTIME_DIR}/opencode/*" # XDG_RUNTIME_DIR does not on Linux
+      "/tmp/opencode/*"
     else
       throw "Unexpected hostPlatform!";
 in

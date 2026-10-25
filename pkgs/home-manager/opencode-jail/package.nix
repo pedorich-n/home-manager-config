@@ -47,7 +47,6 @@ let
       (bind.ro "$HOME/.config/git")
       (bind.ro "$HOME/.nix-profile")
       (bind.rw "$HOME/.cache/nix")
-      (bind.rw "$XDG_RUNTIME_DIR/opencode")
       (add-path (quoted "$HOME/.nix-profile/bin"))
 
       # Minimal config with sane defaults
@@ -72,21 +71,14 @@ let
         ]
       ))
 
-      # Opencode's system prompt sets the scratch directory to /tmp/opencode on Linux (https://github.com/anomalyco/opencode/blob/2a3e7c0f349ba0e9454fa0/packages/core/src/instructions/builtins.ts#L43)
-      # And it's hard to convince it to use anything else, since the system prompt has higher priority
-      # So instead by setting TMPDIR=XDG_RUNTIME_DIR, the opencode will inject the correct folder into the system prompt
-      # See:
-      #  - https://github.com/anomalyco/opencode/issues/49073
-      #  - https://github.com/anomalyco/opencode/issues/55006
-      (set-env-quoted "TMPDIR" "$XDG_RUNTIME_DIR")
-
       (set-env-quoted "SHELL" pkgs.runtimeShell)
+      # Used by Opencode https://github.com/anomalyco/opencode/blob/2a3e7c0f349ba0e9454fa0/packages/core/src/instructions/builtins.ts#L43
+      (set-env-quoted "TMPDIR" "/tmp")
       (set-env-quoted "XDG_CONFIG_HOME" "$HOME/.config")
       (set-env-quoted "XDG_DATA_HOME" "$HOME/.local/share")
       (set-env-quoted "XDG_CACHE_HOME" "$HOME/.cache")
       (set-env-quoted "XDG_STATE_HOME" "$HOME/.local/state")
       (set-env-quoted "NIX_REMOTE" "daemon")
-      (try-fwd-env "XDG_RUNTIME_DIR")
       (try-fwd-env "COLORTERM")
       (try-fwd-env "EDITOR")
 
@@ -95,23 +87,26 @@ let
     ]
     ++ (extraPermissions (combinators // { inherit bind quoted set-env-quoted; }));
 
+  version = lib.getVersion opencode;
+
   unjailed =
     pkgs.runCommand "opencode-unjailed-${opencode.version}"
       {
-        inherit (opencode) version;
+        inherit version;
         meta.mainProgram = "opencode-unjailed";
       }
       ''
         mkdir -p $out/bin
         ln -s ${lib.getExe opencode} $out/bin/opencode-unjailed
       '';
+
 in
 # Using custom package rathther than jail's mkOverlay to allow extra args
 (jail "opencode" opencode permissions).overrideAttrs (old: {
   pname = "opencode-jail";
-  inherit (opencode) version;
+  inherit version;
 
-  name = "opencode-jail-${opencode.version}";
+  name = "opencode-jail-${version}";
   passthru = (old.passthru or { }) // {
     inherit unjailed;
   };
