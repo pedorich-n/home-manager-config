@@ -11,9 +11,11 @@ in
     enable = lib.mkDefault true;
 
     servers = {
+      # mcp-nixos is broken in nixpkgs because of https://github.com/NixOS/nixpkgs/pull/575004
       nix = {
         enabled = lib.mkDefault true;
-        command = lib.getExe pkgs.mcp-nixos;
+        command = uvx;
+        args = [ "mcp-nixos" ];
       };
 
       fetch = {
