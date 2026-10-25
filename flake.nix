@@ -45,6 +45,10 @@
       };
     };
 
+    jail-nix = {
+      url = "sourcehut:~alexdavid/jail.nix";
+    };
+
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs = {

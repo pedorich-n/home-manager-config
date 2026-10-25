@@ -12,7 +12,7 @@ let
       # Apparently not all processes inherit `TMPDIR`, so `getconf` is more reliable
       "$(getconf DARWIN_USER_TEMP_DIR)opencode"
     else if isLinux then
-      "$XDG_RUNTIME_DIR/opencode"
+      "/tmp/opencode"
     else
       throw "Unexpected hostPlatform!";
 
@@ -20,7 +20,7 @@ let
     if isDarwin then
       "{env:TMPDIR}opencode/*" # TMPDIR ends in a slash on Darwin
     else if isLinux then
-      "{env:XDG_RUNTIME_DIR}/opencode/*" # XDG_RUNTIME_DIR does not on Linux
+      "/tmp/opencode/*"
     else
       throw "Unexpected hostPlatform!";
 in
@@ -88,6 +88,10 @@ in
         Work in a per-session subdirectory of the scratch root, created with `mktemp -d "${scratchDir}/session.XXXXXX"`;
         never write into the root itself and don't delete it. Contents are disposable, non-secret, and gone when the session
         ends — put anything persistent in the project or an explicitly requested location.
+
+        ## Destructive commands
+        Never run `rm -rf`, `rmdir`, `mv`, `chmod`, `chown`, `dd`, `truncate`, `shred` or `find -delete` against a path outside the project directory.
+        If a task appears to need it, name the exact path and ask first.
       '')
     ];
   };
