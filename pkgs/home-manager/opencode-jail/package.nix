@@ -83,7 +83,11 @@ let
       (try-fwd-env "EDITOR")
 
       # Defer mounting CWD as r/w until the very to ensure it has the highest priority
-      (defer mount-cwd)
+      (defer (compose [
+        mount-cwd
+        (bind.ro "$PWD/.git/config")
+        (bind.ro "$PWD/.git/hooks")
+      ]))
     ]
     ++ (extraPermissions (combinators // { inherit bind quoted set-env-quoted; }));
 
