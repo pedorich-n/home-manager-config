@@ -1,9 +1,9 @@
 {
   inputs,
   pkgs,
+  lib,
   opencode, # Explicit arg, so that it's overrideable
   extraPermissions ? _: [ ],
-  ...
 }:
 let
   # Just like base, but mounts swhole `/nix/store` as readable rather than just this runtime env.
@@ -35,12 +35,9 @@ let
     [
       network
       notifications
-      open-urls-in-browser
 
       # jail.nix sets --new-session by default, which breaks TUI
       no-new-session
-
-      mount-cwd
 
       # opencode's own state.
       (bind.rw "$HOME/.config/opencode")
@@ -53,17 +50,20 @@ let
       (bind.rw "$XDG_RUNTIME_DIR/opencode")
       (add-path (quoted "$HOME/.nix-profile/bin"))
 
-      # The profile is missing a few staples an agent reaches for. The whole
-      # nix store is already bound, so this only has to put them on PATH.
-      (add-pkg-deps [
-        pkgs.findutils
-        pkgs.gnugrep
-        pkgs.gawk
-        pkgs.gnutar
-        pkgs.which
-        pkgs.file
-        pkgs.wget
-      ])
+      # Some sane defaults expected by Opencode
+      (add-pkg-deps (
+        with pkgs;
+        [
+          coreutils
+          findutils
+          gnugrep
+          gawk
+          gnutar
+          which
+          file
+          wget
+        ]
+      ))
 
       (set "SHELL" pkgs.runtimeShell)
       (set "TMPDIR" "$XDG_RUNTIME_DIR")
@@ -75,6 +75,28 @@ let
       (try-fwd-env "COLORTERM")
       (try-fwd-env "EDITOR")
     ]
-    ++ (extraPermissions combinators);
+    ++ (extraPermissions (combinators // { inherit bind quoted set; }))
+    # Mount CWD as r/w as the very last step to ensure it has the highest priority
+    ++ [ mount-cwd ];
+
+  unjailed =
+    pkgs.runCommand "opencode-unjailed-${opencode.version}"
+      {
+        inherit (opencode) version;
+        meta.mainProgram = "opencode-unjailed";
+      }
+      ''
+        mkdir -p $out/bin
+        ln -s ${lib.getExe opencode} $out/bin/opencode-unjailed
+      '';
 in
-jail "opencode-jail" opencode permissions
+# Using custom package rathther than jail's mkOverlay to allow extra args
+(jail "opencode" opencode permissions).overrideAttrs (old: {
+  pname = "opencode-jail";
+  inherit (opencode) version;
+
+  name = "opencode-jail-${opencode.version}";
+  passthru = (old.passthru or { }) // {
+    inherit unjailed;
+  };
+})
