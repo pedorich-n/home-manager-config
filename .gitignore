@@ -5,4 +5,5 @@ result*
 # AI
 **/*codemap.md
 **/AGENTS.md
-**/.slim
+.slim/**
+.ignore
