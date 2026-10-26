@@ -11,7 +11,7 @@ let
   toRelativePath = path: lib.strings.removePrefix root (lib.strings.unsafeDiscardStringContext path);
   allDotiles = lib.filesystem.listFilesRecursive cfg.root;
   mappedDotfiles = builtins.listToAttrs (
-    builtins.map (file: {
+    map (file: {
       name = toRelativePath file;
       value = {
         source = file;
@@ -20,7 +20,6 @@ let
   );
 in
 {
-  ###### interface
   options = with lib; {
     custom.dotfiles = {
       enable = mkEnableOption "dotfiles";
@@ -32,7 +31,6 @@ in
     };
   };
 
-  ###### implementation
   config = lib.mkIf cfg.enable {
     home.file = mappedDotfiles;
   };
