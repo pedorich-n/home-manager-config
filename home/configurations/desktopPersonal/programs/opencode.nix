@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 let
@@ -38,5 +39,5 @@ in
     };
   };
 
-  home.packages = [ opencode.unjailed ];
+  home.shellAliases."opencode-unjailed" = lib.getExe opencode.unjailed;
 }
