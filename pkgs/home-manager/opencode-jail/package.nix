@@ -50,6 +50,14 @@ let
           disabled = true;
         }
       ))
+      (bind-pkg "/opencode/instructions/jail.md" (
+        pkgs.writers.writeText "jail-opencode-notes.md" ''
+          ## Sandbox
+          You are running inside a sandbox. The home directory is a tmpfs; your
+          dotfiles, ~/.ssh and ~/.gnupg are not mounted, and paths that are not
+          mounted simply do not exist. /nix/store is read-only.
+        ''
+      ))
       (bind.rw "$HOME/.local/share/opencode")
       (bind.rw "$HOME/.cache/opencode")
 
