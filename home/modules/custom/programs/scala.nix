@@ -3,7 +3,7 @@
   ...
 }:
 {
-  config.custom.programs.scala = {
+  custom.programs.scala = {
     extraPackages = with pkgs; [
       ammonite
       bloop

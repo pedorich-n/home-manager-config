@@ -12,10 +12,7 @@ let
     let
       rawPackages = [ cfg.package ] ++ cfg.extraPackages;
     in
-    if cfgJava.enable then
-      map (pkg: pkg.override { jre = cfgJava.package; }) rawPackages
-    else
-      rawPackages;
+    if cfgJava.enable then map (pkg: pkg.override { jre = cfgJava.package; }) rawPackages else rawPackages;
 in
 {
   options = with lib; {
@@ -26,7 +23,7 @@ in
 
       extraPackages = mkOption {
         type = types.listOf types.package;
-        default = [];
+        default = [ ];
         example = lib.literalExpression ''
           [
             pkgs.ammonite
@@ -43,11 +40,11 @@ in
 
       sbtOptions = mkOption {
         type = types.lines;
-        default = [ ];
-        example = [
-          "-J-Xmx8G"
-          "--client"
-        ];
+        default = "";
+        example = ''
+          -J-Xmx8G
+          --client
+        '';
         description = ''
           SBT launcher options to write to the `$XDG_CONFIG_HOME/sbt/sbtopts` file.
 
@@ -59,15 +56,12 @@ in
     };
   };
 
-  config =
-    let
-    in
-    lib.mkIf cfg.enable {
-      home.packages = allPackages;
+  config = lib.mkIf cfg.enable {
+    home.packages = allPackages;
 
-      xdg.configFile."sbt/sbtopts" = lib.mkIf (cfg.sbtOptions != [ ]) {
-        text = cfg.sbtOptions;
-      };
-      custom.runtimes.scala = [ cfg.package ];
+    xdg.configFile."sbt/sbtopts" = lib.mkIf (cfg.sbtOptions != "") {
+      text = cfg.sbtOptions;
     };
+    custom.runtimes.scala = [ cfg.package ];
+  };
 }

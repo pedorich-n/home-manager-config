@@ -5,11 +5,7 @@
   ...
 }:
 let
-  uv =
-    if (config.custom.programs.python.uv.enable or false) then
-      config.custom.programs.python.uv.package
-    else
-      pkgs.uv;
+  uv = if (config.custom.programs.python.uv.enable or false) then config.custom.programs.python.uv.package else pkgs.uv;
   uvx = lib.getExe' uv "uvx";
 in
 {

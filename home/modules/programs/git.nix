@@ -14,6 +14,6 @@
       submodule.recurse = true;
     };
 
-    ignores = config.custom.misc.globalIgnores or [ ];
+    ignores = config.custom.globalIgnores or [ ];
   };
 }
