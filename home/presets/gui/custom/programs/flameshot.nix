@@ -1,40 +1,25 @@
 {
-  config,
   lib,
-  pkgs,
   ...
 }:
-let
-  cfg = config.custom.programs.flameshot;
-
-  iniFormat = pkgs.formats.ini { };
-
-  iniFile = iniFormat.generate "flameshot.ini" cfg.settings;
-in
 {
-  options = {
-    # Basically a copy of https://github.com/nix-community/home-manager/blob/fc52a210b/modules/services/flameshot.nix
-    # But without the systemd service. Just the settings.
-    custom.programs.flameshot = {
-      enable = lib.mkEnableOption "Custom configs for Flameshot";
-
-      package = lib.mkOption {
-        type = with lib.types; nullOr package;
-        default = pkgs.flameshot;
+  custom.programs.flameshot = {
+    settings = lib.mkDefault {
+      # https://github.com/flameshot-org/flameshot/blob/master/flameshot.example.ini
+      General = {
+        allowMultipleGuiInstances = true;
+        buttons = ''@Variant(\0\0\0\x7f\0\0\0\vQList<int>\0\0\0\0\x13\0\0\0\0\0\0\0\x1\0\0\0\x2\0\0\0\x3\0\0\0\x4\0\0\0\x5\0\0\0\x6\0\0\0\x12\0\0\0\x13\0\0\0\b\0\0\0\t\0\0\0\x10\0\0\0\n\0\0\0\v\0\0\0\x17\0\0\0\f\0\0\0\x11\0\0\0\x14\0\0\0\x15)'';
+        saveAsFileExtension = ".png";
+        useJpgForClipboard = true;
+        contrastOpacity = 188;
+        drawColor = "#ffff00";
+        filenamePattern = "%F_%T";
+        disabledTrayIcon = false;
+        showDesktopNotification = false;
+        showStartupLaunchMessage = false;
+        startupLaunch = false;
+        useX11LegacyScreenshot = true;
       };
-
-      settings = lib.mkOption {
-        inherit (iniFormat) type;
-        default = { };
-      };
-    };
-  };
-
-  config = lib.mkIf cfg.enable {
-    home.packages = lib.optional (cfg.package != null) cfg.package;
-
-    xdg.configFile = lib.mkIf (cfg.settings != { }) {
-      "flameshot/flameshot.ini".source = iniFile;
     };
   };
 }

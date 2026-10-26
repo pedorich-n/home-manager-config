@@ -1,10 +1,12 @@
 {
+  config,
   pkgs,
   lib,
   ...
 }:
 let
-  uvx = lib.getExe' pkgs.uv "uvx";
+  uv = if (config.custom.programs.python.uv.enable or false) then config.custom.programs.python.uv.package else pkgs.uv;
+  uvx = lib.getExe' uv "uvx";
 in
 {
   programs.mcp = {

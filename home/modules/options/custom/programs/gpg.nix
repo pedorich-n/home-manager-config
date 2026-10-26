@@ -8,14 +8,12 @@ let
   cfg = config.custom.programs.gpg;
 in
 {
-  ###### interface
   options = with lib; {
     custom.programs.gpg = {
       enable = mkEnableOption "gpg";
     };
   };
 
-  ###### implementation
   config = lib.mkIf cfg.enable {
 
     programs.gpg = {

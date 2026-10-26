@@ -17,13 +17,10 @@ in
   programs.opencode = {
     package = opencode;
 
-    context = ''
-      ## Sandbox
-      You are running inside a sandbox. The home directory contains only the project and a few state directories;
-      your dotfiles, ~/.ssh, ~/.gnupg and ~/.config/gh are not mounted, and paths that are not mounted simply do not exist.
-    '';
-
     settings = {
+      instructions = [
+        "/opencode/instructions/*.md"
+      ];
       permissions = [
         {
           action = "external_directory";

@@ -1,16 +1,18 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 let
   cfg = config.custom.programs.gnome;
 in
 {
-  ###### interface
   options = with lib; {
     custom.programs.gnome = {
       enable = mkEnableOption "Custom configs for Gnome";
     };
   };
 
-  ###### implementation
   config = lib.mkIf cfg.enable {
     dconf.settings = with lib.hm.gvariant; {
       "org/gnome/mutter" = {
@@ -72,7 +74,7 @@ in
       };
 
       "org/gnome/shell/extensions/date-menu-formatter" = {
-        fonr-size = 12;
+        font-size = 12;
         pattern = "EEE, MMMM dd  kk : mm";
       };
 

@@ -1,61 +1,35 @@
 {
   config,
-  pkgs,
   lib,
+  pkgs,
   ...
 }:
 let
-  cfg = config.custom.programs.plasma.themes;
-
-  filterBySubdir = subdir: lib.filter (pkg: builtins.pathExists "${pkg}/${subdir}") cfg.packages;
-
-  mkSource =
-    {
-      name,
-      prefix,
-      paths,
-    }:
-    pkgs.symlinkJoin {
-      name = "kde-themes-${name}";
-      stripPrefix = "/${prefix}";
-      inherit paths;
-    };
-
-  kvantumPackages = filterBySubdir "share/Kvantum";
+  catpuccinVariant = "latte";
+  catpuccinAccent = "green";
 in
 {
-  options = {
-    custom.programs.plasma.themes = {
-      enable = lib.mkEnableOption "Whether to enable custom KDE themes features.";
 
-      packages = lib.mkOption {
-        type = lib.types.listOf lib.types.package;
-        default = [ ];
-        description = ''
-          List of KDE themes to be installed.
-          Expected outputs:
-            - `$out/share`. Should include plasma themes, aurorae themes, icons, and other KDE-related files.
-        '';
-      };
-    };
-  };
-
-  config = lib.mkIf cfg.enable {
-    home = {
-      packages = lib.mkIf (cfg.packages != [ ]) cfg.packages;
-
-      file = lib.mkMerge [
-        (lib.mkIf (kvantumPackages != [ ]) {
-          ".config/Kvantum" = {
-            recursive = true;
-            source = mkSource {
-              name = "kvantum";
-              prefix = "share/Kvantum";
-              paths = kvantumPackages;
-            };
-          };
-        })
-      ];
-    };
+  custom.programs.plasma.themes = lib.mkIf config.programs.plasma.enable {
+    packages = [
+      pkgs.kde-themes.otto
+      pkgs.kde-themes.otto-light
+      pkgs.whitesur-cursors
+      pkgs.custom-wallpapers
+      pkgs.papirus-icon-theme
+      (pkgs.qogir-icon-theme.override { themeVariants = [ "default" ]; })
+      (pkgs.catppuccin-kvantum.override {
+        variant = catpuccinVariant;
+        accent = catpuccinAccent;
+      })
+      (pkgs.catppuccin-kde.override {
+        flavour = [ catpuccinVariant ];
+        accents = [ catpuccinAccent ];
+      })
+      (pkgs.catppuccin-gtk.override {
+        variant = catpuccinVariant;
+        accents = [ catpuccinAccent ];
+      })
+    ];
   };
 }
