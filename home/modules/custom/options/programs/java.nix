@@ -10,7 +10,7 @@ in
   options = with lib; {
     custom.programs.java = {
       toolOptions = mkOption {
-        type = with types; listOf str;
+        type = with types; listOf nonEmptyStr;
         default = [ ];
         example = [ "-Djavax.net.ssl.trustStore=/path/to/truststore.jks" ];
         description = "JVM options to set in JAVA_TOOL_OPTIONS. Picked up by all JVMs.";
