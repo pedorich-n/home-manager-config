@@ -62,6 +62,9 @@ in
       instructions = [
         "/opencode/instructions/*.md"
       ];
+      plugins = [
+        "@slkiser/opencode-quota"
+      ];
       permissions = [
         {
           action = "external_directory";
