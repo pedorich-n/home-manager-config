@@ -4,6 +4,7 @@
 }:
 {
   programs.ghostty = {
+    enable = true;
     package = null; # Installed via HomeBrew
     settings = {
       font-size = 14;

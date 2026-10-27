@@ -86,6 +86,7 @@ let
           which
           file
           wget
+          libnotify
         ]
       ))
 

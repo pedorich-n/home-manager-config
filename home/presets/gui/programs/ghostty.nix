@@ -4,8 +4,6 @@
 }:
 {
   programs.ghostty = {
-    enable = lib.mkDefault true;
-
     # See https://ghostty.org/docs/config/reference
     settings = {
       auto-update = lib.mkDefault "off";
