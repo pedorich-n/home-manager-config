@@ -1,6 +1,7 @@
 {
-  lib,
   pkgs,
+  lib,
+  opencodeLib,
   ...
 }:
 let
@@ -43,58 +44,42 @@ in
     enableMcpIntegration = lib.mkDefault true;
 
     settings = {
-      permissions = lib.mkBefore [
-        {
-          action = "external_directory";
-          resource = "*";
-          effect = "ask";
-        }
-        {
-          action = "external_directory";
-          resource = "/nix/store/*";
-          effect = "allow";
-        }
-        {
-          action = "read";
-          resource = "/nix/store/*";
-          effect = "allow";
-        }
-        {
-          action = "external_directory";
-          resource = permissionsScratchDir;
-          effect = "allow";
-        }
-        {
-          action = "edit";
-          resource = permissionsScratchDir;
-          effect = "allow";
-        }
-        {
-          action = "shell";
-          resource = "rm -rf *";
-          effect = "ask";
-        }
-        {
-          action = "shell";
-          resource = "dd *";
-          effect = "deny";
-        }
-        {
-          action = "shell";
-          resource = "truncate *";
-          effect = "deny";
-        }
-        {
-          action = "shell";
-          resource = "shred *";
-          effect = "deny";
-        }
-        {
-          action = "shell";
-          resource = "find * -delete*";
-          effect = "ask";
-        }
-      ];
+      permissions = lib.mkBefore (
+        lib.flatten [
+          (lib.singleton {
+            action = "external_directory";
+            resource = "*";
+            effect = "ask";
+          })
+          (opencodeLib.mkExternalDirectoryPermissions {
+            path = "/nix/store/*";
+          })
+          (opencodeLib.mkExternalDirectoryPermissions {
+            path = permissionsScratchDir;
+            actionEffect = "edit";
+          })
+          (opencodeLib.mkShellPermission {
+            command = "rm -rf *";
+          })
+          (opencodeLib.mkShellPermission {
+            command = "dd *";
+            effect = "deny";
+          })
+          (opencodeLib.mkShellPermission {
+            command = "truncate *";
+            effect = "deny";
+          })
+          (opencodeLib.mkShellPermission {
+            command = "shred *";
+            effect = "deny";
+          })
+          (opencodeLib.mkShellPermission {
+            command = "find * -delete";
+            effect = "deny";
+          })
+        ]
+      );
+
     };
 
     context = lib.mkMerge [

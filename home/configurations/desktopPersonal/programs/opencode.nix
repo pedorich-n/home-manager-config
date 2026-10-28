@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  opencodeLib,
   ...
 }:
 let
@@ -65,17 +66,13 @@ in
       plugins = [
         "@slkiser/opencode-quota"
       ];
-      permissions = [
-        {
-          action = "external_directory";
-          resource = "$HOME/Projects/*";
-          effect = "allow";
-        }
-        {
-          action = "read";
-          resource = "$HOME/Projects/*";
-          effect = "allow";
-        }
+      permissions = lib.flatten [
+        (opencodeLib.mkExternalDirectoryPermissions {
+          path = "/opencode/*";
+        })
+        (opencodeLib.mkExternalDirectoryPermissions {
+          path = "$HOME/Projects/*";
+        })
       ];
     };
   };
