@@ -8,6 +8,7 @@
     stateVersion = lib.mkDefault "26.05";
 
     packages = with pkgs; [
+      # keep-sorted start
       curl # HTTP client
       dig # DNS lookup utility
       gdu # Fast disk usage analyser
@@ -15,6 +16,7 @@
       jq # Command-line JSON processor
       just # Handy tool to save and run project-specific commands.
       tree # Recursive directory listing
+      # keep-sorted end
     ];
 
     sessionVariables = {

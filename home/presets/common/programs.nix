@@ -4,6 +4,7 @@
 }:
 {
   programs = {
+    # keep-sorted start
     bash.enable = lib.mkDefault true; # To set Home Manager's ENVs vars in .profile
     bat.enable = lib.mkDefault true; # Colorful `cat` replacement (text-files viewer)
     dircolors.enable = lib.mkDefault true; # Manage .dir_colors and set LS_COLORS
@@ -20,5 +21,6 @@
     vim.enable = lib.mkDefault true; # Text editor
     zellij.enable = lib.mkDefault true; # A terminal workspace with batteries included
     zsh.enable = lib.mkDefault true; # Main shell
+    # keep-sorted end
   };
 }
