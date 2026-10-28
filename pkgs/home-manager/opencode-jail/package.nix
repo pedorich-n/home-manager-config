@@ -6,8 +6,59 @@
   extraPermissions ? _: [ ],
 }:
 let
+  kdotool = pkgs.kdotool;
+
+  # kdotool writes a script to a temp file and asks KWin runing on host, to read it back by path.
+  # By default it tries to write to `/tmp/kdotool-XXXX`: https://github.com/jinliu/kdotool/blob/be03ce90c/src/main.rs#L707
+  # But since that folder is mounted as tmpfs, the file never reaches the host.
+  # So we need to point kdotool to a shared directory and make it think it's tmp.
+  kdotoolShim = pkgs.writeShellApplication {
+    name = "kdotool";
+
+    runtimeInputs = [
+      kdotool
+    ];
+
+    text = ''
+      export TMPDIR="$HOME/.cache/opencode/kdotool"
+      mkdir -p "$TMPDIR"
+      exec kdotool "$@"
+    '';
+  };
+
   jail-minimal = inputs.jail-nix.lib.extend {
     inherit pkgs;
+
+    # Lets the jail show desktop notifications and focus the terminal window
+    additionalCombinators =
+      c: with c; {
+        desktop-notifications = compose [
+          (dbus {
+            talk = [
+              "org.kde.KWin"
+              "org.freedesktop.Notifications"
+            ];
+          })
+
+          (add-pkg-deps [
+            pkgs.libnotify
+            kdotool
+            kdotoolShim
+          ])
+
+          (try-fwd-env "KDE_SESSION_VERSION")
+          (try-fwd-env "OPENCODE_NOTIFIER_WINDOW_ID")
+
+          # Resolve the terminal window id on the host
+          (add-runtime ''
+            if [ -z "''${OPENCODE_NOTIFIER_WINDOW_ID:-}" ]; then
+              OPENCODE_NOTIFIER_WINDOW_ID="$(${lib.getExe' kdotool "kdotool"} search --classname konsole 2>/dev/null | head -n1)"
+              export OPENCODE_NOTIFIER_WINDOW_ID
+            fi
+          '')
+        ];
+      };
+
     # basePermissions are inherited by all sub processes inside jail, so don't leave this list empty
     basePermissions =
       c: with c; [
@@ -39,7 +90,7 @@ let
       (set-env "SHELL" "/bin/bash")
       (ro-bind (lib.getExe' pkgs.coreutils "env") "/usr/bin/env")
       network
-      notifications
+      desktop-notifications
       # jail.nix sets --new-session by default, which breaks TUI
       no-new-session
 

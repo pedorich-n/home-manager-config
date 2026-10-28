@@ -10,10 +10,6 @@
       enable = true;
       settings.git_protocol = "https";
     };
-    ghostty = {
-      enable = true;
-      package = null; # Installed via Homebrew
-    };
     mise.enable = true;
     nh.clean.dates = "monthly";
     java = {
