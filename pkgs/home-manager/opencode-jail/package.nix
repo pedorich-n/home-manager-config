@@ -164,6 +164,7 @@ let
         (add-pkg-deps (
           with pkgs;
           [
+            # keep-sorted start
             binutils
             curl
             diffutils
@@ -177,6 +178,7 @@ let
             unzip
             wget
             which
+            # keep-sorted end
           ]
         ))
       ];
