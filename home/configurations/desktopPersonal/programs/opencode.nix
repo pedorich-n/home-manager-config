@@ -9,7 +9,7 @@ let
       c: with c; [
         (try-fwd-env "OPENCODE_ENABLE_EXA")
         (try-fwd-env "OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS")
-        (bind.ro "$HOME/Projects")
+        (bind.try-ro "$HOME/Projects")
       ];
   };
 
