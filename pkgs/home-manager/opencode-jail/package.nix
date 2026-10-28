@@ -164,15 +164,19 @@ let
         (add-pkg-deps (
           with pkgs;
           [
+            binutils
             curl
+            diffutils
+            file
             findutils
-            gnugrep
             gawk
             gitMinimal
+            gnugrep
             gnutar
-            which
-            file
+            patch
+            unzip
             wget
+            which
           ]
         ))
       ];
