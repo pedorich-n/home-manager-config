@@ -63,9 +63,6 @@ in
       instructions = [
         "/opencode/instructions/*.md"
       ];
-      plugins = [
-        "@slkiser/opencode-quota"
-      ];
       permissions = lib.flatten [
         (opencodeLib.mkExternalDirectoryPermissions {
           path = "/opencode/*";

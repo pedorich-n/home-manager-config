@@ -80,6 +80,9 @@ in
         ]
       );
 
+      plugins = [
+        "@slkiser/opencode-quota@latest"
+      ];
     };
 
     context = lib.mkMerge [
