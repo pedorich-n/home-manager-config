@@ -8,7 +8,7 @@
 let
   opencode = pkgs.opencode-jail.override {
     extraGitSettings = {
-      inherit (config.programs.git.settings) credential pull submodules;
+      inherit (config.programs.git.settings) credential pull submodule;
     };
 
     extraPermissions =
