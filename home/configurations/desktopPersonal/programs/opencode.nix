@@ -1,16 +1,34 @@
 {
-  pkgs,
+  config,
   lib,
   opencodeLib,
+  pkgs,
   ...
 }:
 let
   opencode = pkgs.opencode-jail.override {
+    extraGitSettings = {
+      inherit (config.programs.git.settings) credential pull submodules;
+    };
+
     extraPermissions =
       c: with c; [
         (try-fwd-env "OPENCODE_ENABLE_EXA")
         (try-fwd-env "OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS")
         (bind.try-ro "$HOME/Projects")
+        (add-pkg-deps [
+          config.programs.gh.package
+        ])
+
+        (try-ro-bind config.sops.templates."github/opencode-hosts.yml".path (noescape-quoted "$HOME/.config/gh/hosts.yml"))
+
+        (bind-pkg "/opencode/instructions/github.md" (
+          pkgs.writers.writeText "jail-opencode-github-notes.md" ''
+            ## GitHub access
+
+            `gh` is installed and authenticated as `pedorich-n` with a token that has read-only access to Github.
+          ''
+        ))
       ];
   };
 
