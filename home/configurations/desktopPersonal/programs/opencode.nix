@@ -1,7 +1,8 @@
 {
-  pkgs,
+  config,
   lib,
   opencodeLib,
+  pkgs,
   ...
 }:
 let
@@ -11,6 +12,14 @@ let
         (try-fwd-env "OPENCODE_ENABLE_EXA")
         (try-fwd-env "OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS")
         (bind.try-ro "$HOME/Projects")
+        (add-pkg-deps (
+          with pkgs;
+          [
+            gh
+          ]
+        ))
+
+        (try-ro-bind config.sops.templates."github/opencode-hosts.yml".path (noescape-quoted "$HOME/.config/gh/hosts.yml"))
       ];
   };
 
