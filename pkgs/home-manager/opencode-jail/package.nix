@@ -4,6 +4,7 @@
   lib,
   opencode, # Explicit arg, so that it's overrideable
   extraPermissions ? _: [ ],
+  extraGitSettings ? { },
 }:
 let
   kdotool = pkgs.kdotool;
@@ -125,7 +126,19 @@ let
       ];
 
       git = compose [
-        (bind.try-ro "$HOME/.config/git")
+        (bind-pkg (noescape-quoted "$HOME/.config/git/config") (
+          pkgs.writeText "jail-opencode-git-config" ''
+            ${lib.generators.toGitINI (
+              {
+                url."https://github.com/".insteadOf = [
+                  "git@github.com:"
+                  "ssh://git@github.com/"
+                ];
+              }
+              // extraGitSettings
+            )}
+          ''
+        ))
 
         # A runtime hack to protect git in normal git flow as well as in worktrees
         (add-runtime ''
