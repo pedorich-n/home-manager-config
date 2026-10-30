@@ -12,6 +12,7 @@
     };
 
     secrets = {
+      "github/opencode" = { };
     };
   };
 }
