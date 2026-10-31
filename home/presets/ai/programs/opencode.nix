@@ -61,7 +61,7 @@ in
           })
           (opencodeLib.mkExternalDirectoryPermissions {
             path = permissionsScratchDir;
-            actionEffect = "edit";
+            action = "edit";
           })
           (opencodeLib.mkShellPermission {
             command = "rm -rf *";
