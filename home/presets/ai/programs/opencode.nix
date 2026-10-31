@@ -34,6 +34,11 @@ in
       When you delegate, hand over what you have already established: paths, line
       references, and the conclusions you reached. A delegate that re-derives them
       pays for the same work twice.
+
+      If a delegation may create temporary files, include the exact scratch path
+      in the brief: `mktemp -d "${scratchDir}/session.XXXXXX"`, never the system
+      temp directory itself. The shell's `TMPDIR` may not point at the approved
+      scratch root, so a bare `mktemp` can land outside it.
     '';
   };
 
@@ -108,8 +113,12 @@ in
         Ask all your questions in one batch, not one at a time.
 
         ## Code comments
-        Comments explain why for a reader with no context: constraints, tradeoffs, workarounds —
-        never the task, prompt, or diff that produced the code. Keep existing comments unless their code is gone.
+
+        Default to no new comments; keep existing ones. Add a comment only for a
+        non-obvious constraint, invariant, workaround, or tradeoff that the code
+        cannot express and that would otherwise risk a future bug. Never restate
+        what the code does, the task, or the diff — explain changes in your reply
+        instead.
 
         ## Temporary scratch directory
         Work in a per-session subdirectory of the scratch root, created with `mktemp -d "${scratchDir}/session.XXXXXX"`;
