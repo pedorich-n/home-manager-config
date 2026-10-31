@@ -41,8 +41,9 @@ in
       args = [
         "serve"
         "--mcp"
-      ]
-      ++ lib.optional (!cfg.telemetry.enable) "--no-telemetry";
+      ];
+      # TODO: uncomment when this is released upstream. See https://github.com/colbymchenry/codegraph/commit/47526d2078e578deed8dae1c9db87f7df89f9de8
+      #++ lib.optional (!cfg.telemetry.enable) "--no-telemetry";
     };
 
     custom.globalIgnores = [ ".codegraph/" ];
