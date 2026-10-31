@@ -67,6 +67,11 @@ let
         (set-env-quoted "XDG_DATA_HOME" "$HOME/.local/share")
         (set-env-quoted "XDG_CACHE_HOME" "$HOME/.cache")
         (set-env-quoted "XDG_STATE_HOME" "$HOME/.local/state")
+
+        (try-fwd-env "OPENCODE_CONFIG")
+        (try-fwd-env "OPENCODE_TUI_CONFIG")
+        (try-fwd-env "OPENCODE_CLI_CONFIG_CONTENT")
+        (try-fwd-env "OPENCODE_CONFIG_DIR")
       ];
 
       # Host services the agent talks to, and the terminal it runs in.
