@@ -16,8 +16,10 @@ let
         (try-fwd-env "OPENCODE_ENABLE_EXA")
         (try-fwd-env "OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS")
         (bind.try-ro "$HOME/Projects")
+        (bind.try-rw "$HOME/.local/share/plannotator")
         (add-pkg-deps [
           config.programs.gh.package
+          pkgs.plannotator
         ])
 
         (try-ro-bind config.sops.templates."github/opencode-hosts.yml".path (noescape-quoted "$HOME/.config/gh/hosts.yml"))
