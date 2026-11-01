@@ -233,6 +233,13 @@ in
   inherit version;
 
   name = "opencode-jail-${version}";
+
+  buildCommand = (old.buildCommand or "") + ''
+    mkdir -p $out/share
+    ln -s ${opencode}/share/bash-completion $out/share/bash-completion
+    ln -s ${opencode}/share/zsh $out/share/zsh
+  '';
+
   passthru = (old.passthru or { }) // {
     unjailed = opencode;
   };
