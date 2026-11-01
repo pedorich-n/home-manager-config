@@ -86,6 +86,7 @@ in
 
       plugins = [
         "@slkiser/opencode-quota@latest"
+        "@plannotator/opencode@latest"
       ];
     };
 

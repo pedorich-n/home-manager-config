@@ -16,6 +16,7 @@
             self.overlays.default
             inputs.nix-vscode-extensions.overlays.default
             inputs.rust-overlay.overlays.default
+            inputs.nur.repos.pedorich-n.overlays.default
           ];
           config = {
             allowUnfree = true;
