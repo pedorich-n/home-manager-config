@@ -32,6 +32,14 @@
       };
     };
 
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     # Packages / Overlays
     tomorrow-theme-source = {
       url = "github:chriskempson/tomorrow-theme";

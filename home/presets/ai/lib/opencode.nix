@@ -4,8 +4,8 @@
       {
         path,
         extDirEffect ? "allow",
-        action ? "allow",
-        actionEffect ? "read",
+        action ? "read",
+        actionEffect ? "allow",
       }:
       [
         {
