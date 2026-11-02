@@ -80,6 +80,9 @@ in
     package = opencode;
 
     settings = {
+      plugins = [
+        "@plannotator/opencode@latest"
+      ];
       instructions = [
         "/opencode/instructions/*.md"
       ];
