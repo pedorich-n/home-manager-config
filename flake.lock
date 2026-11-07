@@ -61,16 +61,16 @@
     "home-manager-config-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1794015155,
+        "lastModified": 1794017704,
         "narHash": "sha256-TaPwK4cNrAFw5Rt6RxAK5CiqxCQQRQ947E6N2G+qc2Q=",
-        "ref": "refs/heads/updates-2026-11-07",
-        "rev": "7b1e1e3414b1f0a5a67e6e59ce263224d080c678",
+        "ref": "refs/heads/main",
+        "rev": "09c1184004c670ad0a42855ab3b39d5024bd52f6",
         "revCount": 11,
         "type": "git",
         "url": "ssh://git@github.com/pedorich-n/home-manager-config-secrets"
       },
       "original": {
-        "ref": "refs/heads/updates-2026-11-07",
+        "ref": "refs/heads/main",
         "type": "git",
         "url": "ssh://git@github.com/pedorich-n/home-manager-config-secrets"
       }
