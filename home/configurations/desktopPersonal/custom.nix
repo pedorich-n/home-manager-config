@@ -7,7 +7,6 @@
     selinux.enable = true;
     dotfiles.enable = true;
     programs = {
-      gpg.enable = true;
       python = {
         enable = true;
         uv.enable = true;

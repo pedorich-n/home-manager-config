@@ -9,10 +9,7 @@ in
 {
   sops = {
     age = {
-      generateKey = true;
-      sshKeyPaths = [
-        "${config.home.homeDirectory}/.ssh/id_main"
-      ];
+      keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
     };
 
     secrets = {
