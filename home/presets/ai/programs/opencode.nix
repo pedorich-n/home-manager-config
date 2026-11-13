@@ -103,11 +103,12 @@ in
         Never create or amend commits, push, create tags unless I explicitly ask.
 
         ## Reading
-        Read the region you need — the enclosing function plus its callers — rather than whole files.
-        Widen only when the narrow read doesn't answer the question.
+        Start with the relevant code rather than reading whole files by default.
+        For changes where project conventions or existing solutions matter, search for analogous implementations and relevant tests.
+        Read more context whenever it would improve the decision.
 
         ## Uncertainty
-        Ask when the choice affects behavior or is hard to reverse.
+        Ask when you can't tell which outcome I want, or when a decision would be hard to undo. Don't ask about routine implementation details.
         Say plainly when you haven't verified something, instead of presenting it as fact.
         Ask all your questions in one batch, not one at a time.
 
@@ -125,7 +126,7 @@ in
         ends — put anything persistent in the project or an explicitly requested location.
 
         ## Filesystem scope
-        Work inside the project directory. Before touching any path outside it, name the exact path and ask.
+        Work inside the project directory. The approved scratch directory above is an exception; before touching any other path outside the project, name the exact path and ask.
         If a command is blocked or a path is refused, stop and ask — do not look for another way to reach it.
       '')
     ];
