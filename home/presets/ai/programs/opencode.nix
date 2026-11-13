@@ -48,41 +48,60 @@ in
     enableMcpIntegration = lib.mkDefault true;
 
     settings = {
-      permissions = lib.mkBefore (
-        lib.flatten [
-          (lib.singleton {
-            action = "external_directory";
-            resource = "*";
-            effect = "ask";
-          })
-          (opencodeLib.mkExternalDirectoryPermissions {
-            path = "/nix/store/*";
-          })
-          (opencodeLib.mkExternalDirectoryPermissions {
-            path = permissionsScratchDir;
-            action = "edit";
-          })
-          (opencodeLib.mkShellPermission {
-            command = "rm -rf *";
-          })
-          (opencodeLib.mkShellPermission {
-            command = "dd *";
-            effect = "deny";
-          })
-          (opencodeLib.mkShellPermission {
-            command = "truncate *";
-            effect = "deny";
-          })
-          (opencodeLib.mkShellPermission {
-            command = "shred *";
-            effect = "deny";
-          })
-          (opencodeLib.mkShellPermission {
-            command = "find * -delete";
-            effect = "deny";
-          })
-        ]
-      );
+      permissions = lib.mkMerge [
+        (lib.mkBefore (
+          lib.flatten [
+            (lib.singleton {
+              action = "external_directory";
+              resource = "*";
+              effect = "ask";
+            })
+            (opencodeLib.mkExternalDirectoryPermissions {
+              path = "/nix/store/*";
+            })
+            (opencodeLib.mkExternalDirectoryPermissions {
+              path = permissionsScratchDir;
+              action = "edit";
+            })
+            (opencodeLib.mkShellPermission {
+              command = "rm -rf *";
+            })
+            (opencodeLib.mkShellPermission {
+              command = "dd *";
+              effect = "deny";
+            })
+            (opencodeLib.mkShellPermission {
+              command = "truncate *";
+              effect = "deny";
+            })
+            (opencodeLib.mkShellPermission {
+              command = "shred *";
+              effect = "deny";
+            })
+            (opencodeLib.mkShellPermission {
+              command = "find * -delete";
+              effect = "deny";
+            })
+          ]
+        ))
+
+        (lib.mkAfter (
+          lib.flatten [
+            (lib.map
+              (resource: {
+                action = "read";
+                inherit resource;
+                effect = "deny";
+              })
+              [
+                "*.env"
+                "*.env.*"
+              ]
+            )
+
+          ]
+        ))
+      ];
 
       plugins = [
         "@slkiser/opencode-quota@latest"
