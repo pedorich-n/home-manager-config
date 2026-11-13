@@ -12,6 +12,7 @@ in
     # keep-sorted start
     brew "crit"               # Your feedback loop with the agent: review plans and code locally
     cask "alt-tab"            # Window switcher, Windows/Linux-style
+    cask "bruno"              # Open source IDE for exploring and testing APIs
     cask "ghostty"            # Terminal emulator that uses platform-native UI and GPU acceleration
     cask "karabiner-elements" # Keyboard customiser
     cask "macshot"            # Screenshot and screen recording tool
