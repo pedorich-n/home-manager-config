@@ -31,7 +31,7 @@ in
         hm = "home-manager";
       })
       (lib.mkIf cfg.hms.enable {
-        hms = "nh home switch --configuration ${cfg.hms.configName}";
+        hms = "nh home switch --configuration ${cfg.hms.configName} --show-activation-logs";
       })
     ];
   };
