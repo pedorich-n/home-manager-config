@@ -10,6 +10,7 @@
     settings = {
       session_serialization = false;
       stacked_pane_list = false;
+      show_startup_tips = false;
     };
   };
 }
