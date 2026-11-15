@@ -69,9 +69,6 @@ in
               path = "/nix/store/*";
             })
             (opencodeLib.mkShellPermission {
-              command = "rm -rf *";
-            })
-            (opencodeLib.mkShellPermission {
               command = "dd *";
               effect = "deny";
             })
@@ -137,7 +134,6 @@ in
         Ask all your questions in one batch, not one at a time.
 
         ## Code comments
-
         Default to no new comments; keep existing ones. Add a comment only for a
         non-obvious constraint, invariant, workaround, or tradeoff that the code
         cannot express and that would otherwise risk a future bug. Never restate
