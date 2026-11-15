@@ -56,12 +56,17 @@ in
               resource = "*";
               effect = "ask";
             })
-            (opencodeLib.mkExternalDirectoryPermissions {
-              path = "/nix/store/*";
+            (lib.singleton {
+              action = "external_directory";
+              resource = "/tmp/*";
+              effect = "deny";
             })
             (opencodeLib.mkExternalDirectoryPermissions {
               path = permissionsScratchDir;
               action = "edit";
+            })
+            (opencodeLib.mkExternalDirectoryPermissions {
+              path = "/nix/store/*";
             })
             (opencodeLib.mkShellPermission {
               command = "rm -rf *";
