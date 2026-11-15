@@ -14,6 +14,10 @@ in
         General.theme = "catppuccin-latte-green";
       };
 
+      "kdeglobals" = {
+        General.accentColorFromWallpaper = true;
+      };
+
       "klassy/klassyrc" = {
         Global = {
           LookAndFeelSet = "Catppuccin-Latte-Green";
@@ -43,7 +47,7 @@ in
     };
 
     workspace = {
-      colorScheme = "CatppuccinLatteGreen";
+      colorScheme = "BreezeLight";
       theme = "default"; # Breeze
       # Enabling this brings too many dependencies, see: https://github.com/nix-community/plasma-manager/blob/a4b33606111c9/modules/workspace.nix#L569
       # iconTheme = "Papirus-Light";
