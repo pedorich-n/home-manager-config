@@ -30,6 +30,9 @@ in
         variant = catpuccinVariant;
         accents = [ catpuccinAccent ];
       })
+      (pkgs.catppuccin-fcitx5.override {
+        withRoundedCorners = true;
+      })
     ];
   };
 }

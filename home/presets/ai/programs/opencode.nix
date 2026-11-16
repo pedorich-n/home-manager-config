@@ -56,15 +56,17 @@ in
               resource = "*";
               effect = "ask";
             })
-            (opencodeLib.mkExternalDirectoryPermissions {
-              path = "/nix/store/*";
+            (lib.singleton {
+              action = "external_directory";
+              resource = "/tmp/*";
+              effect = "deny";
             })
             (opencodeLib.mkExternalDirectoryPermissions {
               path = permissionsScratchDir;
               action = "edit";
             })
-            (opencodeLib.mkShellPermission {
-              command = "rm -rf *";
+            (opencodeLib.mkExternalDirectoryPermissions {
+              path = "/nix/store/*";
             })
             (opencodeLib.mkShellPermission {
               command = "dd *";
@@ -132,7 +134,6 @@ in
         Ask all your questions in one batch, not one at a time.
 
         ## Code comments
-
         Default to no new comments; keep existing ones. Add a comment only for a
         non-obvious constraint, invariant, workaround, or tradeoff that the code
         cannot express and that would otherwise risk a future bug. Never restate
