@@ -2,7 +2,7 @@
   programs.mcp = {
     servers = {
       confluence = {
-        url = "https://mcp.atlassian.com/v1/mcp";
+        url = "https://mcp.atlassian.com/v2/mcp";
       };
     };
   };
