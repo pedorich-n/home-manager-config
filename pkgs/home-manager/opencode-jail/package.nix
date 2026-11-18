@@ -13,26 +13,6 @@ let
   # Adapted from https://github.com/NixOS/nixpkgs/blob/6b93cd12c87540c01762ba068f30928f4f916954/nixos/modules/config/ldso.nix#L17-L20
   ldsoPath = "/${stdenv.hostPlatform.libDir}/${baseNameOf dynamicLinker}";
 
-  kdotool = pkgs.kdotool;
-
-  # kdotool writes a script to a temp file and asks KWin runing on host, to read it back by path.
-  # By default it tries to write to `/tmp/kdotool-XXXX`: https://github.com/jinliu/kdotool/blob/be03ce90c/src/main.rs#L707
-  # But since that folder is mounted as tmpfs, the file never reaches the host.
-  # So we need to point kdotool to a shared directory and make it think it's tmp.
-  kdotoolShim = pkgs.writeShellApplication {
-    name = "kdotool";
-
-    runtimeInputs = [
-      kdotool
-    ];
-
-    text = ''
-      export TMPDIR="$HOME/.cache/opencode/kdotool"
-      mkdir -p "$TMPDIR"
-      exec kdotool "$@"
-    '';
-  };
-
   jail-minimal = inputs.jail-nix.lib.extend {
     inherit pkgs;
 
@@ -110,33 +90,6 @@ let
         (try-fwd-env "COLORTERM")
         (try-fwd-env "EDITOR")
         (try-fwd-env "VISUAL")
-      ];
-
-      # Lets the jail show desktop notifications and focus the terminal window
-      desktop-notifications = compose [
-        (dbus {
-          talk = [
-            "org.kde.KWin"
-            "org.freedesktop.Notifications"
-          ];
-        })
-
-        (add-pkg-deps [
-          pkgs.libnotify
-          kdotool
-          kdotoolShim
-        ])
-
-        (try-fwd-env "KDE_SESSION_VERSION")
-        (try-fwd-env "OPENCODE_NOTIFIER_WINDOW_ID")
-
-        # Resolve the terminal window id on the host
-        (add-runtime ''
-          if [ -z "''${OPENCODE_NOTIFIER_WINDOW_ID:-}" ]; then
-            OPENCODE_NOTIFIER_WINDOW_ID="$(${lib.getExe' kdotool "kdotool"} search --classname konsole 2>/dev/null | head -n1)"
-            export OPENCODE_NOTIFIER_WINDOW_ID
-          fi
-        '')
       ];
 
       # Everything opencode itself reads and writes.
@@ -237,7 +190,6 @@ let
       environment
       nix-ld
       session
-      desktop-notifications
       opencodeState
       git
       nixCli
