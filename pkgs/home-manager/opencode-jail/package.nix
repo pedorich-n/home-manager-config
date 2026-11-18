@@ -7,6 +7,12 @@
   extraGitSettings ? { },
 }:
 let
+  stdenv = pkgs.stdenv;
+  dynamicLinker = stdenv.cc.bintools.dynamicLinker;
+  # Where prebuilt binaries expect the ELF loader (e.g. `/lib64/ld-linux-x86-64.so.2`)
+  # Adapted from https://github.com/NixOS/nixpkgs/blob/6b93cd12c87540c01762ba068f30928f4f916954/nixos/modules/config/ldso.nix#L17-L20
+  ldsoPath = "/${stdenv.hostPlatform.libDir}/${baseNameOf dynamicLinker}";
+
   kdotool = pkgs.kdotool;
 
   # kdotool writes a script to a temp file and asks KWin runing on host, to read it back by path.
@@ -72,6 +78,29 @@ let
         (try-fwd-env "OPENCODE_TUI_CONFIG")
         (try-fwd-env "OPENCODE_CLI_CONFIG_CONTENT")
         (try-fwd-env "OPENCODE_CONFIG_DIR")
+      ];
+
+      # Downloaded (non-Nix) binaries hardcode the FHS loader path as their
+      # interpreter, but the store glibc loader does not search it.
+      # nix-ld bridges that by handing the store loader an explicit lib path.
+      nix-ld = compose [
+        (ro-bind "${pkgs.nix-ld}/libexec/nix-ld" ldsoPath)
+        (set-env-quoted "NIX_LD" dynamicLinker)
+        (set-env-quoted "NIX_LD_LIBRARY_PATH" (
+          lib.makeLibraryPath (
+            with pkgs;
+            [
+              bzip2
+              curl
+              gcc-unwrapped.lib
+              glibc
+              openssl
+              xz
+              zlib
+              zstd
+            ]
+          )
+        ))
       ];
 
       # Host services the agent talks to, and the terminal it runs in.
@@ -193,10 +222,12 @@ let
             gitMinimal
             gnugrep
             gnutar
+            gzip
             patch
             unzip
             wget
             which
+            xz
             # keep-sorted end
           ]
         ))
@@ -204,6 +235,7 @@ let
     in
     [
       environment
+      nix-ld
       session
       desktop-notifications
       opencodeState
