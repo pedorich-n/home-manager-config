@@ -6,6 +6,23 @@
   ...
 }:
 let
+  # kdotool writes a script to a temp file and asks KWin running on host to read
+  # it back by path. The jail's /tmp is a tmpfs, so point kdotool at a shared
+  # directory and make it think it's tmp.
+  kdotoolShim = pkgs.writeShellApplication {
+    name = "kdotool";
+
+    runtimeInputs = [
+      pkgs.kdotool
+    ];
+
+    text = ''
+      export TMPDIR="$HOME/.cache/opencode/kdotool"
+      mkdir -p "$TMPDIR"
+      exec kdotool "$@"
+    '';
+  };
+
   opencode = pkgs.opencode-jail.override {
     extraGitSettings = {
       inherit (config.programs.git.settings) credential pull submodule;
@@ -31,6 +48,31 @@ let
             `gh` is installed and authenticated as `pedorich-n` with a token that has read-only access to Github.
           ''
         ))
+
+        # KDE: desktop notifications and focusing the terminal window
+        (compose [
+          (dbus {
+            talk = [
+              "org.kde.KWin"
+              "org.freedesktop.Notifications"
+            ];
+          })
+          (add-pkg-deps [
+            pkgs.libnotify
+            pkgs.kdotool
+            kdotoolShim
+          ])
+          (try-fwd-env "KDE_SESSION_VERSION")
+          (try-fwd-env "OPENCODE_NOTIFIER_WINDOW_ID")
+
+          # Resolve the terminal window id on the host
+          (add-runtime ''
+            if [ -z "''${OPENCODE_NOTIFIER_WINDOW_ID:-}" ]; then
+              OPENCODE_NOTIFIER_WINDOW_ID="$(${lib.getExe' pkgs.kdotool "kdotool"} search --classname konsole 2>/dev/null | head -n1)"
+              export OPENCODE_NOTIFIER_WINDOW_ID
+            fi
+          '')
+        ])
       ];
   };
 

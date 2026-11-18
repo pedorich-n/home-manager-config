@@ -7,25 +7,11 @@
   extraGitSettings ? { },
 }:
 let
-  kdotool = pkgs.kdotool;
-
-  # kdotool writes a script to a temp file and asks KWin runing on host, to read it back by path.
-  # By default it tries to write to `/tmp/kdotool-XXXX`: https://github.com/jinliu/kdotool/blob/be03ce90c/src/main.rs#L707
-  # But since that folder is mounted as tmpfs, the file never reaches the host.
-  # So we need to point kdotool to a shared directory and make it think it's tmp.
-  kdotoolShim = pkgs.writeShellApplication {
-    name = "kdotool";
-
-    runtimeInputs = [
-      kdotool
-    ];
-
-    text = ''
-      export TMPDIR="$HOME/.cache/opencode/kdotool"
-      mkdir -p "$TMPDIR"
-      exec kdotool "$@"
-    '';
-  };
+  stdenv = pkgs.stdenv;
+  dynamicLinker = stdenv.cc.bintools.dynamicLinker;
+  # Where prebuilt binaries expect the ELF loader (e.g. `/lib64/ld-linux-x86-64.so.2`)
+  # Adapted from https://github.com/NixOS/nixpkgs/blob/6b93cd12c87540c01762ba068f30928f4f916954/nixos/modules/config/ldso.nix#L17-L20
+  ldsoPath = "/${stdenv.hostPlatform.libDir}/${baseNameOf dynamicLinker}";
 
   jail-minimal = inputs.jail-nix.lib.extend {
     inherit pkgs;
@@ -74,6 +60,29 @@ let
         (try-fwd-env "OPENCODE_CONFIG_DIR")
       ];
 
+      # Downloaded (non-Nix) binaries hardcode the FHS loader path as their
+      # interpreter, but the store glibc loader does not search it.
+      # nix-ld bridges that by handing the store loader an explicit lib path.
+      nix-ld = compose [
+        (ro-bind "${pkgs.nix-ld}/libexec/nix-ld" ldsoPath)
+        (set-env-quoted "NIX_LD" dynamicLinker)
+        (set-env-quoted "NIX_LD_LIBRARY_PATH" (
+          lib.makeLibraryPath (
+            with pkgs;
+            [
+              bzip2
+              curl
+              gcc-unwrapped.lib
+              glibc
+              openssl
+              xz
+              zlib
+              zstd
+            ]
+          )
+        ))
+      ];
+
       # Host services the agent talks to, and the terminal it runs in.
       session = compose [
         network
@@ -81,33 +90,6 @@ let
         (try-fwd-env "COLORTERM")
         (try-fwd-env "EDITOR")
         (try-fwd-env "VISUAL")
-      ];
-
-      # Lets the jail show desktop notifications and focus the terminal window
-      desktop-notifications = compose [
-        (dbus {
-          talk = [
-            "org.kde.KWin"
-            "org.freedesktop.Notifications"
-          ];
-        })
-
-        (add-pkg-deps [
-          pkgs.libnotify
-          kdotool
-          kdotoolShim
-        ])
-
-        (try-fwd-env "KDE_SESSION_VERSION")
-        (try-fwd-env "OPENCODE_NOTIFIER_WINDOW_ID")
-
-        # Resolve the terminal window id on the host
-        (add-runtime ''
-          if [ -z "''${OPENCODE_NOTIFIER_WINDOW_ID:-}" ]; then
-            OPENCODE_NOTIFIER_WINDOW_ID="$(${lib.getExe' kdotool "kdotool"} search --classname konsole 2>/dev/null | head -n1)"
-            export OPENCODE_NOTIFIER_WINDOW_ID
-          fi
-        '')
       ];
 
       # Everything opencode itself reads and writes.
@@ -131,6 +113,7 @@ let
       ];
 
       git = compose [
+        (bind.try-ro "$HOME/.config/git/ignore")
         (bind-pkg (noescape-quoted "$HOME/.config/git/config") (
           pkgs.writeText "jail-opencode-git-config" ''
             ${lib.generators.toGitINI (
@@ -192,10 +175,12 @@ let
             gitMinimal
             gnugrep
             gnutar
+            gzip
             patch
             unzip
             wget
             which
+            xz
             # keep-sorted end
           ]
         ))
@@ -203,8 +188,8 @@ let
     in
     [
       environment
+      nix-ld
       session
-      desktop-notifications
       opencodeState
       git
       nixCli
