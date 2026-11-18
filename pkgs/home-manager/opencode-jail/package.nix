@@ -131,6 +131,7 @@ let
       ];
 
       git = compose [
+        (bind.try-ro "$HOME/.config/git/ignore")
         (bind-pkg (noescape-quoted "$HOME/.config/git/config") (
           pkgs.writeText "jail-opencode-git-config" ''
             ${lib.generators.toGitINI (
