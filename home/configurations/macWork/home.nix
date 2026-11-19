@@ -29,6 +29,7 @@ in
 
     packages = with pkgs; [
       awscli2
+      google-cloud-sdk
       shfmt
       opentofu
       tofu-ls
