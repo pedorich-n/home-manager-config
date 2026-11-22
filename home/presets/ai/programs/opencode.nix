@@ -107,6 +107,12 @@ in
 
       plugins = [
         "@slkiser/opencode-quota@latest"
+        {
+          package = "opencode-handoff@latest";
+          options = {
+            attachFiles = false;
+          };
+        }
       ];
     };
 
