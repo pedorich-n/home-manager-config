@@ -28,6 +28,13 @@ in
 {
 
   xdg.configFile = {
+    "opencode/dcp.json".text = lib.generators.toJSON { } {
+      compress = {
+        minContextLimit = "25%";
+        maxContextLimit = "35%";
+      };
+    };
+
     "opencode/oh-my-opencode-slim/orchestrator_append.md".text = ''
       ## Delegation handover
 
@@ -107,6 +114,7 @@ in
 
       plugins = [
         "@slkiser/opencode-quota@latest"
+        "@tarquinen/opencode-dcp@latest"
         {
           package = "opencode-handoff@latest";
           options = {
