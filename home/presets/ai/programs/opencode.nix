@@ -29,13 +29,14 @@ in
 
   xdg.configFile = {
     "opencode/opencode-status-line.json".text = lib.generators.toJSON { } {
+      surface = "prompt.footer.status";
       cap = {
         mode = "none";
       };
       readings = [ "cumulative" ];
       usage = {
-        warnAt = 30;
-        dangerAt = 40;
+        warnAt = 60;
+        dangerAt = 80;
         segments = [
           "shells"
           "context"
@@ -133,6 +134,12 @@ in
           };
         }
       ];
+
+      # DeepSeek V4.1 Flash degrades well below its advertised 1M context (~300-400K)
+      # declaring 500K aligns compaction and statusline thresholds with that effective limit.
+      providers = {
+        "opencode-go".models."deepseek-v4.1-flash".limit.context = 500000;
+      };
     };
 
     cli = {
