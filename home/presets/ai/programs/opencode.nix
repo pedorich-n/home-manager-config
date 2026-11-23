@@ -28,10 +28,21 @@ in
 {
 
   xdg.configFile = {
-    "opencode/dcp.json".text = lib.generators.toJSON { } {
-      compress = {
-        minContextLimit = "25%";
-        maxContextLimit = "35%";
+    "opencode/opencode-status-line.json".text = lib.generators.toJSON { } {
+      cap = {
+        mode = "none";
+      };
+      readings = [ "cumulative" ];
+      usage = {
+        warnAt = 30;
+        dangerAt = 40;
+        segments = [
+          "shells"
+          "context"
+          "cache"
+          "meter"
+          "cost"
+        ];
       };
     };
 
@@ -114,13 +125,20 @@ in
 
       plugins = [
         "@slkiser/opencode-quota@latest"
-        "@tarquinen/opencode-dcp@latest"
         {
           package = "opencode-handoff@latest";
           options = {
             attachFiles = false;
           };
         }
+      ];
+    };
+
+    cli = {
+      plugins = [
+        "@rashidrazak/opencode-status-line"
+        "-opencode.sidebar.context"
+        "-opencode.prompt.footer"
       ];
     };
 
