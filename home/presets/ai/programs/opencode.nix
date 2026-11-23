@@ -28,10 +28,22 @@ in
 {
 
   xdg.configFile = {
-    "opencode/dcp.json".text = lib.generators.toJSON { } {
-      compress = {
-        minContextLimit = "25%";
-        maxContextLimit = "35%";
+    "opencode/opencode-status-line.json".text = lib.generators.toJSON { } {
+      surface = "prompt.footer.status";
+      cap = {
+        mode = "none";
+      };
+      readings = [ "cumulative" ];
+      usage = {
+        warnAt = 60;
+        dangerAt = 80;
+        segments = [
+          "shells"
+          "context"
+          "cache"
+          "meter"
+          "cost"
+        ];
       };
     };
 
@@ -113,14 +125,30 @@ in
       ];
 
       plugins = [
+        "oh-my-opencode-slim@3.0.7" # 3.0.8 requires Opencode 2.3.0
         "@slkiser/opencode-quota@latest"
-        "@tarquinen/opencode-dcp@latest"
         {
           package = "opencode-handoff@latest";
           options = {
             attachFiles = false;
           };
         }
+      ];
+
+      # DeepSeek V4.1 Flash degrades well below its advertised 1M context (~300-400K)
+      # declaring 500K aligns compaction and statusline thresholds with that effective limit.
+      providers = {
+        "opencode-go".models."deepseek-v4.1-flash".limit.context = 500000;
+      };
+    };
+
+    cli = {
+      plugins = [
+        "@mohak34/opencode-notifier"
+        "-opencode.notifications"
+        "@rashidrazak/opencode-status-line"
+        "-opencode.sidebar.context"
+        "-opencode.prompt.footer"
       ];
     };
 
