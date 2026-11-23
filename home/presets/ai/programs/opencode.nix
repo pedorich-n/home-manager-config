@@ -124,6 +124,7 @@ in
       ];
 
       plugins = [
+        "oh-my-opencode-slim@3.0.7"
         "@slkiser/opencode-quota@latest"
         {
           package = "opencode-handoff@latest";
@@ -136,6 +137,8 @@ in
 
     cli = {
       plugins = [
+        "@mohak34/opencode-notifier"
+        "-opencode.notifications"
         "@rashidrazak/opencode-status-line"
         "-opencode.sidebar.context"
         "-opencode.prompt.footer"
