@@ -125,7 +125,7 @@ in
       ];
 
       plugins = [
-        "oh-my-opencode-slim@3.0.7"
+        "oh-my-opencode-slim@3.0.7" # 3.0.8 requires Opencode 2.3.0
         "@slkiser/opencode-quota@latest"
         {
           package = "opencode-handoff@latest";
