@@ -79,7 +79,7 @@ let
 in
 {
   xdg.configFile = {
-    "opencode/opencode-notifier.json".source = pkgs.writers.writeJSON "opencode-notifier.json" {
+    "opencode/opencode-notifier.json".text = builtins.toJSON {
       notification = true;
       sound = false;
       bell = false;

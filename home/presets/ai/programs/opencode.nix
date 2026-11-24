@@ -28,7 +28,7 @@ in
 {
 
   xdg.configFile = {
-    "opencode/opencode-status-line.json".text = lib.generators.toJSON { } {
+    "opencode/opencode-status-line.json".text = builtins.toJSON {
       surface = "prompt.footer.status";
       cap = {
         mode = "none";
