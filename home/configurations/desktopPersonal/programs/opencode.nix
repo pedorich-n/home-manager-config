@@ -85,6 +85,7 @@ in
       bell = false;
       focusOnClick = false;
       suppressWhenFocused = true;
+      minDuration = 10;
       timeout = 5;
       showProjectName = false;
       showSessionTitle = false;

@@ -7,6 +7,7 @@
       sound = false;
       bell = false;
       suppressWhenFocused = true;
+      minDuration = 10;
     };
   };
 
