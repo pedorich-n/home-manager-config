@@ -79,12 +79,13 @@ let
 in
 {
   xdg.configFile = {
-    "opencode/opencode-notifier.json".source = pkgs.writers.writeJSON "opencode-notifier.json" {
+    "opencode/opencode-notifier.json".text = builtins.toJSON {
       notification = true;
       sound = false;
       bell = false;
       focusOnClick = false;
       suppressWhenFocused = true;
+      minDuration = 10;
       timeout = 5;
       showProjectName = false;
       showSessionTitle = false;
