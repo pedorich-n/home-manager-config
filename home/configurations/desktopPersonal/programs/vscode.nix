@@ -9,6 +9,7 @@
       extensions = with pkgs.vscode-marketplace-release; [
         k--kato.intellij-idea-keybindings
         backnotprop.plannotator-webview
+        myriad-dreamin.tinymist
       ];
     };
   };
