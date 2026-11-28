@@ -15,6 +15,7 @@
 
     programs = {
       aws-sso-cli.enable = true;
+      codegraph.mcp.enable = true;
       rust.enable = true;
       scala = {
         enable = true;
