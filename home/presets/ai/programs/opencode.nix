@@ -120,6 +120,17 @@ in
               ]
             )
 
+            (lib.map
+              (action: {
+                inherit action;
+                resource = "*";
+                effect = "deny";
+              })
+              [
+                "quota_*"
+                "opencode_*"
+              ]
+            )
           ]
         ))
       ];
